@@ -27,13 +27,13 @@ namespace LaboratoryApp
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Certificate> certificates { get; set; }
-        public virtual DbSet<Client> clients { get; set; }
-        public virtual DbSet<Gauge> gauges { get; set; }
-        public virtual DbSet<Office> offices { get; set; }
+        public virtual DbSet<certificate> certificates { get; set; }
+        public virtual DbSet<client> clients { get; set; }
+        public virtual DbSet<gauge> gauges { get; set; }
+        public virtual DbSet<office> offices { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<Type> types { get; set; }
-        public virtual DbSet<Usage> usages { get; set; }
+        public virtual DbSet<type> types { get; set; }
+        public virtual DbSet<usage> usages { get; set; }
     
        
     }

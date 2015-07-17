@@ -13,17 +13,16 @@ namespace LaboratoryApp
     using System.Collections.ObjectModel;
     using System.ComponentModel.DataAnnotations.Schema;
     
-    [Table("types")]
-    public partial class Type
+    public partial class type
     {
-        public Type()
+        public type()
         {
-            this.gauges = new ObservableCollection<Gauge>();
+            this.gauges = new ObservableCollection<gauge>();
         }
     
         public int typeId { get; set; }
         public string name { get; set; }
     
-        public virtual ObservableCollection<Gauge> gauges { get; set; }
+        public virtual ObservableCollection<gauge> gauges { get; set; }
     }
 }

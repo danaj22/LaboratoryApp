@@ -13,8 +13,7 @@ namespace LaboratoryApp
     using System.Collections.ObjectModel;
     using System.ComponentModel.DataAnnotations.Schema;
     
-    [Table("offices")]
-    public partial class Office
+    public partial class office
     {
         public int officeId { get; set; }
         public string name { get; set; }
@@ -25,6 +24,6 @@ namespace LaboratoryApp
         public string is_default { get; set; }
         public int client_id { get; set; }
     
-        public virtual Client client { get; set; }
+        public virtual client client { get; set; }
     }
 }

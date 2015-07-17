@@ -12,18 +12,17 @@ namespace LaboratoryApp
     using System;
     using System.Collections.ObjectModel;
     using System.ComponentModel.DataAnnotations.Schema;
-    
-    [Table("usage")]
-    public partial class Usage
+
+    public partial class usage
     {
-        public Usage()
+        public usage()
         {
-            this.gauges = new ObservableCollection<Gauge>();
+            this.gauges = new ObservableCollection<gauge>();
         }
     
         public int usageId { get; set; }
         public string description { get; set; }
     
-        public virtual ObservableCollection<Gauge> gauges { get; set; }
+        public virtual ObservableCollection<gauge> gauges { get; set; }
     }
 }
