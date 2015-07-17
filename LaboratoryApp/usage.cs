@@ -11,17 +11,19 @@ namespace LaboratoryApp
 {
     using System;
     using System.Collections.ObjectModel;
+    using System.ComponentModel.DataAnnotations.Schema;
     
-    public partial class usage
+    [Table("usage")]
+    public partial class Usage
     {
-        public usage()
+        public Usage()
         {
-            this.gauges = new ObservableCollection<gauge>();
+            this.gauges = new ObservableCollection<Gauge>();
         }
     
         public int usageId { get; set; }
         public string description { get; set; }
     
-        public virtual ObservableCollection<gauge> gauges { get; set; }
+        public virtual ObservableCollection<Gauge> gauges { get; set; }
     }
 }

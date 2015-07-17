@@ -11,8 +11,10 @@ namespace LaboratoryApp
 {
     using System;
     using System.Collections.ObjectModel;
+    using System.ComponentModel.DataAnnotations.Schema;
     
-    public partial class gauge
+    [Table("gauges")]
+    public partial class Gauge
     {
         public int gaugeId { get; set; }
         public string manufacturer_name { get; set; }
@@ -23,8 +25,8 @@ namespace LaboratoryApp
         public int client_id { get; set; }
         public int type_id { get; set; }
     
-        public virtual client client { get; set; }
-        public virtual type type { get; set; }
-        public virtual usage usage { get; set; }
+        public virtual Client client { get; set; }
+        public virtual Type type { get; set; }
+        public virtual Usage usage { get; set; }
     }
 }

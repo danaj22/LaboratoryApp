@@ -1,10 +1,10 @@
 ﻿<Window x:Class="LaboratoryApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:LaboratoryApp.ViewModel"
-        xmlns:local2="clr-namespace:LaboratoryApp"
+        xmlns:local="clr-namespace:LaboratoryApp"
         Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
+        
     </Window.Resources>
     <Window.DataContext>
         <local:MainWindowViewModel/>
@@ -36,7 +36,7 @@
         <TextBox Grid.Column="1" Text="{Binding NameAndSurname}" HorizontalAlignment="Left" Height="23" Margin="0,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
         <!--treeViewClass1-->
-        <TreeView Name="GroupView" Grid.Row="1" ItemsSource="{Binding}" Grid.RowSpan="2">
+        <TreeView Grid.Row="1" ItemsSource="{Binding Data.TreeOfClients}" Grid.RowSpan="2">
 
             <!--general template-->
             <TreeView.ItemTemplate>

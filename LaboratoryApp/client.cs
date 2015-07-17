@@ -11,15 +11,17 @@ namespace LaboratoryApp
 {
     using System;
     using System.Collections.ObjectModel;
+    using System.ComponentModel.DataAnnotations.Schema;
     
-    public partial class client
+    [Table("clients")]
+    public partial class Client
     {
-        public client()
+        
+        public Client()
         {
-            this.gauges = new ObservableCollection<gauge>();
-            this.offices = new ObservableCollection<office>();
+            this.gauges = new ObservableCollection<Gauge>();
+            this.offices = new ObservableCollection<Office>();
         }
-    
         public int clientId { get; set; }
         public string name { get; set; }
         public string adress { get; set; }
@@ -29,7 +31,7 @@ namespace LaboratoryApp
         public string NIP { get; set; }
         public string comments { get; set; }
     
-        public virtual ObservableCollection<gauge> gauges { get; set; }
-        public virtual ObservableCollection<office> offices { get; set; }
+        public virtual ObservableCollection<Gauge> gauges { get; set; }
+        public virtual ObservableCollection<Office> offices { get; set; }
     }
 }

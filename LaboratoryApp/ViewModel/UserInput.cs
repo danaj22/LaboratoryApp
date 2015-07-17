@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LaboratoryApp.ViewModel
+namespace LaboratoryApp
 {
-    class UserInput : ObservableObject
+    public class UserInput : ObservableObject
     {
         private int temperature;
         private string nameAndSurname;

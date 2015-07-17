@@ -5,21 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LaboratoryApp.ViewModel
+namespace LaboratoryApp
 {
-    class MainWindowViewModel : ObservableObject
+    public class MainWindowViewModel : ObservableObject
     {
-        private ObservableCollection<client> collectionOfClients = new ObservableCollection<client>();
+       
+        private LoadData data;
 
-        public ObservableCollection<client> CollectionOfClients
+        public LoadData Data
         {
-            get { return collectionOfClients; }
+            get { return data; }
             set 
-            {
-                collectionOfClients = value;
-                OnPropertyChanged("CollectionOfClients");
+            { 
+                data = value;
+                OnPropertyChanged("Data");
             }
         }
+        
         private UserInput userInput;
 
         public UserInput UserInput
@@ -28,10 +30,15 @@ namespace LaboratoryApp.ViewModel
             set { userInput = value; }
         }
 
+        private void LoadView()
+        {
+            data = new LoadData();
+        }
+
         public MainWindowViewModel()
         {
             userInput = new UserInput();
-
+            LoadView();
         }
     }
 }

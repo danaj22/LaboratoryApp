@@ -11,8 +11,10 @@ namespace LaboratoryApp
 {
     using System;
     using System.Collections.ObjectModel;
+    using System.ComponentModel.DataAnnotations.Schema;
     
-    public partial class certificate
+    [Table ("certificates")]
+    public partial class Certificate
     {
         public int certifacateId { get; set; }
         public string name { get; set; }
