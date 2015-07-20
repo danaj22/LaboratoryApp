@@ -60,14 +60,7 @@ namespace LaboratoryApp
                     i = e.officeId;
                     Blabla.Add(i);
                 }
-
-                /*var tmp2 = (from o  in LabEntities.offices
-                               where  == o.client_id
-                               select new
-                               {
-                                   o.officeId
-                               }).ToList();*/
-
+                /*
                 foreach (var gag in LabEntities.gauges)
                 {
 
@@ -77,8 +70,8 @@ namespace LaboratoryApp
 
                     ClientTree.Gauges.Add(gau);
 
-                }
-
+                }*/
+                
                 foreach (var ofi in LabEntities.offices)
                 {
                     Offices off = new Offices();

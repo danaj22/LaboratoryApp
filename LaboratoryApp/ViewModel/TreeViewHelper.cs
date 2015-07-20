@@ -18,7 +18,7 @@ namespace LaboratoryApp
         public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.RegisterAttached("SelectedItem", //name of property
                                                                         typeof(object), //type of property 
                                                                         typeof(TreeViewHelper), //type of owner property
-                                                                        new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, SelectedItemChanged));//metadata
+                                                                        new UIPropertyMetadata(null,SelectedItemChanged));//metadata
 
 
         //create a dictionary to add a new behavior

@@ -34,12 +34,8 @@ namespace LaboratoryApp
         private void LoadView()
         {
             data = new LoadData();
-            ObservableCollection<Item> items = new ObservableCollection<Item>();
-            Item item1 = new Item() {Name = "Item 1"};
-            items.Add(item1);
 
-           
-            item1.IsExpanded = true;
+            //item1.IsExpanded = true;
         }
 
         public MainWindowViewModel()
@@ -47,24 +43,97 @@ namespace LaboratoryApp
             userInput = new UserInput();
             LoadView();
         }
-
+        
         private object selectedNode = 0;
+        private laboratoryEntities labEntities = new laboratoryEntities();
 
+        public laboratoryEntities LabEntities
+        {
+            get { return labEntities; }
+            set { labEntities = value; }
+        }
+        
         public object SelectedNode
         {
+            
+
             get { return selectedNode; }
             set 
             {
                 selectedNode = value;
-                Clients InstanceOfClientNode = new Clients();
-                InstanceOfClientNode = (Clients)selectedNode;
-                System.Windows.MessageBox.Show(InstanceOfClientNode.Key.ToString());
-                System.Windows.MessageBox.Show(InstanceOfClientNode.Name);
-                System.Windows.MessageBox.Show(InstanceOfClientNode.ToString());
+                if ((selectedNode as Clients) != null)
+                {
+                    Clients InstanceOfClientNode = new Clients();
+                    InstanceOfClientNode = (Clients)selectedNode;
+
+                /////////////////////////////////////////////////////////
+               
                 
-                System.Windows.MessageBox.Show(selectedNode.ToString());
+                    //Create an instance of Clients 
+
+                    Clients ClientTree = new Clients();
+                    ClientTree = (Clients)InstanceOfClientNode;
+                    ClientTree.Offices = new ObservableCollection<Offices>();
+                    
+                    ClientTree.Gauges = new ObservableCollection<Gauges>();
+
+
+                    List<int> TemporaryListOfOfficeId = new List<int>();
+
+                    ClientTree.Key =  InstanceOfClientNode.Key;
+                    ClientTree.Name = InstanceOfClientNode.Name;
+
+                    var tmp = (from o in LabEntities.offices
+                               where InstanceOfClientNode.Key == o.client_id
+                               select new
+                               {
+                                   o.officeId
+                               }).ToList();
+
+                    foreach (var e in tmp)
+                    {
+                        int i;
+                        i = e.officeId;
+                        TemporaryListOfOfficeId.Add(i);
+                    }
+
+                    /*var tmp2 = (from o  in LabEntities.offices
+                                   where  == o.client_id
+                                   select new
+                                   {
+                                       o.officeId
+                                   }).ToList();*/
+                    
+                    foreach (var gag in LabEntities.gauges)
+                    {
+
+                        Gauges gau = new Gauges();
+                        gau.Key = gag.gaugeId;
+                        gau.Name = gag.manufacturer_name + " " + gag.model;
+
+                        ClientTree.Gauges.Add(gau);
+
+                    }
+
+                    foreach (var ofi in LabEntities.offices)
+                    {
+                        Offices off = new Offices();
+                        off.CollectionOfGauges = new ObservableCollection<Gauges>();
+
+                        off.Key = ofi.officeId;
+                        off.Name = ofi.name;
+                        off.CollectionOfGauges = ClientTree.Gauges;
+
+                        ClientTree.Offices.Add(off);
+                    }
+                 }
+                //////////////////////////////////////////////////
+
+
                 OnPropertyChanged("SelectedNode");
             }
+
+
         }
         
     }
