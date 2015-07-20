@@ -4,7 +4,7 @@
         xmlns:local="clr-namespace:LaboratoryApp"
         Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
-        
+        <local:TreeViewHelper x:Key="data"/>
     </Window.Resources>
     <Window.DataContext>
         <local:MainWindowViewModel/>
@@ -35,23 +35,25 @@
         <TextBox Grid.Column="1" Text="{Binding Temperature}" HorizontalAlignment="Left" Height="23" Margin="0,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox Grid.Column="1" Text="{Binding NameAndSurname}" HorizontalAlignment="Left" Height="23" Margin="0,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
-        <!--treeViewClass1-->
         <TreeView Grid.Row="1" ItemsSource="{Binding Data.TreeOfClients}" Grid.RowSpan="2">
 
-            <!--general template-->
             <TreeView.ItemTemplate>
+                
                 <HierarchicalDataTemplate ItemsSource="{Binding Offices}">
-                    <TextBlock Text="{Binding Name}" />
+                    <TreeViewItem Header="{Binding Name}" />
+                    <!--<TextBlock Text="{Binding Name}" />-->
 
                     <!--offices template-->
                     <HierarchicalDataTemplate.ItemTemplate>
-                        <HierarchicalDataTemplate ItemsSource="{Binding ga}">
-                            <TextBlock Text="{Binding Name}"/>
+                        <HierarchicalDataTemplate  ItemsSource="{Binding CollectionOfGauges}">
+                            <TreeViewItem Header="{Binding Name}"/>
+                            <!--<TextBlock Text="{Binding Name}"/>-->
 
                             <!--gauges template-->
                             <HierarchicalDataTemplate.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Name}"/>
+                                    <TreeViewItem Header="{Binding Name}" />
+                                    <!--<TextBlock Text="{Binding Name}"/>-->
                                 </DataTemplate>
                             </HierarchicalDataTemplate.ItemTemplate>
 
@@ -60,6 +62,11 @@
 
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
+
+        </TreeView>
+        <TreeView Grid.Column="2" Grid.Row="0" Grid.RowSpan="1" ItemsSource="{Binding Data.TreeOfClients,UpdateSourceTrigger=PropertyChanged}" 
+                  local:TreeViewHelper.SelectedItem="{Binding SelectedNode, Mode=TwoWay}">
+            
         </TreeView>
 
     </Grid>

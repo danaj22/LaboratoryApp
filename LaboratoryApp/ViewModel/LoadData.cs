@@ -18,10 +18,10 @@ namespace LaboratoryApp
             set { labEntities = value; }
         }
 
-        public ObservableCollection<TreeViewClass> treeViewClass1 = new ObservableCollection<TreeViewClass>();
-        private ObservableCollection<TreeViewClass> treeOfClients = new ObservableCollection<TreeViewClass>();
+        public ObservableCollection<Clients> treeViewClass1 = new ObservableCollection<Clients>();
+        private ObservableCollection<Clients> treeOfClients = new ObservableCollection<Clients>();
 
-        public ObservableCollection<TreeViewClass> TreeOfClients
+        public ObservableCollection<Clients> TreeOfClients
         {
             get { return treeOfClients; }
             set { treeOfClients = value; }
@@ -32,15 +32,15 @@ namespace LaboratoryApp
         public LoadData()
         {
             userInput = new UserInput();
-            gauge1 g1 = new gauge1();
+            Gauges g1 = new Gauges();
 
             foreach (var t in LabEntities.clients)
             {
-                //Create an instance of TreeViewClass 
+                //Create an instance of Clients 
 
-                TreeViewClass ClientTree = new TreeViewClass();
-                ClientTree.Offices = new ObservableCollection<office1>();
-                ClientTree.Gauges = new ObservableCollection<gauge1>();
+                Clients ClientTree = new Clients();
+                ClientTree.Offices = new ObservableCollection<Offices>();
+                ClientTree.Gauges = new ObservableCollection<Gauges>();
 
                 List<int> Blabla = new List<int>();
 
@@ -71,7 +71,7 @@ namespace LaboratoryApp
                 foreach (var gag in LabEntities.gauges)
                 {
 
-                    gauge1 gau = new gauge1();
+                    Gauges gau = new Gauges();
                     gau.Key = gag.gaugeId;
                     gau.Name = gag.manufacturer_name + " " + gag.model;
 
@@ -81,12 +81,12 @@ namespace LaboratoryApp
 
                 foreach (var ofi in LabEntities.offices)
                 {
-                    office1 off = new office1();
-                    off.ga = new ObservableCollection<gauge1>();
+                    Offices off = new Offices();
+                    off.CollectionOfGauges = new ObservableCollection<Gauges>();
 
                     off.Key = ofi.officeId;
                     off.Name = ofi.name;
-                    off.ga = ClientTree.Gauges;
+                    off.CollectionOfGauges = ClientTree.Gauges;
 
                     ClientTree.Offices.Add(off);
                 }

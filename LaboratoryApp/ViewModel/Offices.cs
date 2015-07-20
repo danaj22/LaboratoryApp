@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace LaboratoryApp
 {
-    public class office1
+    public class Offices:ObservableObject
     {
         public int Key { get; set; }
         public string Name { get; set; }
-        public ObservableCollection<gauge1> ga { get; set; }
+        public ObservableCollection<Gauges> CollectionOfGauges { get; set; }
+        
     }
 }

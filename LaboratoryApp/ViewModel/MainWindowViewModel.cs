@@ -9,7 +9,8 @@ namespace LaboratoryApp
 {
     public class MainWindowViewModel : ObservableObject
     {
-       
+        
+        
         private LoadData data;
 
         public LoadData Data
@@ -33,6 +34,12 @@ namespace LaboratoryApp
         private void LoadView()
         {
             data = new LoadData();
+            ObservableCollection<Item> items = new ObservableCollection<Item>();
+            Item item1 = new Item() {Name = "Item 1"};
+            items.Add(item1);
+
+           
+            item1.IsExpanded = true;
         }
 
         public MainWindowViewModel()
@@ -40,5 +47,25 @@ namespace LaboratoryApp
             userInput = new UserInput();
             LoadView();
         }
+
+        private object selectedNode = 0;
+
+        public object SelectedNode
+        {
+            get { return selectedNode; }
+            set 
+            {
+                selectedNode = value;
+                Clients InstanceOfClientNode = new Clients();
+                InstanceOfClientNode = (Clients)selectedNode;
+                System.Windows.MessageBox.Show(InstanceOfClientNode.Key.ToString());
+                System.Windows.MessageBox.Show(InstanceOfClientNode.Name);
+                System.Windows.MessageBox.Show(InstanceOfClientNode.ToString());
+                
+                System.Windows.MessageBox.Show(selectedNode.ToString());
+                OnPropertyChanged("SelectedNode");
+            }
+        }
+        
     }
 }

@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace LaboratoryApp
 {
-    public class TreeViewClass
+    public class Clients:ObservableObject
     {
         public int Key { get; set; }
         public string Name { get; set; }
 
-        public ObservableCollection<gauge1> Gauges { get; set; }
-        public ObservableCollection<office1> Offices { get; set; }
+        public ObservableCollection<Gauges> Gauges { get; set; }
+        public ObservableCollection<Offices> Offices { get; set; }
 
     }
 }

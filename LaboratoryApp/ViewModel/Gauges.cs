@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LaboratoryApp
 {
-    public class gauge1
+    public class Gauges
     {
         public int Key { get; set; }
         public string Name { get; set; }

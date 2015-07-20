@@ -98,10 +98,12 @@
     <Compile Include="usage.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\Class1.cs" />
+    <Compile Include="ViewModel\LoadData.cs" />
+    <Compile Include="ViewModel\TreeViewHelper.cs" />
+    <Compile Include="ViewModel\Item.cs" />
     <Compile Include="ViewModel\Offices.cs" />
     <Compile Include="ViewModel\Gauges.cs" />
-    <Compile Include="ViewModel\Class4.cs" />
+    <Compile Include="ViewModel\Clients.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ObservableObject.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
