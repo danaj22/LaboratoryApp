@@ -12,8 +12,13 @@ namespace LaboratoryApp
         public int Key { get; set; }
         public string Name { get; set; }
 
-        public ObservableCollection<Gauges> Gauges { get; set; }
+        public ObservableCollection<Gauges> CollectionOfGaugesInClients { get; set; }
         public ObservableCollection<Offices> Offices { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
 
     }
 }

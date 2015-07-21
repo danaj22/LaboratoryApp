@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace LaboratoryApp
 {
@@ -31,18 +32,35 @@ namespace LaboratoryApp
 
         public LoadData()
         {
+            MenuItem root = new MenuItem() { Name = "Menu" };
+
+            MenuItem childItem1 = new MenuItem() { Name = "Child item #1" };
+            childItem1.Items.Add(new MenuItem() { Name = "Child item #1.1" });
+            childItem1.Items.Add(new MenuItem() { Name = "Child item #1.2" });
+            root.Items.Add(childItem1);
+            root.Items.Add(new MenuItem() { Name = "Child item #2" });
+            
+            /*******************************
+            //trvMenu.Items.Add(root);
+            ********************************/
+
             userInput = new UserInput();
             Gauges g1 = new Gauges();
+            this.TreeOfClients = new ObservableCollection<Clients>();
 
             foreach (var t in LabEntities.clients)
             {
                 //Create an instance of Clients 
-
+                MenuItem menuItem = new MenuItem();
+                
                 Clients ClientTree = new Clients();
                 ClientTree.Offices = new ObservableCollection<Offices>();
-                ClientTree.Gauges = new ObservableCollection<Gauges>();
+                ClientTree.CollectionOfGaugesInClients = new ObservableCollection<Gauges>();
 
                 List<int> Blabla = new List<int>();
+
+                menuItem.Key = t.clientId;
+                menuItem.Name = t.name;
 
                 ClientTree.Key = t.clientId;
                 ClientTree.Name = t.name;
@@ -60,7 +78,7 @@ namespace LaboratoryApp
                     i = e.officeId;
                     Blabla.Add(i);
                 }
-                /*
+                
                 foreach (var gag in LabEntities.gauges)
                 {
 
@@ -68,9 +86,9 @@ namespace LaboratoryApp
                     gau.Key = gag.gaugeId;
                     gau.Name = gag.manufacturer_name + " " + gag.model;
 
-                    ClientTree.Gauges.Add(gau);
+                    ClientTree.CollectionOfGaugesInClients.Add(gau);
 
-                }*/
+                }
                 
                 foreach (var ofi in LabEntities.offices)
                 {
@@ -79,12 +97,13 @@ namespace LaboratoryApp
 
                     off.Key = ofi.officeId;
                     off.Name = ofi.name;
-                    off.CollectionOfGauges = ClientTree.Gauges;
+                    off.CollectionOfGauges = ClientTree.CollectionOfGaugesInClients;
 
                     ClientTree.Offices.Add(off);
                 }
 
                 treeOfClients.Add(ClientTree);
+
             }
 
         }

@@ -3,15 +3,31 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:LaboratoryApp"
         Title="MainWindow" Height="467.75" Width="630">
+    <UserControl>
+    <UserControl.Resources>
+        <local:Clients x:Key="theData"/>
+        <DataTemplate x:Key="level3">
+            <TextBlock Text="{Binding Name}"/>
+        </DataTemplate>
+        <HierarchicalDataTemplate x:Key="level2" ItemsSource="{Binding Offices}" ItemTemplate="{StaticResource level3}">
+            <TextBlock Text="{Binding Name}"/>
+        </HierarchicalDataTemplate>
+        <HierarchicalDataTemplate x:Key="level1" ItemsSource="{Binding }" ItemTemplate="{StaticResource level2}">
+            <TextBlock Text="{Binding Name}"/>
+        </HierarchicalDataTemplate>
+    </UserControl.Resources>
+    </UserControl>
     <Window.Resources>
         <local:TreeViewHelper x:Key="data"/>
     </Window.Resources>
     <Window.DataContext>
         <local:MainWindowViewModel/>
     </Window.DataContext>
-    <Grid>
+    <!--<Grid>
         <Grid.Resources>
-            <Style x:Key="myTVIStyle" TargetType="TreeViewItem">
+            <Style x:Key="ItemContainerStyle" TargetType="TreeViewItem">
+                <Setter Property="IsSelected" Value="{Binding Path=Selected}"/>
+                <Setter Property="IsExpanded" Value="{Binding Path=Expanded}"/> 
                 <Setter Property="Background" Value="Khaki" />
             </Style>
         </Grid.Resources>
@@ -41,7 +57,7 @@
         <TextBox Grid.Column="1" Text="{Binding Temperature}" HorizontalAlignment="Left" Height="23" Margin="0,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox Grid.Column="1" Text="{Binding NameAndSurname}" HorizontalAlignment="Left" Height="23" Margin="0,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
-        <!--<TreeView Grid.Row="1" ItemsSource="{Binding Data.TreeOfClients}" Grid.RowSpan="2">
+        --><!--<TreeView Grid.Row="1" ItemsSource="{Binding Data.TreeOfClients}" Grid.RowSpan="2">
 
             <TreeView.ItemTemplate>
                 
@@ -79,8 +95,9 @@
 
 
 
-        <TreeView ItemContainerStyle="{StaticResource myTVIStyle}" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding Data.TreeOfClients,UpdateSourceTrigger=PropertyChanged}" 
+        <!--<TreeView ItemContainerStyle="{StaticResource ItemContainerStyle}" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding Data.TreeOfClients,UpdateSourceTrigger=PropertyChanged}" 
                   local:TreeViewHelper.SelectedItem="{Binding SelectedNode, Mode=TwoWay}" VirtualizingPanel.IsVirtualizing="True" Grid.ColumnSpan="2">
+            
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Offices}">
                     <TextBlock Text="{Binding Name}"/>
@@ -89,10 +106,25 @@
                             <TextBlock Text="{Binding Name}"/>
                         </HierarchicalDataTemplate>
                     </HierarchicalDataTemplate.ItemTemplate>
-
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
+                 
+        </TreeView>--><!--
+        <TreeView ItemContainerStyle="{StaticResource ItemContainerStyle}" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" 
+                  ItemTemplate="{StaticResource level1}" ItemsSource="{Binding theData}" VirtualizingPanel.IsVirtualizing="True" Grid.ColumnSpan="2">
+
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Offices}">
+                    <TextBlock Text="{Binding Name}"/>
+                    <HierarchicalDataTemplate.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding CollectionOfGauges}">
+                            <TextBlock Text="{Binding Name}"/>
+                        </HierarchicalDataTemplate>
+                    </HierarchicalDataTemplate.ItemTemplate>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+
         </TreeView>
 
-    </Grid>
+    </Grid>-->
 </Window>

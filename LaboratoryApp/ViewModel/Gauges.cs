@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace LaboratoryApp
 {
-    public class Gauges
+    public class Gauges:ObservableObject
     {
         public int Key { get; set; }
         public string Name { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

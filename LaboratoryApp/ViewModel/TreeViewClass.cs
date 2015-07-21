@@ -14,10 +14,10 @@ namespace LaboratoryApp.ViewModel
 
         public void Load()
         {
-            Clients t1 = new Clients() { Key = 1, Name = "klient1", Gauges = new ObservableCollection<Gauges>(), Offices = new ObservableCollection<Offices>() };
-            Clients t2 = new Clients() { Key = 2, Name = "klient2", Gauges = new ObservableCollection<Gauges>(), Offices = new ObservableCollection<Offices>() };
-            Clients t3 = new Clients() { Key = 3, Name = "klient3", Gauges = new ObservableCollection<Gauges>(), Offices = new ObservableCollection<Offices>() };
-            Clients t4 = new Clients() { Key = 4, Name = "klient4", Gauges = new ObservableCollection<Gauges>(), Offices = new ObservableCollection<Offices>() };
+            Clients t1 = new Clients() { Key = 1, Name = "klient1", CollectionOfGaugesInClients = new ObservableCollection<CollectionOfGaugesInClients>(), Offices = new ObservableCollection<Offices>() };
+            Clients t2 = new Clients() { Key = 2, Name = "klient2", CollectionOfGaugesInClients = new ObservableCollection<CollectionOfGaugesInClients>(), Offices = new ObservableCollection<Offices>() };
+            Clients t3 = new Clients() { Key = 3, Name = "klient3", CollectionOfGaugesInClients = new ObservableCollection<CollectionOfGaugesInClients>(), Offices = new ObservableCollection<Offices>() };
+            Clients t4 = new Clients() { Key = 4, Name = "klient4", CollectionOfGaugesInClients = new ObservableCollection<CollectionOfGaugesInClients>(), Offices = new ObservableCollection<Offices>() };
 
             t1.Offices.Add(new Offices() { Key = 1, Name = "biuro1" });
             t1.Offices.Add(new Offices() { Key = 2, Name = "biuro2" });
@@ -31,10 +31,10 @@ namespace LaboratoryApp.ViewModel
             t3.Offices.Add(new Offices() { Key = 8, Name = "biuro8" });
             t3.Offices.Add(new Offices() { Key = 9, Name = "biuro9" });
 
-            t1.Gauges.Add(new Gauges() { Key = 10, Name = "miernik1" });
-            t1.Gauges.Add(new Gauges() { Key = 11, Name = "miernik2" });
-            t3.Gauges.Add(new Gauges() { Key = 12, Name = "miernik3" });
-            t3.Gauges.Add(new Gauges() { Key = 13, Name = "miernik4" });
+            t1.CollectionOfGaugesInClients.Add(new CollectionOfGaugesInClients() { Key = 10, Name = "miernik1" });
+            t1.CollectionOfGaugesInClients.Add(new CollectionOfGaugesInClients() { Key = 11, Name = "miernik2" });
+            t3.CollectionOfGaugesInClients.Add(new CollectionOfGaugesInClients() { Key = 12, Name = "miernik3" });
+            t3.CollectionOfGaugesInClients.Add(new CollectionOfGaugesInClients() { Key = 13, Name = "miernik4" });
 
             treeViewClass1.Add(t1);
             treeViewClass1.Add(t2);
@@ -49,7 +49,7 @@ namespace LaboratoryApp.ViewModel
         public int Key { get; set; }
         public string Name { get; set; }
     }
-    public class Gauges
+    public class CollectionOfGaugesInClients
     {
         public int Key { get; set; }
         public string Name { get; set; }
@@ -59,7 +59,7 @@ namespace LaboratoryApp.ViewModel
         public int Key { get; set; }
         public string Name { get; set; }
 
-        public ObservableCollection<Gauges> Gauges { get; set; }
+        public ObservableCollection<CollectionOfGaugesInClients> CollectionOfGaugesInClients { get; set; }
         public ObservableCollection<Offices> Offices { get; set; }
 
         public ObservableCollection<object> Items
@@ -70,7 +70,7 @@ namespace LaboratoryApp.ViewModel
 
                 foreach (var o in this.Offices)
                     childNodes.Add(o);
-                foreach (var g in this.Gauges)
+                foreach (var g in this.CollectionOfGaugesInClients)
                     childNodes.Add(g);
 
                 return childNodes;

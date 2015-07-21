@@ -75,7 +75,7 @@ namespace LaboratoryApp
                     ClientTree = (Clients)InstanceOfClientNode;
                     ClientTree.Offices = new ObservableCollection<Offices>();
                     
-                    ClientTree.Gauges = new ObservableCollection<Gauges>();
+                    ClientTree.CollectionOfGaugesInClients = new ObservableCollection<Gauges>();
 
 
                     List<int> TemporaryListOfOfficeId = new List<int>();
@@ -111,7 +111,7 @@ namespace LaboratoryApp
                         gau.Key = gag.gaugeId;
                         gau.Name = gag.manufacturer_name + " " + gag.model;
 
-                        ClientTree.Gauges.Add(gau);
+                        ClientTree.CollectionOfGaugesInClients.Add(gau);
 
                     }
 
@@ -122,7 +122,7 @@ namespace LaboratoryApp
 
                         off.Key = ofi.officeId;
                         off.Name = ofi.name;
-                        off.CollectionOfGauges = ClientTree.Gauges;
+                        off.CollectionOfGauges = ClientTree.CollectionOfGaugesInClients;
 
                         ClientTree.Offices.Add(off);
                     }
