@@ -40,6 +40,7 @@
           <Property Name="usage_id" Type="int" Nullable="false" />
           <Property Name="client_id" Type="int" Nullable="false" />
           <Property Name="type_id" Type="int" Nullable="false" />
+          <Property Name="office_id" Type="int" />
         </EntityType>
         <EntityType Name="offices">
           <Key>
@@ -78,15 +79,15 @@
           <Property Name="usageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="description" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
-        <Association Name="FK_gauges_clients">
-          <End Role="clients" Type="Self.clients" Multiplicity="1" />
+        <Association Name="FK_gauges_offices">
+          <End Role="offices" Type="Self.offices" Multiplicity="0..1" />
           <End Role="gauges" Type="Self.gauges" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="clients">
-              <PropertyRef Name="clientId" />
+            <Principal Role="offices">
+              <PropertyRef Name="officeId" />
             </Principal>
             <Dependent Role="gauges">
-              <PropertyRef Name="client_id" />
+              <PropertyRef Name="office_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -165,8 +166,8 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="types" EntityType="Self.types" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="usage" EntityType="Self.usage" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_gauges_clients" Association="Self.FK_gauges_clients">
-            <End Role="clients" EntitySet="clients" />
+          <AssociationSet Name="FK_gauges_offices" Association="Self.FK_gauges_offices">
+            <End Role="offices" EntitySet="offices" />
             <End Role="gauges" EntitySet="gauges" />
           </AssociationSet>
           <AssociationSet Name="FK_gauges_types" Association="Self.FK_gauges_types">
@@ -208,7 +209,6 @@
           <Property Name="tel" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="NIP" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="comments" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="gauges" Relationship="Self.FK_gauges_clients" FromRole="clients" ToRole="gauges" />
           <NavigationProperty Name="offices" Relationship="Self.FK_offices_clients" FromRole="clients" ToRole="offices" />
         </EntityType>
         <EntityType Name="gauge">
@@ -223,9 +223,10 @@
           <Property Name="usage_id" Type="Int32" Nullable="false" />
           <Property Name="client_id" Type="Int32" Nullable="false" />
           <Property Name="type_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="client" Relationship="Self.FK_gauges_clients" FromRole="gauges" ToRole="clients" />
           <NavigationProperty Name="type" Relationship="Self.FK_gauges_types" FromRole="gauges" ToRole="types" />
           <NavigationProperty Name="usage" Relationship="Self.FK_gauges_usage" FromRole="gauges" ToRole="usage" />
+          <Property Name="office_id" Type="Int32" />
+          <NavigationProperty Name="office" Relationship="laboratoryModel.FK_gauges_offices" FromRole="gauge" ToRole="office" />
         </EntityType>
         <EntityType Name="office">
           <Key>
@@ -240,6 +241,7 @@
           <Property Name="is_default" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="client_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="client" Relationship="Self.FK_offices_clients" FromRole="offices" ToRole="clients" />
+          <NavigationProperty Name="gauges" Relationship="laboratoryModel.FK_gauges_offices" FromRole="office" ToRole="gauge" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -267,18 +269,6 @@
           <Property Name="description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="gauges" Relationship="Self.FK_gauges_usage" FromRole="usage" ToRole="gauges" />
         </EntityType>
-        <Association Name="FK_gauges_clients">
-          <End Role="clients" Type="Self.client" Multiplicity="1" />
-          <End Role="gauges" Type="Self.gauge" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="clients">
-              <PropertyRef Name="clientId" />
-            </Principal>
-            <Dependent Role="gauges">
-              <PropertyRef Name="client_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_offices_clients">
           <End Role="clients" Type="Self.client" Multiplicity="1" />
           <End Role="offices" Type="Self.office" Multiplicity="*" />
@@ -323,10 +313,6 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="types" EntityType="Self.type" />
           <EntitySet Name="usages" EntityType="Self.usage" />
-          <AssociationSet Name="FK_gauges_clients" Association="Self.FK_gauges_clients">
-            <End Role="clients" EntitySet="clients" />
-            <End Role="gauges" EntitySet="gauges" />
-          </AssociationSet>
           <AssociationSet Name="FK_offices_clients" Association="Self.FK_offices_clients">
             <End Role="clients" EntitySet="clients" />
             <End Role="offices" EntitySet="offices" />
@@ -369,6 +355,10 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <AssociationSet Name="FK_gauges_offices" Association="laboratoryModel.FK_gauges_offices">
+            <End Role="office" EntitySet="offices" />
+            <End Role="gauge" EntitySet="gauges" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -381,6 +371,18 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <Association Name="FK_gauges_offices">
+          <End Type="laboratoryModel.office" Role="office" Multiplicity="0..1" />
+          <End Type="laboratoryModel.gauge" Role="gauge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="office">
+              <PropertyRef Name="officeId" />
+            </Principal>
+            <Dependent Role="gauge">
+              <PropertyRef Name="office_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -415,6 +417,7 @@
           <EntitySetMapping Name="gauges">
             <EntityTypeMapping TypeName="laboratoryModel.gauge">
               <MappingFragment StoreEntitySet="gauges">
+                <ScalarProperty Name="office_id" ColumnName="office_id" />
                 <ScalarProperty Name="gaugeId" ColumnName="gaugeId" />
                 <ScalarProperty Name="manufacturer_name" ColumnName="manufacturer_name" />
                 <ScalarProperty Name="model" ColumnName="model" />

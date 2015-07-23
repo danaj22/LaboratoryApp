@@ -11,7 +11,6 @@ namespace LaboratoryApp
 {
     using System;
     using System.Collections.ObjectModel;
-    using System.ComponentModel.DataAnnotations.Schema;
     
     public partial class gauge
     {
@@ -23,9 +22,10 @@ namespace LaboratoryApp
         public int usage_id { get; set; }
         public int client_id { get; set; }
         public int type_id { get; set; }
+        public Nullable<int> office_id { get; set; }
     
-        public virtual client client { get; set; }
-        public virtual Type type { get; set; }
+        public virtual type type { get; set; }
         public virtual usage usage { get; set; }
+        public virtual office office { get; set; }
     }
 }

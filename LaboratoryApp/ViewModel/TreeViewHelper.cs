@@ -13,12 +13,11 @@ namespace LaboratoryApp
 {
     public class TreeViewHelper : DependencyObject
     {
-        
         // Using a DependencyProperty as the backing store for SelectedItem.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.RegisterAttached("SelectedItem", //name of property
                                                                         typeof(object), //type of property 
                                                                         typeof(TreeViewHelper), //type of owner property
-                                                                        new UIPropertyMetadata(null,SelectedItemChanged));//metadata
+                                                                        new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, SelectedItemChanged));//metadata
 
 
         //create a dictionary to add a new behavior

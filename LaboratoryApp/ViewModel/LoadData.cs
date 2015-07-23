@@ -52,7 +52,7 @@ namespace LaboratoryApp
             {
                 //Create an instance of Clients 
                 MenuItem menuItem = new MenuItem();
-                
+
                 Clients ClientTree = new Clients();
                 ClientTree.Offices = new ObservableCollection<Offices>();
                 ClientTree.CollectionOfGaugesInClients = new ObservableCollection<Gauges>();

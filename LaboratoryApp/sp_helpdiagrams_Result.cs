@@ -10,18 +10,13 @@
 namespace LaboratoryApp
 {
     using System;
-    using System.Collections.ObjectModel;
     
-    public partial class type
+    public partial class sp_helpdiagrams_Result
     {
-        public type()
-        {
-            this.gauges = new ObservableCollection<gauge>();
-        }
-    
-        public int typeId { get; set; }
-        public string name { get; set; }
-    
-        public virtual ObservableCollection<gauge> gauges { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

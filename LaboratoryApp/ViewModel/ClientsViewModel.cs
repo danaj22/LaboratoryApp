@@ -7,15 +7,13 @@ using System.Threading.Tasks;
 
 namespace LaboratoryApp
 {
-    public class Offices : ObservableObject
+    public class ClientsViewModel:ObservableObject
     {
         public int Key { get; set; }
         public string Name { get; set; }
-        public ObservableCollection<Gauges> CollectionOfGauges { get; set; }
-        public override string ToString()
-        {
-            return Name;
-        }
+
+        private ObservableCollection<OfficesViewModel> children = new ObservableCollection<OfficesViewModel>();
+        public ObservableCollection<OfficesViewModel> Children { get { return children; } }
         
     }
 }

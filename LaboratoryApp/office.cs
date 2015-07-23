@@ -11,10 +11,14 @@ namespace LaboratoryApp
 {
     using System;
     using System.Collections.ObjectModel;
-    using System.ComponentModel.DataAnnotations.Schema;
     
     public partial class office
     {
+        public office()
+        {
+            this.gauges = new ObservableCollection<gauge>();
+        }
+    
         public int officeId { get; set; }
         public string name { get; set; }
         public string adress { get; set; }
@@ -25,5 +29,6 @@ namespace LaboratoryApp
         public int client_id { get; set; }
     
         public virtual client client { get; set; }
+        public virtual ObservableCollection<gauge> gauges { get; set; }
     }
 }

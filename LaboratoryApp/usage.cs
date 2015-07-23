@@ -11,8 +11,7 @@ namespace LaboratoryApp
 {
     using System;
     using System.Collections.ObjectModel;
-    using System.ComponentModel.DataAnnotations.Schema;
-
+    
     public partial class usage
     {
         public usage()
