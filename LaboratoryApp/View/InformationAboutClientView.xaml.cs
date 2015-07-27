@@ -22,33 +22,18 @@ namespace LaboratoryApp.View
     /// </summary>
     public partial class InformationAboutClientView : UserControl
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string ContactPerson { get; set; }
+        public string Email { get; set; }
+        public string Telephone { get; set; }
+        public string NIP { get; set; }
+        public string Comment { get; set; }
 
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-        public static int i = 1;
         public InformationAboutClientView()
         {
             InitializeComponent();
-            Imie = "ala ma kota "+i++.ToString();        
         }
-
-        private string imie = "Adamiakowa";
-
-        public string Imie
-        {
-            get { return (string)GetValue(ImieProperty); }
-            set { SetValue(ImieProperty, value); }
-
-
-        }
-        public static readonly DependencyProperty ImieProperty = DependencyProperty.Register("Imie", typeof(string), typeof(InformationAboutClientView), new PropertyMetadata(default(string)));
 
     }
 }

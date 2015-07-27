@@ -17,7 +17,6 @@ namespace LaboratoryApp
         public client()
         {
             this.offices = new ObservableCollection<office>();
-            name = "Jaœ pukacz";
         }
     
         public int clientId { get; set; }

@@ -6,7 +6,36 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <TextBlock Text="informacje o oddziałach" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="informacje o oddziałach" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" TextAlignment="Center"/>
+        <TextBlock Text="Nazwa:" Grid.Column="0" Grid.Row="3"/>
+        <TextBlock Text="{Binding Name}" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3"/>
+        <TextBlock Text="Osoba kontaktowa:" Grid.Column="0" Grid.Row="4"/>
+        <TextBlock Text="{Binding ContactPerson}" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3"/>
+        <TextBlock Text="E-mail:" Grid.Column="0" Grid.Row="5"/>
+        <TextBlock Text="{Binding Email}" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3"/>
+        <TextBlock Text="Telefon:" Grid.Column="0" Grid.Row="6"/>
+        <TextBlock Text="{Binding Telephone}" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="3"/>
+        <TextBlock Text="Adres:" Grid.Column="0" Grid.Row="7"/>
+        <TextBlock Text="{Binding Address}" Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="3"/>
+
     </Grid>
 </UserControl>

@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace LaboratoryApp.ViewModel
 {
-    class RelayCommand : ICommand
+    public class RelayCommand : ICommand
     {
         private readonly Func<Boolean> _canExecute;
         private readonly Action _execute;

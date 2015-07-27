@@ -1,9 +1,11 @@
-﻿using System;
+﻿using LaboratoryApp.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace LaboratoryApp
 {
@@ -31,41 +33,105 @@ namespace LaboratoryApp
             set { userInput = value; }
         }
 
-        private void LoadView()
-        {
-            data = new LoadData();
-            ObservableCollection<Item> items = new ObservableCollection<Item>();
-            Item item1 = new Item() {Name = "Item 1"};
-            items.Add(item1);
+        private ObservableCollection<client> allItems = new ObservableCollection<client>();
 
-           
-            item1.IsExpanded = true;
+        public ObservableCollection<client> AllItems
+        {
+            get { return allItems; }
+            set { allItems = value; }
         }
 
-        public MainWindowViewModel()
-        {
-            userInput = new UserInput();
-            LoadView();
-        }
-        
         private object selectedNode = 0;
 
         public object SelectedNode
         {
             get { return selectedNode; }
-            set 
+            set
             {
                 selectedNode = value;
-                    Clients InstanceOfClientNode = new Clients();
-                    InstanceOfClientNode = (Clients)selectedNode;
-                System.Windows.MessageBox.Show(InstanceOfClientNode.Key.ToString());
-                System.Windows.MessageBox.Show(InstanceOfClientNode.Name);
-                System.Windows.MessageBox.Show(InstanceOfClientNode.ToString());
 
-                System.Windows.MessageBox.Show(selectedNode.ToString());
+                if ((SelectedNode as client) != null)
+                {
+                    client selectedClient = selectedNode as client;
+                    CurrentViewModel = new InformationAboutClient(new View.InformationAboutClientView 
+                                                                    { Name = selectedClient.name, 
+                                                                      Address = selectedClient.adress, 
+                                                                      NIP = selectedClient.NIP, 
+                                                                      Telephone = selectedClient.tel,
+                                                                      ContactPerson = selectedClient.contact_person_name,
+                                                                      Comment = selectedClient.comments,
+                                                                      Email = selectedClient.mail});
+                }
+                if((SelectedNode as office)!=null)
+                {
+                    office selectedOffice = selectedNode as office;
+                    CurrentViewModel = new InformationAboutOffice(new View.InformationAboutOfficeView 
+                                                                    { Name = selectedOffice.name,
+                                                                      Address = selectedOffice.adress,
+                                                                      Telephone = selectedOffice.tel,
+                                                                      ContactPerson = selectedOffice.contact_person_name,
+                                                                      Email = selectedOffice.mail});
+                }
+                if ((SelectedNode as gauge) != null)
+                {
+                    gauge selectedGauge = selectedNode as gauge;
+                    CurrentViewModel = new InformationAboutGauge(new View.InformationAboutGaugeView 
+                                                                    { ModelName = selectedGauge.model,
+                                                                      ManufacturerName = selectedGauge.manufacturer_name,
+                                                                      SerialNumber = selectedGauge.serial_number });
+                }
                 OnPropertyChanged("SelectedNode");
             }
         }
+
+        private ObservableObject currentViewModel;
+
+        public ObservableObject CurrentViewModel
+        {
+            get { return currentViewModel; }
+            set 
+            {
+                currentViewModel = value;
+                this.OnPropertyChanged("CurrentViewModel");
+
+            }
+        }
+
+        
+        private void LoadView()
+        {
+            
+            data = new LoadData(AllItems);
+        }
+
+        public MainWindowViewModel()
+        {
+            CurrentViewModel = null;
+            userInput = new UserInput();
+            LoadView();
+        }
+
+        public int SearchItem { get; set; }
+        public ICommand LoadContent { get; set; }
+        public ICommand SearchCommand 
+        {
+            get { return new RelayCommand(SearchGauge, CanSearchGauge); }
+        }
+        private void SearchGauge()
+        {
+            laboratoryEntities context = new laboratoryEntities();
+
+            var tmp = (from searchedGauge in context.gauges
+                       where SearchItem == searchedGauge.serial_number
+                       select new { searchedGauge.model }).ToList();
+
+            //trzeba dopisać wyszukiwanie
+            
+        }
+
+        private bool CanSearchGauge()
+        { return true; }
+
         
     }
 }

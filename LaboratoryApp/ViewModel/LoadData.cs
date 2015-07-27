@@ -19,90 +19,88 @@ namespace LaboratoryApp
             set { labEntities = value; }
         }
 
-        public ObservableCollection<Clients> treeViewClass1 = new ObservableCollection<Clients>();
-        private ObservableCollection<Clients> treeOfClients = new ObservableCollection<Clients>();
+        //public ObservableCollection<Clients> treeViewClass1 = new ObservableCollection<Clients>();
+        //private ObservableCollection<Clients> treeOfClients = new ObservableCollection<Clients>();
 
-        public ObservableCollection<Clients> TreeOfClients
+        //public ObservableCollection<Clients> TreeOfClients
+        //{
+        //    get { return treeOfClients; }
+        //    set { treeOfClients = value; }
+        //}
+
+
+        public LoadData(ObservableCollection<client> AllItems)
         {
-            get { return treeOfClients; }
-            set { treeOfClients = value; }
-        }
-       
 
-
-        public LoadData()
-        {
-            MenuItem root = new MenuItem() { Name = "Menu" };
-
-            MenuItem childItem1 = new MenuItem() { Name = "Child item #1" };
-            childItem1.Items.Add(new MenuItem() { Name = "Child item #1.1" });
-            childItem1.Items.Add(new MenuItem() { Name = "Child item #1.2" });
-            root.Items.Add(childItem1);
-            root.Items.Add(new MenuItem() { Name = "Child item #2" });
             
+           
             /*******************************
             //trvMenu.Items.Add(root);
             ********************************/
 
             userInput = new UserInput();
-            Gauges g1 = new Gauges();
-            this.TreeOfClients = new ObservableCollection<Clients>();
+            //Gauges g1 = new Gauges();
+            //this.TreeOfClients = new ObservableCollection<Clients>();
 
             foreach (var t in LabEntities.clients)
             {
-                //Create an instance of Clients 
-                MenuItem menuItem = new MenuItem();
+                AllItems.Add(t);
 
-                Clients ClientTree = new Clients();
-                ClientTree.Offices = new ObservableCollection<Offices>();
-                ClientTree.CollectionOfGaugesInClients = new ObservableCollection<Gauges>();
+                //InformationAboutClient infoClient = new InformationAboutClient();
 
-                List<int> Blabla = new List<int>();
+                ///Create an instance of Clients 
+                //MenuItem menuItem = new MenuItem();
 
-                menuItem.Key = t.clientId;
-                menuItem.Name = t.name;
+                //Clients ClientTree = new Clients();
+                //ClientTree.Offices = new ObservableCollection<Offices>();
+                //ClientTree.CollectionOfGaugesInClients = new ObservableCollection<Gauges>();
 
-                ClientTree.Key = t.clientId;
-                ClientTree.Name = t.name;
+                //List<int> Blabla = new List<int>();
 
-                var tmp = (from o in LabEntities.offices
-                           where ClientTree.Key == o.client_id
-                           select new
-                           {
-                               o.officeId
-                           }).ToList();
+                //menuItem.Key = t.clientId;
+                //menuItem.ContactPerson = t.name;
 
-                foreach (var e in tmp)
-                {
-                    int i;
-                    i = e.officeId;
-                    Blabla.Add(i);
-                }
+                //ClientTree.Key = t.clientId;
+                //ClientTree.ContactPerson = t.name;
+
+                //var tmp = (from o in LabEntities.offices
+                //           where ClientTree.Key == o.client_id
+                //           select new
+                //           {
+                //               o.officeId
+                //           }).ToList();
+
+                //foreach (var e in tmp)
+                //{
+                //    int i;
+                //    i = e.officeId;
+                //    Blabla.Add(i);
+                //}
                 
-                foreach (var gag in LabEntities.gauges)
-                {
+                //foreach (var gag in LabEntities.gauges)
+                //{
 
-                    Gauges gau = new Gauges();
-                    gau.Key = gag.gaugeId;
-                    gau.Name = gag.manufacturer_name + " " + gag.model;
+                //    Gauges gau = new Gauges();
+                //    gau.Key = gag.gaugeId;
+                //    gau.ContactPerson = gag.manufacturer_name + " " + gag.model;
 
-                    ClientTree.CollectionOfGaugesInClients.Add(gau);
+                //    ClientTree.CollectionOfGaugesInClients.Add(gau);
 
-                }
+                //}
                 
-                foreach (var ofi in LabEntities.offices)
-                {
-                    Offices off = new Offices();
-                    off.CollectionOfGauges = new ObservableCollection<Gauges>();
+                //foreach (var ofi in LabEntities.offices)
+                //{
+                //    Offices off = new Offices();
+                //    off.CollectionOfGauges = new ObservableCollection<Gauges>();
 
-                    off.Key = ofi.officeId;
-                    off.Name = ofi.name;
-                    off.CollectionOfGauges = ClientTree.CollectionOfGaugesInClients;
+                //    off.Key = ofi.officeId;
+                //    off.ContactPerson = ofi.name;
+                //    off.CollectionOfGauges = ClientTree.CollectionOfGaugesInClients;
 
-                    ClientTree.Offices.Add(off);
-                }
+                //    ClientTree.Offices.Add(off);
+                //}
 
-                treeOfClients.Add(ClientTree);
+                //treeOfClients.Add(ClientTree);
 
             }
 

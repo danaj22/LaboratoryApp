@@ -5,7 +5,7 @@ namespace LaboratoryApp
 {
     public abstract class InformationAboutSelectedNodeViewModelBase:ObservableObject
     {
-        public abstract string Name { get; }
+        public abstract string Name { get; set; }
 
         public ObservableCollection<client> Clients { get; set; }
         public client SelectedClient { get; set; }
@@ -15,18 +15,18 @@ namespace LaboratoryApp
         {
 
             Clients = new ObservableCollection<client>();
-            Clients.Add(new SingleViewModel() { Title="Q1 : Single Choice Sample"});
+            //Clients.Add(new SingleViewModel() { Title="Q1 : Single Choice Sample"});
 
-            SelectedClient = Clients[0];
-            SelectedClient.GetContent();
+            //SelectedClient = Clients[0];
+            //SelectedClient.GetContent();
 
-            LoadContent = new RelayCommand(
-                () =>
-            {
-                SelectedClient.GetContent();
-            }, () => {
-                return SelectedClient != null;
-            });
+            //LoadContent = new RelayCommand(
+            //    () =>
+            //{
+            //    SelectedClient.GetContent();
+            //}, () => {
+            //    return SelectedClient != null;
+            //});
         
 
         }

@@ -6,6 +6,25 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <TextBlock Text="informacje o mierniku" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="informacje o mierniku" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock Text="Model: " Grid.Column="0" Grid.Row="1"/>
+        <TextBlock Text="{Binding ModelName}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3"/>
+        <TextBlock Text="Producent przyrządu: " Grid.Column="0" Grid.Row="2"/>
+        <TextBlock Text="{Binding ManufacturerName}" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3"/>
+        <TextBlock Text="Nr fabryczny: " Grid.Column="0" Grid.Row="3"/>
+        <TextBlock Text="{Binding SerialNumber}" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3"/>
     </Grid>
 </UserControl>

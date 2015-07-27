@@ -24,5 +24,8 @@ namespace LaboratoryApp.View
         {
             InitializeComponent();
         }
+        public string ModelName { get; set; }
+        public string ManufacturerName { get; set; }
+        public int SerialNumber { get; set; }
     }
 }
