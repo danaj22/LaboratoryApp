@@ -93,11 +93,9 @@ namespace LaboratoryApp
             {
                 currentViewModel = value;
                 this.OnPropertyChanged("CurrentViewModel");
-
             }
         }
-
-        
+      
         private void LoadView()
         {
             
@@ -109,8 +107,9 @@ namespace LaboratoryApp
             CurrentViewModel = null;
             userInput = new UserInput();
             LoadView();
+           
         }
-
+       
         public int SearchItem { get; set; }
         public ICommand LoadContent { get; set; }
         public ICommand SearchCommand 
@@ -128,9 +127,33 @@ namespace LaboratoryApp
             //trzeba dopisać wyszukiwanie
             
         }
-
         private bool CanSearchGauge()
         { return true; }
+
+        public ICommand AddNewClientCommand
+        {
+            get
+            {
+                return new RelayCommand(AddClient, CanAddClient);
+            }
+        }
+        public View.ModalWindowAddClient NClient = null;
+        private void AddClient()
+        {
+            NClient = new View.ModalWindowAddClient();
+            NClient.ShowDialog();
+            DialogResult = NClient.DialogResult;
+            if (DialogResult == false)
+               NClient.Close();
+        }
+
+        private bool CanAddClient()
+        { return true; }
+
+        public bool? DialogResult
+        { get; set; }
+
+
 
         
     }

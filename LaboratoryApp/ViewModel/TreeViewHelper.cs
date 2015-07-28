@@ -19,7 +19,6 @@ namespace LaboratoryApp
                                                                         typeof(TreeViewHelper), //type of owner property
                                                                         new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, SelectedItemChanged));//metadata
 
-
         //create a dictionary to add a new behavior
         private static Dictionary<DependencyObject, TreeViewSelectedItemBehavior> behaviors = new Dictionary<DependencyObject, TreeViewSelectedItemBehavior>();
 
@@ -32,9 +31,29 @@ namespace LaboratoryApp
         {
             obj.SetValue(SelectedItemProperty, value);
         }
+
+        /// <summary>
+        /// It is a Dependency Property which set a result after clicked on a button in dialog window
+        /// </summary>
+        public static readonly DependencyProperty DialogResultProperty = DependencyProperty.RegisterAttached(
+                                                                            "DialogResult",
+                                                                            typeof(bool?),
+                                                                            typeof(TreeViewHelper),
+                                                                            new PropertyMetadata(DialogResultChanged));
+
+        private static void DialogResultChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var window = d as Window;
+            if (window != null)
+                window.DialogResult = e.NewValue as bool?;
+        }
+        public static void SetDialogResult(Window target, bool? value)
+        {
+            target.SetValue(DialogResultProperty, value);
+        }
         
 
-        //when click new item item is changed...
+        //when click new item in TreeView  SelectedItem is changing...
         private static void SelectedItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (!(d is TreeView))
