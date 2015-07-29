@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace LaboratoryApp
@@ -114,7 +115,7 @@ namespace LaboratoryApp
         public ICommand LoadContent { get; set; }
         public ICommand SearchCommand 
         {
-            get { return new RelayCommand(SearchGauge, CanSearchGauge); }
+            get { return new SimpleRelayCommand(SearchGauge); }
         }
         private void SearchGauge()
         {
@@ -128,33 +129,72 @@ namespace LaboratoryApp
             
         }
         private bool CanSearchGauge()
-        { return true; }
+        {
+            return true; 
+        }
 
         public ICommand AddNewClientCommand
         {
             get
             {
-                return new RelayCommand(AddClient, CanAddClient);
+                return new SimpleRelayCommand(AddClient);
             }
         }
-        public View.ModalWindowAddClient NClient = null;
+
+        //public View.ModalWindowAddClient NClient = new View.ModalWindowAddClient();
+        
+        private void changeResult(View.ModalWindowAddClient cli)
+        {
+            cli.DialogResult = true;
+        }
+
+        public View.ModalWindowAddClient newModal;
         private void AddClient()
         {
-            NClient = new View.ModalWindowAddClient();
-            NClient.ShowDialog();
-            DialogResult = NClient.DialogResult;
-            if (DialogResult == false)
-               NClient.Close();
+            //newModal = new View.ModalWindowAddClient();
+            View.ModalWindowAddClient newModal = new View.ModalWindowAddClient();
+            newModal.Owner = Application.Current.MainWindow;
+           
+            newModal.ShowDialog();
+
+            if (newModal.DialogResult == true)
+            {
+                MessageBox.Show(newModal.DialogResult.ToString());
+            }
+            //OpenNewWindow NewWindow = new OpenNewWindow() { MWindow = newModal };
+            
+            //newModal.ShowDialog();
+
+            
+            //OpenedWindow.CancelDialog();
+
+            //if (NClient.DialogResult == true)
+            //{
+            //    //some tests....
+            //}
+            //else
+            //{
+            //    System.Windows.MessageBox.Show(NClient.DialogResult.ToString());
+            //    //something when cancel was clicked...
+            //}
+
+            //ViewModel.OpenNewWindow NewWindow = new OpenNewWindow();
+
+            //if (NClient.ShowDialog() == true)
+            //    System.Windows.MessageBox.Show(NClient.ShowDialog().ToString());
+
+            //DialogResult = NClient.DialogResult;
+            //if (DialogResult == false)
+            //   NClient.Close();
         }
 
         private bool CanAddClient()
-        { return true; }
+        { 
+            return true; 
+        }
 
         public bool? DialogResult
         { get; set; }
-
-
-
-        
+   
     }
 }

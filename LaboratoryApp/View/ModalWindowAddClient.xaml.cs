@@ -23,24 +23,42 @@ namespace LaboratoryApp.View
         public ModalWindowAddClient()
         {
             InitializeComponent();
+
+        }
+
+        public ICommand ConfirmCommand
+        {
+            get
+            {
+                return new SimpleRelayCommand(ConfirmDialog);
+            }
+        }
+        private void ConfirmDialog()
+        {
+            DialogResult = true;
         }
 
         public ICommand CancelCommand
         {
             get
             {
-                return new RelayCommand(CancelDialog, CanCancelDialog);
+                return new SimpleRelayCommand(CancelDialog);
             }
         }
-        private void CancelDialog()
+
+        public void CancelDialog()
         {
-
-            this.Close();
-
+            DialogResult = false;
         }
 
-        private bool CanCancelDialog()
-        { return true; }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+        }
 
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+        }
     }
 }

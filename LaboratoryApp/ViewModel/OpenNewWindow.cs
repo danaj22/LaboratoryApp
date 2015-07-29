@@ -12,30 +12,42 @@ namespace LaboratoryApp.ViewModel
 {
     public partial class OpenNewWindow:Window
     {
-        public virtual void Confirm()
-        { }
+
+        public View.ModalWindowAddClient MWindow;
+        public bool Result { get; set; }
+        
         public virtual void Cancel()
         { }
+        public virtual void Confirm()
+        { }
 
-        public OpenNewWindow()
+        
+        //public OpenNewWindow()
+        //{}
+
+        public ICommand ConfirmCommand
         {
-
+            get
+            {
+                return new SimpleRelayCommand(ConfirmDialog);
+            }
         }
+        private void ConfirmDialog()
+        {
+            MWindow.DialogResult = true;
+        }
+
         public ICommand CancelCommand
         {
             get
             {
-                return new RelayCommand(CancelDialog, CanCancelDialog);
+                return new SimpleRelayCommand(CancelDialog);
             }
         }
-        private void CancelDialog()
+
+        public void CancelDialog()
         {
-
-            this.Close();
-
+            MWindow.DialogResult = false;
         }
-
-        private bool CanCancelDialog()
-        { return true; }
     }
 }

@@ -143,10 +143,7 @@
         </ContentControl>
         <Button Content="Wyszukaj" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Width="80" Command="{Binding SearchCommand}" Margin="10,12,10,11" />
         <TextBox Text="{Binding SearchItem}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Background="AliceBlue" Margin="0,12,0,11" />
-        <Button Content="Dodaj klienta" Command="{Binding AddNewClientCommand}" Grid.Column="4" HorizontalAlignment="Right"  VerticalAlignment="center" Margin="0,2"/>
-
-
-        <MenuItem Header="argins..." Grid.Column="4" Margin="307,0,409,0" Grid.Row="1"  />
+        <Button Content="Dodaj klienta" Command="{Binding AddNewClientCommand}" Grid.Column="4" HorizontalAlignment="Right"  VerticalAlignment="center" Margin="0,2" />
 
 
         <!--<Button Content="Edytuj klienta" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Right"  VerticalAlignment="center"/>

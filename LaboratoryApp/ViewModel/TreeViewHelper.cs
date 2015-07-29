@@ -33,7 +33,7 @@ namespace LaboratoryApp
         }
 
         /// <summary>
-        /// It is a Dependency Property which set a result after clicked on a button in dialog window
+        /// It is a Dependency Property which set a DialogResult after click on a button in dialog window
         /// </summary>
         public static readonly DependencyProperty DialogResultProperty = DependencyProperty.RegisterAttached(
                                                                             "DialogResult",
