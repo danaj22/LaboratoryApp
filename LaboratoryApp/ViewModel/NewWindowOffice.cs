@@ -14,7 +14,7 @@ namespace LaboratoryApp.ViewModel
         public string Email { get; set; }
         public string Telephone { get; set; }
 
-        public override void Confirm()
+        public void Confirm()
         {
             laboratoryEntities context = new laboratoryEntities();
             if (Name != null && Address != null && ContactPerson != null && Email != null && Telephone != null)
@@ -31,9 +31,6 @@ namespace LaboratoryApp.ViewModel
             }
         }
         
-        public override void Cancel()
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

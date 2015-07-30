@@ -12,6 +12,13 @@ namespace LaboratoryApp
 {
     public class MainWindowViewModel : ObservableObject
     {
+        private string nameAndSurname = "Janina Powygina";
+
+        public string NameAndSurname
+        {
+            get { return nameAndSurname; }
+            set { nameAndSurname = value; }
+        }
         
         
         private LoadData data;
@@ -132,7 +139,9 @@ namespace LaboratoryApp
         {
             return true; 
         }
-
+        /// <summary>
+        /// command to show modal window where we can add new Client
+        /// </summary>
         public ICommand AddNewClientCommand
         {
             get
@@ -149,15 +158,21 @@ namespace LaboratoryApp
         }
 
         public View.ModalWindowAddClient newModal;
+        //
         private void AddClient()
         {
-            //newModal = new View.ModalWindowAddClient();
+            //create a new modal window
             View.ModalWindowAddClient newModal = new View.ModalWindowAddClient();
+            //set owner of this window
             newModal.Owner = Application.Current.MainWindow;
-           
             newModal.ShowDialog();
 
+            //when we click OK button we add client to database 
             if (newModal.DialogResult == true)
+            {
+                MessageBox.Show(newModal.DialogResult.ToString());
+            }
+            else
             {
                 MessageBox.Show(newModal.DialogResult.ToString());
             }
@@ -188,13 +203,15 @@ namespace LaboratoryApp
             //   NClient.Close();
         }
 
+
         private bool CanAddClient()
         { 
             return true; 
         }
 
-        public bool? DialogResult
-        { get; set; }
+        public bool? WindowCloseResult
+        { get;
+            set; }
    
     }
 }

@@ -42,9 +42,10 @@
         <TextBlock Text="{Binding Address}" Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="3"/>
         <TextBlock Text="NIP:" Grid.Column="0" Grid.Row="8"/>
         <TextBlock Text="{Binding NIP}"  Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3"/>
-        <Button Content="Dodaj oddział"  Grid.Row="9" VerticalAlignment="Top" Grid.Column="1" HorizontalAlignment="Left" />
-        <Button Content="Usuń oddział"   Grid.Row="9" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Center" />
-        <Button Content="Edytuj oddział" Grid.Row="9" VerticalAlignment="Top" Grid.Column="3" HorizontalAlignment="Center" />
+        <!--<Button Content="Dodaj oddział" Command="AddCommand" Grid.Row="9" VerticalAlignment="Top" Grid.Column="1" HorizontalAlignment="Left" />
+        <Button Content="Usuń klienta" Command="DeleteCommand"  Grid.Row="9" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Center" />-->
+        
+        <Button Content="Edytuj klienta" Command="EditCommand" Grid.Row="9" VerticalAlignment="Top" Grid.Column="3" HorizontalAlignment="Center" />
 
 
         <!--<StackPanel Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2">

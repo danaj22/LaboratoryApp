@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LaboratoryApp.View;
+using System.Windows.Input;
+using LaboratoryApp.ViewModel;
+using System.Windows;
 
 namespace LaboratoryApp
 {
@@ -98,6 +101,17 @@ namespace LaboratoryApp
                 this.Model.Comment = value;
                 this.OnPropertyChanged("Comment");
             }
+        }
+
+        public ICommand EditCommand
+        { get { return new SimpleRelayCommand(EditClient);} }
+
+        private void EditClient()
+        {
+            
+            View.ModalWindowEditClient ModalWindow = new ModalWindowEditClient();
+            ModalWindow.Owner = Application.Current.MainWindow;
+
         }
         
     }

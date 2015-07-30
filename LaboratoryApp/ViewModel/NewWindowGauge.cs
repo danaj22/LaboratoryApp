@@ -10,14 +10,5 @@ namespace LaboratoryApp.ViewModel
         public string Name { get; set; }
         public string ManufacturerName { get; set; }
         public string SerialNumber { get; set; }
-
-        public override void Confirm()
-        {
-            throw new NotImplementedException();
-        }
-        public override void Cancel()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

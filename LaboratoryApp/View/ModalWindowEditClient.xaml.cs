@@ -1,5 +1,4 @@
-﻿using LaboratoryApp.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,15 +15,13 @@ using System.Windows.Shapes;
 namespace LaboratoryApp.View
 {
     /// <summary>
-    /// Interaction logic for ModalWindowAddClient.xaml
+    /// Interaction logic for ModalWindowEditClient.xaml
     /// </summary>
-    public partial class ModalWindowAddClient : Window
+    public partial class ModalWindowEditClient : Window
     {
-        public ModalWindowAddClient()
+        public ModalWindowEditClient()
         {
             InitializeComponent();
-            DataContext = new OpenNewWindow(this);
         }
-
     }
 }

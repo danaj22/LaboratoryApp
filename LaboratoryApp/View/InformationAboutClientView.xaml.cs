@@ -20,7 +20,7 @@ namespace LaboratoryApp.View
     /// <summary>
     /// Interaction logic for InformationAboutClientView.xaml
     /// </summary>
-    public partial class InformationAboutClientView : UserControl
+    public partial class InformationAboutClientView 
     {
         public string Name { get; set; }
         public string Address { get; set; }
@@ -34,6 +34,7 @@ namespace LaboratoryApp.View
         {
             InitializeComponent();
         }
+
 
     }
 }

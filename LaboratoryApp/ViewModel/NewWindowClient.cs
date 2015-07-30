@@ -18,7 +18,7 @@ namespace LaboratoryApp.ViewModel
         public string NIP { get; set; }
         public string Comment { get; set; }
 
-        public override void Confirm()
+        public void Confirm()
         {
             laboratoryEntities context = new laboratoryEntities();
             if(Name!=null && Address!=null && ContactPerson != null && Email != null && Telephone != null && NIP != null && Comment != null)
@@ -35,10 +35,6 @@ namespace LaboratoryApp.ViewModel
                 context.clients.Add(NewClient);
                 context.SaveChanges();
             }
-        }
-        public override void Cancel()
-        {
-            
         }
     }
 }

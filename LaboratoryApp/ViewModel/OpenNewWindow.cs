@@ -10,20 +10,21 @@ using LaboratoryApp;
 
 namespace LaboratoryApp.ViewModel
 {
-    public partial class OpenNewWindow:Window
+    public partial class OpenNewWindow
     {
-
         public View.ModalWindowAddClient MWindow;
-        public bool Result { get; set; }
-        
-        public virtual void Cancel()
-        { }
-        public virtual void Confirm()
-        { }
 
-        
-        //public OpenNewWindow()
-        //{}
+
+        public OpenNewWindow()
+        {
+            //MWindow = new View.ModalWindowAddClient();
+            //MWindow.Owner = Application.Current.MainWindow;
+           // this.MWindow.Owner = Application.Current.MainWindow;
+        }
+        public OpenNewWindow(View.ModalWindowAddClient window)
+        {
+            MWindow = window;
+        }
 
         public ICommand ConfirmCommand
         {
@@ -49,5 +50,8 @@ namespace LaboratoryApp.ViewModel
         {
             MWindow.DialogResult = false;
         }
+
+        public TemporaryClass OpenCloseView{get; set;}
+
     }
 }

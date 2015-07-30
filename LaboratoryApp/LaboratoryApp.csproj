@@ -117,6 +117,7 @@
     <Compile Include="ViewModel\NewWindowOffice.cs" />
     <Compile Include="ViewModel\OfficesViewModel.cs" />
     <Compile Include="ViewModel\OpenNewWindow.cs" />
+    <Compile Include="ViewModel\TemporaryClass.cs" />
     <Compile Include="ViewModel\TreeViewHelper.cs" />
     <Compile Include="ViewModel\GaugesViewModel.cs" />
     <Compile Include="ViewModel\ClientsViewModel.cs" />
@@ -133,8 +134,12 @@
     <Compile Include="View\InformationAboutOfficeView.xaml.cs">
       <DependentUpon>InformationAboutOfficeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\InformationBase.cs" />
     <Compile Include="View\ModalWindowAddClient.xaml.cs">
       <DependentUpon>ModalWindowAddClient.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ModalWindowEditClient.xaml.cs">
+      <DependentUpon>ModalWindowEditClient.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -161,6 +166,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ModalWindowAddClient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ModalWindowEditClient.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
