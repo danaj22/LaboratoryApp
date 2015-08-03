@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LaboratoryApp.View;
+using System.Windows.Input;
+using LaboratoryApp.ViewModel;
+using System.Windows;
 
 namespace LaboratoryApp
 {
-    class InformationAboutOffice: ObservableObject
+    public class InformationAboutOffice: ObservableObject
     {
         public InformationAboutOffice(InformationAboutOfficeView model)
         {
@@ -73,6 +76,37 @@ namespace LaboratoryApp
                 this.Model.Telephone = value;
                 this.OnPropertyChanged("Telephone");
             }
+        }
+
+        public ICommand DeleteCommand
+        { get { return new SimpleRelayCommand(DeleteOffice); } }
+
+        private void DeleteOffice()
+        {
+            var result = MessageBox.Show("Czy na pewno chcesz usunąć bezzwłocznie i definitywnie ten oddział?", "aaaaa", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.No)
+            {
+                laboratoryEntities context = new laboratoryEntities();
+                //delete selected office
+                //context.offices.Remove();
+            }
+        }
+
+        public ICommand EditCommand
+        { get { return new SimpleRelayCommand(EditOffice); } }
+
+        private void EditOffice()
+        {
+            //create a new modal window
+            InformationAboutOffice infoOffice = this;
+            View.ModalWindowOffice newModal = new View.ModalWindowOffice(infoOffice);
+
+            //set owner of this window
+            newModal.Owner = Application.Current.MainWindow;
+            newModal.ShowDialog();
+
+
+
         }
     }
 }

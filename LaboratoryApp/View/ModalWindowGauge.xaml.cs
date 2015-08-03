@@ -1,5 +1,4 @@
-﻿using LaboratoryApp.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,15 +15,21 @@ using System.Windows.Shapes;
 namespace LaboratoryApp.View
 {
     /// <summary>
-    /// Interaction logic for ModalWindowAddClient.xaml
+    /// Interaction logic for ModalWindowGauge.xaml
     /// </summary>
-    public partial class ModalWindowAddClient : Window
+    public partial class ModalWindowGauge : Window
     {
-        public ModalWindowAddClient()
+        public InformationAboutGauge infoGauge;
+
+        public ModalWindowGauge()
         {
             InitializeComponent();
-            DataContext = new OpenNewWindow(this);
+            DataContext = new ViewModel.NewWindowGauge(this);
         }
-
+        public ModalWindowGauge(InformationAboutGauge info)
+        {
+            InitializeComponent();
+            DataContext = new ViewModel.NewWindowGauge(this) { AboutGauge = info };
+        }
     }
 }

@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace LaboratoryApp
 {
-    class InformationAboutClient : ObservableObject
+    public class InformationAboutClient : ObservableObject
     {
         public InformationAboutClient(InformationAboutClientView model)
         {
@@ -103,16 +103,35 @@ namespace LaboratoryApp
             }
         }
 
+        public ICommand DeleteCommand
+        { get { return new SimpleRelayCommand(DeleteClient); } }
+
+        private void DeleteClient()
+        {
+            var result = MessageBox.Show("Czy na pewno chcesz usunąć bezzwłocznie i definitywnie tego klienta?","aaaaa",MessageBoxButton.YesNo,MessageBoxImage.Question);
+            if(result == MessageBoxResult.No)
+            {
+                laboratoryEntities context = new laboratoryEntities();
+                //delete selected client
+                //context.clients.Remove();
+            }
+        }
         public ICommand EditCommand
         { get { return new SimpleRelayCommand(EditClient);} }
 
         private void EditClient()
         {
-            
-            View.ModalWindowEditClient ModalWindow = new ModalWindowEditClient();
-            ModalWindow.Owner = Application.Current.MainWindow;
+            //create a new modal window
+            InformationAboutClient infoClient = this;
+            View.ModalWindowClient newModal = new View.ModalWindowClient(infoClient);
+
+            //set owner of this window
+            newModal.Owner = Application.Current.MainWindow;
+            newModal.ShowDialog();
+
+
 
         }
-        
+
     }
 }

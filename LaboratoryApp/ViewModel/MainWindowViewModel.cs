@@ -150,20 +150,24 @@ namespace LaboratoryApp
             }
         }
 
-        //public View.ModalWindowAddClient NClient = new View.ModalWindowAddClient();
+        //public View.ModalWindowClient NClient = new View.ModalWindowClient();
         
-        private void changeResult(View.ModalWindowAddClient cli)
+        private void changeResult(View.ModalWindowClient cli)
         {
             cli.DialogResult = true;
         }
 
-        public View.ModalWindowAddClient newModal;
+        public View.ModalWindowClient newModal;
         //
         private void AddClient()
         {
             //create a new modal window
-            View.ModalWindowAddClient newModal = new View.ModalWindowAddClient();
+            
+            View.ModalWindowClient newModal = new View.ModalWindowClient()
+            {/* infoClient = (CurrentViewModel as InformationAboutClient)*/};
+
             //set owner of this window
+
             newModal.Owner = Application.Current.MainWindow;
             newModal.ShowDialog();
 

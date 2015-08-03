@@ -117,7 +117,7 @@
     <Compile Include="ViewModel\NewWindowOffice.cs" />
     <Compile Include="ViewModel\OfficesViewModel.cs" />
     <Compile Include="ViewModel\OpenNewWindow.cs" />
-    <Compile Include="ViewModel\TemporaryClass.cs" />
+    <Compile Include="ViewModel\ResultFromModalWindowBase.cs" />
     <Compile Include="ViewModel\TreeViewHelper.cs" />
     <Compile Include="ViewModel\GaugesViewModel.cs" />
     <Compile Include="ViewModel\ClientsViewModel.cs" />
@@ -135,11 +135,14 @@
       <DependentUpon>InformationAboutOfficeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\InformationBase.cs" />
-    <Compile Include="View\ModalWindowAddClient.xaml.cs">
-      <DependentUpon>ModalWindowAddClient.xaml</DependentUpon>
+    <Compile Include="View\ModalWindowClient.xaml.cs">
+      <DependentUpon>ModalWindowClient.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ModalWindowEditClient.xaml.cs">
-      <DependentUpon>ModalWindowEditClient.xaml</DependentUpon>
+    <Compile Include="View\ModalWindowGauge.xaml.cs">
+      <DependentUpon>ModalWindowGauge.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ModalWindowOffice.xaml.cs">
+      <DependentUpon>ModalWindowOffice.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -165,11 +168,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ModalWindowAddClient.xaml">
+    <Page Include="View\ModalWindowClient.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ModalWindowEditClient.xaml">
+    <Page Include="View\ModalWindowGauge.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ModalWindowOffice.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

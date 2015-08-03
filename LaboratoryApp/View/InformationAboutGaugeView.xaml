@@ -8,9 +8,9 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -26,5 +26,11 @@
         <TextBlock Text="{Binding ManufacturerName}" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3"/>
         <TextBlock Text="Nr fabryczny: " Grid.Column="0" Grid.Row="3"/>
         <TextBlock Text="{Binding SerialNumber}" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3"/>
+
+        <Button Content="Usuń miernik" Command="{Binding DeleteCommand}"  Grid.Row="9" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Center" />
+
+        <Button Content="Edytuj dane miernika" Command="{Binding EditCommand}" Grid.Row="9" VerticalAlignment="Top" Grid.Column="3" HorizontalAlignment="Center" />
+
+
     </Grid>
 </UserControl>
