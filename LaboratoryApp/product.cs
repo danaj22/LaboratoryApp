@@ -12,12 +12,15 @@ namespace LaboratoryApp
     using System;
     using System.Collections.ObjectModel;
     
-    public partial class sysdiagram
+    public partial class product
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int productId { get; set; }
+        public int serial_number { get; set; }
+        public Nullable<int> client_id { get; set; }
+        public Nullable<int> office_id { get; set; }
+        public Nullable<int> gauge_id { get; set; }
+    
+        public virtual gauge gauge { get; set; }
+        public virtual office office { get; set; }
     }
 }

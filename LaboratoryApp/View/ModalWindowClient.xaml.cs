@@ -20,17 +20,20 @@ namespace LaboratoryApp.View
     /// </summary>
     public partial class ModalWindowClient : Window
     {
-        public InformationAboutClient infoClient;
+        //public InformationAboutClient infoClient;
 
         public ModalWindowClient()
         {
             InitializeComponent();
             DataContext = new NewWindowClient(this);
         }
+
+        public InformationAboutClient AllInformation;
+
         public ModalWindowClient(InformationAboutClient info)
         {
             InitializeComponent();
-            DataContext = new NewWindowClient(this) { AboutClient = info };
+            DataContext = new NewWindowClient(this) { AboutClient = AllInformation = info };
         }
     }
 }

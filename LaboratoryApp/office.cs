@@ -16,7 +16,7 @@ namespace LaboratoryApp
     {
         public office()
         {
-            this.gauges = new ObservableCollection<gauge>();
+            this.products = new ObservableCollection<product>();
         }
     
         public int officeId { get; set; }
@@ -29,6 +29,6 @@ namespace LaboratoryApp
         public int client_id { get; set; }
     
         public virtual client client { get; set; }
-        public virtual ObservableCollection<gauge> gauges { get; set; }
+        public virtual ObservableCollection<product> products { get; set; }
     }
 }

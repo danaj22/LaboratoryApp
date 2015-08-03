@@ -89,13 +89,13 @@
     <Compile Include="office.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="product.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_helpdiagrams_Result.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sysdiagram.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="type.cs">
@@ -111,10 +111,12 @@
     <Compile Include="ViewModel\InformationAboutClient.cs" />
     <Compile Include="ViewModel\InformationAboutGauge.cs" />
     <Compile Include="ViewModel\InformationAboutOffice.cs" />
+    <Compile Include="ViewModel\InformationAboutProduct.cs" />
     <Compile Include="ViewModel\LoadData.cs" />
     <Compile Include="ViewModel\NewWindowClient.cs" />
     <Compile Include="ViewModel\NewWindowGauge.cs" />
     <Compile Include="ViewModel\NewWindowOffice.cs" />
+    <Compile Include="ViewModel\NewWindowProduct.cs" />
     <Compile Include="ViewModel\OfficesViewModel.cs" />
     <Compile Include="ViewModel\OpenNewWindow.cs" />
     <Compile Include="ViewModel\ResultFromModalWindowBase.cs" />
@@ -128,8 +130,8 @@
     <Compile Include="View\InformationAboutClientView.xaml.cs">
       <DependentUpon>InformationAboutClientView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\InformationAboutGaugeView.xaml.cs">
-      <DependentUpon>InformationAboutGaugeView.xaml</DependentUpon>
+    <Compile Include="View\InformationAboutProductView.xaml.cs">
+      <DependentUpon>InformationAboutProductView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\InformationAboutOfficeView.xaml.cs">
       <DependentUpon>InformationAboutOfficeView.xaml</DependentUpon>
@@ -140,6 +142,9 @@
     </Compile>
     <Compile Include="View\ModalWindowGauge.xaml.cs">
       <DependentUpon>ModalWindowGauge.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ModalWindowProduct.xaml.cs">
+      <DependentUpon>ModalWindowProduct.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ModalWindowOffice.xaml.cs">
       <DependentUpon>ModalWindowOffice.xaml</DependentUpon>
@@ -160,7 +165,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\InformationAboutGaugeView.xaml">
+    <Page Include="View\InformationAboutProductView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -173,6 +178,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ModalWindowGauge.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ModalWindowProduct.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

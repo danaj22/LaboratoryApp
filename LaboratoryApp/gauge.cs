@@ -14,18 +14,19 @@ namespace LaboratoryApp
     
     public partial class gauge
     {
+        public gauge()
+        {
+            this.products = new ObservableCollection<product>();
+        }
+    
         public int gaugeId { get; set; }
         public string manufacturer_name { get; set; }
         public string model { get; set; }
-        public int serial_number { get; set; }
-        public string checked_function { get; set; }
         public int usage_id { get; set; }
-        public int client_id { get; set; }
         public int type_id { get; set; }
-        public Nullable<int> office_id { get; set; }
     
         public virtual type type { get; set; }
+        public virtual ObservableCollection<product> products { get; set; }
         public virtual usage usage { get; set; }
-        public virtual office office { get; set; }
     }
 }

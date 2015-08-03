@@ -128,9 +128,6 @@ namespace LaboratoryApp
             //set owner of this window
             newModal.Owner = Application.Current.MainWindow;
             newModal.ShowDialog();
-
-
-
         }
 
     }

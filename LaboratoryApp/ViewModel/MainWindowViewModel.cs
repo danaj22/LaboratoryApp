@@ -32,7 +32,7 @@ namespace LaboratoryApp
                 OnPropertyChanged("Data");
             }
         }
-        
+
         private UserInput userInput;
 
         public UserInput UserInput
@@ -80,13 +80,15 @@ namespace LaboratoryApp
                                                                       ContactPerson = selectedOffice.contact_person_name,
                                                                       Email = selectedOffice.mail});
                 }
-                if ((SelectedNode as gauge) != null)
+                if ((SelectedNode as product) != null)
                 {
-                    gauge selectedGauge = selectedNode as gauge;
-                    CurrentViewModel = new InformationAboutGauge(new View.InformationAboutGaugeView 
-                                                                    { ModelName = selectedGauge.model,
-                                                                      ManufacturerName = selectedGauge.manufacturer_name,
-                                                                      SerialNumber = selectedGauge.serial_number });
+                    product selectedProduct = selectedNode as product;
+                    CurrentViewModel = new ViewModel.InformationAboutProduct() {
+                                                                      
+                                                                      SerialNumber = selectedProduct.serial_number,
+                                                                      Gauge = selectedProduct.gauge,
+                                                                      Office = selectedProduct.office
+                                                                      };
                 }
                 OnPropertyChanged("SelectedNode");
             }
@@ -129,7 +131,7 @@ namespace LaboratoryApp
             laboratoryEntities context = new laboratoryEntities();
 
             var tmp = (from searchedGauge in context.gauges
-                       where SearchItem == searchedGauge.serial_number
+                       where SearchItem == searchedGauge.gaugeId
                        select new { searchedGauge.model }).ToList();
 
             //trzeba dopisać wyszukiwanie
@@ -138,6 +140,45 @@ namespace LaboratoryApp
         private bool CanSearchGauge()
         {
             return true; 
+        }
+
+        /// <summary>
+        /// command to show modal window where we can add new Gauge
+        /// </summary>
+        public ICommand AddNewGaugeCommand
+        { get { return new SimpleRelayCommand(AddGauge); } }
+
+        private void AddGauge()
+        {
+            //create a new modal window
+
+            View.ModalWindowGauge newModal = new View.ModalWindowGauge();
+
+            //set owner of this window
+            newModal.Owner = Application.Current.MainWindow;
+            newModal.ShowDialog();
+            
+            if (newModal.DialogResult == true)
+            {
+                MessageBox.Show(newModal.DialogResult.ToString());
+                var newGauge = new gauge();
+                newGauge.manufacturer_name = newModal.infoGauge.ManufacturerName;
+                newGauge.model = newModal.infoGauge.Model;
+                newGauge.type_id = 1;
+                newGauge.usage_id = 1;
+
+                using (laboratoryEntities context = new laboratoryEntities())
+                {
+
+                    context.gauges.Add(newGauge);
+                    context.SaveChanges();
+                }
+            }
+            else
+            {
+                MessageBox.Show(newModal.DialogResult.ToString());
+            }
+            
         }
         /// <summary>
         /// command to show modal window where we can add new Client
@@ -157,14 +198,14 @@ namespace LaboratoryApp
             cli.DialogResult = true;
         }
 
-        public View.ModalWindowClient newModal;
+        
         //
         private void AddClient()
         {
+            View.ModalWindowClient newModal;
             //create a new modal window
-            
-            View.ModalWindowClient newModal = new View.ModalWindowClient()
-            {/* infoClient = (CurrentViewModel as InformationAboutClient)*/};
+
+            newModal = new View.ModalWindowClient() {/* infoClient = (CurrentViewModel as InformationAboutClient)*/};
 
             //set owner of this window
 
@@ -180,31 +221,33 @@ namespace LaboratoryApp
             {
                 MessageBox.Show(newModal.DialogResult.ToString());
             }
-            //OpenNewWindow NewWindow = new OpenNewWindow() { MWindow = newModal };
             
-            //newModal.ShowDialog();
+                //OpenNewWindow NewWindow = new OpenNewWindow() { MWindow = newModal };
 
+                //newModal.ShowDialog();
+
+
+                //OpenedWindow.CancelDialog();
+
+                //if (NClient.DialogResult == true)
+                //{
+                //    //some tests....
+                //}
+                //else
+                //{
+                //    System.Windows.MessageBox.Show(NClient.DialogResult.ToString());
+                //    //something when cancel was clicked...
+                //}
+
+                //ViewModel.OpenNewWindow NewWindow = new OpenNewWindow();
+
+                //if (NClient.ShowDialog() == true)
+                //    System.Windows.MessageBox.Show(NClient.ShowDialog().ToString());
+
+                //DialogResult = NClient.DialogResult;
+                //if (DialogResult == false)
+                //   NClient.Close();
             
-            //OpenedWindow.CancelDialog();
-
-            //if (NClient.DialogResult == true)
-            //{
-            //    //some tests....
-            //}
-            //else
-            //{
-            //    System.Windows.MessageBox.Show(NClient.DialogResult.ToString());
-            //    //something when cancel was clicked...
-            //}
-
-            //ViewModel.OpenNewWindow NewWindow = new OpenNewWindow();
-
-            //if (NClient.ShowDialog() == true)
-            //    System.Windows.MessageBox.Show(NClient.ShowDialog().ToString());
-
-            //DialogResult = NClient.DialogResult;
-            //if (DialogResult == false)
-            //   NClient.Close();
         }
 
 
@@ -212,6 +255,7 @@ namespace LaboratoryApp
         { 
             return true; 
         }
+
 
         public bool? WindowCloseResult
         { get;

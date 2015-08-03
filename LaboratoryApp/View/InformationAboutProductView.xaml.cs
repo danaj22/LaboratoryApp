@@ -16,16 +16,13 @@ using System.Windows.Shapes;
 namespace LaboratoryApp.View
 {
     /// <summary>
-    /// Interaction logic for InformationAboutGaugeView.xaml
+    /// Interaction logic for InformationAboutProductView.xaml
     /// </summary>
-    public partial class InformationAboutGaugeView : UserControl
+    public partial class InformationAboutProductView : UserControl
     {
-        public InformationAboutGaugeView()
+        public InformationAboutProductView()
         {
             InitializeComponent();
         }
-        public string ModelName { get; set; }
-        public string ManufacturerName { get; set; }
-        public int SerialNumber { get; set; }
     }
 }

@@ -87,7 +87,7 @@ namespace LaboratoryApp
             if (result == MessageBoxResult.No)
             {
                 laboratoryEntities context = new laboratoryEntities();
-                //delete selected office
+                //delete selected Office
                 //context.offices.Remove();
             }
         }

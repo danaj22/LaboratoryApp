@@ -7,54 +7,69 @@ using LaboratoryApp.View;
 using System.Windows.Input;
 using LaboratoryApp.ViewModel;
 using System.Windows;
+using System.Collections.ObjectModel;
 
 namespace LaboratoryApp
 {
     public class InformationAboutGauge : ObservableObject
     {
-        public InformationAboutGauge(InformationAboutGaugeView model)
+        public InformationAboutGauge()
         {
-            this.Model = model;
+            this.Products = new ObservableCollection<product>();
         }
-        public InformationAboutGaugeView Model { get; set; }
-
-        public string ModelName
-        {
-            get
-            {
-                return this.Model.ModelName;
-            }
-            set
-            {
-                this.Model.ModelName = value;
-                this.OnPropertyChanged("ModelName");
-            }
-        }
+        
+        public int gaugeId { get; set; }
         public string ManufacturerName
         {
-            get
-            {
-                return this.Model.ManufacturerName;
-            }
-            set
-            {
-                this.Model.ManufacturerName = value;
-                this.OnPropertyChanged("ManufacturerName");
-            }
+            get;
+            set;
         }
+        public string Model { get; set; }
+        public int UsageId { get; set; }
+        public int TypeId { get; set; }
+    
+        public virtual type Type { get; set; }
+        public virtual ObservableCollection<product> Products { get; set; }
+        public virtual usage Usage { get; set; }
+         
 
-        public int SerialNumber
-        {
-            get
-            {
-                return this.Model.SerialNumber;
-            }
-            set
-            {
-                this.Model.SerialNumber = value;
-                this.OnPropertyChanged("SerialNumber");
-            }
-        }
+        //public string ModelName
+        //{
+        //    get
+        //    {
+        //        return this.Model.ModelName;
+        //    }
+        //    set
+        //    {
+        //        this.Model.ModelName = value;
+        //        this.OnPropertyChanged("ModelName");
+        //    }
+        //}
+        //public string ManufacturerName
+        //{
+        //    get
+        //    {
+        //        return this.Model.ManufacturerName;
+        //    }
+        //    set
+        //    {
+        //        this.Model.ManufacturerName = value;
+        //        this.OnPropertyChanged("ManufacturerName");
+        //    }
+        //}
+
+        //public int SerialNumber
+        //{
+        //    get
+        //    {
+        //        return this.Model.SerialNumber;
+        //    }
+        //    set
+        //    {
+        //        this.Model.SerialNumber = value;
+        //        this.OnPropertyChanged("SerialNumber");
+        //    }
+        //}
 
 
         public ICommand DeleteCommand
@@ -66,7 +81,7 @@ namespace LaboratoryApp
             if (result == MessageBoxResult.No)
             {
                 laboratoryEntities context = new laboratoryEntities();
-                //delete selected gauge
+                //delete selected Gauge
                 //context.gauges.Remove();
             }
         }
