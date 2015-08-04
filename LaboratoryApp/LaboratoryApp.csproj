@@ -108,6 +108,7 @@
     <Compile Include="ViewModel\ConfigurationDialogViewModel.cs" />
     <Compile Include="ViewModel\ContentViewControl.cs" />
     <Compile Include="ViewModel\IItems.cs" />
+    <Compile Include="ViewModel\IModalWindow.cs" />
     <Compile Include="ViewModel\InformationAboutClient.cs" />
     <Compile Include="ViewModel\InformationAboutGauge.cs" />
     <Compile Include="ViewModel\InformationAboutOffice.cs" />
@@ -136,7 +137,6 @@
     <Compile Include="View\InformationAboutOfficeView.xaml.cs">
       <DependentUpon>InformationAboutOfficeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\InformationBase.cs" />
     <Compile Include="View\ModalWindowClient.xaml.cs">
       <DependentUpon>ModalWindowClient.xaml</DependentUpon>
     </Compile>

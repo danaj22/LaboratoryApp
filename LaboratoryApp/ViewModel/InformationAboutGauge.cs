@@ -18,7 +18,7 @@ namespace LaboratoryApp
             this.Products = new ObservableCollection<product>();
         }
         
-        public int gaugeId { get; set; }
+        public int GaugeId { get; set; }
         public string ManufacturerName
         {
             get;
@@ -31,45 +31,18 @@ namespace LaboratoryApp
         public virtual type Type { get; set; }
         public virtual ObservableCollection<product> Products { get; set; }
         public virtual usage Usage { get; set; }
-         
 
-        //public string ModelName
-        //{
-        //    get
-        //    {
-        //        return this.Model.ModelName;
-        //    }
-        //    set
-        //    {
-        //        this.Model.ModelName = value;
-        //        this.OnPropertyChanged("ModelName");
-        //    }
-        //}
-        //public string ManufacturerName
-        //{
-        //    get
-        //    {
-        //        return this.Model.ManufacturerName;
-        //    }
-        //    set
-        //    {
-        //        this.Model.ManufacturerName = value;
-        //        this.OnPropertyChanged("ManufacturerName");
-        //    }
-        //}
+        private ObservableCollection<usage> collectionOfusage = new ObservableCollection<usage>();
 
-        //public int SerialNumber
-        //{
-        //    get
-        //    {
-        //        return this.Model.SerialNumber;
-        //    }
-        //    set
-        //    {
-        //        this.Model.SerialNumber = value;
-        //        this.OnPropertyChanged("SerialNumber");
-        //    }
-        //}
+        public ObservableCollection<usage> CollectionOfUsage
+        {
+            get { return collectionOfusage; }
+            set
+            {
+                collectionOfusage = CollectionOfUsage;
+                OnPropertyChanged("CollectionOfUsage");
+            }
+        }
 
 
         public ICommand DeleteCommand
@@ -78,11 +51,16 @@ namespace LaboratoryApp
         private void DeleteGauge()
         {
             var result = MessageBox.Show("Czy na pewno chcesz usunąć bezzwłocznie i definitywnie ten miernik?", "aaaaa", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.No)
+            if (result == MessageBoxResult.Yes)
             {
                 laboratoryEntities context = new laboratoryEntities();
-                //delete selected Gauge
-                //context.gauges.Remove();
+                //delete selected client
+                var gaugeToDelete = (from g in context.gauges
+                                      where g.gaugeId == this.GaugeId
+                                      select g).FirstOrDefault();
+
+                context.gauges.Remove(gaugeToDelete);
+                context.SaveChanges();
             }
         }
 
@@ -99,7 +77,33 @@ namespace LaboratoryApp
             newModal.Owner = Application.Current.MainWindow;
             newModal.ShowDialog();
 
+            //if (newModal.DialogResult == true)
+            //{
+            //    using (laboratoryEntities context = new laboratoryEntities())
+            //    {
+            //        var gaugeToEdit = (from g in context.gauges
+            //                            where g.gaugeId == this.GaugeId
+            //                            select g).FirstOrDefault();
 
+            //        if (ManufacturerName != "" && Address != "" && ContactPerson != "" && Email != "" && Telephone != "" && NIP != "" && Comment != "")
+            //        {
+            //            gaugeToEdit.name = Name;
+            //            gaugeToEdit.adress = Address;
+            //            gaugeToEdit.contact_person_name = ContactPerson;
+            //            gaugeToEdit.mail = Email;
+            //            gaugeToEdit.tel = Telephone;
+            //            gaugeToEdit.NIP = NIP;
+            //            gaugeToEdit.comments = Comment;
+
+            //            context.SaveChanges();
+            //        }
+            //        else
+            //        {
+            //            MessageBox.Show("Wypełnij wszystkie pola");
+            //        }
+
+            //    }
+            //}
 
         }
         

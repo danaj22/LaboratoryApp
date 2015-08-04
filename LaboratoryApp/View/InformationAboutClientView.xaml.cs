@@ -22,19 +22,11 @@ namespace LaboratoryApp.View
     /// </summary>
     public partial class InformationAboutClientView 
     {
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public string ContactPerson { get; set; }
-        public string Email { get; set; }
-        public string Telephone { get; set; }
-        public string NIP { get; set; }
-        public string Comment { get; set; }
-
+        
         public InformationAboutClientView()
         {
             InitializeComponent();
         }
-
 
     }
 }

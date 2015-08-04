@@ -30,7 +30,7 @@
         <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="2" HorizontalAlignment="Right" Grid.Row="8" VerticalAlignment="Center" Width="75" IsCancel="True"/>
         <TextBox HorizontalAlignment="Center" Text="{Binding AboutGauge.ManufacturerName}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Width="156" Height="24"/>
         <TextBox HorizontalAlignment="Center" Text="{Binding AboutGauge.Model}" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Width="156" Height="24"/>
-        <ListBox ItemsSource="{Binding CollectionOfUsage}"  SelectedItem="{Binding SelectedUsage}" Grid.Row="2" Grid.Column="1"  Grid.RowSpan="1" Grid.ColumnSpan="1" >
+        <ListBox ItemsSource="{Binding AboutGauge.CollectionOfUsage}"  SelectedItem="{Binding SelectedUsage}" Grid.Row="2" Grid.Column="1"  Grid.RowSpan="1" Grid.ColumnSpan="1" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">

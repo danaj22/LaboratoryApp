@@ -11,44 +11,19 @@ namespace LaboratoryApp.ViewModel
 {
     public class NewWindowClient: ResultFromModalWindowBase
     {
-        public InformationAboutClient AboutClient {get; set;}
-        
         public View.ModalWindowClient MWindow;
 
-        public NewWindowClient(View.ModalWindowClient window)
+        public InformationAboutClient AboutClient {get; set;}
+        //public View.ModalWindowClient MWindow;
+
+        public NewWindowClient(View.ModalWindowClient window) : base(window)
         {
+            laboratoryEntities context = new laboratoryEntities();
             MWindow = window;
+            MWindow.infoClient = AboutClient = new InformationAboutClient();
+
+            //AboutGauge = new InformationAboutGauge();
         }
-
-        public ICommand ConfirmCommand
-        {
-            get
-            {
-                return new SimpleRelayCommand(ConfirmDialog);
-            }
-        }
-        private void ConfirmDialog()
-        {
-            //dialog result set as 'true'
-            MWindow.DialogResult = true;
-        }
-
-        public ICommand CancelCommand
-        {
-            get
-            {
-                return new SimpleRelayCommand(CancelDialog);
-            }
-        }
-
-        public void CancelDialog()
-        {
-            //dialog result as 'false'
-            MWindow.DialogResult = false;
-
-        }
-
-
         
     }
 }

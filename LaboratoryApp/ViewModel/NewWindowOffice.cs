@@ -13,38 +13,14 @@ namespace LaboratoryApp.ViewModel
         public InformationAboutOffice AboutOffice { get; set; }
         public View.ModalWindowOffice MWindow;
 
-        public NewWindowOffice(View.ModalWindowOffice window)
+
+        public NewWindowOffice(View.ModalWindowOffice window) : base(window)
         {
             MWindow = window;
+            MWindow.infoOffice = AboutOffice = new InformationAboutOffice();
+        
         }
 
-        public ICommand ConfirmCommand
-        {
-            get
-            {
-                return new SimpleRelayCommand(ConfirmDialog);
-            }
-        }
-        private void ConfirmDialog()
-        {
-            //dialog result set as 'true'
-            MWindow.DialogResult = true;
-        }
-
-        public ICommand CancelCommand
-        {
-            get
-            {
-                return new SimpleRelayCommand(CancelDialog);
-            }
-        }
-
-        public void CancelDialog()
-        {
-            //dialog result as 'false'
-            MWindow.DialogResult = false;
-
-        }
        
     }
 }

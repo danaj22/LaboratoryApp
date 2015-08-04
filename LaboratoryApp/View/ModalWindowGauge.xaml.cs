@@ -18,7 +18,7 @@ namespace LaboratoryApp.View
     /// <summary>
     /// Interaction logic for ModalWindowGauge.xaml
     /// </summary>
-    public partial class ModalWindowGauge : Window
+    public partial class ModalWindowGauge : Window,IModalWindow
     {
         public InformationAboutGauge infoGauge = new InformationAboutGauge();
 

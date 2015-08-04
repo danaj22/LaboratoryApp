@@ -18,22 +18,23 @@ namespace LaboratoryApp.View
     /// <summary>
     /// Interaction logic for ModalWindowClient.xaml
     /// </summary>
-    public partial class ModalWindowClient : Window
+    public partial class ModalWindowClient : Window, IModalWindow
     {
-        //public InformationAboutClient infoClient;
+        public InformationAboutClient infoClient = new InformationAboutClient();
 
         public ModalWindowClient()
         {
             InitializeComponent();
-            DataContext = new NewWindowClient(this);
-        }
 
-        public InformationAboutClient AllInformation;
+            NewWindowClient tmp = new NewWindowClient(this);
+            DataContext = tmp;
+            infoClient = tmp.AboutClient;
+        }
 
         public ModalWindowClient(InformationAboutClient info)
         {
             InitializeComponent();
-            DataContext = new NewWindowClient(this) { AboutClient = AllInformation = info };
+            DataContext = new NewWindowClient(this) { AboutClient = infoClient = info };
         }
     }
 }

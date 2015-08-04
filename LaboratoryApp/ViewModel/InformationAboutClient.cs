@@ -13,107 +13,34 @@ namespace LaboratoryApp
 {
     public class InformationAboutClient : ObservableObject
     {
-        public InformationAboutClient(InformationAboutClientView model)
-        {
-            this.Model = model;
-        }
-        public InformationAboutClientView Model { get; set; }
-        public string Name 
-        {
-            get
-            {
-                return this.Model.Name;
-            }
-            set
-            {
-                this.Model.Name = value;
-                this.OnPropertyChanged("Name");
-            }
-        }
-        public string Address
-        {
-            get
-            {
-                return this.Model.Address;
-            }
-            set
-            {
-                this.Model.Address = value;
-                this.OnPropertyChanged("Address");
-            }
-        }
-        public string ContactPerson
-        {
-            get
-            {
-                return this.Model.ContactPerson;
-            }
-            set
-            {
-                this.Model.ContactPerson = value;
-                this.OnPropertyChanged("ContactPerson");
-            }
-        }
-        public string Email
-        {
-            get
-            {
-                return this.Model.Email;
-            }
-            set
-            {
-                this.Model.Email = value;
-                this.OnPropertyChanged("Email");
-            }
-        }
-        public string Telephone
-        {
-            get
-            {
-                return this.Model.Telephone;
-            }
-            set
-            {
-                this.Model.Telephone = value;
-                this.OnPropertyChanged("Telephone");
-            }
-        }
-        public string NIP
-        {
-            get
-            {
-                return this.Model.NIP;
-            }
-            set
-            {
-                this.Model.NIP = value;
-                this.OnPropertyChanged("NIP");
-            }
-        }
-        public string Comment
-        {
-            get
-            {
-                return this.Model.Comment;
-            }
-            set
-            {
-                this.Model.Comment = value;
-                this.OnPropertyChanged("Comment");
-            }
-        }
+        public InformationAboutClient()
+        {   }
+        public int ClientId { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string ContactPerson { get; set; }
+        public string Email { get; set; }
+        public string Telephone { get; set; }
+        public string NIP { get; set; }
+        public string Comment { get; set; }
 
         public ICommand DeleteCommand
         { get { return new SimpleRelayCommand(DeleteClient); } }
 
         private void DeleteClient()
         {
-            var result = MessageBox.Show("Czy na pewno chcesz usunąć bezzwłocznie i definitywnie tego klienta?","aaaaa",MessageBoxButton.YesNo,MessageBoxImage.Question);
-            if(result == MessageBoxResult.No)
+            var result = MessageBox.Show("Czy na pewno chcesz usunąć bezzwłocznie i definitywnie tego klienta?","Usuwanie klienta",MessageBoxButton.YesNo,MessageBoxImage.Question);
+            
+            if(result == MessageBoxResult.Yes)
             {
                 laboratoryEntities context = new laboratoryEntities();
                 //delete selected client
-                //context.clients.Remove();
+                var clientToDelete = (from c in context.clients
+                                      where c.clientId == this.ClientId
+                                      select c).FirstOrDefault();
+
+                context.clients.Remove(clientToDelete);
+                context.SaveChanges();
             }
         }
         public ICommand EditCommand
@@ -128,7 +55,72 @@ namespace LaboratoryApp
             //set owner of this window
             newModal.Owner = Application.Current.MainWindow;
             newModal.ShowDialog();
+
+            if (newModal.DialogResult == true) 
+            {
+                using(laboratoryEntities context = new laboratoryEntities() )
+                {
+                    var clientToEdit = (from c in context.clients
+                                        where c.clientId == this.ClientId
+                                        select c).FirstOrDefault();
+                    context.clients.Attach(clientToEdit);
+                    
+                    if(Name != "" && Address != "" && ContactPerson != "" && Email != "" && Telephone != "" && NIP != "" && Comment != "")
+                    {
+                        clientToEdit.name = Name;
+                        clientToEdit.adress = Address;
+                        clientToEdit.contact_person_name = ContactPerson;
+                        clientToEdit.mail = Email;
+                        clientToEdit.tel = Telephone;
+                        clientToEdit.NIP = NIP;
+                        clientToEdit.comments = Comment;
+
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Wypełnij wszystkie pola");
+                    }
+
+                }
+            }
         }
 
+        public ICommand AddCommand
+        { get { return new SimpleRelayCommand(AddOffice); } }
+
+        private void AddOffice()
+        {
+            //create a new modal window
+
+            View.ModalWindowOffice newModal = new View.ModalWindowOffice();
+
+            //set owner of this window
+            newModal.Owner = Application.Current.MainWindow;
+            newModal.ShowDialog();
+
+            if (newModal.DialogResult == true)
+            {
+                MessageBox.Show(newModal.DialogResult.ToString());
+                var newOffice = new office();
+                newOffice.name = newModal.infoOffice.Name;
+                newOffice.adress = newModal.infoOffice.Address;
+                newOffice.contact_person_name = newModal.infoOffice.ContactPerson;
+                newOffice.mail = newModal.infoOffice.Email;
+                newOffice.tel = newModal.infoOffice.Telephone;
+                newOffice.client_id = this.ClientId;
+
+                using (laboratoryEntities context = new laboratoryEntities())
+                {
+
+                    context.offices.Add(newOffice);
+                    context.SaveChanges();
+                }
+            }
+            else
+            {
+                MessageBox.Show(newModal.DialogResult.ToString());
+            }
+        }
     }
 }

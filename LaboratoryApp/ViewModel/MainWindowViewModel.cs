@@ -61,30 +61,33 @@ namespace LaboratoryApp
                 if ((SelectedNode as client) != null)
                 {
                     client selectedClient = selectedNode as client;
-                    CurrentViewModel = new InformationAboutClient(new View.InformationAboutClientView 
-                                                                    { Name = selectedClient.name, 
+                    CurrentViewModel = new InformationAboutClient()
+                                                                    { ClientId = selectedClient.clientId,
+                                                                      Name = selectedClient.name, 
                                                                       Address = selectedClient.adress, 
                                                                       NIP = selectedClient.NIP, 
                                                                       Telephone = selectedClient.tel,
                                                                       ContactPerson = selectedClient.contact_person_name,
                                                                       Comment = selectedClient.comments,
-                                                                      Email = selectedClient.mail});
+                                                                      Email = selectedClient.mail};
                 }
                 if((SelectedNode as office)!=null)
                 {
                     office selectedOffice = selectedNode as office;
-                    CurrentViewModel = new InformationAboutOffice(new View.InformationAboutOfficeView 
-                                                                    { Name = selectedOffice.name,
+                    CurrentViewModel = new InformationAboutOffice()
+                                                                    {
+                                                                      OfficeId = selectedOffice.officeId,
+                                                                      Name = selectedOffice.name,
                                                                       Address = selectedOffice.adress,
                                                                       Telephone = selectedOffice.tel,
                                                                       ContactPerson = selectedOffice.contact_person_name,
-                                                                      Email = selectedOffice.mail});
+                                                                      Email = selectedOffice.mail};
                 }
                 if ((SelectedNode as product) != null)
                 {
                     product selectedProduct = selectedNode as product;
                     CurrentViewModel = new ViewModel.InformationAboutProduct() {
-                                                                      
+                                                                      ProductId = selectedProduct.productId,
                                                                       SerialNumber = selectedProduct.serial_number,
                                                                       Gauge = selectedProduct.gauge,
                                                                       Office = selectedProduct.office
@@ -205,7 +208,7 @@ namespace LaboratoryApp
             View.ModalWindowClient newModal;
             //create a new modal window
 
-            newModal = new View.ModalWindowClient() {/* infoClient = (CurrentViewModel as InformationAboutClient)*/};
+            newModal = new View.ModalWindowClient() {};
 
             //set owner of this window
 
@@ -215,38 +218,42 @@ namespace LaboratoryApp
             //when we click OK button we add client to database 
             if (newModal.DialogResult == true)
             {
-                MessageBox.Show(newModal.DialogResult.ToString());
+                client newClient = new client();
+                newClient.name = newModal.infoClient.Name;
+                newClient.adress = newModal.infoClient.Address;
+                newClient.mail = newModal.infoClient.Email;
+                newClient.tel = newModal.infoClient.Telephone;
+                newClient.NIP = newModal.infoClient.NIP;
+                newClient.contact_person_name = newModal.infoClient.ContactPerson;
+                newClient.comments = newModal.infoClient.Comment;
+
+                using (laboratoryEntities context = new laboratoryEntities())
+                {
+                    context.clients.Add(newClient);
+                    context.SaveChanges();
+                    //if (Name != "" && Address != "" && ContactPerson != "" && Email != "" && Telephone != "" && NIP != "" && Comment != "")
+                    //{
+                    //    clientToEdit.name = Name;
+                    //    clientToEdit.adress = Address;
+                    //    clientToEdit.contact_person_name = ContactPerson;
+                    //    clientToEdit.mail = Email;
+                    //    clientToEdit.tel = Telephone;
+                    //    clientToEdit.NIP = NIP;
+                    //    clientToEdit.comments = Comment;
+
+                    //    context.SaveChanges();
+                    //}
+                    //else
+                    //{
+                    //    MessageBox.Show("Wypełnij wszystkie pola");
+                    //}
+
+                }
             }
             else
             {
                 MessageBox.Show(newModal.DialogResult.ToString());
             }
-            
-                //OpenNewWindow NewWindow = new OpenNewWindow() { MWindow = newModal };
-
-                //newModal.ShowDialog();
-
-
-                //OpenedWindow.CancelDialog();
-
-                //if (NClient.DialogResult == true)
-                //{
-                //    //some tests....
-                //}
-                //else
-                //{
-                //    System.Windows.MessageBox.Show(NClient.DialogResult.ToString());
-                //    //something when cancel was clicked...
-                //}
-
-                //ViewModel.OpenNewWindow NewWindow = new OpenNewWindow();
-
-                //if (NClient.ShowDialog() == true)
-                //    System.Windows.MessageBox.Show(NClient.ShowDialog().ToString());
-
-                //DialogResult = NClient.DialogResult;
-                //if (DialogResult == false)
-                //   NClient.Close();
             
         }
 

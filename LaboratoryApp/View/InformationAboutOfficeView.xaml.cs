@@ -18,18 +18,12 @@ namespace LaboratoryApp.View
     /// <summary>
     /// Interaction logic for InformationAboutOfficeView.xaml
     /// </summary>
-    public partial class InformationAboutOfficeView : UserControl
+    public partial class InformationAboutOfficeView
     {
         public InformationAboutOfficeView()
         {
             InitializeComponent();
         }
-
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public string ContactPerson { get; set; }
-        public string Email { get; set; }
-        public string Telephone { get; set; }
 
     }
 }
