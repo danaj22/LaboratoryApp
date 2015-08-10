@@ -107,6 +107,8 @@
     <Compile Include="ViewModel\Answer.cs" />
     <Compile Include="ViewModel\ConfigurationDialogViewModel.cs" />
     <Compile Include="ViewModel\ContentViewControl.cs" />
+    <Compile Include="ViewModel\DialogCloser.cs" />
+    <Compile Include="ViewModel\DialogWindowBase.cs" />
     <Compile Include="ViewModel\IItems.cs" />
     <Compile Include="ViewModel\IModalWindow.cs" />
     <Compile Include="ViewModel\InformationAboutClient.cs" />
@@ -120,7 +122,6 @@
     <Compile Include="ViewModel\NewWindowProduct.cs" />
     <Compile Include="ViewModel\OfficesViewModel.cs" />
     <Compile Include="ViewModel\OpenNewWindow.cs" />
-    <Compile Include="ViewModel\ResultFromModalWindowBase.cs" />
     <Compile Include="ViewModel\TreeViewHelper.cs" />
     <Compile Include="ViewModel\GaugesViewModel.cs" />
     <Compile Include="ViewModel\ClientsViewModel.cs" />
@@ -128,6 +129,18 @@
     <Compile Include="ViewModel\ObservableObject.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
     <Compile Include="ViewModel\UserInput.cs" />
+    <Compile Include="View\DialogWindowClient.xaml.cs">
+      <DependentUpon>DialogWindowClient.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowGauge.xaml.cs">
+      <DependentUpon>DialogWindowGauge.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowOffice.xaml.cs">
+      <DependentUpon>DialogWindowOffice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowProduct.xaml.cs">
+      <DependentUpon>DialogWindowProduct.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\InformationAboutClientView.xaml.cs">
       <DependentUpon>InformationAboutClientView.xaml</DependentUpon>
     </Compile>
@@ -149,6 +162,9 @@
     <Compile Include="View\ModalWindowOffice.xaml.cs">
       <DependentUpon>ModalWindowOffice.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\WindowService.xaml.cs">
+      <DependentUpon>WindowService.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -161,6 +177,22 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\DialogWindowClient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowGauge.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowOffice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowProduct.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\InformationAboutClientView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -186,6 +218,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ModalWindowOffice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WindowService.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

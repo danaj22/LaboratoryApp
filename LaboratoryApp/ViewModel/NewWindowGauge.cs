@@ -8,24 +8,26 @@ using System.Windows.Input;
 
 namespace LaboratoryApp.ViewModel
 {
-    public class NewWindowGauge : ResultFromModalWindowBase
+    public class NewWindowGauge
     {
-        public View.ModalWindowGauge MWindow;
+        //public View.ModalWindowGauge MWindow;
 
         public InformationAboutGauge AboutGauge { get; set; }
 
+        public NewWindowGauge()
+        { }
 
-        public NewWindowGauge(View.ModalWindowGauge window) : base (window)
+        public NewWindowGauge(Window window) //: base (window)
         {
-            laboratoryEntities context = new laboratoryEntities();
-            MWindow = window;
-            MWindow.infoGauge = AboutGauge = new InformationAboutGauge();
+            //laboratoryEntities context = new laboratoryEntities();
+            //MWindow = window;
+            //MWindow.infoGauge = AboutGauge = new InformationAboutGauge();
 
-            foreach(var tmp in context.usages)
-            {
+            //foreach(var tmp in context.usages)
+            //{
 
-                AboutGauge.CollectionOfUsage.Add(tmp);
-            }
+            //    AboutGauge.CollectionOfUsage.Add(tmp);
+            //}
             //AboutGauge = new InformationAboutGauge();
         }
 

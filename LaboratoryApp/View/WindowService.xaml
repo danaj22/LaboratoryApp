@@ -1,0 +1,35 @@
+﻿<Window x:Class="LaboratoryApp.View.WindowService"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="WindowService" Height="500" Width="400"
+        xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
+        xmlns:v="clr-namespace:LaboratoryApp.View"
+        xmlns:local="clr-namespace:LaboratoryApp"
+        vm:DialogCloser.DialogResult="{Binding DialogResultValue}"
+        >
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:NewWindowClient}">
+            <v:DialogWindowClient />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewWindowGauge}">
+            <v:DialogWindowGauge />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewWindowOffice}">
+            <v:DialogWindowOffice />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewWindowProduct}">
+            <v:DialogWindowProduct />
+        </DataTemplate>
+    </Window.Resources>
+
+    <Window.DataContext>
+        <vm:DialogWindowBase/>
+    </Window.DataContext>
+    
+    <Grid>
+        <Button Content="Ok" Command="{Binding OkCommand}" HorizontalAlignment="Left" Margin="153,322,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Cancel" Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="233,322,0,0" VerticalAlignment="Top" Width="75"/>
+        <ContentControl Content="{Binding BaseContent}" HorizontalAlignment="Left" Margin="28,21,0,0" VerticalAlignment="Top" Height="296" Width="338"/>
+
+    </Grid>
+</Window>

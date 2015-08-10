@@ -4,10 +4,11 @@
         xmlns:local="clr-namespace:LaboratoryApp"
         xmlns:view="clr-namespace:LaboratoryApp.View"
         xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
+        vm:DialogCloser.DialogResult="{Binding DialogResultValue}"
          WindowStartupLocation="CenterScreen"
         
-        local:TreeViewHelper.DialogResult="{Binding WindowCloseResult}"
-        Title="MainWindow" Height="600" Width="1200">
+        
+        Title="MainWindow" Height="400" Width="600">
     <Window.Resources>
         <DataTemplate DataType="{x:Type local:InformationAboutClient}">
             <view:InformationAboutClientView/>
@@ -148,6 +149,8 @@
         <TextBox Text="{Binding SearchItem}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Background="AliceBlue" Margin="0,12,0,11" />
         <Button Content="Dodaj klienta" Command="{Binding AddNewClientCommand}" Grid.Column="4" HorizontalAlignment="Right"  VerticalAlignment="center" Margin="0,2" />
         <Button Content="Dodaj miernik" Command="{Binding AddNewGaugeCommand}" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Right"  VerticalAlignment="center" Margin="0,2" />
+        <Button Content="Button" Grid.Column="4" Command="{Binding TaskCommand}" HorizontalAlignment="Left" Margin="83,10,0,0" Grid.Row="3" VerticalAlignment="Top" Width="75"/>
+
 
 
         <!--<Button Content="Edytuj klienta" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Right"  VerticalAlignment="center"/>

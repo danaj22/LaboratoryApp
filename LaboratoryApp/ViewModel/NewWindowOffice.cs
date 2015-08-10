@@ -8,16 +8,18 @@ using System.Windows.Input;
 
 namespace LaboratoryApp.ViewModel
 {
-    public class NewWindowOffice : ResultFromModalWindowBase
+    public class NewWindowOffice
     {
         public InformationAboutOffice AboutOffice { get; set; }
-        public View.ModalWindowOffice MWindow;
+        //public View.ModalWindowOffice MWindow;
 
+        public NewWindowOffice()
+        { }
 
-        public NewWindowOffice(View.ModalWindowOffice window) : base(window)
+        public NewWindowOffice(View.ModalWindowOffice window)// : base(window)
         {
-            MWindow = window;
-            MWindow.infoOffice = AboutOffice = new InformationAboutOffice();
+            //MWindow = window;
+            //MWindow.infoOffice = AboutOffice = new InformationAboutOffice();
         
         }
 

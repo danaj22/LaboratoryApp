@@ -12,8 +12,8 @@ namespace LaboratoryApp.ViewModel
 {
     public partial class OpenNewWindow
     {
-        public View.ModalWindowClient MWindow;
-        public View.ModalWindowClient MEditWindow;
+        //public View.ModalWindowClient MWindow;
+        //public View.ModalWindowClient MEditWindow;
 
 
         public OpenNewWindow()
@@ -22,37 +22,37 @@ namespace LaboratoryApp.ViewModel
             //MWindow.Owner = Application.Current.MainWindow;
            // this.MWindow.Owner = Application.Current.MainWindow;
         }
-        public OpenNewWindow(View.ModalWindowClient window)
-        {
-            MWindow = window;
-        }
+        //public OpenNewWindow(View.ModalWindowClient window)
+        //{
+        //    MWindow = window;
+        //}
 
-        public InformationAboutClient Cli { get; set; }
+        //public InformationAboutClient Cli { get; set; }
 
-        public ICommand ConfirmCommand
-        {
-            get
-            {
-                return new SimpleRelayCommand(ConfirmDialog);
-            }
-        }
-        private void ConfirmDialog()
-        {
-            MWindow.DialogResult = true;
-        }
+        //public ICommand ConfirmCommand
+        //{
+        //    get
+        //    {
+        //        return new SimpleRelayCommand(ConfirmDialog);
+        //    }
+        //}
+        //private void ConfirmDialog()
+        //{
+        //    MWindow.DialogResult = true;
+        //}
 
-        public ICommand CancelCommand
-        {
-            get
-            {
-                return new SimpleRelayCommand(CancelDialog);
-            }
-        }
+        //public ICommand CancelCommand
+        //{
+        //    get
+        //    {
+        //        return new SimpleRelayCommand(CancelDialog);
+        //    }
+        //}
 
-        public void CancelDialog()
-        {
-            MWindow.DialogResult = false;
+        //public void CancelDialog()
+        //{
+        //    MWindow.DialogResult = false;
             
-        }
+        //}
     }
 }

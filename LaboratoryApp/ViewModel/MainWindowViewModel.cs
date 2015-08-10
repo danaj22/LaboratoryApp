@@ -1,4 +1,5 @@
-﻿using LaboratoryApp.ViewModel;
+﻿using LaboratoryApp.View;
+using LaboratoryApp.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -117,12 +118,14 @@ namespace LaboratoryApp
 
         public MainWindowViewModel()
         {
+            TaskCommand = new SimpleRelayCommand(TaskCom);
             CurrentViewModel = null;
             userInput = new UserInput();
             LoadView();
            
         }
        
+
         public int SearchItem { get; set; }
         public ICommand LoadContent { get; set; }
         public ICommand SearchCommand 
@@ -153,34 +156,71 @@ namespace LaboratoryApp
 
         private void AddGauge()
         {
-            //create a new modal window
-
-            View.ModalWindowGauge newModal = new View.ModalWindowGauge();
-
-            //set owner of this window
-            newModal.Owner = Application.Current.MainWindow;
-            newModal.ShowDialog();
-            
-            if (newModal.DialogResult == true)
+            DialogWindowBase newBaseWindow = new DialogWindowBase();
+            NewWindowGauge newBaseGauge = new NewWindowGauge();
+            //newBaseGauge = newBaseWindow.BaseContent;
+            newBaseWindow.BaseContent = new NewWindowGauge();
+            if((newBaseWindow.BaseContent as NewWindowGauge)!=null)
             {
-                MessageBox.Show(newModal.DialogResult.ToString());
+
+            }
+
+            WindowService w = new WindowService();
+            w.DataContext = newBaseWindow;
+            w.Owner = Application.Current.MainWindow;
+            w.ShowDialog();
+
+            var result = w.DialogResult;
+
+            if (result == true)
+            {
+                MessageBox.Show(result.ToString());
                 var newGauge = new gauge();
-                newGauge.manufacturer_name = newModal.infoGauge.ManufacturerName;
-                newGauge.model = newModal.infoGauge.Model;
-                newGauge.type_id = 1;
-                newGauge.usage_id = 1;
+
+                //newGauge.manufacturer_name = .infoGauge.ManufacturerName;
+               // newGauge.model = newBaseWindow.infoGauge.Model;
+                //newGauge.type_id = 1;
+                //newGauge.usage_id = 1;
 
                 using (laboratoryEntities context = new laboratoryEntities())
                 {
 
-                    context.gauges.Add(newGauge);
-                    context.SaveChanges();
+                   // context.gauges.Add(newGauge);
+                    //context.SaveChanges();
                 }
             }
             else
             {
-                MessageBox.Show(newModal.DialogResult.ToString());
+                MessageBox.Show(w.DialogResult.ToString());
             }
+            //create a new modal window
+
+            //View.ModalWindowGauge newModal = new View.ModalWindowGauge();
+
+            ////set owner of this window
+            //newModal.Owner = Application.Current.MainWindow;
+            //newModal.ShowDialog();
+            
+            //if (newModal.DialogResult == true)
+            //{
+            //    MessageBox.Show(newModal.DialogResult.ToString());
+            //    var newGauge = new gauge();
+            //    newGauge.manufacturer_name = newModal.infoGauge.ManufacturerName;
+            //    newGauge.model = newModal.infoGauge.Model;
+            //    newGauge.type_id = 1;
+            //    newGauge.usage_id = 1;
+
+            //    using (laboratoryEntities context = new laboratoryEntities())
+            //    {
+
+            //        context.gauges.Add(newGauge);
+            //        context.SaveChanges();
+            //    }
+            //}
+            //else
+            //{
+            //    MessageBox.Show(newModal.DialogResult.ToString());
+            //}
             
         }
         /// <summary>
@@ -201,59 +241,149 @@ namespace LaboratoryApp
             cli.DialogResult = true;
         }
 
-        
-        //
-        private void AddClient()
+        private bool? dialogResultValue;
+
+        public bool? DialogResultValue
         {
-            View.ModalWindowClient newModal;
-            //create a new modal window
+            get { return dialogResultValue; }
+            set 
+            { 
+                dialogResultValue = value;
+                OnPropertyChanged("DialogResultValue");
+            }
+        }
 
-            newModal = new View.ModalWindowClient() {};
 
-            //set owner of this window
 
-            newModal.Owner = Application.Current.MainWindow;
-            newModal.ShowDialog();
-
-            //when we click OK button we add client to database 
-            if (newModal.DialogResult == true)
+        private ICommand taskCommand;
+        public ICommand TaskCommand
+        {
+            get { return taskCommand; }
+            set 
             {
-                client newClient = new client();
-                newClient.name = newModal.infoClient.Name;
-                newClient.adress = newModal.infoClient.Address;
-                newClient.mail = newModal.infoClient.Email;
-                newClient.tel = newModal.infoClient.Telephone;
-                newClient.NIP = newModal.infoClient.NIP;
-                newClient.contact_person_name = newModal.infoClient.ContactPerson;
-                newClient.comments = newModal.infoClient.Comment;
+                taskCommand = value;
+                OnPropertyChanged("TaskCommand");
+            }
+        }
+        
 
-                using (laboratoryEntities context = new laboratoryEntities())
-                {
-                    context.clients.Add(newClient);
-                    context.SaveChanges();
-                    //if (Name != "" && Address != "" && ContactPerson != "" && Email != "" && Telephone != "" && NIP != "" && Comment != "")
-                    //{
-                    //    clientToEdit.name = Name;
-                    //    clientToEdit.adress = Address;
-                    //    clientToEdit.contact_person_name = ContactPerson;
-                    //    clientToEdit.mail = Email;
-                    //    clientToEdit.tel = Telephone;
-                    //    clientToEdit.NIP = NIP;
-                    //    clientToEdit.comments = Comment;
+        private void TaskCom()
+        {
 
-                    //    context.SaveChanges();
-                    //}
-                    //else
-                    //{
-                    //    MessageBox.Show("Wypełnij wszystkie pola");
-                    //}
+            DialogWindowBase newBaseWindow = new DialogWindowBase();
+            newBaseWindow.BaseContent = new NewWindowOffice();
+            
+            WindowService w = new WindowService();
+            w.DataContext = newBaseWindow;
+            
+            w.Owner = Application.Current.MainWindow;
+            
+            w.ShowDialog();
 
-                }
+            //w.SetBinding(Window.ContentProperty, "");
+            
+            var result = w.DialogResult;
+
+            if(result == true)
+            {
+                MessageBox.Show(result.ToString());
             }
             else
             {
-                MessageBox.Show(newModal.DialogResult.ToString());
+
             }
+                  
+        }
+
+
+
+        private DialogWindowBase dialogWindow;
+        public DialogWindowBase DialogWindow
+        {
+            get { return dialogWindow; }
+            set 
+            {
+                dialogWindow = value;
+                OnPropertyChanged("DialogWindow");
+            }
+        }
+
+            
+        
+        private void AddClient()
+        {
+            DialogWindowBase newBaseWindow = new DialogWindowBase();
+            newBaseWindow.BaseContent = new NewWindowClient();
+
+            WindowService w = new WindowService();
+            w.DataContext = newBaseWindow;
+            w.Owner = Application.Current.MainWindow;
+            w.ShowDialog();
+
+            var result = w.DialogResult;
+
+            if(result == true)
+            {
+                MessageBox.Show(result.ToString());
+
+            }
+            else
+            { }
+            //NewWindowClient newClient = new NewWindowClient();
+            //WindowService window = new WindowService();
+            //var result = window.ShowWindow(newClient);
+
+            //MessageBox.Show(result.ToString());
+            
+            //View.ModalWindowClient newModal;
+            //create a new modal window
+
+            //newModal = new View.ModalWindowClient() {};
+
+            ////set owner of this window
+
+            //newModal.Owner = Application.Current.MainWindow;
+            //newModal.ShowDialog();
+
+            ////when we click OK button we add client to database 
+            //if (newModal.DialogResult == true)
+            //{
+            //    client newClient = new client();
+            //    newClient.name = newModal.infoClient.Name;
+            //    newClient.adress = newModal.infoClient.Address;
+            //    newClient.mail = newModal.infoClient.Email;
+            //    newClient.tel = newModal.infoClient.Telephone;
+            //    newClient.NIP = newModal.infoClient.NIP;
+            //    newClient.contact_person_name = newModal.infoClient.ContactPerson;
+            //    newClient.comments = newModal.infoClient.Comment;
+
+            //    using (laboratoryEntities context = new laboratoryEntities())
+            //    {
+            //        context.clients.Add(newClient);
+            //        context.SaveChanges();
+            //        //if (Name != "" && Address != "" && ContactPerson != "" && Email != "" && Telephone != "" && NIP != "" && Comment != "")
+            //        //{
+            //        //    clientToEdit.name = Name;
+            //        //    clientToEdit.adress = Address;
+            //        //    clientToEdit.contact_person_name = ContactPerson;
+            //        //    clientToEdit.mail = Email;
+            //        //    clientToEdit.tel = Telephone;
+            //        //    clientToEdit.NIP = NIP;
+            //        //    clientToEdit.comments = Comment;
+
+            //        //    context.SaveChanges();
+            //        //}
+            //        //else
+            //        //{
+            //        //    MessageBox.Show("Wypełnij wszystkie pola");
+            //        //}
+
+            //    }
+            //}
+            //else
+            //{
+            //    MessageBox.Show(newModal.DialogResult.ToString());
+            //}
             
         }
 
@@ -264,9 +394,6 @@ namespace LaboratoryApp
         }
 
 
-        public bool? WindowCloseResult
-        { get;
-            set; }
    
     }
 }

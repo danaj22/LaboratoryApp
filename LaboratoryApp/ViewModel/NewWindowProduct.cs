@@ -7,16 +7,16 @@ using System.Windows.Input;
 
 namespace LaboratoryApp.ViewModel
 {
-    public class NewWindowProduct : ResultFromModalWindowBase
+    public class NewWindowProduct 
     {
-        public View.ModalWindowProduct MWindow;
+        //public View.ModalWindowProduct MWindow;
         public InformationAboutProduct AboutProduct { get; set; }
 
-        public NewWindowProduct(View.ModalWindowProduct window):base(window)
+        public NewWindowProduct(View.ModalWindowProduct window)//:base(window)
         {
-            laboratoryEntities context = new laboratoryEntities();
-            MWindow = window;
-            MWindow.infoProduct = AboutProduct = new InformationAboutProduct();
+            //laboratoryEntities context = new laboratoryEntities();
+            //MWindow = window;
+            //MWindow.infoProduct = AboutProduct = new InformationAboutProduct();
 
         }
 
