@@ -20,19 +20,19 @@ namespace LaboratoryApp.View
     /// </summary>
     public partial class ModalWindowGauge : Window,IModalWindow
     {
-        public InformationAboutGauge infoGauge = new InformationAboutGauge();
+        public InformationAboutModelOfGauge infoGauge = new InformationAboutModelOfGauge();
 
         public ModalWindowGauge()
         {
             InitializeComponent();
-            NewWindowGauge tmp = new NewWindowGauge(this);
+            NewWindowModelOfGauge tmp = new NewWindowModelOfGauge(this);
             DataContext = tmp;
-            infoGauge = tmp.AboutGauge;
+            infoGauge = tmp.AboutModelOfGauge;
         }
-        public ModalWindowGauge(InformationAboutGauge info)
+        public ModalWindowGauge(InformationAboutModelOfGauge info)
         {
             InitializeComponent();
-            DataContext = new NewWindowGauge(this) { AboutGauge = infoGauge = info };
+            DataContext = new NewWindowModelOfGauge(this) { AboutModelOfGauge = infoGauge = info };
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-
+//todelet 2 lib^^
 namespace LaboratoryApp
 {
     public class MainWindowViewModel : ObservableObject
@@ -63,7 +63,8 @@ namespace LaboratoryApp
                 {
                     client selectedClient = selectedNode as client;
                     CurrentViewModel = new InformationAboutClient()
-                                                                    { ClientId = selectedClient.clientId,
+                                                                    { 
+                                                                      ClientId = selectedClient.clientId,
                                                                       Name = selectedClient.name, 
                                                                       Address = selectedClient.adress, 
                                                                       NIP = selectedClient.NIP, 
@@ -87,8 +88,8 @@ namespace LaboratoryApp
                 if ((SelectedNode as product) != null)
                 {
                     product selectedProduct = selectedNode as product;
-                    CurrentViewModel = new ViewModel.InformationAboutProduct() {
-                                                                      ProductId = selectedProduct.productId,
+                    CurrentViewModel = new ViewModel.InformationAboutGauge() {
+                                                                      GaugeId = selectedProduct.productId,
                                                                       SerialNumber = selectedProduct.serial_number,
                                                                       Gauge = selectedProduct.gauge,
                                                                       Office = selectedProduct.office
@@ -118,7 +119,7 @@ namespace LaboratoryApp
 
         public MainWindowViewModel()
         {
-            TaskCommand = new SimpleRelayCommand(TaskCom);
+            //TaskCommand = new SimpleRelayCommand(TaskCom);
             CurrentViewModel = null;
             userInput = new UserInput();
             LoadView();
@@ -134,7 +135,7 @@ namespace LaboratoryApp
         }
         private void SearchGauge()
         {
-            laboratoryEntities context = new laboratoryEntities();
+            LaboratoryEntities context = new LaboratoryEntities();
 
             var tmp = (from searchedGauge in context.gauges
                        where SearchItem == searchedGauge.gaugeId
@@ -157,36 +158,33 @@ namespace LaboratoryApp
         private void AddGauge()
         {
             DialogWindowBase newBaseWindow = new DialogWindowBase();
-            NewWindowGauge newBaseGauge = new NewWindowGauge();
-            //newBaseGauge = newBaseWindow.BaseContent;
-            newBaseWindow.BaseContent = new NewWindowGauge();
-            if((newBaseWindow.BaseContent as NewWindowGauge)!=null)
-            {
+            NewWindowModelOfGauge gaugeDialogWindow = new NewWindowModelOfGauge() { AboutModelOfGauge = new InformationAboutModelOfGauge() };
 
-            }
+            newBaseWindow.BaseContent = gaugeDialogWindow;
 
             WindowService w = new WindowService();
             w.DataContext = newBaseWindow;
             w.Owner = Application.Current.MainWindow;
             w.ShowDialog();
 
-            var result = w.DialogResult;
+            bool? result = w.DialogResult;
 
             if (result == true)
             {
                 MessageBox.Show(result.ToString());
-                var newGauge = new gauge();
+                var gaugeToAddToDatabase = new gauge();
 
-                //newGauge.manufacturer_name = .infoGauge.ManufacturerName;
-               // newGauge.model = newBaseWindow.infoGauge.Model;
-                //newGauge.type_id = 1;
-                //newGauge.usage_id = 1;
+                gaugeToAddToDatabase.manufacturer_name = gaugeDialogWindow.AboutModelOfGauge.ManufacturerName;
+                gaugeToAddToDatabase.model = gaugeDialogWindow.AboutModelOfGauge.Model;
+                
+                //trzeba dorobić wyszukiwanie w bazie "po nazwie znajdź ID"
+                gaugeToAddToDatabase.type_id = 1;
+                gaugeToAddToDatabase.usage_id = 1;
 
-                using (laboratoryEntities context = new laboratoryEntities())
+                using (LaboratoryEntities context = new LaboratoryEntities())
                 {
-
-                   // context.gauges.Add(newGauge);
-                    //context.SaveChanges();
+                    context.gauges.Add(gaugeToAddToDatabase);
+                    context.SaveChanges();
                 }
             }
             else
@@ -210,7 +208,7 @@ namespace LaboratoryApp
             //    newGauge.type_id = 1;
             //    newGauge.usage_id = 1;
 
-            //    using (laboratoryEntities context = new laboratoryEntities())
+            //    using (LaboratoryEntities context = new LaboratoryEntities())
             //    {
 
             //        context.gauges.Add(newGauge);
@@ -254,49 +252,6 @@ namespace LaboratoryApp
         }
 
 
-
-        private ICommand taskCommand;
-        public ICommand TaskCommand
-        {
-            get { return taskCommand; }
-            set 
-            {
-                taskCommand = value;
-                OnPropertyChanged("TaskCommand");
-            }
-        }
-        
-
-        private void TaskCom()
-        {
-
-            DialogWindowBase newBaseWindow = new DialogWindowBase();
-            newBaseWindow.BaseContent = new NewWindowOffice();
-            
-            WindowService w = new WindowService();
-            w.DataContext = newBaseWindow;
-            
-            w.Owner = Application.Current.MainWindow;
-            
-            w.ShowDialog();
-
-            //w.SetBinding(Window.ContentProperty, "");
-            
-            var result = w.DialogResult;
-
-            if(result == true)
-            {
-                MessageBox.Show(result.ToString());
-            }
-            else
-            {
-
-            }
-                  
-        }
-
-
-
         private DialogWindowBase dialogWindow;
         public DialogWindowBase DialogWindow
         {
@@ -313,86 +268,63 @@ namespace LaboratoryApp
         private void AddClient()
         {
             DialogWindowBase newBaseWindow = new DialogWindowBase();
-            newBaseWindow.BaseContent = new NewWindowClient();
+            NewWindowClient newBaseClient = new NewWindowClient() { AboutClient = new InformationAboutClient() };
+
+            newBaseWindow.BaseContent = newBaseClient;
 
             WindowService w = new WindowService();
             w.DataContext = newBaseWindow;
+
             w.Owner = Application.Current.MainWindow;
+
             w.ShowDialog();
+
+            //w.SetBinding(Window.ContentProperty, "");
 
             var result = w.DialogResult;
 
-            if(result == true)
+            if (result == true)
             {
                 MessageBox.Show(result.ToString());
 
+                client newClient = new client();
+                newClient.name = newBaseClient.AboutClient.Name;
+                newClient.adress = newBaseClient.AboutClient.Address;
+                newClient.mail = newBaseClient.AboutClient.Email;
+                newClient.tel = newBaseClient.AboutClient.Telephone;
+                newClient.NIP = newBaseClient.AboutClient.NIP;
+                newClient.contact_person_name = newBaseClient.AboutClient.ContactPerson;
+                newClient.comments = newBaseClient.AboutClient.Comment;
+
+                using (LaboratoryEntities context = new LaboratoryEntities())
+                {
+                    context.clients.Add(newClient);
+                    context.SaveChanges();
+                    //if (Name != "" && Address != "" && ContactPerson != "" && Email != "" && Telephone != "" && NIP != "" && Comment != "")
+                    //{
+                    //    clientToEdit.name = Name;
+                    //    clientToEdit.adress = Address;
+                    //    clientToEdit.contact_person_name = ContactPerson;
+                    //    clientToEdit.mail = Email;
+                    //    clientToEdit.tel = Telephone;
+                    //    clientToEdit.NIP = NIP;
+                    //    clientToEdit.comments = Comment;
+
+                    //    context.SaveChanges();
+                    //}
+                    //else
+                    //{
+                    //    MessageBox.Show("Wypełnij wszystkie pola");
+                    //}
+
+                }
             }
             else
-            { }
-            //NewWindowClient newClient = new NewWindowClient();
-            //WindowService window = new WindowService();
-            //var result = window.ShowWindow(newClient);
+            {
 
-            //MessageBox.Show(result.ToString());
-            
-            //View.ModalWindowClient newModal;
-            //create a new modal window
-
-            //newModal = new View.ModalWindowClient() {};
-
-            ////set owner of this window
-
-            //newModal.Owner = Application.Current.MainWindow;
-            //newModal.ShowDialog();
-
-            ////when we click OK button we add client to database 
-            //if (newModal.DialogResult == true)
-            //{
-            //    client newClient = new client();
-            //    newClient.name = newModal.infoClient.Name;
-            //    newClient.adress = newModal.infoClient.Address;
-            //    newClient.mail = newModal.infoClient.Email;
-            //    newClient.tel = newModal.infoClient.Telephone;
-            //    newClient.NIP = newModal.infoClient.NIP;
-            //    newClient.contact_person_name = newModal.infoClient.ContactPerson;
-            //    newClient.comments = newModal.infoClient.Comment;
-
-            //    using (laboratoryEntities context = new laboratoryEntities())
-            //    {
-            //        context.clients.Add(newClient);
-            //        context.SaveChanges();
-            //        //if (Name != "" && Address != "" && ContactPerson != "" && Email != "" && Telephone != "" && NIP != "" && Comment != "")
-            //        //{
-            //        //    clientToEdit.name = Name;
-            //        //    clientToEdit.adress = Address;
-            //        //    clientToEdit.contact_person_name = ContactPerson;
-            //        //    clientToEdit.mail = Email;
-            //        //    clientToEdit.tel = Telephone;
-            //        //    clientToEdit.NIP = NIP;
-            //        //    clientToEdit.comments = Comment;
-
-            //        //    context.SaveChanges();
-            //        //}
-            //        //else
-            //        //{
-            //        //    MessageBox.Show("Wypełnij wszystkie pola");
-            //        //}
-
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show(newModal.DialogResult.ToString());
-            //}
+            }
             
         }
-
-
-        private bool CanAddClient()
-        { 
-            return true; 
-        }
-
 
    
     }

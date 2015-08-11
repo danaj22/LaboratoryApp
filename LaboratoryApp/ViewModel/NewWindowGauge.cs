@@ -1,34 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Windows;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace LaboratoryApp.ViewModel
 {
-    public class NewWindowGauge
+    public class NewWindowGauge:ObservableObject
     {
-        //public View.ModalWindowGauge MWindow;
+        //public View.ModalWindowProduct MWindow;
+        private InformationAboutGauge aboutGauge;
 
-        public InformationAboutGauge AboutGauge { get; set; }
+        public InformationAboutGauge AboutGauge
+        {
+            get { return aboutGauge; }
+            set 
+            { 
+                aboutGauge = value;
+                OnPropertyChanged("AboutGauge");
+            }
+        }
+
 
         public NewWindowGauge()
-        { }
-
-        public NewWindowGauge(Window window) //: base (window)
         {
-            //laboratoryEntities context = new laboratoryEntities();
+            aboutGauge = new InformationAboutGauge();
+        }
+
+        public NewWindowGauge(View.ModalWindowProduct window)//:base(window)
+        {
+            //LaboratoryEntities context = new LaboratoryEntities();
             //MWindow = window;
-            //MWindow.infoGauge = AboutGauge = new InformationAboutGauge();
+            //MWindow.infoProduct = AboutGauge = new InformationAboutGauge();
 
-            //foreach(var tmp in context.usages)
-            //{
-
-            //    AboutGauge.CollectionOfUsage.Add(tmp);
-            //}
-            //AboutGauge = new InformationAboutGauge();
         }
 
     }

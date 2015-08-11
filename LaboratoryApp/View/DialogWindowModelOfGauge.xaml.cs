@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace LaboratoryApp.View
 {
     /// <summary>
-    /// Interaction logic for DialogWindowProduct.xaml
+    /// Interaction logic for DialogWindowModelOfGauge.xaml
     /// </summary>
-    public partial class DialogWindowProduct : UserControl
+    public partial class DialogWindowModelOfGauge : UserControl
     {
-        public DialogWindowProduct()
+        public DialogWindowModelOfGauge()
         {
             InitializeComponent();
         }

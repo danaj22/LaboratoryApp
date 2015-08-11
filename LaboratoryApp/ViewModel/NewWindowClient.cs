@@ -16,18 +16,29 @@ namespace LaboratoryApp.ViewModel
 
         //public View.ModalWindowClient MWindow;
 
-        public InformationAboutClient AboutClient = null; //{get; set;}
+        private InformationAboutClient aboutClient;
+
+        public InformationAboutClient AboutClient
+        {
+            get { return aboutClient; }
+            set 
+            { 
+                aboutClient = value;
+                OnPropertyChanged("AboutClient");
+            }
+        }
         //public View.ModalWindowClient MWindow;
         public NewWindowClient()
-        { }
+        {
+        }
 
         public NewWindowClient(View.ModalWindowClient window)// : base(window)
         {
-        //    //laboratoryEntities context = new laboratoryEntities();
+        //    //LaboratoryEntities context = new LaboratoryEntities();
         //    //MWindow = window;
         //    //MWindow.infoClient = AboutClient = new InformationAboutClient();
 
-        //    //AboutGauge = new InformationAboutGauge();
+        //    //AboutModelOfGauge = new InformationAboutModelOfGauge();
         }
         
     }

@@ -15,25 +15,98 @@ namespace LaboratoryApp
     {
         public InformationAboutClient()
         {   }
-        public int ClientId { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public string ContactPerson { get; set; }
-        public string Email { get; set; }
-        public string Telephone { get; set; }
-        public string NIP { get; set; }
-        public string Comment { get; set; }
+
+        private int clientId;
+        public int ClientId
+        {
+            get { return clientId; }
+            set 
+            { 
+                clientId = value;
+                OnPropertyChanged("ClientId");
+            }
+        }
+        private string name;
+        public string Name
+        {
+            get { return name; }
+            set 
+            {
+                name = value;
+                OnPropertyChanged("Name");
+            }
+        }
+        private string address;
+        public string Address
+        {
+            get { return address; }
+            set 
+            { 
+                address = value;
+                OnPropertyChanged("Address");
+            }
+        }
+        private string contactPerson;
+        public string ContactPerson
+        {
+            get { return contactPerson; }
+            set 
+            { 
+                contactPerson = value;
+                OnPropertyChanged("ContactPerson");
+            }
+        }
+        private string email;
+        public string Email
+        {
+            get { return email; }
+            set
+            { 
+                email = value;
+                OnPropertyChanged("Email");
+            }
+        }
+        private string telephone;
+        public string Telephone
+        {
+            get { return telephone; }
+            set 
+            {
+                telephone = value;
+                OnPropertyChanged("Telephone");
+            }
+        }
+        private string nIP;
+        public string NIP
+        {
+            get { return nIP; }
+            set 
+            { 
+                nIP = value;
+                OnPropertyChanged("NIP");
+            }
+        }
+        private string comment;
+        public string Comment
+        {
+            get { return comment; }
+            set 
+            { 
+                comment = value;
+                OnPropertyChanged("Comment");
+            }
+        }
 
         public ICommand DeleteCommand
-        { get { return new SimpleRelayCommand(DeleteClient); } }
+        { get { return new SimpleRelayCommand(DeleteClientExecute); } }
 
-        private void DeleteClient()
+        private void DeleteClientExecute()
         {
             var result = MessageBox.Show("Czy na pewno chcesz usunąć bezzwłocznie i definitywnie tego klienta?","Usuwanie klienta",MessageBoxButton.YesNo,MessageBoxImage.Question);
             
             if(result == MessageBoxResult.Yes)
             {
-                laboratoryEntities context = new laboratoryEntities();
+                LaboratoryEntities context = new LaboratoryEntities();
                 //delete selected client
                 var clientToDelete = (from c in context.clients
                                       where c.clientId == this.ClientId
@@ -44,38 +117,70 @@ namespace LaboratoryApp
             }
         }
         public ICommand EditCommand
-        { get { return new SimpleRelayCommand(EditClient);} }
+        { get { return new SimpleRelayCommand(EditClientExecute);} }
 
-        private void EditClient()
+        private void EditClientExecute()
         {
             //create a new modal window
-            InformationAboutClient infoClient = this;
-            View.ModalWindowClient newModal = new View.ModalWindowClient(infoClient);
+            DialogWindowBase newBaseWindow = new DialogWindowBase();
+            NewWindowClient clientDialogWindow = new NewWindowClient() { AboutClient = new InformationAboutClient() };
 
-            //set owner of this window
-            newModal.Owner = Application.Current.MainWindow;
-            newModal.ShowDialog();
 
-            if (newModal.DialogResult == true) 
+            //filling in the data fields in new window
+            clientDialogWindow.AboutClient.Comment = Comment;
+            clientDialogWindow.AboutClient.Name = Name;
+            clientDialogWindow.AboutClient.ContactPerson = ContactPerson;
+            clientDialogWindow.AboutClient.Address = Address;
+            clientDialogWindow.AboutClient.Telephone = Telephone;
+            clientDialogWindow.AboutClient.NIP = NIP;
+            clientDialogWindow.AboutClient.Email = Email;
+
+            //filling the window contents
+            newBaseWindow.BaseContent = clientDialogWindow;
+
+            WindowService w = new WindowService();
+            w.DataContext = newBaseWindow;
+            w.Owner = Application.Current.MainWindow;
+            w.ShowDialog();
+
+            if (w.DialogResult == true)
             {
-                using(laboratoryEntities context = new laboratoryEntities() )
+                using (LaboratoryEntities context = new LaboratoryEntities())
                 {
+                    //finding selected client in database
                     var clientToEdit = (from c in context.clients
                                         where c.clientId == this.ClientId
                                         select c).FirstOrDefault();
-                    context.clients.Attach(clientToEdit);
                     
-                    if(Name != "" && Address != "" && ContactPerson != "" && Email != "" && Telephone != "" && NIP != "" && Comment != "")
+
+                    //modify data in database
+                    if (clientDialogWindow.AboutClient.Name != ""
+                        && clientDialogWindow.AboutClient.Address != ""
+                        && clientDialogWindow.AboutClient.ContactPerson != ""
+                        && clientDialogWindow.AboutClient.Email != ""
+                        && clientDialogWindow.AboutClient.Telephone != ""
+                        && clientDialogWindow.AboutClient.NIP != ""
+                        && clientDialogWindow.AboutClient.Comment != "")
                     {
-                        clientToEdit.name = Name;
-                        clientToEdit.adress = Address;
-                        clientToEdit.contact_person_name = ContactPerson;
-                        clientToEdit.mail = Email;
-                        clientToEdit.tel = Telephone;
-                        clientToEdit.NIP = NIP;
-                        clientToEdit.comments = Comment;
+                        
+                        clientToEdit.name = clientDialogWindow.AboutClient.Name;
+                        clientToEdit.adress = clientDialogWindow.AboutClient.Address;
+                        clientToEdit.contact_person_name = clientDialogWindow.AboutClient.ContactPerson;
+                        clientToEdit.mail = clientDialogWindow.AboutClient.Email;
+                        clientToEdit.tel = clientDialogWindow.AboutClient.Telephone;
+                        clientToEdit.NIP = clientDialogWindow.AboutClient.NIP;
+                        clientToEdit.comments = clientDialogWindow.AboutClient.Comment;
 
                         context.SaveChanges();
+
+                        //set new data in main window view
+                        Name = clientDialogWindow.AboutClient.Name;
+                        Address = clientDialogWindow.AboutClient.Address;
+                        ContactPerson = clientDialogWindow.AboutClient.ContactPerson;
+                        Email = clientDialogWindow.AboutClient.Email;
+                        Telephone = clientDialogWindow.AboutClient.Telephone;
+                        NIP = clientDialogWindow.AboutClient.NIP;
+                        Comment = clientDialogWindow.AboutClient.Comment;
                     }
                     else
                     {
@@ -84,43 +189,84 @@ namespace LaboratoryApp
 
                 }
             }
+
+
+            //View.ModalWindowClient newModal = new View.ModalWindowClient(infoClient);
+
+            ////set owner of this window
+            //newModal.Owner = Application.Current.MainWindow;
+            //newModal.ShowDialog();
+
+            //if (newModal.DialogResult == true) 
+            //{
+            //    using(LaboratoryEntities context = new LaboratoryEntities() )
+            //    {
+            //        var clientToEdit = (from c in context.clients
+            //                            where c.clientId == this.ClientId
+            //                            select c).FirstOrDefault();
+            //        context.clients.Attach(clientToEdit);
+                    
+            //        if(Name != "" && Address != "" && ContactPerson != "" && Email != "" && Telephone != "" && NIP != "" && Comment != "")
+            //        {
+            //            clientToEdit.name = Name;
+            //            clientToEdit.adress = Address;
+            //            clientToEdit.contact_person_name = ContactPerson;
+            //            clientToEdit.mail = Email;
+            //            clientToEdit.tel = Telephone;
+            //            clientToEdit.NIP = NIP;
+            //            clientToEdit.comments = Comment;
+
+            //            context.SaveChanges();
+            //        }
+            //        else
+            //        {
+            //            MessageBox.Show("Wypełnij wszystkie pola");
+            //        }
+
+            //    }
+            //}
         }
 
         public ICommand AddCommand
-        { get { return new SimpleRelayCommand(AddOffice); } }
+        { get { return new SimpleRelayCommand(AddOfficeExecute); } }
 
-        private void AddOffice()
+        private void AddOfficeExecute()
         {
             //create a new modal window
 
-            View.ModalWindowOffice newModal = new View.ModalWindowOffice();
+            DialogWindowBase newBaseWindow = new DialogWindowBase();
+            NewWindowOffice officeDialogWindow = new NewWindowOffice() { AboutOffice = new InformationAboutOffice() };
 
-            //set owner of this window
-            newModal.Owner = Application.Current.MainWindow;
-            newModal.ShowDialog();
+            newBaseWindow.BaseContent = officeDialogWindow;
 
-            if (newModal.DialogResult == true)
+            WindowService w = new WindowService();
+            w.DataContext = newBaseWindow;
+            w.Owner = Application.Current.MainWindow;
+            w.ShowDialog();
+            bool? result = w.DialogResult;
+            
+            if (result == true)
             {
-                MessageBox.Show(newModal.DialogResult.ToString());
-                var newOffice = new office();
-                newOffice.name = newModal.infoOffice.Name;
-                newOffice.adress = newModal.infoOffice.Address;
-                newOffice.contact_person_name = newModal.infoOffice.ContactPerson;
-                newOffice.mail = newModal.infoOffice.Email;
-                newOffice.tel = newModal.infoOffice.Telephone;
-                newOffice.client_id = this.ClientId;
+                office officeToAddToDatabase = new office();
+                officeToAddToDatabase.adress = officeDialogWindow.AboutOffice.Address;
+                officeToAddToDatabase.mail = officeDialogWindow.AboutOffice.Email;
+                officeToAddToDatabase.contact_person_name = officeDialogWindow.AboutOffice.ContactPerson;
+                officeToAddToDatabase.name = officeDialogWindow.AboutOffice.Name;
+                officeToAddToDatabase.tel = officeDialogWindow.AboutOffice.Telephone;
+                officeToAddToDatabase.client_id = this.ClientId;
 
-                using (laboratoryEntities context = new laboratoryEntities())
+                using(LaboratoryEntities context = new LaboratoryEntities())
                 {
-
-                    context.offices.Add(newOffice);
+                    context.offices.Add(officeToAddToDatabase);
                     context.SaveChanges();
                 }
+                MessageBox.Show("Oddział został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
-                MessageBox.Show(newModal.DialogResult.ToString());
+
             }
+            
         }
     }
 }

@@ -15,10 +15,10 @@ namespace LaboratoryApp
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class laboratoryEntities : DbContext
+    public partial class LaboratoryEntities : DbContext
     {
-        public laboratoryEntities()
-            : base("name=laboratoryEntities")
+        public LaboratoryEntities()
+            : base("name=LaboratoryEntities")
         {
         }
     

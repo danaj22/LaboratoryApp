@@ -11,9 +11,9 @@ namespace LaboratoryApp
     public class LoadData : ObservableObject
     {
         UserInput userInput;
-        private laboratoryEntities labEntities = new laboratoryEntities();
+        private LaboratoryEntities labEntities = new LaboratoryEntities();
 
-        public laboratoryEntities LabEntities
+        public LaboratoryEntities LabEntities
         {
             get { return labEntities; }
             set { labEntities = value; }

@@ -1,111 +1,165 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using LaboratoryApp.View;
-using System.Windows.Input;
-using LaboratoryApp.ViewModel;
 using System.Windows;
-using System.Collections.ObjectModel;
+using System.Windows.Input;
 
-namespace LaboratoryApp
+namespace LaboratoryApp.ViewModel
 {
     public class InformationAboutGauge : ObservableObject
     {
-        public InformationAboutGauge()
-        {
-            this.Products = new ObservableCollection<product>();
-        }
-        
         public int GaugeId { get; set; }
-        public string ManufacturerName
+        public int SerialNumber { get; set; }
+        public Nullable<int> ClientId { get; set; }
+        public Nullable<int> OfficeId { get; set; }
+        public Nullable<int> ModalOfGaugeId { get; set; }
+
+        public virtual gauge Gauge { get; set; }
+        public virtual office Office { get; set; }
+
+        List<string> collectionOfManufacturers;
+
+        public List<string> CollectionOfManufacturers
         {
-            get;
-            set;
+            get { return this.collectionOfManufacturers; }
+            set 
+            {
+                collectionOfManufacturers = value;
+                OnPropertyChanged("CollectionOfManufacturers");
+            }
+
         }
-        public string Model { get; set; }
-        public int UsageId { get; set; }
-        public int TypeId { get; set; }
-    
-        public virtual type Type { get; set; }
-        public virtual ObservableCollection<product> Products { get; set; }
-        public virtual usage Usage { get; set; }
 
-        private ObservableCollection<usage> collectionOfusage = new ObservableCollection<usage>();
-
-        public ObservableCollection<usage> CollectionOfUsage
+        private void InitializeCollectionOfManufacturers()
         {
-            get { return collectionOfusage; }
+            LaboratoryEntities context = new LaboratoryEntities();
+            collectionOfManufacturers = (from m in context.gauges select m.manufacturer_name).ToList();
+
+        }
+
+
+        private string selectedManufacturer;
+
+        public string SelectedManufacturer
+        {
+            get { return selectedManufacturer; }
+            set 
+            { 
+                selectedManufacturer = value;
+                InitializeCollectionOfModels();
+                OnPropertyChanged("SelectedManufacturer");
+            }
+        }
+
+        public List<string> modelList;
+
+        private void InitializeCollectionOfModels()
+        {
+            if(SelectedManufacturer != null)
+            {
+                LaboratoryEntities context = new LaboratoryEntities();
+                var getManufacturer = context.gauges.FirstOrDefault( g => g.manufacturer_name == selectedManufacturer);
+                modelList = (from g in context.gauges where g.gaugeId == getManufacturer.gaugeId select g.model).ToList();
+                
+            }
+        }
+
+
+        List<string> collectionOfModels;
+
+        public List<string> CollectionOfModels
+        {
+          get { return modelList; }
+          set 
+          { 
+              //collectionOfModels = value;
+              InitializeCollectionOfModels();
+              OnPropertyChanged("CollectionOfModels");
+          }
+        }
+        private string selectedModel;
+
+        public string SelectedModel
+        {
+            get { return selectedModel; }
             set
             {
-                collectionOfusage = CollectionOfUsage;
-                OnPropertyChanged("CollectionOfUsage");
+                selectedModel = value;
+                OnPropertyChanged("SelectedModel");
             }
+
+        }
+
+
+        public InformationAboutGauge()
+        {
+            InitializeCollectionOfManufacturers();
+            //collectionOfModels = new List<string>();
+            //collectionOfManufacturers = new List<string>();
         }
 
 
         public ICommand DeleteCommand
-        { get { return new SimpleRelayCommand(DeleteGauge); } }
+        { get { return new SimpleRelayCommand(DeleteProduct); } }
 
-        private void DeleteGauge()
+        private void DeleteProduct()
         {
-            var result = MessageBox.Show("Czy na pewno chcesz usunąć bezzwłocznie i definitywnie ten miernik?", "aaaaa", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var result = MessageBox.Show("Czy na pewno chcesz usunąć bezzwłocznie i definitywnie ten produkt?", "Usuwanie produktu", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
             if (result == MessageBoxResult.Yes)
             {
-                laboratoryEntities context = new laboratoryEntities();
+                LaboratoryEntities context = new LaboratoryEntities();
                 //delete selected client
-                var gaugeToDelete = (from g in context.gauges
-                                      where g.gaugeId == this.GaugeId
-                                      select g).FirstOrDefault();
+                var productToDelete = (from p in context.products
+                                      where p.productId == this.GaugeId
+                                      select p).FirstOrDefault();
 
-                context.gauges.Remove(gaugeToDelete);
+                context.products.Remove(productToDelete);
                 context.SaveChanges();
             }
         }
-
         public ICommand EditCommand
-        { get { return new SimpleRelayCommand(EditGauge); } }
+        { get { return new SimpleRelayCommand(EditProduct); } }
 
-        private void EditGauge()
+        private void EditProduct()
         {
             //create a new modal window
-            InformationAboutGauge infoGauge = this;
-            View.ModalWindowGauge newModal = new View.ModalWindowGauge(infoGauge);
+            InformationAboutGauge infoProduct = this;
+            View.ModalWindowProduct newModal = new View.ModalWindowProduct(infoProduct);
 
             //set owner of this window
             newModal.Owner = Application.Current.MainWindow;
             newModal.ShowDialog();
 
-            //if (newModal.DialogResult == true)
-            //{
-            //    using (laboratoryEntities context = new laboratoryEntities())
-            //    {
-            //        var gaugeToEdit = (from g in context.gauges
-            //                            where g.gaugeId == this.GaugeId
-            //                            select g).FirstOrDefault();
+            if (newModal.DialogResult == true)
+            {
+                using (LaboratoryEntities context = new LaboratoryEntities())
+                {
+                    var productToEdit = (from p in context.products
+                                        where p.productId == this.GaugeId
+                                        select p).FirstOrDefault();
 
-            //        if (ManufacturerName != "" && Address != "" && ContactPerson != "" && Email != "" && Telephone != "" && NIP != "" && Comment != "")
-            //        {
-            //            gaugeToEdit.name = Name;
-            //            gaugeToEdit.adress = Address;
-            //            gaugeToEdit.contact_person_name = ContactPerson;
-            //            gaugeToEdit.mail = Email;
-            //            gaugeToEdit.tel = Telephone;
-            //            gaugeToEdit.NIP = NIP;
-            //            gaugeToEdit.comments = Comment;
+                    if (SerialNumber != null && Gauge != null && Office != null)
+                    {
+                        productToEdit.serial_number = SerialNumber;
+                        //productToEdit.adress = Address;
+                        //productToEdit.contact_person_name = ContactPerson;
+                        //productToEdit.mail = Email;
+                        //productToEdit.tel = Telephone;
+                        //productToEdit.NIP = NIP;
+                        //productToEdit.comments = Comment;
 
-            //            context.SaveChanges();
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Wypełnij wszystkie pola");
-            //        }
+                        //context.SaveChanges();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Wypełnij wszystkie pola");
+                    }
 
-            //    }
-            //}
-
+                }
+            }
         }
-        
     }
 }

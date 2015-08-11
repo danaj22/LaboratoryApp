@@ -21,7 +21,7 @@ namespace LaboratoryApp.ViewModel
         //    informations = new ObservableCollection<InformationAboutSelectedNodeViewModelBase>();
 
         //    informations.Add(new InformationAboutClient());
-        //    informations.Add(new InformationAboutGauge());
+        //    informations.Add(new InformationAboutModelOfGauge());
         //    informations.Add(new InformationAboutOffice());
         //}
 

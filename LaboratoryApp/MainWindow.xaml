@@ -16,7 +16,7 @@
         <DataTemplate DataType="{x:Type local:InformationAboutOffice}">
             <view:InformationAboutOfficeView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:InformationAboutProduct}">
+        <DataTemplate DataType="{x:Type vm:InformationAboutGauge}">
             <view:InformationAboutProductView />
         </DataTemplate>
     </Window.Resources>
@@ -56,74 +56,7 @@
         <Label Content="Imię i Nazwisko:" Grid.Column="0" Grid.Row="2" />
         <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding NameAndSurname}" />
 
-        <!--<TreeView Grid.Row="1" ItemsSource="{Binding Data.TreeOfClients}" Grid.RowSpan="2">
 
-            <TreeView.ItemTemplate>
-                
-                <HierarchicalDataTemplate ItemsSource="{Binding Offices}">
-                    <TreeViewItem Header="{Binding Name}" />
-        <TextBlock Text="{Binding Name}" />
-
-        -->
-        <!--offices template-->
-        <!--
-                    <HierarchicalDataTemplate.ItemTemplate>
-                        <HierarchicalDataTemplate  ItemsSource="{Binding CollectionOfGauges}">
-                            <TreeViewItem Header="{Binding Name}"/>
-        <TextBlock Text="{Binding Name}"/>
-
-        -->
-        <!--gauges template-->
-        <!--
-                            <HierarchicalDataTemplate.ItemTemplate>
-                                <DataTemplate>
-                                    <TreeViewItem Header="{Binding Name}" />
-                        <TextBlock Text="{Binding Name}"/>
-                    </DataTemplate>
-                            </HierarchicalDataTemplate.ItemTemplate>
-
-                        </HierarchicalDataTemplate>
-                    </HierarchicalDataTemplate.ItemTemplate>
-
-                </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
-
-        </TreeView>-->
-
-
-
-        <!--<TreeView ItemContainerStyle="{StaticResource ItemContainerStyle}" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding Data.TreeOfClients,UpdateSourceTrigger=PropertyChanged}" 
-                  local:TreeViewHelper.SelectedItem="{Binding SelectedNode, Mode=TwoWay}" VirtualizingPanel.IsVirtualizing="True" Grid.ColumnSpan="2">
-            
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding Offices}">
-                    <TextBlock Text="{Binding Name}"/>
-                    <HierarchicalDataTemplate.ItemTemplate>
-                        <HierarchicalDataTemplate ItemsSource="{Binding CollectionOfGauges}">
-                            <TextBlock Text="{Binding Name}"/>
-                        </HierarchicalDataTemplate>
-                    </HierarchicalDataTemplate.ItemTemplate>
-                </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
-                 
-        </TreeView>-->
-        <!--
-        <TreeView ItemContainerStyle="{StaticResource ItemContainerStyle}" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" 
-                  ItemTemplate="{StaticResource level1}" ItemsSource="{Binding theData}" VirtualizingPanel.IsVirtualizing="True" Grid.ColumnSpan="2">
-
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding Offices}">
-                    <TextBlock Text="{Binding Name}"/>
-                    <HierarchicalDataTemplate.ItemTemplate>
-                        <HierarchicalDataTemplate ItemsSource="{Binding CollectionOfGauges}">
-                            <TextBlock Text="{Binding Name}"/>
-                        </HierarchicalDataTemplate>
-                    </HierarchicalDataTemplate.ItemTemplate>
-                </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
-
-        </TreeView>
--->
         <TreeView Name="tvwAllClients" ItemContainerStyle="{StaticResource ItemContainerStyle}" Grid.Row="4" Grid.RowSpan="2" ItemsSource="{Binding AllItems,UpdateSourceTrigger=PropertyChanged}" 
                   local:TreeViewHelper.SelectedItem="{Binding SelectedNode, Mode=TwoWay}" VirtualizingPanel.IsVirtualizing="True" Grid.Column="0" Grid.ColumnSpan="2">
             <TreeView.ItemTemplate>
@@ -147,9 +80,8 @@
         </ContentControl>
         <Button Content="Wyszukaj" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Width="80" Command="{Binding SearchCommand}" Margin="10,12,10,11" />
         <TextBox Text="{Binding SearchItem}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Background="AliceBlue" Margin="0,12,0,11" />
-        <Button Content="Dodaj klienta" Command="{Binding AddNewClientCommand}" Grid.Column="4" HorizontalAlignment="Right"  VerticalAlignment="center" Margin="0,2" />
-        <Button Content="Dodaj miernik" Command="{Binding AddNewGaugeCommand}" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Right"  VerticalAlignment="center" Margin="0,2" />
-        <Button Content="Button" Grid.Column="4" Command="{Binding TaskCommand}" HorizontalAlignment="Left" Margin="83,10,0,0" Grid.Row="3" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Dodaj klienta" Command="{Binding AddNewClientCommand}" Grid.Column="4" HorizontalAlignment="Right"  VerticalAlignment="center" Margin="0,2" Width="123" />
+        <Button Content="Dodaj model miernika" Command="{Binding AddNewGaugeCommand}" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Right"  VerticalAlignment="center" Margin="0,2" />
 
 
 

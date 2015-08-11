@@ -8,9 +8,19 @@ using System.Windows.Input;
 
 namespace LaboratoryApp.ViewModel
 {
-    public class NewWindowOffice
+    public class NewWindowOffice:ObservableObject
     {
-        public InformationAboutOffice AboutOffice { get; set; }
+        private InformationAboutOffice aboutOffice;
+
+        public InformationAboutOffice AboutOffice
+        {
+            get { return aboutOffice; }
+            set 
+            { 
+                aboutOffice = value;
+                OnPropertyChanged("AboutOffice");
+            }
+        }
         //public View.ModalWindowOffice MWindow;
 
         public NewWindowOffice()

@@ -112,14 +112,14 @@
     <Compile Include="ViewModel\IItems.cs" />
     <Compile Include="ViewModel\IModalWindow.cs" />
     <Compile Include="ViewModel\InformationAboutClient.cs" />
-    <Compile Include="ViewModel\InformationAboutGauge.cs" />
+    <Compile Include="ViewModel\InformationAboutModelOfGauge.cs" />
     <Compile Include="ViewModel\InformationAboutOffice.cs" />
-    <Compile Include="ViewModel\InformationAboutProduct.cs" />
+    <Compile Include="ViewModel\InformationAboutGauge.cs" />
     <Compile Include="ViewModel\LoadData.cs" />
     <Compile Include="ViewModel\NewWindowClient.cs" />
-    <Compile Include="ViewModel\NewWindowGauge.cs" />
+    <Compile Include="ViewModel\NewWindowModelOfGauge.cs" />
     <Compile Include="ViewModel\NewWindowOffice.cs" />
-    <Compile Include="ViewModel\NewWindowProduct.cs" />
+    <Compile Include="ViewModel\NewWindowGauge.cs" />
     <Compile Include="ViewModel\OfficesViewModel.cs" />
     <Compile Include="ViewModel\OpenNewWindow.cs" />
     <Compile Include="ViewModel\TreeViewHelper.cs" />
@@ -132,14 +132,14 @@
     <Compile Include="View\DialogWindowClient.xaml.cs">
       <DependentUpon>DialogWindowClient.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\DialogWindowGauge.xaml.cs">
-      <DependentUpon>DialogWindowGauge.xaml</DependentUpon>
+    <Compile Include="View\DialogWindowModelOfGauge.xaml.cs">
+      <DependentUpon>DialogWindowModelOfGauge.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DialogWindowOffice.xaml.cs">
       <DependentUpon>DialogWindowOffice.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\DialogWindowProduct.xaml.cs">
-      <DependentUpon>DialogWindowProduct.xaml</DependentUpon>
+    <Compile Include="View\DialogWindowGauge.xaml.cs">
+      <DependentUpon>DialogWindowGauge.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\InformationAboutClientView.xaml.cs">
       <DependentUpon>InformationAboutClientView.xaml</DependentUpon>
@@ -181,7 +181,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\DialogWindowGauge.xaml">
+    <Page Include="View\DialogWindowModelOfGauge.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -189,7 +189,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\DialogWindowProduct.xaml">
+    <Page Include="View\DialogWindowGauge.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
