@@ -116,6 +116,7 @@
     <Compile Include="ViewModel\InformationAboutOffice.cs" />
     <Compile Include="ViewModel\InformationAboutGauge.cs" />
     <Compile Include="ViewModel\LoadData.cs" />
+    <Compile Include="ViewModel\ModalDialogManager.cs" />
     <Compile Include="ViewModel\NewWindowClient.cs" />
     <Compile Include="ViewModel\NewWindowModelOfGauge.cs" />
     <Compile Include="ViewModel\NewWindowOffice.cs" />

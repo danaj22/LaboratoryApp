@@ -9,18 +9,18 @@
     
     <Application.Resources>
 
-        <!--<DataTemplate DataType="{x:Type vm:NewWindowClient}">
+        <DataTemplate DataType="{x:Type vm:NewWindowClient}">
             <v:DialogWindowClient />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:NewWindowGauge}">
-            <v:DialogWindowGauge />
+        <DataTemplate DataType="{x:Type vm:NewWindowModelOfGauge}">
+            <v:DialogWindowModelOfGauge />
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:NewWindowOffice}">
             <v:DialogWindowOffice />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:NewWindowProduct}">
-            <v:DialogWindowProduct />
-        </DataTemplate>-->
+        <DataTemplate DataType="{x:Type vm:NewWindowGauge}">
+            <v:DialogWindowGauge />
+        </DataTemplate>
 
     </Application.Resources>
 </Application>

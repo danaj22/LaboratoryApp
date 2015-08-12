@@ -35,5 +35,8 @@
         <TextBox HorizontalAlignment="Center" Text="{Binding AboutOffice.Email}" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Width="156" Height="24"/>
         <TextBox HorizontalAlignment="Center" Text="{Binding AboutOffice.Telephone}" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" Width="156" Height="24"/>
 
+        <Button Grid.ColumnSpan="2" Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="79,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1" HorizontalAlignment="Left" Margin="44,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="75"/>
+
     </Grid>
 </UserControl>

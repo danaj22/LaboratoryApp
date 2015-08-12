@@ -120,6 +120,11 @@ namespace LaboratoryApp
         public MainWindowViewModel()
         {
             //TaskCommand = new SimpleRelayCommand(TaskCom);
+
+            Title = "Laboratorium";
+            ShowMessageCommand = new SimpleRelayCommand(ShowMessage);
+            AddNewClientCommand = new SimpleRelayCommand(AddClient);
+            AddNewGaugeCommand = new SimpleRelayCommand(AddGauge);
             CurrentViewModel = null;
             userInput = new UserInput();
             LoadView();
@@ -152,45 +157,61 @@ namespace LaboratoryApp
         /// <summary>
         /// command to show modal window where we can add new Gauge
         /// </summary>
+        /// 
+        private ICommand addNewGaugeCommand;
         public ICommand AddNewGaugeCommand
-        { get { return new SimpleRelayCommand(AddGauge); } }
+        { 
+
+            get 
+            { 
+                return addNewGaugeCommand;
+            } 
+            set
+            {
+                addNewGaugeCommand = value;
+                OnPropertyChanged("AddNewGaugeCommand");
+            }
+        }
 
         private void AddGauge()
         {
-            DialogWindowBase newBaseWindow = new DialogWindowBase();
-            NewWindowModelOfGauge gaugeDialogWindow = new NewWindowModelOfGauge() { AboutModelOfGauge = new InformationAboutModelOfGauge() };
+            MessageWindowModelOfGauge = new NewWindowModelOfGauge() { AboutModelOfGauge = new InformationAboutModelOfGauge() };
+            MessageWindowModelOfGauge.IsOpen = true;
 
-            newBaseWindow.BaseContent = gaugeDialogWindow;
+            //DialogWindowBase newBaseWindow = new DialogWindowBase();
+            //NewWindowModelOfGauge gaugeDialogWindow = new NewWindowModelOfGauge() { AboutModelOfGauge = new InformationAboutModelOfGauge() };
 
-            WindowService w = new WindowService();
-            w.DataContext = newBaseWindow;
-            w.Owner = Application.Current.MainWindow;
-            w.ShowDialog();
+            //newBaseWindow.BaseContent = gaugeDialogWindow;
 
-            bool? result = w.DialogResult;
+            //WindowService w = new WindowService();
+            //w.DataContext = newBaseWindow;
+            //w.Owner = Application.Current.MainWindow;
+            //w.ShowDialog();
 
-            if (result == true)
-            {
-                MessageBox.Show(result.ToString());
-                var gaugeToAddToDatabase = new gauge();
+            //bool? result = w.DialogResult;
 
-                gaugeToAddToDatabase.manufacturer_name = gaugeDialogWindow.AboutModelOfGauge.ManufacturerName;
-                gaugeToAddToDatabase.model = gaugeDialogWindow.AboutModelOfGauge.Model;
+            //if (result == true)
+            //{
+            //    MessageBox.Show(result.ToString());
+            //    var gaugeToAddToDatabase = new gauge();
+
+            //    gaugeToAddToDatabase.manufacturer_name = gaugeDialogWindow.AboutModelOfGauge.ManufacturerName;
+            //    gaugeToAddToDatabase.model = gaugeDialogWindow.AboutModelOfGauge.Model;
                 
-                //trzeba dorobić wyszukiwanie w bazie "po nazwie znajdź ID"
-                gaugeToAddToDatabase.type_id = 1;
-                gaugeToAddToDatabase.usage_id = 1;
+            //    //trzeba dorobić wyszukiwanie w bazie "po nazwie znajdź ID"
+            //    gaugeToAddToDatabase.type_id = 1;
+            //    gaugeToAddToDatabase.usage_id = 1;
 
-                using (LaboratoryEntities context = new LaboratoryEntities())
-                {
-                    context.gauges.Add(gaugeToAddToDatabase);
-                    context.SaveChanges();
-                }
-            }
-            else
-            {
-                MessageBox.Show(w.DialogResult.ToString());
-            }
+            //    using (LaboratoryEntities context = new LaboratoryEntities())
+            //    {
+            //        context.gauges.Add(gaugeToAddToDatabase);
+            //        context.SaveChanges();
+            //    }
+            //}
+            //else
+            //{
+            //    MessageBox.Show(w.DialogResult.ToString());
+            //}
             //create a new modal window
 
             //View.ModalWindowGauge newModal = new View.ModalWindowGauge();
@@ -224,11 +245,19 @@ namespace LaboratoryApp
         /// <summary>
         /// command to show modal window where we can add new Client
         /// </summary>
+        /// 
+        private ICommand addNewClientCommand;
         public ICommand AddNewClientCommand
         {
+
             get
             {
-                return new SimpleRelayCommand(AddClient);
+                return addNewClientCommand;
+            }
+            set 
+            { 
+                addNewClientCommand = value;
+                OnPropertyChanged("AddNewClientCommand");
             }
         }
 
@@ -267,65 +296,137 @@ namespace LaboratoryApp
         
         private void AddClient()
         {
-            DialogWindowBase newBaseWindow = new DialogWindowBase();
-            NewWindowClient newBaseClient = new NewWindowClient() { AboutClient = new InformationAboutClient() };
+            MessageWindow = new NewWindowClient { AboutClient = new InformationAboutClient() };
+            MessageWindow.IsOpen = true;
 
-            newBaseWindow.BaseContent = newBaseClient;
 
-            WindowService w = new WindowService();
-            w.DataContext = newBaseWindow;
 
-            w.Owner = Application.Current.MainWindow;
+            //DialogWindowBase newBaseWindow = new DialogWindowBase();
+            //NewWindowClient newBaseClient = new NewWindowClient() { AboutClient = new InformationAboutClient() };
 
-            w.ShowDialog();
+            //newBaseWindow.BaseContent = newBaseClient;
 
-            //w.SetBinding(Window.ContentProperty, "");
+            //WindowService w = new WindowService();
+            //w.DataContext = newBaseWindow;
 
-            var result = w.DialogResult;
+            //w.Owner = Application.Current.MainWindow;
 
-            if (result == true)
-            {
-                MessageBox.Show(result.ToString());
+            //w.ShowDialog();
 
-                client newClient = new client();
-                newClient.name = newBaseClient.AboutClient.Name;
-                newClient.adress = newBaseClient.AboutClient.Address;
-                newClient.mail = newBaseClient.AboutClient.Email;
-                newClient.tel = newBaseClient.AboutClient.Telephone;
-                newClient.NIP = newBaseClient.AboutClient.NIP;
-                newClient.contact_person_name = newBaseClient.AboutClient.ContactPerson;
-                newClient.comments = newBaseClient.AboutClient.Comment;
+            ////w.SetBinding(Window.ContentProperty, "");
 
-                using (LaboratoryEntities context = new LaboratoryEntities())
-                {
-                    context.clients.Add(newClient);
-                    context.SaveChanges();
-                    //if (Name != "" && Address != "" && ContactPerson != "" && Email != "" && Telephone != "" && NIP != "" && Comment != "")
-                    //{
-                    //    clientToEdit.name = Name;
-                    //    clientToEdit.adress = Address;
-                    //    clientToEdit.contact_person_name = ContactPerson;
-                    //    clientToEdit.mail = Email;
-                    //    clientToEdit.tel = Telephone;
-                    //    clientToEdit.NIP = NIP;
-                    //    clientToEdit.comments = Comment;
+            //var result = w.DialogResult;
 
-                    //    context.SaveChanges();
-                    //}
-                    //else
-                    //{
-                    //    MessageBox.Show("Wypełnij wszystkie pola");
-                    //}
+            //if (result == true)
+            //{
+            //    MessageBox.Show(result.ToString());
 
-                }
-            }
-            else
-            {
+            //    client newClient = new client();
+            //    newClient.name = newBaseClient.AboutClient.Name;
+            //    newClient.adress = newBaseClient.AboutClient.Address;
+            //    newClient.mail = newBaseClient.AboutClient.Email;
+            //    newClient.tel = newBaseClient.AboutClient.Telephone;
+            //    newClient.NIP = newBaseClient.AboutClient.NIP;
+            //    newClient.contact_person_name = newBaseClient.AboutClient.ContactPerson;
+            //    newClient.comments = newBaseClient.AboutClient.Comment;
 
-            }
+            //    using (LaboratoryEntities context = new LaboratoryEntities())
+            //    {
+            //        context.clients.Add(newClient);
+            //        context.SaveChanges();
+            //        //if (Name != "" && Address != "" && ContactPerson != "" && Email != "" && Telephone != "" && NIP != "" && Comment != "")
+            //        //{
+            //        //    clientToEdit.name = Name;
+            //        //    clientToEdit.adress = Address;
+            //        //    clientToEdit.contact_person_name = ContactPerson;
+            //        //    clientToEdit.mail = Email;
+            //        //    clientToEdit.tel = Telephone;
+            //        //    clientToEdit.NIP = NIP;
+            //        //    clientToEdit.comments = Comment;
+
+            //        //    context.SaveChanges();
+            //        //}
+            //        //else
+            //        //{
+            //        //    MessageBox.Show("Wypełnij wszystkie pola");
+            //        //}
+
+            //    }
+            //}
+            //else
+            //{
+
+            //}
             
         }
 
+        private NewWindowModelOfGauge messageWindowModelOfGauge;
+
+        public NewWindowModelOfGauge MessageWindowModelOfGauge
+        {
+            get { return messageWindowModelOfGauge; }
+            set 
+            {
+                messageWindowModelOfGauge = value;
+                base.OnPropertyChanged("MessageWindowModelOfGauge");
+            }
+        }
+
+
+        private string title;
+
+        public string Title
+        {
+            get { return title; }
+            set
+            {
+                title = value;
+                base.OnPropertyChanged("Title");
+            }
+        }
+
+        private NewWindowClient messageWindow;
+
+        public NewWindowClient MessageWindow
+        {
+            get { return messageWindow; }
+            set
+            {
+                
+                messageWindow = value;
+                base.OnPropertyChanged("MessageWindow");
+            }
+        }
+
+        private ICommand showMessageCommand;
+
+        public ICommand ShowMessageCommand
+        {
+            get { return showMessageCommand; }
+            set
+            {
+                
+                showMessageCommand = value;
+                base.OnPropertyChanged("ShowMessageCommand");
+            }
+        }
+        private string status;
+
+        public string Status
+        {
+            get { return status; }
+            set
+            {
+                status = value;
+                base.OnPropertyChanged("Status");
+            }
+        }
+        public void ShowMessage()
+        {
+            MessageWindow = new NewWindowClient {};
+            MessageWindow.IsOpen = true;
+            Status = "User was informed - " + DateTime.Now.ToLongTimeString();
+        }
    
     }
 }

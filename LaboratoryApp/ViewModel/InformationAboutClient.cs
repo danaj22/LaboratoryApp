@@ -97,6 +97,17 @@ namespace LaboratoryApp
             }
         }
 
+        private NewWindowOffice messageWindowOffice;
+
+        public NewWindowOffice MessageWindowOffice
+        {
+            get { return messageWindowOffice; }
+            set 
+            {
+                messageWindowOffice = value;
+                OnPropertyChanged("MessageWindowOffice");
+            }
+        }
         public ICommand DeleteCommand
         { get { return new SimpleRelayCommand(DeleteClientExecute); } }
 
@@ -232,40 +243,43 @@ namespace LaboratoryApp
 
         private void AddOfficeExecute()
         {
+            MessageWindowOffice = new NewWindowOffice() { AboutOffice = new InformationAboutOffice() };
+            messageWindowOffice.IsOpen = true;
+
             //create a new modal window
 
-            DialogWindowBase newBaseWindow = new DialogWindowBase();
-            NewWindowOffice officeDialogWindow = new NewWindowOffice() { AboutOffice = new InformationAboutOffice() };
+            //DialogWindowBase newBaseWindow = new DialogWindowBase();
+            //NewWindowOffice officeDialogWindow = new NewWindowOffice() { AboutOffice = new InformationAboutOffice() };
 
-            newBaseWindow.BaseContent = officeDialogWindow;
+            //newBaseWindow.BaseContent = officeDialogWindow;
 
-            WindowService w = new WindowService();
-            w.DataContext = newBaseWindow;
-            w.Owner = Application.Current.MainWindow;
-            w.ShowDialog();
-            bool? result = w.DialogResult;
+            //WindowService w = new WindowService();
+            //w.DataContext = newBaseWindow;
+            //w.Owner = Application.Current.MainWindow;
+            //w.ShowDialog();
+            //bool? result = w.DialogResult;
             
-            if (result == true)
-            {
-                office officeToAddToDatabase = new office();
-                officeToAddToDatabase.adress = officeDialogWindow.AboutOffice.Address;
-                officeToAddToDatabase.mail = officeDialogWindow.AboutOffice.Email;
-                officeToAddToDatabase.contact_person_name = officeDialogWindow.AboutOffice.ContactPerson;
-                officeToAddToDatabase.name = officeDialogWindow.AboutOffice.Name;
-                officeToAddToDatabase.tel = officeDialogWindow.AboutOffice.Telephone;
-                officeToAddToDatabase.client_id = this.ClientId;
+            //if (result == true)
+            //{
+            //    office officeToAddToDatabase = new office();
+            //    officeToAddToDatabase.adress = officeDialogWindow.AboutOffice.Address;
+            //    officeToAddToDatabase.mail = officeDialogWindow.AboutOffice.Email;
+            //    officeToAddToDatabase.contact_person_name = officeDialogWindow.AboutOffice.ContactPerson;
+            //    officeToAddToDatabase.name = officeDialogWindow.AboutOffice.Name;
+            //    officeToAddToDatabase.tel = officeDialogWindow.AboutOffice.Telephone;
+            //    officeToAddToDatabase.client_id = this.ClientId;
 
-                using(LaboratoryEntities context = new LaboratoryEntities())
-                {
-                    context.offices.Add(officeToAddToDatabase);
-                    context.SaveChanges();
-                }
-                MessageBox.Show("Oddział został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
+            //    using(LaboratoryEntities context = new LaboratoryEntities())
+            //    {
+            //        context.offices.Add(officeToAddToDatabase);
+            //        context.SaveChanges();
+            //    }
+            //    MessageBox.Show("Oddział został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+            //}
+            //else
+            //{
 
-            }
+            //}
             
         }
     }

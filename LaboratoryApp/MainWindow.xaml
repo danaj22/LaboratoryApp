@@ -4,11 +4,13 @@
         xmlns:local="clr-namespace:LaboratoryApp"
         xmlns:view="clr-namespace:LaboratoryApp.View"
         xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
-        vm:DialogCloser.DialogResult="{Binding DialogResultValue}"
-         WindowStartupLocation="CenterScreen"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"     
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         
-        
-        Title="MainWindow" Height="400" Width="600">
+        Title="{Binding Title}" Height="600" Width="700">
+    
     <Window.Resources>
         <DataTemplate DataType="{x:Type local:InformationAboutClient}">
             <view:InformationAboutClientView/>
@@ -19,6 +21,7 @@
         <DataTemplate DataType="{x:Type vm:InformationAboutGauge}">
             <view:InformationAboutProductView />
         </DataTemplate>
+        <local:MainWindowViewModel x:Key="MainWindowViewModelDataSource"/>
     </Window.Resources>
     <Window.DataContext>
         <local:MainWindowViewModel/>
@@ -78,7 +81,14 @@
 
         <ContentControl Grid.RowSpan="2" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="3" Content="{Binding CurrentViewModel}">
         </ContentControl>
-        <Button Content="Wyszukaj" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Width="80" Command="{Binding SearchCommand}" Margin="10,12,10,11" />
+        <Button Content="Wyszukaj" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Width="80" Command="{Binding ShowMessageCommand}" Margin="10,12,10,11" />
+        
+        <vm:ModalDialogManager DataContext="{Binding MessageWindow}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
+			DialogWidth="300" DialogResizeMode="NoResize" CloseCommand="{Binding OKCommand}"/>
+
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowModelOfGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
+			DialogWidth="300" DialogResizeMode="NoResize" CloseCommand="{Binding OKCommand}"/>
+
         <TextBox Text="{Binding SearchItem}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Background="AliceBlue" Margin="0,12,0,11" />
         <Button Content="Dodaj klienta" Command="{Binding AddNewClientCommand}" Grid.Column="4" HorizontalAlignment="Right"  VerticalAlignment="center" Margin="0,2" Width="123" />
         <Button Content="Dodaj model miernika" Command="{Binding AddNewGaugeCommand}" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Right"  VerticalAlignment="center" Margin="0,2" />

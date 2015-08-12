@@ -24,7 +24,10 @@ namespace LaboratoryApp.ViewModel
         //public View.ModalWindowOffice MWindow;
 
         public NewWindowOffice()
-        { }
+        {
+            OKCommand = new SimpleRelayCommand(Confirm);
+            CancelCommand = new SimpleRelayCommand(Close);
+        }
 
         public NewWindowOffice(View.ModalWindowOffice window)// : base(window)
         {
@@ -32,6 +35,86 @@ namespace LaboratoryApp.ViewModel
             //MWindow.infoOffice = AboutOffice = new InformationAboutOffice();
         
         }
+
+        private ICommand okCommand;
+
+        public ICommand OKCommand
+        {
+            get { return okCommand; }
+            set
+            {
+                okCommand = value;
+                base.OnPropertyChanged("OKCommand");
+            }
+        }
+        private ICommand cancelCommand;
+
+        public ICommand CancelCommand
+        {
+            get { return cancelCommand; }
+            set
+            {
+                cancelCommand = value;
+                OnPropertyChanged("CancelCommand");
+            }
+        }
+
+        private bool isOpen;
+
+        public bool IsOpen
+        {
+            get { return isOpen; }
+            set
+            {
+                isOpen = value;
+                base.OnPropertyChanged("IsOpen");
+            }
+        }
+
+        private bool toConfirm;
+
+        public bool ToConfirm
+        {
+            get { return toConfirm; }
+            set
+            {
+                toConfirm = value;
+                base.OnPropertyChanged("ToConfirm");
+            }
+        }
+
+        public void Confirm()
+        {
+
+            if (this.AboutOffice.Name != null
+                && this.AboutOffice.Address != null
+                && this.AboutOffice.Email != null
+                && this.AboutOffice.Telephone != null
+                && this.AboutOffice.ContactPerson != null)
+            {
+
+                office newOffice = new office();
+                newOffice.name = this.AboutOffice.Name;
+                newOffice.adress = this.AboutOffice.Address;
+                newOffice.mail = this.AboutOffice.Email;
+                newOffice.tel = this.AboutOffice.Telephone;
+                newOffice.contact_person_name = this.AboutOffice.ContactPerson;
+                
+
+                using (LaboratoryEntities context = new LaboratoryEntities())
+                {
+                    context.offices.Add(newOffice);
+                    context.SaveChanges();
+                }
+            }
+            IsOpen = false;
+
+        }
+        public void Close()
+        {
+            IsOpen = false;
+        }
+
 
        
     }

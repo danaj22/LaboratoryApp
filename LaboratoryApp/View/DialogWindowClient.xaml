@@ -11,6 +11,9 @@
              >
     <UserControl.Resources>
     </UserControl.Resources>
+    <d:DataContext>
+        <vm:NewWindowClient/>
+    </d:DataContext>
 <Grid >
     <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto"/>
@@ -43,6 +46,9 @@
     <TextBox HorizontalAlignment="Center" Text="{Binding AboutClient.Telephone}" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" Width="156" Height="24"/>
     <TextBox HorizontalAlignment="Center" Text="{Binding AboutClient.NIP}" VerticalAlignment="Center" Grid.Row="5" Grid.Column="1" Width="156" Height="24"/>
     <TextBox HorizontalAlignment="Center" Text="{Binding AboutClient.Comment}" VerticalAlignment="Center" Grid.Row="6" Grid.Column="1" Width="156" Height="24"/>
+    
+    <Button Grid.ColumnSpan="2" Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="79,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="75"/>
+    <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1" HorizontalAlignment="Left" Margin="23,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="75"/>
 
 
     </Grid>
