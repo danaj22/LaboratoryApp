@@ -70,12 +70,6 @@ namespace LaboratoryApp
         private void EditGauge()
         {
             //create a new modal window
-            InformationAboutModelOfGauge infoGauge = this;
-            View.ModalWindowGauge newModal = new View.ModalWindowGauge(infoGauge);
-
-            //set owner of this window
-            newModal.Owner = Application.Current.MainWindow;
-            newModal.ShowDialog();
 
             //if (newModal.DialogResult == true)
             //{

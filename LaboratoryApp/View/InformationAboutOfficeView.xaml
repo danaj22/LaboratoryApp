@@ -3,7 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
+             xmlns:local="clr-namespace:LaboratoryApp"
+             
              mc:Ignorable="d" 
+             x:Name="uc" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -36,12 +40,18 @@
         <TextBlock Text="{Binding Telephone}" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="3"/>
         <TextBlock Text="Adres:" Grid.Column="0" Grid.Row="7"/>
         <TextBlock Text="{Binding Address}" Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="3"/>
-        
-        <Button Content="Usuń oddział" Command="{Binding DeleteCommand}"  Grid.Row="9" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Center" />
 
-        <Button Content="Edytuj oddział" Command="{Binding EditCommand}" Grid.Row="9" VerticalAlignment="Top" Grid.Column="3" HorizontalAlignment="Center" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowOffice}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
+			DialogWidth="300" DialogResizeMode="NoResize" CloseCommand="{Binding OKCommand}"/>
 
-        <Button Content="Dodaj miernik" Command="{Binding AddCommand}" Grid.Row="9" VerticalAlignment="Top" Grid.Column="1" HorizontalAlignment="Center" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
+			DialogWidth="300" DialogResizeMode="NoResize" CloseCommand="{Binding OKCommand}"/>
+
+        <Button Content="Usuń oddział" Command="{Binding DeleteOfficeCommand}"  Grid.Row="9" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Center" />
+
+        <Button Content="Edytuj oddział" Command="{Binding EditOfficeCommand}" Grid.Row="9" VerticalAlignment="Top" Grid.Column="3" HorizontalAlignment="Center" />
+
+        <Button Content="Dodaj miernik" Command="{Binding AddGaugeCommand}" Grid.Row="9" VerticalAlignment="Top" Grid.Column="1" HorizontalAlignment="Center" />
 
 
 

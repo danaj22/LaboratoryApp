@@ -47,7 +47,10 @@ namespace LaboratoryApp
         public ObservableCollection<client> AllItems
         {
             get { return allItems; }
-            set { allItems = value; }
+            set {
+                allItems = value;
+                OnPropertyChanged("AllItems");
+            }
         }
 
         private object selectedNode = 0;
@@ -79,6 +82,7 @@ namespace LaboratoryApp
                     CurrentViewModel = new InformationAboutOffice()
                                                                     {
                                                                       OfficeId = selectedOffice.officeId,
+                                                                      ClientId = selectedOffice.client_id,
                                                                       Name = selectedOffice.name,
                                                                       Address = selectedOffice.adress,
                                                                       Telephone = selectedOffice.tel,
@@ -120,9 +124,7 @@ namespace LaboratoryApp
         public MainWindowViewModel()
         {
             //TaskCommand = new SimpleRelayCommand(TaskCom);
-
             Title = "Laboratorium";
-            ShowMessageCommand = new SimpleRelayCommand(ShowMessage);
             AddNewClientCommand = new SimpleRelayCommand(AddClient);
             AddNewGaugeCommand = new SimpleRelayCommand(AddGauge);
             CurrentViewModel = null;
@@ -214,7 +216,7 @@ namespace LaboratoryApp
             //}
             //create a new modal window
 
-            //View.ModalWindowGauge newModal = new View.ModalWindowGauge();
+            //View.ModalWindowModelOfGauge newModal = new View.ModalWindowModelOfGauge();
 
             ////set owner of this window
             //newModal.Owner = Application.Current.MainWindow;
@@ -240,7 +242,6 @@ namespace LaboratoryApp
             //{
             //    MessageBox.Show(newModal.DialogResult.ToString());
             //}
-            
         }
         /// <summary>
         /// command to show modal window where we can add new Client
@@ -263,11 +264,6 @@ namespace LaboratoryApp
 
         //public View.ModalWindowClient NClient = new View.ModalWindowClient();
         
-        private void changeResult(View.ModalWindowClient cli)
-        {
-            cli.DialogResult = true;
-        }
-
         private bool? dialogResultValue;
 
         public bool? DialogResultValue
@@ -299,6 +295,39 @@ namespace LaboratoryApp
             MessageWindow = new NewWindowClient { AboutClient = new InformationAboutClient() };
             MessageWindow.IsOpen = true;
 
+            if(MessageWindow.ToConfirm == true)
+            {
+                MessageBox.Show("dodanie użytkownika do bazy");
+                if (MessageWindow.AboutClient.Name != null
+                && MessageWindow.AboutClient.Address != null
+                && MessageWindow.AboutClient.Email != null
+                && MessageWindow.AboutClient.Telephone != null
+                && MessageWindow.AboutClient.NIP != null
+                && MessageWindow.AboutClient.ContactPerson != null)
+                {
+
+                    client newClient = new client();
+                    newClient.name = MessageWindow.AboutClient.Name;
+                    newClient.adress = MessageWindow.AboutClient.Address;
+                    newClient.mail = MessageWindow.AboutClient.Email;
+                    newClient.tel = MessageWindow.AboutClient.Telephone;
+                    newClient.NIP = MessageWindow.AboutClient.NIP;
+                    newClient.contact_person_name = MessageWindow.AboutClient.ContactPerson;
+                    newClient.comments = MessageWindow.AboutClient.Comment;
+
+                    using (LaboratoryEntities context = new LaboratoryEntities())
+                    {
+                        context.clients.Add(newClient);
+                        context.SaveChanges();
+                    }
+
+                    
+                    var index = AllItems.IndexOf(AllItems.Last())+1;
+                    //AllItems.Remove((client)SelectedNode);
+                    //Add new client to TreeView
+                    AllItems.Insert(index, newClient);
+                }
+            }
 
 
             //DialogWindowBase newBaseWindow = new DialogWindowBase();
@@ -357,7 +386,7 @@ namespace LaboratoryApp
             //{
 
             //}
-            
+
         }
 
         private NewWindowModelOfGauge messageWindowModelOfGauge;
@@ -398,18 +427,7 @@ namespace LaboratoryApp
             }
         }
 
-        private ICommand showMessageCommand;
-
-        public ICommand ShowMessageCommand
-        {
-            get { return showMessageCommand; }
-            set
-            {
-                
-                showMessageCommand = value;
-                base.OnPropertyChanged("ShowMessageCommand");
-            }
-        }
+       
         private string status;
 
         public string Status
@@ -421,12 +439,5 @@ namespace LaboratoryApp
                 base.OnPropertyChanged("Status");
             }
         }
-        public void ShowMessage()
-        {
-            MessageWindow = new NewWindowClient {};
-            MessageWindow.IsOpen = true;
-            Status = "User was informed - " + DateTime.Now.ToLongTimeString();
-        }
-   
     }
 }

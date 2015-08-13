@@ -34,15 +34,6 @@ namespace LaboratoryApp.ViewModel
             CancelCommand = new SimpleRelayCommand(Close);
         }
 
-        public NewWindowClient(View.ModalWindowClient window)// : base(window)
-        {
-        //    //LaboratoryEntities context = new LaboratoryEntities();
-        //    //MWindow = window;
-        //    //MWindow.infoClient = AboutClient = new InformationAboutClient();
-
-        //    //AboutModelOfGauge = new InformationAboutModelOfGauge();
-        }
-
         private ICommand okCommand;
 
         public ICommand OKCommand
@@ -92,32 +83,7 @@ namespace LaboratoryApp.ViewModel
 
         public void Confirm()
         {
-            if (this.AboutClient.Name != null
-                && this.AboutClient.Address != null
-                && this.AboutClient.Email != null
-                && this.AboutClient.Telephone != null
-                && this.AboutClient.NIP != null
-                && this.AboutClient.ContactPerson != null)
-
-            {
-
-                client newClient = new client();
-                newClient.name = this.AboutClient.Name;
-                newClient.adress = this.AboutClient.Address;
-                newClient.mail = this.AboutClient.Email;
-                newClient.tel = this.AboutClient.Telephone;
-                newClient.NIP = this.AboutClient.NIP;
-                newClient.contact_person_name = this.AboutClient.ContactPerson;
-                newClient.comments = this.AboutClient.Comment;
-
-                using (LaboratoryEntities context = new LaboratoryEntities())
-                {
-                    context.clients.Add(newClient);
-                    context.SaveChanges();
-                }
-                IsOpen = false;
-
-            }
+            if (!ToConfirm) ToConfirm = true;
             IsOpen = false;
  
         }

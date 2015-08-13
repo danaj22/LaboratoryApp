@@ -11,7 +11,7 @@ namespace LaboratoryApp.ViewModel
     public class NewWindowModelOfGauge : ObservableObject
 
     {
-        //public View.ModalWindowGauge MWindow;
+        //public View.ModalWindowModelOfGauge MWindow;
 
         public InformationAboutModelOfGauge AboutModelOfGauge { get; set; }
 

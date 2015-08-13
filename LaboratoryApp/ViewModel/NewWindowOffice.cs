@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace LaboratoryApp.ViewModel
 {
-    public class NewWindowOffice:ObservableObject
+    public class NewWindowOffice : ObservableObject
     {
         private InformationAboutOffice aboutOffice;
 
@@ -21,7 +21,6 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("AboutOffice");
             }
         }
-        //public View.ModalWindowOffice MWindow;
 
         public NewWindowOffice()
         {
@@ -29,12 +28,6 @@ namespace LaboratoryApp.ViewModel
             CancelCommand = new SimpleRelayCommand(Close);
         }
 
-        public NewWindowOffice(View.ModalWindowOffice window)// : base(window)
-        {
-            //MWindow = window;
-            //MWindow.infoOffice = AboutOffice = new InformationAboutOffice();
-        
-        }
 
         private ICommand okCommand;
 
@@ -85,28 +78,28 @@ namespace LaboratoryApp.ViewModel
 
         public void Confirm()
         {
+            if (!this.ToConfirm) this.ToConfirm = true;
+            //if (this.AboutOffice.Name != null
+            //    && this.AboutOffice.Address != null
+            //    && this.AboutOffice.Email != null
+            //    && this.AboutOffice.Telephone != null
+            //    && this.AboutOffice.ContactPerson != null)
+            //{
 
-            if (this.AboutOffice.Name != null
-                && this.AboutOffice.Address != null
-                && this.AboutOffice.Email != null
-                && this.AboutOffice.Telephone != null
-                && this.AboutOffice.ContactPerson != null)
-            {
-
-                office newOffice = new office();
-                newOffice.name = this.AboutOffice.Name;
-                newOffice.adress = this.AboutOffice.Address;
-                newOffice.mail = this.AboutOffice.Email;
-                newOffice.tel = this.AboutOffice.Telephone;
-                newOffice.contact_person_name = this.AboutOffice.ContactPerson;
+            //    office newOffice = new office();
+            //    newOffice.name = this.AboutOffice.Name;
+            //    newOffice.adress = this.AboutOffice.Address;
+            //    newOffice.mail = this.AboutOffice.Email;
+            //    newOffice.tel = this.AboutOffice.Telephone;
+            //    newOffice.contact_person_name = this.AboutOffice.ContactPerson;
                 
 
-                using (LaboratoryEntities context = new LaboratoryEntities())
-                {
-                    context.offices.Add(newOffice);
-                    context.SaveChanges();
-                }
-            }
+            //    using (LaboratoryEntities context = new LaboratoryEntities())
+            //    {
+            //        context.offices.Add(newOffice);
+            //        context.SaveChanges();
+            //    }
+            //}
             IsOpen = false;
 
         }

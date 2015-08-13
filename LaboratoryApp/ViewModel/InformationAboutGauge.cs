@@ -32,11 +32,22 @@ namespace LaboratoryApp.ViewModel
 
         }
 
+        private NewWindowGauge messageWindowGauge;
+
+        public NewWindowGauge MessageWindowGauge
+        {
+            get { return messageWindowGauge; }
+            set
+            {
+                messageWindowGauge = value;
+                OnPropertyChanged("MessageWindowGauge");
+            }
+        }
+
         private void InitializeCollectionOfManufacturers()
         {
             LaboratoryEntities context = new LaboratoryEntities();
-            collectionOfManufacturers = (from m in context.gauges select m.manufacturer_name).ToList();
-
+            CollectionOfManufacturers = (from m in context.gauges select m.manufacturer_name).Distinct().ToList();
         }
 
 
@@ -53,16 +64,12 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
-        public List<string> modelList;
-
         private void InitializeCollectionOfModels()
         {
             if(SelectedManufacturer != null)
             {
-                LaboratoryEntities context = new LaboratoryEntities();
-                var getManufacturer = context.gauges.FirstOrDefault( g => g.manufacturer_name == selectedManufacturer);
-                modelList = (from g in context.gauges where g.gaugeId == getManufacturer.gaugeId select g.model).ToList();
-                
+                LaboratoryEntities context = new LaboratoryEntities();               
+                CollectionOfModels = (from g in context.gauges where g.manufacturer_name == SelectedManufacturer select g.model).ToList(); 
             }
         }
 
@@ -71,11 +78,10 @@ namespace LaboratoryApp.ViewModel
 
         public List<string> CollectionOfModels
         {
-          get { return modelList; }
+            get { return collectionOfModels; }
           set 
           { 
-              //collectionOfModels = value;
-              InitializeCollectionOfModels();
+              collectionOfModels = value;
               OnPropertyChanged("CollectionOfModels");
           }
         }
@@ -101,12 +107,12 @@ namespace LaboratoryApp.ViewModel
         }
 
 
-        public ICommand DeleteCommand
-        { get { return new SimpleRelayCommand(DeleteProduct); } }
+        public ICommand DeleteGaugeCommand
+        { get { return new SimpleRelayCommand(DeleteGaugeExecute); } }
 
-        private void DeleteProduct()
+        private void DeleteGaugeExecute()
         {
-            var result = MessageBox.Show("Czy na pewno chcesz usunąć bezzwłocznie i definitywnie ten produkt?", "Usuwanie produktu", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var result = MessageBox.Show("Czy na pewno chcesz usunąć bezzwłocznie i definitywnie ten miernik?", "Usuwanie miernika", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Yes)
             {
@@ -120,46 +126,56 @@ namespace LaboratoryApp.ViewModel
                 context.SaveChanges();
             }
         }
-        public ICommand EditCommand
-        { get { return new SimpleRelayCommand(EditProduct); } }
+        public ICommand EditGaugeCommand
+        { get { return new SimpleRelayCommand(EditGaugeExecute); } }
 
-        private void EditProduct()
+        private void EditGaugeExecute()
         {
-            //create a new modal window
-            InformationAboutGauge infoProduct = this;
-            View.ModalWindowProduct newModal = new View.ModalWindowProduct(infoProduct);
+            MessageWindowGauge = new NewWindowGauge() { AboutGauge = new InformationAboutGauge() { Gauge = new gauge() } };
 
-            //set owner of this window
-            newModal.Owner = Application.Current.MainWindow;
-            newModal.ShowDialog();
+            MessageWindowGauge.AboutGauge.SerialNumber = SerialNumber;
+            MessageWindowGauge.AboutGauge.SelectedManufacturer = Gauge.manufacturer_name;
+            MessageWindowGauge.AboutGauge.SelectedModel = Gauge.model;
 
-            if (newModal.DialogResult == true)
-            {
-                using (LaboratoryEntities context = new LaboratoryEntities())
-                {
-                    var productToEdit = (from p in context.products
-                                        where p.productId == this.GaugeId
-                                        select p).FirstOrDefault();
 
-                    if (SerialNumber != null && Gauge != null && Office != null)
-                    {
-                        productToEdit.serial_number = SerialNumber;
-                        //productToEdit.adress = Address;
-                        //productToEdit.contact_person_name = ContactPerson;
-                        //productToEdit.mail = Email;
-                        //productToEdit.tel = Telephone;
-                        //productToEdit.NIP = NIP;
-                        //productToEdit.comments = Comment;
+            MessageWindowGauge.IsOpen = true;
 
-                        //context.SaveChanges();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Wypełnij wszystkie pola");
-                    }
 
-                }
-            }
+            ////create a new modal window
+            //InformationAboutGauge infoProduct = this;
+            //View.ModalWindowProduct newModal = new View.ModalWindowProduct(infoProduct);
+
+            ////set owner of this window
+            //newModal.Owner = Application.Current.MainWindow;
+            //newModal.ShowDialog();
+
+            //if (newModal.DialogResult == true)
+            //{
+            //    using (LaboratoryEntities context = new LaboratoryEntities())
+            //    {
+            //        var productToEdit = (from p in context.products
+            //                            where p.productId == this.GaugeId
+            //                            select p).FirstOrDefault();
+
+            //        if (SerialNumber != null && Gauge != null && Office != null)
+            //        {
+            //            productToEdit.serial_number = SerialNumber;
+            //            //productToEdit.adress = Address;
+            //            //productToEdit.contact_person_name = ContactPerson;
+            //            //productToEdit.mail = Email;
+            //            //productToEdit.tel = Telephone;
+            //            //productToEdit.NIP = NIP;
+            //            //productToEdit.comments = Comment;
+
+            //            //context.SaveChanges();
+            //        }
+            //        else
+            //        {
+            //            MessageBox.Show("Wypełnij wszystkie pola");
+            //        }
+
+            //    }
+            //}
         }
     }
 }

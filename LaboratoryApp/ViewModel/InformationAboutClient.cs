@@ -108,6 +108,7 @@ namespace LaboratoryApp
                 OnPropertyChanged("MessageWindowOffice");
             }
         }
+        
         public ICommand DeleteCommand
         { get { return new SimpleRelayCommand(DeleteClientExecute); } }
 
@@ -127,71 +128,84 @@ namespace LaboratoryApp
                 context.SaveChanges();
             }
         }
+
+        private NewWindowClient messageWindowClient;
+
+        public NewWindowClient MessageWindowClient
+        {
+            get { return messageWindowClient; }
+            set
+            {
+                messageWindowClient = value;
+                OnPropertyChanged("MessageWindowClient");
+            }
+        }
+
         public ICommand EditCommand
         { get { return new SimpleRelayCommand(EditClientExecute);} }
 
+
         private void EditClientExecute()
         {
+
+            MessageWindowClient = new NewWindowClient() { AboutClient = new InformationAboutClient() };
+            
             //create a new modal window
-            DialogWindowBase newBaseWindow = new DialogWindowBase();
-            NewWindowClient clientDialogWindow = new NewWindowClient() { AboutClient = new InformationAboutClient() };
+            //DialogWindowBase newBaseWindow = new DialogWindowBase();
+            //NewWindowClient clientDialogWindow = new NewWindowClient() { AboutClient = new InformationAboutClient() };
 
 
             //filling in the data fields in new window
-            clientDialogWindow.AboutClient.Comment = Comment;
-            clientDialogWindow.AboutClient.Name = Name;
-            clientDialogWindow.AboutClient.ContactPerson = ContactPerson;
-            clientDialogWindow.AboutClient.Address = Address;
-            clientDialogWindow.AboutClient.Telephone = Telephone;
-            clientDialogWindow.AboutClient.NIP = NIP;
-            clientDialogWindow.AboutClient.Email = Email;
+            MessageWindowClient.AboutClient.ClientId = ClientId;
+            MessageWindowClient.AboutClient.Comment = Comment;
+            MessageWindowClient.AboutClient.Name = Name;
+            MessageWindowClient.AboutClient.ContactPerson = ContactPerson;
+            MessageWindowClient.AboutClient.Address = Address;
+            MessageWindowClient.AboutClient.Telephone = Telephone;
+            MessageWindowClient.AboutClient.NIP = NIP;
+            MessageWindowClient.AboutClient.Email = Email;
 
-            //filling the window contents
-            newBaseWindow.BaseContent = clientDialogWindow;
+            //show window
+            MessageWindowClient.IsOpen = true;
 
-            WindowService w = new WindowService();
-            w.DataContext = newBaseWindow;
-            w.Owner = Application.Current.MainWindow;
-            w.ShowDialog();
-
-            if (w.DialogResult == true)
+            if (MessageWindowClient.ToConfirm)
             {
                 using (LaboratoryEntities context = new LaboratoryEntities())
                 {
                     //finding selected client in database
                     var clientToEdit = (from c in context.clients
-                                        where c.clientId == this.ClientId
+                                        where c.clientId == MessageWindowClient.AboutClient.ClientId
                                         select c).FirstOrDefault();
-                    
+
 
                     //modify data in database
-                    if (clientDialogWindow.AboutClient.Name != ""
-                        && clientDialogWindow.AboutClient.Address != ""
-                        && clientDialogWindow.AboutClient.ContactPerson != ""
-                        && clientDialogWindow.AboutClient.Email != ""
-                        && clientDialogWindow.AboutClient.Telephone != ""
-                        && clientDialogWindow.AboutClient.NIP != ""
-                        && clientDialogWindow.AboutClient.Comment != "")
+                    if (MessageWindowClient.AboutClient.Name != ""
+                        && MessageWindowClient.AboutClient.Address != ""
+                        && MessageWindowClient.AboutClient.ContactPerson != ""
+                        && MessageWindowClient.AboutClient.Email != ""
+                        && MessageWindowClient.AboutClient.Telephone != ""
+                        && MessageWindowClient.AboutClient.NIP != ""
+                        && MessageWindowClient.AboutClient.Comment != "")
                     {
-                        
-                        clientToEdit.name = clientDialogWindow.AboutClient.Name;
-                        clientToEdit.adress = clientDialogWindow.AboutClient.Address;
-                        clientToEdit.contact_person_name = clientDialogWindow.AboutClient.ContactPerson;
-                        clientToEdit.mail = clientDialogWindow.AboutClient.Email;
-                        clientToEdit.tel = clientDialogWindow.AboutClient.Telephone;
-                        clientToEdit.NIP = clientDialogWindow.AboutClient.NIP;
-                        clientToEdit.comments = clientDialogWindow.AboutClient.Comment;
+
+                        clientToEdit.name = MessageWindowClient.AboutClient.Name;
+                        clientToEdit.adress = MessageWindowClient.AboutClient.Address;
+                        clientToEdit.contact_person_name = MessageWindowClient.AboutClient.ContactPerson;
+                        clientToEdit.mail = MessageWindowClient.AboutClient.Email;
+                        clientToEdit.tel = MessageWindowClient.AboutClient.Telephone;
+                        clientToEdit.NIP = MessageWindowClient.AboutClient.NIP;
+                        clientToEdit.comments = MessageWindowClient.AboutClient.Comment;
 
                         context.SaveChanges();
 
                         //set new data in main window view
-                        Name = clientDialogWindow.AboutClient.Name;
-                        Address = clientDialogWindow.AboutClient.Address;
-                        ContactPerson = clientDialogWindow.AboutClient.ContactPerson;
-                        Email = clientDialogWindow.AboutClient.Email;
-                        Telephone = clientDialogWindow.AboutClient.Telephone;
-                        NIP = clientDialogWindow.AboutClient.NIP;
-                        Comment = clientDialogWindow.AboutClient.Comment;
+                        Name = MessageWindowClient.AboutClient.Name;
+                        Address = MessageWindowClient.AboutClient.Address;
+                        ContactPerson = MessageWindowClient.AboutClient.ContactPerson;
+                        Email = MessageWindowClient.AboutClient.Email;
+                        Telephone = MessageWindowClient.AboutClient.Telephone;
+                        NIP = MessageWindowClient.AboutClient.NIP;
+                        Comment = MessageWindowClient.AboutClient.Comment;
                     }
                     else
                     {
@@ -199,43 +213,8 @@ namespace LaboratoryApp
                     }
 
                 }
+                MessageWindowClient.ToConfirm = false;
             }
-
-
-            //View.ModalWindowClient newModal = new View.ModalWindowClient(infoClient);
-
-            ////set owner of this window
-            //newModal.Owner = Application.Current.MainWindow;
-            //newModal.ShowDialog();
-
-            //if (newModal.DialogResult == true) 
-            //{
-            //    using(LaboratoryEntities context = new LaboratoryEntities() )
-            //    {
-            //        var clientToEdit = (from c in context.clients
-            //                            where c.clientId == this.ClientId
-            //                            select c).FirstOrDefault();
-            //        context.clients.Attach(clientToEdit);
-                    
-            //        if(Name != "" && Address != "" && ContactPerson != "" && Email != "" && Telephone != "" && NIP != "" && Comment != "")
-            //        {
-            //            clientToEdit.name = Name;
-            //            clientToEdit.adress = Address;
-            //            clientToEdit.contact_person_name = ContactPerson;
-            //            clientToEdit.mail = Email;
-            //            clientToEdit.tel = Telephone;
-            //            clientToEdit.NIP = NIP;
-            //            clientToEdit.comments = Comment;
-
-            //            context.SaveChanges();
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Wypełnij wszystkie pola");
-            //        }
-
-            //    }
-            //}
         }
 
         public ICommand AddCommand
@@ -244,42 +223,39 @@ namespace LaboratoryApp
         private void AddOfficeExecute()
         {
             MessageWindowOffice = new NewWindowOffice() { AboutOffice = new InformationAboutOffice() };
+            
+            //open a new modal window
             messageWindowOffice.IsOpen = true;
 
-            //create a new modal window
+            if (MessageWindowOffice.ToConfirm)
+            {
+                office officeToAddToDatabase = new office();
+                officeToAddToDatabase.adress = MessageWindowOffice.AboutOffice.Address;
+                officeToAddToDatabase.mail = MessageWindowOffice.AboutOffice.Email;
+                officeToAddToDatabase.contact_person_name = MessageWindowOffice.AboutOffice.ContactPerson;
+                officeToAddToDatabase.name = MessageWindowOffice.AboutOffice.Name;
+                officeToAddToDatabase.tel = MessageWindowOffice.AboutOffice.Telephone;
+                officeToAddToDatabase.client_id = this.ClientId;
 
-            //DialogWindowBase newBaseWindow = new DialogWindowBase();
-            //NewWindowOffice officeDialogWindow = new NewWindowOffice() { AboutOffice = new InformationAboutOffice() };
+                using (LaboratoryEntities context = new LaboratoryEntities())
+                {
+                    context.offices.Add(officeToAddToDatabase);
+                    context.SaveChanges();
+                }
+                MessageBox.Show("Oddział został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            //newBaseWindow.BaseContent = officeDialogWindow;
+                //var index = AllItems.IndexOf(AllItems.Last()) + 1;
+                //AllItems.Remove((client)SelectedNode);
+                ////Add new client to TreeView
+                //AllItems.Insert(index+1, newClient);
+            }
+            else
+            {
 
-            //WindowService w = new WindowService();
-            //w.DataContext = newBaseWindow;
-            //w.Owner = Application.Current.MainWindow;
-            //w.ShowDialog();
-            //bool? result = w.DialogResult;
-            
-            //if (result == true)
-            //{
-            //    office officeToAddToDatabase = new office();
-            //    officeToAddToDatabase.adress = officeDialogWindow.AboutOffice.Address;
-            //    officeToAddToDatabase.mail = officeDialogWindow.AboutOffice.Email;
-            //    officeToAddToDatabase.contact_person_name = officeDialogWindow.AboutOffice.ContactPerson;
-            //    officeToAddToDatabase.name = officeDialogWindow.AboutOffice.Name;
-            //    officeToAddToDatabase.tel = officeDialogWindow.AboutOffice.Telephone;
-            //    officeToAddToDatabase.client_id = this.ClientId;
+            }
+            MessageWindowOffice.ToConfirm = false;
 
-            //    using(LaboratoryEntities context = new LaboratoryEntities())
-            //    {
-            //        context.offices.Add(officeToAddToDatabase);
-            //        context.SaveChanges();
-            //    }
-            //    MessageBox.Show("Oddział został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
-            //}
-            //else
-            //{
 
-            //}
             
         }
     }

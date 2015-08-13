@@ -110,7 +110,6 @@
     <Compile Include="ViewModel\DialogCloser.cs" />
     <Compile Include="ViewModel\DialogWindowBase.cs" />
     <Compile Include="ViewModel\IItems.cs" />
-    <Compile Include="ViewModel\IModalWindow.cs" />
     <Compile Include="ViewModel\InformationAboutClient.cs" />
     <Compile Include="ViewModel\InformationAboutModelOfGauge.cs" />
     <Compile Include="ViewModel\InformationAboutOffice.cs" />
@@ -145,23 +144,11 @@
     <Compile Include="View\InformationAboutClientView.xaml.cs">
       <DependentUpon>InformationAboutClientView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\InformationAboutProductView.xaml.cs">
-      <DependentUpon>InformationAboutProductView.xaml</DependentUpon>
+    <Compile Include="View\InformationAboutGaugeView.xaml.cs">
+      <DependentUpon>InformationAboutGaugeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\InformationAboutOfficeView.xaml.cs">
       <DependentUpon>InformationAboutOfficeView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ModalWindowClient.xaml.cs">
-      <DependentUpon>ModalWindowClient.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ModalWindowGauge.xaml.cs">
-      <DependentUpon>ModalWindowGauge.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ModalWindowProduct.xaml.cs">
-      <DependentUpon>ModalWindowProduct.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ModalWindowOffice.xaml.cs">
-      <DependentUpon>ModalWindowOffice.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\WindowService.xaml.cs">
       <DependentUpon>WindowService.xaml</DependentUpon>
@@ -198,27 +185,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\InformationAboutProductView.xaml">
+    <Page Include="View\InformationAboutGaugeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\InformationAboutOfficeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ModalWindowClient.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ModalWindowGauge.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ModalWindowProduct.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ModalWindowOffice.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

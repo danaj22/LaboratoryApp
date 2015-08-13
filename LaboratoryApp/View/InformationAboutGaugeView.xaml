@@ -3,7 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
+             xmlns:local="clr-namespace:LaboratoryApp"
+             
              mc:Ignorable="d" 
+             x:Name="uc"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -30,9 +34,12 @@
         <TextBlock Text="Zastosowanie: " Grid.Column="0" Grid.Row="4"/>
         <TextBlock Text="{Binding Gauge.usage.description}" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3"/>
 
-        <Button Content="Usuń miernik" Command="{Binding DeleteCommand}"  Grid.Row="9" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Center" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
+			DialogWidth="300" DialogResizeMode="NoResize" CloseCommand="{Binding OKCommand}"/>
 
-        <Button Content="Edytuj dane miernika" Command="{Binding EditCommand}" Grid.Row="9" VerticalAlignment="Top" Grid.Column="3" HorizontalAlignment="Center" />
+        <Button Content="Usuń miernik" Command="{Binding DeleteGaugeCommand}"  Grid.Row="9" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Center" />
+
+        <Button Content="Edytuj dane miernika" Command="{Binding EditGaugeCommand}" Grid.Row="9" VerticalAlignment="Top" Grid.Column="3" HorizontalAlignment="Center" />
 
 
     </Grid>

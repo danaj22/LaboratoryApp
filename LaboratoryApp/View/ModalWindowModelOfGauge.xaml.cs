@@ -16,20 +16,20 @@ using System.Windows.Shapes;
 namespace LaboratoryApp.View
 {
     /// <summary>
-    /// Interaction logic for ModalWindowGauge.xaml
+    /// Interaction logic for ModalWindowModelOfGauge.xaml
     /// </summary>
-    public partial class ModalWindowGauge : Window,IModalWindow
+    public partial class ModalWindowModelOfGauge : Window,IModalWindow
     {
         public InformationAboutModelOfGauge infoGauge = new InformationAboutModelOfGauge();
 
-        public ModalWindowGauge()
+        public ModalWindowModelOfGauge()
         {
             InitializeComponent();
             NewWindowModelOfGauge tmp = new NewWindowModelOfGauge(this);
             DataContext = tmp;
             infoGauge = tmp.AboutModelOfGauge;
         }
-        public ModalWindowGauge(InformationAboutModelOfGauge info)
+        public ModalWindowModelOfGauge(InformationAboutModelOfGauge info)
         {
             InitializeComponent();
             DataContext = new NewWindowModelOfGauge(this) { AboutModelOfGauge = infoGauge = info };

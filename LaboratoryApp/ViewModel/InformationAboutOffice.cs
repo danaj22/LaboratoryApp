@@ -22,6 +22,16 @@ namespace LaboratoryApp
                 OnPropertyChanged("OfficeId");
             }
         }
+        private int clientId;
+        public int ClientId
+        {
+            get { return clientId; }
+            set 
+            {
+                clientId = value;
+                OnPropertyChanged("ClientId");
+            }
+        }
         private string name;
         public string Name
         {
@@ -73,28 +83,112 @@ namespace LaboratoryApp
             }
         }
 
-        public ICommand AddCommand
-        { get { return new SimpleRelayCommand(AddExecute); } }
 
-        private void AddExecute()
+        private NewWindowOffice messageWindowOffice;
+
+        public NewWindowOffice MessageWindowOffice
         {
-            DialogWindowBase newBaseWindow = new DialogWindowBase();
-            NewWindowGauge gaugeDialogWindow = new NewWindowGauge() { AboutGauge = new  InformationAboutGauge() };
-
-            newBaseWindow.BaseContent = gaugeDialogWindow;
-
-            WindowService w = new WindowService();
-            w.DataContext = newBaseWindow;
-            w.Owner = Application.Current.MainWindow;
-            w.ShowDialog();
+            get { return messageWindowOffice; }
+            set
+            {
+                messageWindowOffice = value;
+                OnPropertyChanged("MessageWindowOffice");
+            }
         }
 
-        public ICommand DeleteCommand
+        private NewWindowGauge messageWindowGauge;
+
+        public NewWindowGauge MessageWindowGauge
+        {
+            get { return messageWindowGauge; }
+            set
+            {
+                messageWindowGauge = value;
+                OnPropertyChanged("MessageWindowGauge");
+            }
+        }
+        
+        public ICommand AddGaugeCommand
+        { get { return new SimpleRelayCommand(AddGaugeExecute); } }
+
+        private int? clientIdToAdd;
+
+        public int? ClientIdToAdd
+        {
+            get { return clientIdToAdd; }
+            set 
+            { 
+                clientIdToAdd = value;
+                OnPropertyChanged("ClientIdToAdd");
+            }
+        }
+        private int? officeIdToAdd;
+
+        public int? OfficeIdToAdd
+        {
+            get { return officeIdToAdd; }
+            set
+            {
+                officeIdToAdd = value;
+                OnPropertyChanged("OfficeIdToAdd");
+            }
+        }
+        private int? gaugeIdToAdd;
+
+        public int? GaugeIdToAdd
+        {
+            get { return gaugeIdToAdd; }
+            set
+            {
+                gaugeIdToAdd = value;
+                OnPropertyChanged("GaugeIdToAdd");
+            }
+        }
+        private void AddGaugeExecute()
+        {
+            MessageWindowGauge = new NewWindowGauge() { AboutGauge = new InformationAboutGauge() };
+            MessageWindowGauge.IsOpen = true;
+
+            if (MessageWindowGauge.ToConfirm)
+            {
+                product gaugeToAddToDatabase = new product();
+
+                using (LaboratoryEntities context = new LaboratoryEntities())
+                {
+                    GaugeIdToAdd = (from g in context.gauges where g.model == MessageWindowGauge.AboutGauge.SelectedModel select g.gaugeId).FirstOrDefault();
+                }
+                gaugeToAddToDatabase.client_id = ClientId;
+                gaugeToAddToDatabase.office_id = OfficeId;
+                gaugeToAddToDatabase.gauge_id = GaugeIdToAdd;
+                gaugeToAddToDatabase.serial_number = MessageWindowGauge.AboutGauge.SerialNumber;
+
+                using (LaboratoryEntities context = new LaboratoryEntities())
+                {
+                    context.products.Add(gaugeToAddToDatabase);
+                    context.SaveChanges();
+                }
+                MessageBox.Show("Miernik został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                //var index = AllItems.IndexOf(AllItems.Last()) + 1;
+                //AllItems.Remove((client)SelectedNode);
+                ////Add new client to TreeView
+                //AllItems.Insert(index+1, newClient);
+
+                MessageWindowGauge.ToConfirm = false;
+            }
+            else
+            {
+
+            }
+
+        }
+
+        public ICommand DeleteOfficeCommand
         { get { return new SimpleRelayCommand(DeleteOfficeExecute); } }
 
         private void DeleteOfficeExecute()
         {
-            var result = MessageBox.Show("Czy na pewno chcesz usunąć bezzwłocznie i definitywnie ten oddział?", "Usuwanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var result = MessageBox.Show("Czy na pewno chcesz usunąć bezzwłocznie i definitywnie ten oddział?", "Usuwanie oddziału", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 using(LaboratoryEntities context = new LaboratoryEntities())
@@ -110,30 +204,25 @@ namespace LaboratoryApp
             }
         }
 
-        public ICommand EditCommand
+        public ICommand EditOfficeCommand
         { get { return new SimpleRelayCommand(EditOfficeExecute); } }
 
         private void EditOfficeExecute()
         {
-            DialogWindowBase newBaseWindow = new DialogWindowBase();
-            NewWindowOffice officeDialogWindow = new NewWindowOffice() { AboutOffice = new InformationAboutOffice() };
-
-            
-            officeDialogWindow.AboutOffice.Name = Name;
-            officeDialogWindow.AboutOffice.ContactPerson = ContactPerson;
-            officeDialogWindow.AboutOffice.Address = Address;
-            officeDialogWindow.AboutOffice.Telephone = Telephone;
-            officeDialogWindow.AboutOffice.Email = Email;
+            MessageWindowOffice = new NewWindowOffice() { AboutOffice = new InformationAboutOffice() };
             
 
-            newBaseWindow.BaseContent = officeDialogWindow;
+            MessageWindowOffice.AboutOffice.OfficeId = OfficeId;
 
-            WindowService w = new WindowService();
-            w.DataContext = newBaseWindow;
-            w.Owner = Application.Current.MainWindow;
-            w.ShowDialog();
+            MessageWindowOffice.AboutOffice.Name = Name;
+            MessageWindowOffice.AboutOffice.ContactPerson = ContactPerson;
+            MessageWindowOffice.AboutOffice.Address = Address;
+            MessageWindowOffice.AboutOffice.Telephone = Telephone;
+            MessageWindowOffice.AboutOffice.Email = Email;
 
-            if(w.DialogResult == true)
+            MessageWindowOffice.IsOpen = true;
+
+            if (MessageWindowOffice.ToConfirm)
             {
                 using (LaboratoryEntities context = new LaboratoryEntities())
                 {
@@ -145,20 +234,20 @@ namespace LaboratoryApp
                     //modify data in database
                     if (Name != "" && Address != "" && ContactPerson != "" && Email != "" && Telephone != "")
                     {
-                        officeToEdit.name = officeDialogWindow.AboutOffice.Name;
-                        officeToEdit.adress = officeDialogWindow.AboutOffice.Address;
-                        officeToEdit.contact_person_name = officeDialogWindow.AboutOffice.ContactPerson;
-                        officeToEdit.mail = officeDialogWindow.AboutOffice.Email;
-                        officeToEdit.tel = officeDialogWindow.AboutOffice.Telephone;
+                        officeToEdit.name = MessageWindowOffice.AboutOffice.Name;
+                        officeToEdit.adress = MessageWindowOffice.AboutOffice.Address;
+                        officeToEdit.contact_person_name = MessageWindowOffice.AboutOffice.ContactPerson;
+                        officeToEdit.mail = MessageWindowOffice.AboutOffice.Email;
+                        officeToEdit.tel = MessageWindowOffice.AboutOffice.Telephone;
 
                         context.SaveChanges();
 
                         //set new data in main window view
-                        Name = officeDialogWindow.AboutOffice.Name;
-                        ContactPerson = officeDialogWindow.AboutOffice.ContactPerson;
-                        Address = officeDialogWindow.AboutOffice.Address;
-                        Telephone = officeDialogWindow.AboutOffice.Telephone;
-                        Email = officeDialogWindow.AboutOffice.Email;
+                        Name = MessageWindowOffice.AboutOffice.Name;
+                        ContactPerson = MessageWindowOffice.AboutOffice.ContactPerson;
+                        Address = MessageWindowOffice.AboutOffice.Address;
+                        Telephone = MessageWindowOffice.AboutOffice.Telephone;
+                        Email = MessageWindowOffice.AboutOffice.Email;
                     }
                     else
                     {
@@ -166,7 +255,7 @@ namespace LaboratoryApp
                     }
 
                 }
-
+                MessageWindowOffice.ToConfirm = false;
             }
 
 

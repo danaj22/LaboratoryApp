@@ -25,19 +25,10 @@ namespace LaboratoryApp.ViewModel
 
         public NewWindowGauge()
         {
-            AboutGauge = new InformationAboutGauge();
             OKCommand = new SimpleRelayCommand(Confirm);
             CancelCommand = new SimpleRelayCommand(Close);
-
         }
 
-        public NewWindowGauge(View.ModalWindowProduct window)//:base(window)
-        {
-            //LaboratoryEntities context = new LaboratoryEntities();
-            //MWindow = window;
-            //MWindow.infoProduct = AboutGauge = new InformationAboutGauge();
-
-        }
 
         private ICommand okCommand;
 
@@ -88,23 +79,7 @@ namespace LaboratoryApp.ViewModel
 
         public void Confirm()
         {
-            //if (this.AboutClient.Name != null
-            //    && this.AboutClient.Address != null
-            //    && this.AboutClient.Email != null
-            //    && this.AboutClient.Telephone != null
-            //    && this.AboutClient.NIP != null
-            //    && this.AboutClient.ContactPerson != null)
-            //{
-
-                
-            //    using (LaboratoryEntities context = new LaboratoryEntities())
-            //    {
-            //        context.clients.Add(newClient);
-            //        context.SaveChanges();
-            //    }
-            //    IsOpen = false;
-
-            //}
+            if (!ToConfirm) ToConfirm = true;
             IsOpen = false;
 
         }

@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using LaboratoryApp.ViewModel;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 
 namespace LaboratoryApp
@@ -93,6 +94,28 @@ namespace LaboratoryApp
                 }
                 catch (Exception ex)
                 { }
+            }
+        
+        }
+
+        
+    }
+
+    public static class FwExtensions
+    {
+        public static void SendUIRefreshNotification(this ObservableCollection<client> observableCollection, client item)
+        {
+            var index = observableCollection.IndexOf(item);
+            observableCollection.Remove(item);
+            observableCollection.Insert(index, item);
+        }
+
+        public static void SendUIRefreshNotification(this ObservableCollection<client> observablecollection)
+        {
+            var a = observablecollection.ToList();
+            foreach (var item in a)
+            {
+                observablecollection.SendUIRefreshNotification(item);
             }
         }
     }
