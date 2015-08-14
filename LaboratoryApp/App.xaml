@@ -21,6 +21,9 @@
         <DataTemplate DataType="{x:Type vm:NewWindowGauge}">
             <v:DialogWindowGauge />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewWindowRaport}">
+            <v:Raport />
+        </DataTemplate>
 
     </Application.Resources>
 </Application>

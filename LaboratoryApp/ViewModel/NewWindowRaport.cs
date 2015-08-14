@@ -7,23 +7,21 @@ using System.Windows.Input;
 
 namespace LaboratoryApp.ViewModel
 {
-    public class NewWindowGauge : ObservableObject
+    public class NewWindowRaport : ObservableObject
     {
-        //public View.ModalWindowProduct MWindow;
         private InformationAboutGauge aboutGauge;
 
         public InformationAboutGauge AboutGauge
         {
             get { return aboutGauge; }
-            set 
-            { 
+            set
+            {
                 aboutGauge = value;
                 OnPropertyChanged("AboutGauge");
             }
         }
 
-
-        public NewWindowGauge()
+        public NewWindowRaport()
         {
             OKCommand = new SimpleRelayCommand(Confirm);
             CancelCommand = new SimpleRelayCommand(Close);
@@ -90,3 +88,4 @@ namespace LaboratoryApp.ViewModel
 
     }
 }
+

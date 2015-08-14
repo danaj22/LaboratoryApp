@@ -121,16 +121,17 @@ namespace LaboratoryApp
             data = new LoadData(AllItems);
         }
 
+
         public MainWindowViewModel()
         {
+
             //TaskCommand = new SimpleRelayCommand(TaskCom);
             Title = "Laboratorium";
             AddNewClientCommand = new SimpleRelayCommand(AddClient);
             AddNewGaugeCommand = new SimpleRelayCommand(AddGauge);
             CurrentViewModel = null;
             userInput = new UserInput();
-            LoadView();
-           
+            LoadView();        
         }
        
 

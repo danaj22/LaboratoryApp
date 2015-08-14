@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace LaboratoryApp.View
 {
     /// <summary>
-    /// Interaction logic for InformationAboutGaugeView.xaml
+    /// Interaction logic for Raport.xaml
     /// </summary>
-    public partial class InformationAboutGaugeView : UserControl
+    public partial class Raport : UserControl
     {
-        public InformationAboutGaugeView()
+        public Raport()
         {
             InitializeComponent();
         }

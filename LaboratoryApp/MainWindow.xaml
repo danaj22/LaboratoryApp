@@ -19,7 +19,7 @@
             <view:InformationAboutOfficeView />
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:InformationAboutGauge}">
-            <view:InformationAboutProductView />
+            <view:InformationAboutGaugeView />
         </DataTemplate>
         <local:MainWindowViewModel x:Key="MainWindowViewModelDataSource"/>
     </Window.Resources>
@@ -86,9 +86,7 @@
         <vm:ModalDialogManager DataContext="{Binding MessageWindow}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
 			DialogWidth="300" DialogResizeMode="NoResize" CloseCommand="{Binding OKCommand}"/>
 
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowModelOfGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
-			DialogWidth="300" DialogResizeMode="NoResize" CloseCommand="{Binding OKCommand}"/>
-
+        
         <TextBox Text="{Binding SearchItem}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Background="AliceBlue" Margin="0,12,0,11" />
         <Button Content="Dodaj klienta" Command="{Binding AddNewClientCommand}" Grid.Column="4" HorizontalAlignment="Right"  VerticalAlignment="center" Margin="0,2" Width="123" />
         <Button Content="Dodaj model miernika" Command="{Binding AddNewGaugeCommand}" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Right"  VerticalAlignment="center" Margin="0,2" />

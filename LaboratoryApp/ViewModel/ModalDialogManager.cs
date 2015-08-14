@@ -32,6 +32,9 @@ namespace LaboratoryApp.ViewModel
         /// <summary>
         /// This is invoked when the red X is clicked or a keypress closes the window - 
         /// </summary>
+        /// 
+        
+
         public ICommand CloseCommand
         {
             get { return (ICommand)GetValue(CloseCommandProperty); }
