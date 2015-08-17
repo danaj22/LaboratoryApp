@@ -12,9 +12,18 @@ namespace LaboratoryApp.ViewModel
 
     {
         //public View.ModalWindowModelOfGauge MWindow;
+        private InformationAboutModelOfGauge aboutModelOfGauge;
 
-        public InformationAboutModelOfGauge AboutModelOfGauge { get; set; }
-
+        public InformationAboutModelOfGauge AboutModelOfGauge
+        {
+            get { return aboutModelOfGauge; }
+            set 
+            { 
+                aboutModelOfGauge = value;
+                OnPropertyChanged("AboutModelOfGauge");
+            }
+        }
+       
         public NewWindowModelOfGauge()
         {
             OKCommand = new SimpleRelayCommand(Confirm);

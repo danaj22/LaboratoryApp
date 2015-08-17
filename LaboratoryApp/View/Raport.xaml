@@ -10,7 +10,7 @@
              d:DesignHeight="600" d:DesignWidth="500"
              >
     <UserControl.Resources>
-       
+
     </UserControl.Resources>
     <!--<d:DataContext>
         <local:MainWindowViewModel/>
@@ -71,18 +71,22 @@
         <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.SerialNumber}" VerticalAlignment="center" Grid.Row="5" Grid.Column="1" Width="156" Height="24"/>
         <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.Gauge.usage.description}" VerticalAlignment="center" Grid.Row="6" Grid.Column="1" Width="156" Height="24"/>
         <TextBox HorizontalAlignment="center" Text="{Binding TheCalibrationMethod}" VerticalAlignment="center" Grid.Row="7" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.SerialNumber}" VerticalAlignment="center" Grid.Row="8" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.SerialNumber}" VerticalAlignment="center" Grid.Row="9" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.SerialNumber}" VerticalAlignment="center" Grid.Row="10" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.SerialNumber}" VerticalAlignment="center" Grid.Row="11" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.SerialNumber}" VerticalAlignment="center" Grid.Row="12" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.SerialNumber}" VerticalAlignment="center" Grid.Row="13" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.SerialNumber}" VerticalAlignment="center" Grid.Row="14" Grid.Column="1" Width="156" Height="24"/>
+        <TextBox HorizontalAlignment="center" Text="{Binding NationalPattern}" VerticalAlignment="center" Grid.Row="8" Grid.Column="1" Width="156" Height="24"/>
+        <TextBox HorizontalAlignment="center" Text="{Binding Temperature}" VerticalAlignment="center" Grid.Row="9" Grid.Column="1" Width="156" Height="24"/>
+        <TextBox HorizontalAlignment="center" Text="{Binding Humidity}" VerticalAlignment="center" Grid.Row="10" Grid.Column="1" Width="156" Height="24"/>
+        <ComboBox ItemsSource="{Binding Compatibility}" SelectedItem="{Binding SelectedCompatibility}"  HorizontalAlignment="Center" VerticalAlignment="center" Grid.Row="11" Grid.Column="1" Width="156" Height="24"/>
+        <TextBox HorizontalAlignment="center" Text="{Binding CheckedFunction}" VerticalAlignment="center" Grid.Row="12" Grid.Column="1" Width="156" Height="24"/>
+        <TextBox HorizontalAlignment="center" Text="{Binding Uncertainty}" VerticalAlignment="center" Grid.Row="13" Grid.Column="1" Width="156" Height="24"/>
+        <TextBox HorizontalAlignment="center" Text="{Binding NumberOfCertificate}" VerticalAlignment="center" Grid.Row="14" Grid.Column="1" Width="156" Height="24"/>
+
+        <TextBox HorizontalAlignment="center" Text="{Binding DateSurvey}" VerticalAlignment="center" Grid.Row="15" Grid.Column="1" Width="156" Height="24" Margin="47,0,48,3"/>
+        <TextBox HorizontalAlignment="center" Text="{Binding Recommendations}" VerticalAlignment="center" Grid.Row="16" Grid.Column="1" Width="156" Height="24" Margin="47,0,48,3"/>
+        <TextBox HorizontalAlignment="center" Text="{Binding Author}" VerticalAlignment="center" Grid.Row="17" Grid.Column="1" Width="156" Height="24" Margin="47,2,48,1"/>
 
         <Button Grid.ColumnSpan="2" Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="79,10,0,0" Grid.Row="18" VerticalAlignment="Top" Width="75"/>
         <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1" HorizontalAlignment="Left" Margin="23,10,0,0" Grid.Row="18" VerticalAlignment="Top" Width="75"/>
 
-        <Label Content="Świadectwo składa się z 1 strony. Może być okazywane lub kopiowane tylko w całości." Grid.Row="19" Grid.ColumnSpan="2" />
-
+        <Label Content="{Binding Footer}" Grid.Row="19" Grid.ColumnSpan="2" />
+        
     </Grid>
 </UserControl>

@@ -178,9 +178,13 @@ namespace LaboratoryApp
 
         private void AddGauge()
         {
-            MessageWindowModelOfGauge = new NewWindowModelOfGauge() { AboutModelOfGauge = new InformationAboutModelOfGauge() };
+            MessageWindowModelOfGauge = new NewWindowModelOfGauge 
+            { AboutModelOfGauge = new InformationAboutModelOfGauge() };
+            
             MessageWindowModelOfGauge.IsOpen = true;
 
+            if (MessageWindowModelOfGauge.ToConfirm == true)
+            { }
             //DialogWindowBase newBaseWindow = new DialogWindowBase();
             //NewWindowModelOfGauge gaugeDialogWindow = new NewWindowModelOfGauge() { AboutModelOfGauge = new InformationAboutModelOfGauge() };
 

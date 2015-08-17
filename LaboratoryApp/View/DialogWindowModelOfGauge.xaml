@@ -4,12 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
-             xmlns:local="clr-namespace:LaboratoryApp" 
-             mc:Ignorable="d" 
+             xmlns:local="clr-namespace:LaboratoryApp"
+             
+             mc:Ignorable="d"  
              d:DesignHeight="300" d:DesignWidth="300">
-    <d:DataContext>
+    <!--<d:DataContext>
         <vm:NewWindowModelOfGauge/>
-    </d:DataContext>
+    </d:DataContext>-->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
