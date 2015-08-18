@@ -91,24 +91,9 @@ namespace LaboratoryApp.ViewModel
         }
 
         public void Confirm()
+        
         {
-            if (this.AboutModelOfGauge.ManufacturerName != null)
-            {
-                var newGauge = new gauge();
-                newGauge.manufacturer_name = this.AboutModelOfGauge.ManufacturerName;
-                newGauge.model = this.AboutModelOfGauge.Model;
-                newGauge.type_id = 1;
-                newGauge.usage_id = 1;
-
-                using (LaboratoryEntities context = new LaboratoryEntities())
-                {
-
-                    context.gauges.Add(newGauge);
-                    context.SaveChanges();
-                }
-
-                IsOpen = false;
-            }
+            if (!ToConfirm) ToConfirm = true;
             IsOpen = false;
 
         }

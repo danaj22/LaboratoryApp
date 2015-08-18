@@ -14,7 +14,9 @@ namespace LaboratoryApp
     public class InformationAboutClient : ObservableObject
     {
         public InformationAboutClient()
-        {   }
+        {
+            OfficeId = null;
+        }
 
         private int clientId;
         public int ClientId
@@ -24,6 +26,16 @@ namespace LaboratoryApp
             { 
                 clientId = value;
                 OnPropertyChanged("ClientId");
+            }
+        }
+        private int? officeId;
+        public int? OfficeId
+        {
+            get { return officeId; }
+            set
+            {
+                officeId = value;
+                OnPropertyChanged("OfficeId");
             }
         }
         private string name;
@@ -96,9 +108,19 @@ namespace LaboratoryApp
                 OnPropertyChanged("Comment");
             }
         }
+        private int gaugeIdToAdd;
+        public int GaugeIdToAdd
+        {
+            get { return gaugeIdToAdd; }
+            set
+            {
+                gaugeIdToAdd = value;
+                OnPropertyChanged("GaugeIdToAdd");
+            }
+        }
+
 
         private NewWindowOffice messageWindowOffice;
-
         public NewWindowOffice MessageWindowOffice
         {
             get { return messageWindowOffice; }
@@ -107,6 +129,61 @@ namespace LaboratoryApp
                 messageWindowOffice = value;
                 OnPropertyChanged("MessageWindowOffice");
             }
+        }
+
+        private NewWindowGauge messageWindowGauge;
+
+        public NewWindowGauge MessageWindowGauge
+        {
+            get { return messageWindowGauge; }
+            set
+            {
+                messageWindowGauge = value;
+                OnPropertyChanged("MessageWindowGauge");
+            }
+        }
+
+        public ICommand AddGaugeCommand
+        { get { return new SimpleRelayCommand(AddGaugeExecute); } }
+
+        private void AddGaugeExecute()
+        {
+            MessageWindowGauge = new NewWindowGauge() { AboutGauge = new InformationAboutGauge() };
+            MessageWindowGauge.IsOpen = true;
+
+            if (MessageWindowGauge.ToConfirm)
+            {
+                gauge gaugeToAddToDatabase = new gauge();
+
+                using (LaboratoryEntities context = new LaboratoryEntities())
+                {
+                    GaugeIdToAdd = (from m in context.model_of_gauges where m.model == MessageWindowGauge.AboutGauge.SelectedModel select m.model_of_gaugeId).FirstOrDefault();
+                }
+                gaugeToAddToDatabase.client_id = ClientId;
+                gaugeToAddToDatabase.office_id = OfficeId;
+                gaugeToAddToDatabase.model_of_gauge_id = GaugeIdToAdd;
+                gaugeToAddToDatabase.serial_number = MessageWindowGauge.AboutGauge.SerialNumber;
+
+                using (LaboratoryEntities context = new LaboratoryEntities())
+                {
+                    context.gauges.Add(gaugeToAddToDatabase);
+                    context.SaveChanges();
+                }
+                MessageBox.Show("Miernik został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                //var index = AllItems.IndexOf(AllItems.Last()) + 1;
+                //AllItems.Remove((client)SelectedNode);
+                ////Add new client to TreeView
+                //AllItems.Insert(index+1, newClient);
+
+                MessageWindowGauge.ToConfirm = false;
+                MainWindowViewModel.LoadView();
+            }
+            else
+            {
+
+            }
+
         }
         
         public ICommand DeleteCommand
@@ -126,6 +203,7 @@ namespace LaboratoryApp
 
                 context.clients.Remove(clientToDelete);
                 context.SaveChanges();
+                MainWindowViewModel.LoadView();
             }
         }
 
@@ -214,6 +292,7 @@ namespace LaboratoryApp
 
                 }
                 MessageWindowClient.ToConfirm = false;
+                MainWindowViewModel.LoadView();
             }
         }
 
@@ -248,14 +327,12 @@ namespace LaboratoryApp
                 //AllItems.Remove((client)SelectedNode);
                 ////Add new client to TreeView
                 //AllItems.Insert(index+1, newClient);
+                MainWindowViewModel.LoadView();
             }
             else
-            {
+            { }
 
-            }
             MessageWindowOffice.ToConfirm = false;
-
-
             
         }
     }

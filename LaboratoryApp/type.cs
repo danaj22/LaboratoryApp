@@ -16,12 +16,12 @@ namespace LaboratoryApp
     {
         public type()
         {
-            this.gauges = new ObservableCollection<gauge>();
+            this.model_of_gauges = new ObservableCollection<model_of_gauges>();
         }
     
         public int typeId { get; set; }
         public string name { get; set; }
     
-        public virtual ObservableCollection<gauge> gauges { get; set; }
+        public virtual ObservableCollection<model_of_gauges> model_of_gauges { get; set; }
     }
 }

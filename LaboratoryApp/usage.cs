@@ -16,12 +16,12 @@ namespace LaboratoryApp
     {
         public usage()
         {
-            this.gauges = new ObservableCollection<gauge>();
+            this.model_of_gauges = new ObservableCollection<model_of_gauges>();
         }
     
         public int usageId { get; set; }
         public string description { get; set; }
     
-        public virtual ObservableCollection<gauge> gauges { get; set; }
+        public virtual ObservableCollection<model_of_gauges> model_of_gauges { get; set; }
     }
 }

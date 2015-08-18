@@ -104,10 +104,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
-    <Compile Include="office.cs">
+    <Compile Include="model_of_gauges.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="product.cs">
+    <Compile Include="office.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_helpdiagramdefinition_Result.cs">
@@ -141,6 +141,7 @@
     <Compile Include="ViewModel\NewWindowRaport.cs" />
     <Compile Include="ViewModel\OfficesViewModel.cs" />
     <Compile Include="ViewModel\OpenNewWindow.cs" />
+    <Compile Include="ViewModel\TreeViewContainer.cs" />
     <Compile Include="ViewModel\TreeViewHelper.cs" />
     <Compile Include="ViewModel\GaugesViewModel.cs" />
     <Compile Include="ViewModel\ClientsViewModel.cs" />

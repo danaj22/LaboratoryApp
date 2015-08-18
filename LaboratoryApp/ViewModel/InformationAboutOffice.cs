@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using LaboratoryApp.View;
 using System.Windows.Input;
-using LaboratoryApp.ViewModel;
+using LaboratoryApp;
 using System.Windows;
 
-namespace LaboratoryApp
+namespace LaboratoryApp.ViewModel
 {
     public class InformationAboutOffice: ObservableObject
     {
@@ -133,9 +133,9 @@ namespace LaboratoryApp
                 OnPropertyChanged("OfficeIdToAdd");
             }
         }
-        private int? gaugeIdToAdd;
+        private int gaugeIdToAdd;
 
-        public int? GaugeIdToAdd
+        public int GaugeIdToAdd
         {
             get { return gaugeIdToAdd; }
             set
@@ -151,20 +151,20 @@ namespace LaboratoryApp
 
             if (MessageWindowGauge.ToConfirm)
             {
-                product gaugeToAddToDatabase = new product();
+                gauge gaugeToAddToDatabase = new gauge();
 
                 using (LaboratoryEntities context = new LaboratoryEntities())
                 {
-                    GaugeIdToAdd = (from g in context.gauges where g.model == MessageWindowGauge.AboutGauge.SelectedModel select g.gaugeId).FirstOrDefault();
+                    GaugeIdToAdd = (from m in context.model_of_gauges where m.model == MessageWindowGauge.AboutGauge.SelectedModel select m.model_of_gaugeId).FirstOrDefault();
                 }
                 gaugeToAddToDatabase.client_id = ClientId;
                 gaugeToAddToDatabase.office_id = OfficeId;
-                gaugeToAddToDatabase.gauge_id = GaugeIdToAdd;
+                gaugeToAddToDatabase.model_of_gauge_id = GaugeIdToAdd;
                 gaugeToAddToDatabase.serial_number = MessageWindowGauge.AboutGauge.SerialNumber;
 
                 using (LaboratoryEntities context = new LaboratoryEntities())
                 {
-                    context.products.Add(gaugeToAddToDatabase);
+                    context.gauges.Add(gaugeToAddToDatabase);
                     context.SaveChanges();
                 }
                 MessageBox.Show("Miernik został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -175,6 +175,7 @@ namespace LaboratoryApp
                 //AllItems.Insert(index+1, newClient);
 
                 MessageWindowGauge.ToConfirm = false;
+                MainWindowViewModel.LoadView();
             }
             else
             {
@@ -201,6 +202,7 @@ namespace LaboratoryApp
                     context.offices.Remove(officeToDelete);
                     context.SaveChanges();
                 }
+                MainWindowViewModel.LoadView();
             }
         }
 
@@ -256,6 +258,7 @@ namespace LaboratoryApp
 
                 }
                 MessageWindowOffice.ToConfirm = false;
+                MainWindowViewModel.LoadView();
             }
 
 

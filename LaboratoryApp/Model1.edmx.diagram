@@ -6,16 +6,17 @@
     <edmx:Diagrams>
       <Diagram DiagramId="f4e6fe1a0c50490e9ac3fd268ff3c237" Name="Diagram1">
         <EntityTypeShape EntityType="laboratoryModel.certificate" Width="1.5" PointX="8.625" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="laboratoryModel.client" Width="1.5" PointX="9.875" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="laboratoryModel.type" Width="1.5" PointX="3.5" PointY="9.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="laboratoryModel.product" Width="1.5" PointX="4.5" PointY="3.125" />
-        <EntityTypeShape EntityType="laboratoryModel.gauge" Width="1.5" PointX="4.5" PointY="6.125" />
-        <AssociationConnector Association="laboratoryModel.FK_gauges_types" />
-        <AssociationConnector Association="laboratoryModel.FK_products_gauges" />
-        <EntityTypeShape EntityType="laboratoryModel.office" Width="1.5" PointX="7.125" PointY="3" />
-        <EntityTypeShape EntityType="laboratoryModel.usage" Width="1.5" PointX="5.5" PointY="9.125" />
+        <EntityTypeShape EntityType="laboratoryModel.type" Width="1.5" PointX="2.625" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="laboratoryModel.usage" Width="1.5" PointX="4.25" PointY="10.25" />
+        <EntityTypeShape EntityType="laboratoryModel.model_of_gauges" Width="1.5" PointX="3.625" PointY="6.375" />
+        <AssociationConnector Association="laboratoryModel.FK_gauges_types1" />
+        <AssociationConnector Association="laboratoryModel.FK_gauges_usage1" />
+        <EntityTypeShape EntityType="laboratoryModel.office" Width="1.5" PointX="6.625" PointY="3.125" />
+        <EntityTypeShape EntityType="laboratoryModel.client" Width="1.5" PointX="9.625" PointY="2.875" />
         <AssociationConnector Association="laboratoryModel.FK_offices_clients" />
-        <AssociationConnector Association="laboratoryModel.FK_gauges_usage" />
+        <EntityTypeShape EntityType="laboratoryModel.gauge" Width="2.125" PointX="3" PointY="3.25" />
+        <AssociationConnector Association="laboratoryModel.FK_gauges_clients" />
+        <AssociationConnector Association="laboratoryModel.FK_gauges_model_of_gauges" />
         <AssociationConnector Association="laboratoryModel.FK_gauges_offices" />
       </Diagram>
     </edmx:Diagrams>

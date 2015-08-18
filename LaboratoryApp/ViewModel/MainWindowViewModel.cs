@@ -22,7 +22,7 @@ namespace LaboratoryApp
         }
         
         
-        private LoadData data;
+        static private LoadData data;
 
         public LoadData Data
         {
@@ -42,7 +42,7 @@ namespace LaboratoryApp
             set { userInput = value; }
         }
 
-        private ObservableCollection<client> allItems = new ObservableCollection<client>();
+        static public ObservableCollection<client> allItems = new ObservableCollection<client>();
 
         public ObservableCollection<client> AllItems
         {
@@ -53,7 +53,7 @@ namespace LaboratoryApp
             }
         }
 
-        private object selectedNode = 0;
+        static private object selectedNode = 0;
 
         public object SelectedNode
         {
@@ -89,14 +89,14 @@ namespace LaboratoryApp
                                                                       ContactPerson = selectedOffice.contact_person_name,
                                                                       Email = selectedOffice.mail};
                 }
-                if ((SelectedNode as product) != null)
+                if ((SelectedNode as gauge) != null)
                 {
-                    product selectedProduct = selectedNode as product;
+                    gauge selectedGauge = selectedNode as gauge;
                     CurrentViewModel = new ViewModel.InformationAboutGauge() {
-                                                                      GaugeId = selectedProduct.productId,
-                                                                      SerialNumber = selectedProduct.serial_number,
-                                                                      Gauge = selectedProduct.gauge,
-                                                                      Office = selectedProduct.office
+                                                                      GaugeId = selectedGauge.gaugeId,
+                                                                      SerialNumber = selectedGauge.serial_number,
+                                                                      ModelOfGaugeItem = selectedGauge.model_of_gauges,
+                                                                      Office = selectedGauge.office
                                                                       };
                 }
                 OnPropertyChanged("SelectedNode");
@@ -115,10 +115,11 @@ namespace LaboratoryApp
             }
         }
       
-        private void LoadView()
+        static public void LoadView()
         {
             
-            data = new LoadData(AllItems);
+            data = new LoadData(allItems);
+            selectedNode = 0;
         }
 
 
@@ -145,9 +146,9 @@ namespace LaboratoryApp
         {
             LaboratoryEntities context = new LaboratoryEntities();
 
-            var tmp = (from searchedGauge in context.gauges
-                       where SearchItem == searchedGauge.gaugeId
-                       select new { searchedGauge.model }).ToList();
+            //var tmp = (from searchedGauge in context.model_of_gauges
+            //           where SearchItem == searchedGauge.gaugeId
+            //           select new { searchedGauge. }).ToList();
 
             //trzeba dopisać wyszukiwanie
             
@@ -158,7 +159,7 @@ namespace LaboratoryApp
         }
 
         /// <summary>
-        /// command to show modal window where we can add new Gauge
+        /// command to show modal window where we can add new ModelOfGaugeItem
         /// </summary>
         /// 
         private ICommand addNewGaugeCommand;
@@ -183,8 +184,35 @@ namespace LaboratoryApp
             
             MessageWindowModelOfGauge.IsOpen = true;
 
-            if (MessageWindowModelOfGauge.ToConfirm == true)
-            { }
+            if (MessageWindowModelOfGauge.ToConfirm)
+            {
+                if (!String.IsNullOrEmpty(MessageWindowModelOfGauge.AboutModelOfGauge.ManufacturerName)
+                    && !String.IsNullOrEmpty(MessageWindowModelOfGauge.AboutModelOfGauge.Model)
+                    && !String.IsNullOrEmpty(MessageWindowModelOfGauge.AboutModelOfGauge.SelectedUsage)
+                    && !String.IsNullOrEmpty(MessageWindowModelOfGauge.AboutModelOfGauge.SelectedType)
+                    )
+                {
+                    var newGauge = new model_of_gauges();
+                    newGauge.manufacturer_name = MessageWindowModelOfGauge.AboutModelOfGauge.ManufacturerName;
+                    newGauge.model = MessageWindowModelOfGauge.AboutModelOfGauge.Model;
+                    
+                    using (LaboratoryEntities context = new LaboratoryEntities())
+                    {
+                        newGauge.type_id = (from t in context.types where t.name == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedType select t.typeId).FirstOrDefault();
+                        newGauge.usage_id = (from u in context.usages where u.description == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedUsage select u.usageId).FirstOrDefault();
+                    }
+
+                    using (LaboratoryEntities context = new LaboratoryEntities())
+                    {
+
+                        context.model_of_gauges.Add(newGauge);
+                        context.SaveChanges();
+                    }
+                }
+
+            }
+            MessageWindowModelOfGauge.ToConfirm = false;
+
             //DialogWindowBase newBaseWindow = new DialogWindowBase();
             //NewWindowModelOfGauge gaugeDialogWindow = new NewWindowModelOfGauge() { AboutModelOfGauge = new InformationAboutModelOfGauge() };
 
@@ -200,7 +228,7 @@ namespace LaboratoryApp
             //if (result == true)
             //{
             //    MessageBox.Show(result.ToString());
-            //    var gaugeToAddToDatabase = new gauge();
+            //    var gaugeToAddToDatabase = new modelOfGaugeItem();
 
             //    gaugeToAddToDatabase.manufacturer_name = gaugeDialogWindow.AboutModelOfGauge.ManufacturerName;
             //    gaugeToAddToDatabase.model = gaugeDialogWindow.AboutModelOfGauge.Model;
@@ -230,7 +258,7 @@ namespace LaboratoryApp
             //if (newModal.DialogResult == true)
             //{
             //    MessageBox.Show(newModal.DialogResult.ToString());
-            //    var newGauge = new gauge();
+            //    var newGauge = new modelOfGaugeItem();
             //    newGauge.manufacturer_name = newModal.infoGauge.ManufacturerName;
             //    newGauge.model = newModal.infoGauge.Model;
             //    newGauge.type_id = 1;
@@ -297,28 +325,22 @@ namespace LaboratoryApp
         
         private void AddClient()
         {
-            MessageWindow = new NewWindowClient { AboutClient = new InformationAboutClient() };
-            MessageWindow.IsOpen = true;
+            MessageWindowClient = new NewWindowClient { AboutClient = new InformationAboutClient() };
+            MessageWindowClient.IsOpen = true;
 
-            if(MessageWindow.ToConfirm == true)
+            if(MessageWindowClient.ToConfirm)
             {
-                MessageBox.Show("dodanie użytkownika do bazy");
-                if (MessageWindow.AboutClient.Name != null
-                && MessageWindow.AboutClient.Address != null
-                && MessageWindow.AboutClient.Email != null
-                && MessageWindow.AboutClient.Telephone != null
-                && MessageWindow.AboutClient.NIP != null
-                && MessageWindow.AboutClient.ContactPerson != null)
+                if (MessageWindowClient.AboutClient.Name != null && MessageWindowClient.AboutClient.NIP != null)
                 {
 
                     client newClient = new client();
-                    newClient.name = MessageWindow.AboutClient.Name;
-                    newClient.adress = MessageWindow.AboutClient.Address;
-                    newClient.mail = MessageWindow.AboutClient.Email;
-                    newClient.tel = MessageWindow.AboutClient.Telephone;
-                    newClient.NIP = MessageWindow.AboutClient.NIP;
-                    newClient.contact_person_name = MessageWindow.AboutClient.ContactPerson;
-                    newClient.comments = MessageWindow.AboutClient.Comment;
+                    newClient.name = MessageWindowClient.AboutClient.Name;
+                    newClient.adress = MessageWindowClient.AboutClient.Address;
+                    newClient.mail = MessageWindowClient.AboutClient.Email;
+                    newClient.tel = MessageWindowClient.AboutClient.Telephone;
+                    newClient.NIP = MessageWindowClient.AboutClient.NIP;
+                    newClient.contact_person_name = MessageWindowClient.AboutClient.ContactPerson;
+                    newClient.comments = MessageWindowClient.AboutClient.Comment;
 
                     using (LaboratoryEntities context = new LaboratoryEntities())
                     {
@@ -331,8 +353,13 @@ namespace LaboratoryApp
                     //AllItems.Remove((client)SelectedNode);
                     //Add new client to TreeView
                     AllItems.Insert(index, newClient);
+
+                    MessageBox.Show("dodanie użytkownika do bazy");
+                    
                 }
+                
             }
+            MessageWindowClient.ToConfirm = false;
 
 
             //DialogWindowBase newBaseWindow = new DialogWindowBase();
@@ -395,7 +422,6 @@ namespace LaboratoryApp
         }
 
         private NewWindowModelOfGauge messageWindowModelOfGauge;
-
         public NewWindowModelOfGauge MessageWindowModelOfGauge
         {
             get { return messageWindowModelOfGauge; }
@@ -408,7 +434,6 @@ namespace LaboratoryApp
 
 
         private string title;
-
         public string Title
         {
             get { return title; }
@@ -419,22 +444,21 @@ namespace LaboratoryApp
             }
         }
 
-        private NewWindowClient messageWindow;
+        private NewWindowClient messageWindowClient;
 
-        public NewWindowClient MessageWindow
+        public NewWindowClient MessageWindowClient
         {
-            get { return messageWindow; }
+            get { return messageWindowClient; }
             set
             {
                 
-                messageWindow = value;
-                base.OnPropertyChanged("MessageWindow");
+                messageWindowClient = value;
+                base.OnPropertyChanged("MessageWindowClient");
             }
         }
 
        
         private string status;
-
         public string Status
         {
             get { return status; }

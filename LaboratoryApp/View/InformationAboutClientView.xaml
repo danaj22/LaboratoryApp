@@ -7,18 +7,14 @@
              xmlns:local="clr-namespace:LaboratoryApp"
              
              mc:Ignorable="d" 
-             x:Name="uc"
-             d:DesignHeight="300" d:DesignWidth="300">
+             x:Name="uc" Height="292" Width="374">
 
-    <!--<d:DataContext>
-        <vm:NewWindowClient/>
-    </d:DataContext>-->
-    <Grid >
+    <Grid Margin="0,0,-73,0" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto" MinWidth="80"/>
+            <ColumnDefinition Width="Auto" MinWidth="96"/>
+            <ColumnDefinition Width="Auto" MinWidth="87"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -30,11 +26,12 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <TextBlock Text="informacje o klientach" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" TextAlignment="Center"/>
-        <TextBlock Text="{Binding Comment}" Background="Aquamarine" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Grid.ColumnSpan="4"/>
+        <TextBlock Text="{Binding Comment}" Background="Aquamarine" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="63,0,24,0" Width="0"/>
         <TextBlock Text="Nazwa:" Grid.Column="0" Grid.Row="3"/>
         <TextBlock Text="{Binding Name}" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3"/>
         <TextBlock Text="Osoba kontaktowa:" Grid.Column="0" Grid.Row="4"/>
@@ -54,10 +51,17 @@
         <vm:ModalDialogManager DataContext="{Binding MessageWindowClient}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
 			DialogWidth="300" DialogResizeMode="NoResize" CloseCommand="{Binding OKCommand}"/>
 
-        <Button Content="Dodaj oddział" Command="{Binding AddCommand}" Grid.Row="9" VerticalAlignment="Top" Grid.Column="1" HorizontalAlignment="Left" />
-        <Button Content="Usuń klienta" Command="{Binding DeleteCommand}"  Grid.Row="9" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Center" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
+			DialogWidth="400" DialogResizeMode="NoResize" CloseCommand="{Binding OKCommand}"/>
+
+
+        <Button Content="Dodaj oddział" Command="{Binding AddCommand}" Grid.Row="9" VerticalAlignment="Top" Grid.Column="1" HorizontalAlignment="Left" Height="22" Width="80" />
+        <Button Content="Usuń klienta" Command="{Binding DeleteCommand}"  Grid.Row="9" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Center" Height="22" Width="70" Margin="13,0" />
+
+        <Button Content="Edytuj klienta" Command="{Binding EditCommand}" Grid.Row="9" VerticalAlignment="Top" Grid.Column="3" HorizontalAlignment="Center" Height="22" Width="78" Margin="6,0,3,0" />
+
+        <Button Content="Dodaj miernik" Command="{Binding AddGaugeCommand}" Grid.Row="10" VerticalAlignment="Top" Grid.Column="1" HorizontalAlignment="Center" Height="22" Margin="0,5,7,0" Width="80" />
         
-        <Button Content="Edytuj klienta" Command="{Binding EditCommand}" Grid.Row="9" VerticalAlignment="Top" Grid.Column="3" HorizontalAlignment="Center" />
 
     </Grid>
 </UserControl>

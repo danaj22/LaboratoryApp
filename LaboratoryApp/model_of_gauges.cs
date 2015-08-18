@@ -12,24 +12,21 @@ namespace LaboratoryApp
     using System;
     using System.Collections.ObjectModel;
     
-    public partial class client
+    public partial class model_of_gauges
     {
-        public client()
+        public model_of_gauges()
         {
-            this.offices = new ObservableCollection<office>();
             this.gauges = new ObservableCollection<gauge>();
         }
     
-        public int clientId { get; set; }
-        public string name { get; set; }
-        public string adress { get; set; }
-        public string contact_person_name { get; set; }
-        public string mail { get; set; }
-        public string tel { get; set; }
-        public string NIP { get; set; }
-        public string comments { get; set; }
+        public int model_of_gaugeId { get; set; }
+        public string manufacturer_name { get; set; }
+        public string model { get; set; }
+        public int usage_id { get; set; }
+        public int type_id { get; set; }
     
-        public virtual ObservableCollection<office> offices { get; set; }
+        public virtual type type { get; set; }
+        public virtual usage usage { get; set; }
         public virtual ObservableCollection<gauge> gauges { get; set; }
     }
 }

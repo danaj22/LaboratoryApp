@@ -23,7 +23,7 @@ namespace LaboratoryApp.ViewModel
             //configure a DataTemplate that associates the ViewModel to the View that will be shown inside this dialog
             // e.g
             //         <DataTemplate DataType="{x:Type vm:MessageWindowViewModel}">
-            //              <v:MessageWindow/>
+            //              <v:MessageWindowClient/>
             //          </DataTemplate>
             //Usually these datatemplates are defined in a global resource library such as App.xaml
             //If this is not configured propertly instead of seeing your control - you will just see the classname in the resulting dialog

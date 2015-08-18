@@ -37,7 +37,7 @@ namespace LaboratoryApp
             /*******************************
             //trvMenu.Items.Add(root);
             ********************************/
-
+            AllItems.Clear();
             userInput = new UserInput();
             //Gauges g1 = new Gauges();
             //this.TreeOfClients = new ObservableCollection<Clients>();
@@ -52,7 +52,7 @@ namespace LaboratoryApp
                 //MenuItem menuItem = new MenuItem();
 
                 //Clients ClientTree = new Clients();
-                //ClientTree.Offices = new ObservableCollection<Offices>();
+                //ClientTree.offices = new ObservableCollection<offices>();
                 //ClientTree.CollectionOfGaugesInClients = new ObservableCollection<Gauges>();
 
                 //List<int> Blabla = new List<int>();
@@ -90,14 +90,14 @@ namespace LaboratoryApp
                 
                 //foreach (var ofi in LabEntities.offices)
                 //{
-                //    Offices off = new Offices();
+                //    offices off = new offices();
                 //    off.CollectionOfGauges = new ObservableCollection<Gauges>();
 
                 //    off.Key = ofi.officeId;
                 //    off.ContactPerson = ofi.name;
                 //    off.CollectionOfGauges = ClientTree.CollectionOfGaugesInClients;
 
-                //    ClientTree.Offices.Add(off);
+                //    ClientTree.offices.Add(off);
                 //}
 
                 //treeOfClients.Add(ClientTree);

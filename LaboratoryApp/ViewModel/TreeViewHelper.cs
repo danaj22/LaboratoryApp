@@ -93,7 +93,9 @@ namespace LaboratoryApp
 
                 }
                 catch (Exception ex)
-                { }
+                {
+                    MessageBox.Show(ex.ToString());
+                }
             }
         
         }
