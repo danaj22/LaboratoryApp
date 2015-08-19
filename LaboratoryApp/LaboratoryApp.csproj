@@ -141,7 +141,7 @@
     <Compile Include="ViewModel\NewWindowRaport.cs" />
     <Compile Include="ViewModel\OfficesViewModel.cs" />
     <Compile Include="ViewModel\OpenNewWindow.cs" />
-    <Compile Include="ViewModel\TreeViewContainer.cs" />
+    <Compile Include="ViewModel\MenuItem.cs" />
     <Compile Include="ViewModel\TreeViewHelper.cs" />
     <Compile Include="ViewModel\GaugesViewModel.cs" />
     <Compile Include="ViewModel\ClientsViewModel.cs" />

@@ -10,8 +10,28 @@
         WindowStartupLocation="CenterScreen"
         
         Title="{Binding Title}" Height="600" Width="700">
-    
+
     <Window.Resources>
+        <!-- To a treeView -->      
+        <HierarchicalDataTemplate DataType="{x:Type local:client}"  ItemsSource="{Binding Items}">
+            <Grid>
+            <TextBlock Text="{Binding name}" />
+            </Grid>
+        </HierarchicalDataTemplate>
+        
+        <HierarchicalDataTemplate DataType="{x:Type local:office}"  ItemsSource="{Binding gauges}">
+            <Grid>
+                <TextBlock Text="{Binding name}" />
+            </Grid>
+        </HierarchicalDataTemplate>
+        
+        <HierarchicalDataTemplate DataType="{x:Type local:gauge}"  ItemsSource="{Binding Items}">
+            <Grid>
+                <TextBlock Text="{Binding model_of_gauges.model}" />
+            </Grid>
+        </HierarchicalDataTemplate>
+        
+        
         <DataTemplate DataType="{x:Type local:InformationAboutClient}">
             <view:InformationAboutClientView/>
         </DataTemplate>
@@ -60,27 +80,10 @@
         <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding NameAndSurname}" />
 
 
-        <TreeView Name="tvwAllClients" ItemContainerStyle="{StaticResource ItemContainerStyle}" Grid.Row="4" Grid.RowSpan="2" ItemsSource="{Binding AllItems,UpdateSourceTrigger=PropertyChanged}" 
+        <TreeView Name="tvwAllClients" ItemContainerStyle="{StaticResource ItemContainerStyle}" Grid.Row="4" Grid.RowSpan="2" ItemsSource="{Binding RootElement.Items,UpdateSourceTrigger=PropertyChanged}" 
                   local:TreeViewHelper.SelectedItem="{Binding SelectedNode, Mode=TwoWay}" VirtualizingPanel.IsVirtualizing="True" Grid.Column="0" Grid.ColumnSpan="2">
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding offices}">
-                    <TextBlock Text="{Binding name}"/>
-                    
-                    <HierarchicalDataTemplate.ItemTemplate>
-                        <HierarchicalDataTemplate ItemsSource="{Binding gauges}">
-                            
-                            <HierarchicalDataTemplate.ItemTemplate>
-                                <HierarchicalDataTemplate>
-                                    <TextBlock Text="{Binding model_of_gauge.model}"/>
-                                </HierarchicalDataTemplate>
-                            </HierarchicalDataTemplate.ItemTemplate>
-                        </HierarchicalDataTemplate>                        
-                    </HierarchicalDataTemplate.ItemTemplate>
-                    
-                </HierarchicalDataTemplate>
-                
-            </TreeView.ItemTemplate>
         </TreeView>
+
 
         <!--<TreeView Name="tvwAllClients" ItemContainerStyle="{StaticResource ItemContainerStyle}" Grid.Row="4" Grid.RowSpan="2" ItemsSource="{Binding AllItems,UpdateSourceTrigger=PropertyChanged}" 
                   local:TreeViewHelper.SelectedItem="{Binding SelectedNode, Mode=TwoWay}" VirtualizingPanel.IsVirtualizing="True" Grid.Column="0" Grid.ColumnSpan="2">
@@ -105,11 +108,13 @@
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
                             </StackPanel>
-                            --><!--<HierarchicalDataTemplate.ItemTemplate>
+                            -->
+        <!--<HierarchicalDataTemplate.ItemTemplate>
                                 <HierarchicalDataTemplate>
                                     <TextBlock Text="{Binding model_of_gauges.model}"/>
                                 </HierarchicalDataTemplate>
-                            </HierarchicalDataTemplate.ItemTemplate>--><!--
+                            </HierarchicalDataTemplate.ItemTemplate>-->
+        <!--
                         </DataTemplate>
                     </HierarchicalDataTemplate.ItemTemplate>
                 </HierarchicalDataTemplate>
@@ -120,7 +125,7 @@
         <ContentControl Grid.RowSpan="2" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="3" Content="{Binding CurrentViewModel}">
         </ContentControl>
         <Button Content="Wyszukaj" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Width="80" Margin="10,12,10,11" />
-        
+
         <vm:ModalDialogManager DataContext="{Binding MessageWindowClient}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
 			DialogWidth="400" DialogResizeMode="NoResize" CloseCommand="{Binding OKCommand}"/>
 

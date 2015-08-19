@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:LaboratoryApp"
              
              mc:Ignorable="d" 
-             x:Name="uc" Height="292" Width="374">
+             x:Name="uc" Height="300" Width="300">
 
     <Grid Margin="0,0,-73,0" >
         <Grid.ColumnDefinitions>

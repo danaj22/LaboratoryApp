@@ -42,6 +42,14 @@ namespace LaboratoryApp
             set { userInput = value; }
         }
 
+        static private MenuItem rootElement = new MenuItem();
+
+        public MenuItem RootElement
+        {
+            get { return rootElement; }
+            set { rootElement = value; }
+        }
+
         static public ObservableCollection<client> allItems = new ObservableCollection<client>();
 
         public ObservableCollection<client> AllItems
@@ -118,7 +126,7 @@ namespace LaboratoryApp
         static public void LoadView()
         {
             
-            data = new LoadData(allItems);
+            data = new LoadData(rootElement);
             selectedNode = 0;
         }
 
@@ -132,7 +140,8 @@ namespace LaboratoryApp
             AddNewGaugeCommand = new SimpleRelayCommand(AddGauge);
             CurrentViewModel = null;
             userInput = new UserInput();
-            LoadView();        
+            LoadView();
+
         }
        
 
@@ -440,7 +449,7 @@ namespace LaboratoryApp
             set
             {
                 title = value;
-                base.OnPropertyChanged("Title");
+                base.OnPropertyChanged("TitleOfItem");
             }
         }
 

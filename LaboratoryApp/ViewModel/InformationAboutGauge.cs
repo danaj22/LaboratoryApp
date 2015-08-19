@@ -240,7 +240,7 @@ namespace LaboratoryApp.ViewModel
 
             //// Create a new PDF document
             //PdfDocument document = new PdfDocument();
-            //document.Info.Title = "Created with PDFsharp";
+            //document.Info.TitleOfItem = "Created with PDFsharp";
 
             //// Create an empty page
             //PdfPage page = document.AddPage();

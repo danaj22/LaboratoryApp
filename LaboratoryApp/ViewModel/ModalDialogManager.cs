@@ -166,13 +166,13 @@ namespace LaboratoryApp.ViewModel
         //public static readonly DependencyProperty IconProperty =
         //    DependencyProperty.Register("Icon", typeof(ImageSource), typeof(ModalDialogManager), new UIPropertyMetadata(null));
 
-        //public string Title
+        //public string TitleOfItem
         //{
         //    get { return (string)GetValue(TitleProperty); }
         //    set { SetValue(TitleProperty, value); }
         //}
         //public static readonly DependencyProperty TitleProperty =
-        //    DependencyProperty.Register("Title", typeof(string), typeof(ModalDialogManager), new UIPropertyMetadata(null));
+        //    DependencyProperty.Register("TitleOfItem", typeof(string), typeof(ModalDialogManager), new UIPropertyMetadata(null));
 
         #endregion
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using LaboratoryApp.ViewModel;
 
 namespace LaboratoryApp
 {
@@ -29,22 +30,28 @@ namespace LaboratoryApp
         //}
 
 
-        public LoadData(ObservableCollection<client> AllItems)
+        public LoadData(MenuItem rootItem)
         {
 
             
            
             /*******************************
-            //trvMenu.Items.Add(root);
+            //trvMenu.ChildItem.Add(root);
             ********************************/
-            AllItems.Clear();
+            //rootItem = new MenuItem();
+            
             userInput = new UserInput();
             //Gauges g1 = new Gauges();
             //this.TreeOfClients = new ObservableCollection<Clients>();
 
             foreach (var t in LabEntities.clients)
             {
-                AllItems.Add(t);
+                rootItem.Items.Add(t);
+                foreach(var g in t.gauges)
+                    if(g.office_id== null)
+                        rootItem.Items.Last().Items.Add(g);
+                foreach (var o in t.offices)
+                    rootItem.Items.Last().Items.Add(o);
 
                 //InformationAboutClient infoClient = new InformationAboutClient();
 
@@ -101,7 +108,6 @@ namespace LaboratoryApp
                 //}
 
                 //treeOfClients.Add(ClientTree);
-
             }
 
         }

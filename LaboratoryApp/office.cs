@@ -11,8 +11,8 @@ namespace LaboratoryApp
 {
     using System;
     using System.Collections.ObjectModel;
-    
-    public partial class office
+
+    public partial class office : ViewModel.MenuItem
     {
         public office()
         {

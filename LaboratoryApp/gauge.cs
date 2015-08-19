@@ -11,9 +11,13 @@ namespace LaboratoryApp
 {
     using System;
     using System.Collections.ObjectModel;
-    
-    public partial class gauge
+
+    public partial class gauge : ViewModel.MenuItem
     {
+        public gauge()
+        {
+            NameOfItem = "biuro";
+        }
         public int gaugeId { get; set; }
         public int serial_number { get; set; }
         public int client_id { get; set; }
@@ -23,5 +27,7 @@ namespace LaboratoryApp
         public virtual client client { get; set; }
         public virtual model_of_gauges model_of_gauges { get; set; }
         public virtual office office { get; set; }
+
+
     }
 }

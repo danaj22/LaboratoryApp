@@ -12,7 +12,7 @@ namespace LaboratoryApp
     using System;
     using System.Collections.ObjectModel;
     
-    public partial class client
+    public partial class client : ViewModel.MenuItem
     {
         public client()
         {
@@ -27,7 +27,7 @@ namespace LaboratoryApp
         public string mail { get; set; }
         public string tel { get; set; }
         public string NIP { get; set; }
-        public string comments { get; set; }
+        public string comments { get; set;}
     
         public virtual ObservableCollection<office> offices { get; set; }
         public virtual ObservableCollection<gauge> gauges { get; set; }
