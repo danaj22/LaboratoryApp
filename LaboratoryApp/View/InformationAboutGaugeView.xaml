@@ -35,10 +35,10 @@
         <TextBlock Text="{Binding Gauge.usage.description}" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3"/>
 
         <vm:ModalDialogManager DataContext="{Binding MessageWindowGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
-			DialogWidth="300" DialogResizeMode="NoResize" CloseCommand="{Binding OKCommand}"/>
+			DialogWidth="300" DialogResizeMode="NoResize" />
 
         <vm:ModalDialogManager DataContext="{Binding MessageWindowRaport}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
-			DialogWidth="500" DialogResizeMode="NoResize" CloseCommand="{Binding OKCommand}"/>
+			DialogWidth="500" DialogResizeMode="NoResize" />
 
         <Button Content="Usuń miernik" Command="{Binding DeleteGaugeCommand}"  Grid.Row="5" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Center" Height="22" Margin="12,0,10,0" Width="76" />
 

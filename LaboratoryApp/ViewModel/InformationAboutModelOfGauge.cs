@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using LaboratoryApp.View;
 using System.Windows.Input;
-using LaboratoryApp.ViewModel;
+using LaboratoryApp;
 using System.Windows;
 using System.Collections.ObjectModel;
 
-namespace LaboratoryApp
+namespace LaboratoryApp.ViewModel
 {
     public class InformationAboutModelOfGauge : ObservableObject
     {

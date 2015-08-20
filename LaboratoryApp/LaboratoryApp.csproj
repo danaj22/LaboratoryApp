@@ -139,6 +139,8 @@
     <Compile Include="ViewModel\NewWindowOffice.cs" />
     <Compile Include="ViewModel\NewWindowGauge.cs" />
     <Compile Include="ViewModel\NewWindowRaport.cs" />
+    <Compile Include="ViewModel\NewWindowType.cs" />
+    <Compile Include="ViewModel\NewWindowUsage.cs" />
     <Compile Include="ViewModel\OfficesViewModel.cs" />
     <Compile Include="ViewModel\OpenNewWindow.cs" />
     <Compile Include="ViewModel\MenuItem.cs" />
@@ -160,6 +162,12 @@
     </Compile>
     <Compile Include="View\DialogWindowGauge.xaml.cs">
       <DependentUpon>DialogWindowGauge.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowType.xaml.cs">
+      <DependentUpon>DialogWindowType.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowUsage.xaml.cs">
+      <DependentUpon>DialogWindowUsage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\InformationAboutClientView.xaml.cs">
       <DependentUpon>InformationAboutClientView.xaml</DependentUpon>
@@ -198,6 +206,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DialogWindowGauge.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowType.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowUsage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

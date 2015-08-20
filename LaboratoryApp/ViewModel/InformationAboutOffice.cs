@@ -166,6 +166,24 @@ namespace LaboratoryApp.ViewModel
                 {
                     context.gauges.Add(gaugeToAddToDatabase);
                     context.SaveChanges();
+                    office of = (office)MainWindowViewModel.selectedNode;
+                    
+                    client i =new client();
+                    foreach(var c in context.clients)
+                    {
+                        foreach (var o in c.offices)
+                        {
+                            if (o.officeId == of.officeId)
+                            {
+                                i = c;
+                            }
+                        }
+                    }
+
+                    var r = MainWindowViewModel.rootElement.Items.IndexOf(i);
+                    var q = MainWindowViewModel.rootElement.Items[r].Items.IndexOf(of);
+
+                    MainWindowViewModel.rootElement.Items[r].Items[q].Items.Add(gaugeToAddToDatabase);
                 }
                 MessageBox.Show("Miernik został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
 
@@ -175,7 +193,7 @@ namespace LaboratoryApp.ViewModel
                 //AllItems.Insert(index+1, newClient);
 
                 MessageWindowGauge.ToConfirm = false;
-                MainWindowViewModel.LoadView();
+                //MainWindowViewModel.LoadView();
             }
             else
             {
@@ -258,7 +276,7 @@ namespace LaboratoryApp.ViewModel
 
                 }
                 MessageWindowOffice.ToConfirm = false;
-                MainWindowViewModel.LoadView();
+                //MainWindowViewModel.LoadView();
             }
 
 

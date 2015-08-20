@@ -278,26 +278,28 @@ namespace LaboratoryApp.ViewModel
             //Process.Start(filename);
 
 
+            if (MessageWindowRaport.ToConfirm)
+            {
+                ///////////////////////////////////////////////////////
+                NewWindowRaport raport;
+                // Create a MigraDoc document
+                raport = MessageWindowRaport;
+                Document document = InformationAboutGauge.CreateDocument(raport);
 
-            ///////////////////////////////////////////////////////
-            NewWindowRaport raport;
-            // Create a MigraDoc document
-            raport = MessageWindowRaport;
-            Document document =  InformationAboutGauge.CreateDocument(raport);
-            
-            //string ddl = MigraDoc.DocumentObjectModel.IO.DdlWriter.WriteToString(document);
-            MigraDoc.DocumentObjectModel.IO.DdlWriter.WriteToFile(document, "MigraDoc.mdddl");
+                //string ddl = MigraDoc.DocumentObjectModel.IO.DdlWriter.WriteToString(document);
+                MigraDoc.DocumentObjectModel.IO.DdlWriter.WriteToFile(document, "MigraDoc.mdddl");
 
-            PdfDocumentRenderer renderer = new PdfDocumentRenderer(true, PdfSharp.Pdf.PdfFontEmbedding.Always);
-            renderer.Document = document;
-            
-            renderer.RenderDocument();
+                PdfDocumentRenderer renderer = new PdfDocumentRenderer(true, PdfSharp.Pdf.PdfFontEmbedding.Always);
+                renderer.Document = document;
 
-            // Save the document...
-            string filename = "1HelloMigraDoc.pdf";
-            renderer.PdfDocument.Save(filename);
-            // ...and start a viewer.
-            Process.Start(filename);
+                renderer.RenderDocument();
+
+                // Save the document...
+                string filename = "1HelloMigraDoc.pdf";
+                renderer.PdfDocument.Save(filename);
+                // ...and start a viewer.
+                Process.Start(filename);
+            }
  
         }
 

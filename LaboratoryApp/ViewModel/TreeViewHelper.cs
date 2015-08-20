@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using LaboratoryApp.ViewModel;
+using LaboratoryApp;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 
 
-namespace LaboratoryApp
+namespace LaboratoryApp.ViewModel
 {
     public class TreeViewHelper : DependencyObject
     {

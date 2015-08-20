@@ -24,8 +24,16 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("NameOfItem");
             }
         }
-
+        private ObservableCollection<MenuItem> items;
         public ObservableCollection<MenuItem> Items
-        { get; set; }
+        {
+            get
+            { return items; }
+            set
+            {
+                items = value;
+                OnPropertyChanged("Items");
+            }
+        }
     }
 }

@@ -42,10 +42,10 @@
         <TextBlock Text="{Binding Address}" Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="3"/>
 
         <vm:ModalDialogManager DataContext="{Binding MessageWindowOffice}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
-			DialogWidth="300" DialogResizeMode="NoResize" CloseCommand="{Binding OKCommand}"/>
+			DialogWidth="300" DialogResizeMode="NoResize" />
 
         <vm:ModalDialogManager DataContext="{Binding MessageWindowGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
-			DialogWidth="300" DialogResizeMode="NoResize" CloseCommand="{Binding OKCommand}"/>
+			DialogWidth="300" DialogResizeMode="NoResize" />
 
         <Button Content="Usuń oddział" Command="{Binding DeleteOfficeCommand}"  Grid.Row="9" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Center" Height="22" Margin="8,0" Width="74" />
 

@@ -100,7 +100,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_gauges_offices">
-          <End Role="offices" Type="Self.offices" Multiplicity="0..1" />
+          <End Role="offices" Type="Self.offices" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="gauges" Type="Self.gauges" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="offices">
@@ -136,7 +138,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_offices_clients">
-          <End Role="clients" Type="Self.clients" Multiplicity="1" />
+          <End Role="clients" Type="Self.clients" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="offices" Type="Self.offices" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="clients">

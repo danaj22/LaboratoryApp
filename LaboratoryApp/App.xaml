@@ -15,6 +15,12 @@
         <DataTemplate DataType="{x:Type vm:NewWindowModelOfGauge}">
             <v:DialogWindowModelOfGauge />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewWindowType}">
+            <v:DialogWindowType />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewWindowUsage}">
+            <v:DialogWindowUsage />
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:NewWindowOffice}">
             <v:DialogWindowOffice />
         </DataTemplate>

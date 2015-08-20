@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LaboratoryApp
+namespace LaboratoryApp.ViewModel
 {
     public class ClientsViewModel:ObservableObject
     {

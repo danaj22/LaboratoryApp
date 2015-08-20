@@ -12,27 +12,27 @@
         Title="{Binding Title}" Height="600" Width="700">
 
     <Window.Resources>
-        <!-- To a treeView -->      
+        <!-- To a treeView -->
         <HierarchicalDataTemplate DataType="{x:Type local:client}"  ItemsSource="{Binding Items}">
             <Grid>
-            <TextBlock Text="{Binding name}" />
+                <TextBlock Text="{Binding name}" />
             </Grid>
         </HierarchicalDataTemplate>
-        
+
         <HierarchicalDataTemplate DataType="{x:Type local:office}"  ItemsSource="{Binding gauges}">
             <Grid>
                 <TextBlock Text="{Binding name}" />
             </Grid>
         </HierarchicalDataTemplate>
-        
+
         <HierarchicalDataTemplate DataType="{x:Type local:gauge}"  ItemsSource="{Binding Items}">
             <Grid>
                 <TextBlock Text="{Binding model_of_gauges.model}" />
             </Grid>
         </HierarchicalDataTemplate>
-        
-        
-        <DataTemplate DataType="{x:Type local:InformationAboutClient}">
+
+
+        <DataTemplate DataType="{x:Type vm:InformationAboutClient}">
             <view:InformationAboutClientView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:InformationAboutOffice}">
@@ -41,10 +41,10 @@
         <DataTemplate DataType="{x:Type vm:InformationAboutGauge}">
             <view:InformationAboutGaugeView />
         </DataTemplate>
-        <local:MainWindowViewModel x:Key="MainWindowViewModelDataSource"/>
+        <vm:MainWindowViewModel x:Key="MainWindowViewModelDataSource"/>
     </Window.Resources>
     <Window.DataContext>
-        <local:MainWindowViewModel/>
+        <vm:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.Resources>
@@ -59,8 +59,7 @@
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="126*"/>
-            <ColumnDefinition Width="817*"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -81,7 +80,7 @@
 
 
         <TreeView Name="tvwAllClients" ItemContainerStyle="{StaticResource ItemContainerStyle}" Grid.Row="4" Grid.RowSpan="2" ItemsSource="{Binding RootElement.Items,UpdateSourceTrigger=PropertyChanged}" 
-                  local:TreeViewHelper.SelectedItem="{Binding SelectedNode, Mode=TwoWay}" VirtualizingPanel.IsVirtualizing="True" Grid.Column="0" Grid.ColumnSpan="2">
+                  vm:TreeViewHelper.SelectedItem="{Binding SelectedNode, Mode=TwoWay}" VirtualizingPanel.IsVirtualizing="True" Grid.Column="0" Grid.ColumnSpan="2">
         </TreeView>
 
 
@@ -127,15 +126,15 @@
         <Button Content="Wyszukaj" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Width="80" Margin="10,12,10,11" />
 
         <vm:ModalDialogManager DataContext="{Binding MessageWindowClient}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
-			DialogWidth="400" DialogResizeMode="NoResize" CloseCommand="{Binding OKCommand}"/>
+			DialogWidth="400" DialogResizeMode="NoResize"/>
 
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowModelOfGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
-			DialogWidth="400" DialogResizeMode="NoResize" CloseCommand="{Binding OKCommand}"/>
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowModelOfGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="200" 
+			DialogWidth="443" DialogResizeMode="NoResize"/>
 
 
         <TextBox Text="{Binding SearchItem}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Background="AliceBlue" Margin="0,12,0,11" />
-        <Button Content="Dodaj klienta" Command="{Binding AddNewClientCommand}" Grid.Column="4" HorizontalAlignment="Right"  VerticalAlignment="center" Margin="0,2" Width="123" />
-        <Button Content="Dodaj model miernika" Command="{Binding AddNewGaugeCommand}" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Right"  VerticalAlignment="center" Margin="0,2" />
+        <Button Content="Dodaj klienta" Command="{Binding AddNewClientCommand}" Grid.Column="3" HorizontalAlignment="Right"  VerticalAlignment="center" Margin="0,2" Width="123" />
+        <Button Content="Dodaj model miernika" Command="{Binding AddNewGaugeCommand}" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right"  VerticalAlignment="center" Margin="0,2" />
 
 
 

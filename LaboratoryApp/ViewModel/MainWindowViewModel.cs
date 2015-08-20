@@ -1,15 +1,17 @@
 ﻿using LaboratoryApp.View;
-using LaboratoryApp.ViewModel;
+using LaboratoryApp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
+using System.Windows;
+//using System.Windows;
+//using System.Windows.Input;
 //todelet 2 lib^^
-namespace LaboratoryApp
+namespace LaboratoryApp.ViewModel
 {
     public class MainWindowViewModel : ObservableObject
     {
@@ -42,12 +44,16 @@ namespace LaboratoryApp
             set { userInput = value; }
         }
 
-        static private MenuItem rootElement = new MenuItem();
+        static public MenuItem rootElement = new MenuItem();
 
         public MenuItem RootElement
         {
             get { return rootElement; }
-            set { rootElement = value; }
+            set 
+            { 
+                rootElement = value;
+                OnPropertyChanged("RootElement");
+            }
         }
 
         static public ObservableCollection<client> allItems = new ObservableCollection<client>();
@@ -61,7 +67,7 @@ namespace LaboratoryApp
             }
         }
 
-        static private object selectedNode = 0;
+        static public object selectedNode = 0;
 
         public object SelectedNode
         {
@@ -125,7 +131,6 @@ namespace LaboratoryApp
       
         static public void LoadView()
         {
-            
             data = new LoadData(rootElement);
             selectedNode = 0;
         }
@@ -153,13 +158,20 @@ namespace LaboratoryApp
         }
         private void SearchGauge()
         {
-            LaboratoryEntities context = new LaboratoryEntities();
+            try
+            {
+                LaboratoryEntities context = new LaboratoryEntities();
 
-            //var tmp = (from searchedGauge in context.model_of_gauges
-            //           where SearchItem == searchedGauge.gaugeId
-            //           select new { searchedGauge. }).ToList();
+                //var tmp = (from searchedGauge in context.model_of_gauges
+                //           where SearchItem == searchedGauge.gaugeId
+                //           select new { searchedGauge. }).ToList();
 
-            //trzeba dopisać wyszukiwanie
+                //trzeba dopisać wyszukiwanie
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
             
         }
         private bool CanSearchGauge()
@@ -204,18 +216,31 @@ namespace LaboratoryApp
                     var newGauge = new model_of_gauges();
                     newGauge.manufacturer_name = MessageWindowModelOfGauge.AboutModelOfGauge.ManufacturerName;
                     newGauge.model = MessageWindowModelOfGauge.AboutModelOfGauge.Model;
-                    
-                    using (LaboratoryEntities context = new LaboratoryEntities())
+
+                    try
                     {
-                        newGauge.type_id = (from t in context.types where t.name == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedType select t.typeId).FirstOrDefault();
-                        newGauge.usage_id = (from u in context.usages where u.description == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedUsage select u.usageId).FirstOrDefault();
+                        using (LaboratoryEntities context = new LaboratoryEntities())
+                        {
+                            newGauge.type_id = (from t in context.types where t.name == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedType select t.typeId).FirstOrDefault();
+                            newGauge.usage_id = (from u in context.usages where u.description == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedUsage select u.usageId).FirstOrDefault();
+                        }
                     }
-
-                    using (LaboratoryEntities context = new LaboratoryEntities())
+                    catch(Exception ex)
+                    { 
+                        MessageBox.Show(ex.ToString());
+                    }
+                    try
                     {
+                        using (LaboratoryEntities context = new LaboratoryEntities())
+                        {
 
-                        context.model_of_gauges.Add(newGauge);
-                        context.SaveChanges();
+                            context.model_of_gauges.Add(newGauge);
+                            context.SaveChanges();
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
                     }
                 }
 
@@ -351,17 +376,23 @@ namespace LaboratoryApp
                     newClient.contact_person_name = MessageWindowClient.AboutClient.ContactPerson;
                     newClient.comments = MessageWindowClient.AboutClient.Comment;
 
-                    using (LaboratoryEntities context = new LaboratoryEntities())
+                    try
                     {
-                        context.clients.Add(newClient);
-                        context.SaveChanges();
+                        using (LaboratoryEntities context = new LaboratoryEntities())
+                        {
+                            context.clients.Add(newClient);
+                            context.SaveChanges();
+                        }
                     }
-
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
+                    }
                     
-                    var index = AllItems.IndexOf(AllItems.Last())+1;
+                    var index = RootElement.Items.IndexOf(RootElement.Items.Last())+1;
                     //AllItems.Remove((client)SelectedNode);
                     //Add new client to TreeView
-                    AllItems.Insert(index, newClient);
+                    RootElement.Items.Insert(index, newClient);
 
                     MessageBox.Show("dodanie użytkownika do bazy");
                     

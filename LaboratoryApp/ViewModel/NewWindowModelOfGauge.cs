@@ -11,7 +11,6 @@ namespace LaboratoryApp.ViewModel
     public class NewWindowModelOfGauge : ObservableObject
 
     {
-        //public View.ModalWindowModelOfGauge MWindow;
         private InformationAboutModelOfGauge aboutModelOfGauge;
 
         public InformationAboutModelOfGauge AboutModelOfGauge
@@ -23,11 +22,36 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("AboutModelOfGauge");
             }
         }
+
+        private NewWindowType messageWindowType;
+
+        public NewWindowType MessageWindowType
+        {
+            get { return messageWindowType; }
+            set 
+            { 
+                messageWindowType = value;
+                OnPropertyChanged("MessageWindowType");
+            }
+        }
+        private NewWindowUsage messageWindowUsage;
+
+        public NewWindowUsage MessageWindowUsage
+        {
+            get { return messageWindowUsage; }
+            set 
+            { 
+                messageWindowUsage = value;
+                OnPropertyChanged("MessageWindowUsage");
+            }
+        }
        
         public NewWindowModelOfGauge()
         {
             OKCommand = new SimpleRelayCommand(Confirm);
             CancelCommand = new SimpleRelayCommand(Close);
+            AddUsageCommand = new SimpleRelayCommand(AddUsage);
+            AddTypeCommand = new SimpleRelayCommand(AddType);
         }
 
         public NewWindowModelOfGauge(Window window) //: base (window)
@@ -44,7 +68,6 @@ namespace LaboratoryApp.ViewModel
             //AboutModelOfGauge = new InformationAboutModelOfGauge();
         }
         private ICommand okCommand;
-
         public ICommand OKCommand
         {
             get { return okCommand; }
@@ -54,8 +77,8 @@ namespace LaboratoryApp.ViewModel
                 base.OnPropertyChanged("OKCommand");
             }
         }
-        private ICommand cancelCommand;
 
+        private ICommand cancelCommand;
         public ICommand CancelCommand
         {
             get { return cancelCommand; }
@@ -65,6 +88,29 @@ namespace LaboratoryApp.ViewModel
                 base.OnPropertyChanged("CancelCommand");
             }
         }
+
+        private ICommand addUsageCommand;
+        public ICommand AddUsageCommand
+        {
+            get { return addUsageCommand; }
+            set 
+            { 
+                addUsageCommand = value;
+                base.OnPropertyChanged("AddUsageCommand");
+            }
+        }
+
+        private ICommand addTypeCommand;
+        public ICommand AddTypeCommand
+        {
+            get { return addTypeCommand; }
+            set 
+            {
+                addTypeCommand = value;
+                base.OnPropertyChanged("AddTypeCommand");
+            }
+        }
+
 
         private bool isOpen;
 
@@ -100,6 +146,16 @@ namespace LaboratoryApp.ViewModel
         public void Close()
         {
             IsOpen = false;
+        }
+        public void AddType()
+        {
+            MessageWindowType = new NewWindowType();
+            MessageWindowType.IsOpen = true;
+        }
+        public void AddUsage()
+        {
+            MessageWindowUsage = new NewWindowUsage();
+            MessageWindowUsage.IsOpen = true;
         }
 
     }

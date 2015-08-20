@@ -1,34 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Windows;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace LaboratoryApp.ViewModel
 {
-    public class NewWindowOffice : ObservableObject
+    public class NewWindowType : ObservableObject
     {
-        private InformationAboutOffice aboutOffice;
 
-        public InformationAboutOffice AboutOffice
-        {
-            get { return aboutOffice; }
-            set 
-            { 
-                aboutOffice = value;
-                OnPropertyChanged("AboutOffice");
-            }
-        }
-
-        public NewWindowOffice()
+        public NewWindowType()
         {
             OKCommand = new SimpleRelayCommand(Confirm);
             CancelCommand = new SimpleRelayCommand(Close);
+
         }
-
-
         private ICommand okCommand;
 
         public ICommand OKCommand
@@ -79,27 +66,7 @@ namespace LaboratoryApp.ViewModel
         public void Confirm()
         {
             if (!this.ToConfirm) ToConfirm = true;
-            //if (this.AboutOffice.Name != null
-            //    && this.AboutOffice.Address != null
-            //    && this.AboutOffice.Email != null
-            //    && this.AboutOffice.Telephone != null
-            //    && this.AboutOffice.ContactPerson != null)
-            //{
-
-            //    office newOffice = new office();
-            //    newOffice.name = this.AboutOffice.Name;
-            //    newOffice.adress = this.AboutOffice.Address;
-            //    newOffice.mail = this.AboutOffice.Email;
-            //    newOffice.tel = this.AboutOffice.Telephone;
-            //    newOffice.contact_person_name = this.AboutOffice.ContactPerson;
-                
-
-            //    using (LaboratoryEntities context = new LaboratoryEntities())
-            //    {
-            //        context.offices.Add(newOffice);
-            //        context.SaveChanges();
-            //    }
-            //}
+            
             IsOpen = false;
 
         }
@@ -107,8 +74,5 @@ namespace LaboratoryApp.ViewModel
         {
             IsOpen = false;
         }
-
-
-       
     }
 }

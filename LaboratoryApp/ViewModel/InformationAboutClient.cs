@@ -6,10 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using LaboratoryApp.View;
 using System.Windows.Input;
-using LaboratoryApp.ViewModel;
+using LaboratoryApp;
 using System.Windows;
 
-namespace LaboratoryApp
+namespace LaboratoryApp.ViewModel
 {
     public class InformationAboutClient : ObservableObject
     {
@@ -168,6 +168,9 @@ namespace LaboratoryApp
                 {
                     context.gauges.Add(gaugeToAddToDatabase);
                     context.SaveChanges();
+
+                    var r = MainWindowViewModel.rootElement.Items.IndexOf((client)MainWindowViewModel.selectedNode);
+                    MainWindowViewModel.rootElement.Items[r].Items.Add(gaugeToAddToDatabase);
                 }
                 MessageBox.Show("Miernik został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
 
@@ -177,7 +180,7 @@ namespace LaboratoryApp
                 //AllItems.Insert(index+1, newClient);
 
                 MessageWindowGauge.ToConfirm = false;
-                MainWindowViewModel.LoadView();
+                //MainWindowViewModel.LoadView();
             }
             else
             {
@@ -195,15 +198,30 @@ namespace LaboratoryApp
             
             if(result == MessageBoxResult.Yes)
             {
-                LaboratoryEntities context = new LaboratoryEntities();
-                //delete selected client
-                var clientToDelete = (from c in context.clients
-                                      where c.clientId == this.ClientId
-                                      select c).FirstOrDefault();
+                try
+                {
+                    var r = MainWindowViewModel.rootElement.Items.IndexOf((client)MainWindowViewModel.selectedNode);
+                    //MainWindowViewModel.rootElement.Items.Remove(clientToDelete);
+                    MainWindowViewModel.rootElement.Items[r].Items.Clear();
+                    MainWindowViewModel.rootElement.Items.RemoveAt(r);
+                    //MainWindowViewModel.LoadView();
 
-                context.clients.Remove(clientToDelete);
-                context.SaveChanges();
-                MainWindowViewModel.LoadView();
+
+
+                    LaboratoryEntities context = new LaboratoryEntities();
+                    //delete selected client
+                    var clientToDelete = (from c in context.clients
+                                          where c.clientId == this.ClientId
+                                          select c).FirstOrDefault();
+                    //context.clients.
+                    context.clients.Remove(clientToDelete);
+                    context.SaveChanges();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+
             }
         }
 
@@ -276,6 +294,9 @@ namespace LaboratoryApp
 
                         context.SaveChanges();
 
+                        var r = MainWindowViewModel.rootElement.Items.IndexOf((client)MainWindowViewModel.selectedNode);
+                        MainWindowViewModel.rootElement.Items[r] = clientToEdit;
+
                         //set new data in main window view
                         Name = MessageWindowClient.AboutClient.Name;
                         Address = MessageWindowClient.AboutClient.Address;
@@ -292,7 +313,7 @@ namespace LaboratoryApp
 
                 }
                 MessageWindowClient.ToConfirm = false;
-                MainWindowViewModel.LoadView();
+                //MainWindowViewModel.LoadView();
             }
         }
 
@@ -305,10 +326,11 @@ namespace LaboratoryApp
             
             //open a new modal window
             messageWindowOffice.IsOpen = true;
-
+            office officeToAddToDatabase;
+            
             if (MessageWindowOffice.ToConfirm)
             {
-                office officeToAddToDatabase = new office();
+                officeToAddToDatabase = new office();
                 officeToAddToDatabase.adress = MessageWindowOffice.AboutOffice.Address;
                 officeToAddToDatabase.mail = MessageWindowOffice.AboutOffice.Email;
                 officeToAddToDatabase.contact_person_name = MessageWindowOffice.AboutOffice.ContactPerson;
@@ -318,8 +340,15 @@ namespace LaboratoryApp
 
                 using (LaboratoryEntities context = new LaboratoryEntities())
                 {
+
                     context.offices.Add(officeToAddToDatabase);
                     context.SaveChanges();
+
+                    var r = MainWindowViewModel.rootElement.Items.IndexOf((client)MainWindowViewModel.selectedNode);
+                    MainWindowViewModel.rootElement.Items[r].Items.Add(officeToAddToDatabase);
+
+                    //MainWindowViewModel.rootElement.Items.[ind].Items.Add(officeToAddToDatabase);
+                     
                 }
                 MessageBox.Show("Oddział został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
 
@@ -327,7 +356,14 @@ namespace LaboratoryApp
                 //AllItems.Remove((client)SelectedNode);
                 ////Add new client to TreeView
                 //AllItems.Insert(index+1, newClient);
-                MainWindowViewModel.LoadView();
+                //MainWindowViewModel.LoadView();
+                
+                //int ind = MainWindowViewModel.rootElement.Items[this.ClientId];
+                
+                //(client)MainWindowViewModel.selectedNode;
+                //client temporaryClient = (client)MainWindowViewModel.selectedNode;
+                
+                //MainWindowViewModel.rootElement.Items.[ind].Items.Add(officeToAddToDatabase);
             }
             else
             { }
