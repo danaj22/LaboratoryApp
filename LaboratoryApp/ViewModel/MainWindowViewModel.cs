@@ -393,7 +393,7 @@ namespace LaboratoryApp.ViewModel
                     //var index = RootElement.Items.IndexOf(RootElement.Items.Last())+1;
                     //AllItems.Remove((client)SelectedNode);
                     //Add new client to TreeView
-                    //RootElement.Items.Insert(index, newClient);
+                    RootElement.Children.Add(newClient);
 
                     MessageBox.Show("dodanie użytkownika do bazy");
                     

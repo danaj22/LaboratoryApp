@@ -13,6 +13,7 @@ namespace LaboratoryApp.ViewModel
 {
     public class InformationAboutClient : ObservableObject
     {
+        #region
         public InformationAboutClient()
         {
             OfficeId = null;
@@ -119,6 +120,17 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
+        private model_of_gauges modelOfGauge;
+        public model_of_gauges ModelOfGauge
+        {
+            get { return modelOfGauge; }
+            set
+            {
+                modelOfGauge = value;
+                OnPropertyChanged("ModelOfGauge");
+            }
+        }
+        #endregion
 
         private NewWindowOffice messageWindowOffice;
         public NewWindowOffice MessageWindowOffice
@@ -154,20 +166,40 @@ namespace LaboratoryApp.ViewModel
             if (MessageWindowGauge.ToConfirm)
             {
                 gauge gaugeToAddToDatabase = new gauge();
+                ModelOfGauge = new model_of_gauges();
 
                 using (LaboratoryEntities context = new LaboratoryEntities())
                 {
                     GaugeIdToAdd = (from m in context.model_of_gauges where m.model == MessageWindowGauge.AboutGauge.SelectedModel select m.model_of_gaugeId).FirstOrDefault();
-                }
-                gaugeToAddToDatabase.client_id = ClientId;
-                gaugeToAddToDatabase.office_id = OfficeId;
-                gaugeToAddToDatabase.model_of_gauge_id = GaugeIdToAdd;
-                gaugeToAddToDatabase.serial_number = MessageWindowGauge.AboutGauge.SerialNumber;
 
-                using (LaboratoryEntities context = new LaboratoryEntities())
-                {
-                    context.gauges.Add(gaugeToAddToDatabase);
-                    context.SaveChanges();
+                    //nie mogę pobrać całego rekordu
+                    ModelOfGauge = (from m in context.model_of_gauges where m.model_of_gaugeId == GaugeIdToAdd select m).FirstOrDefault();
+
+
+                    //GaugeIdToAdd = (from m in context.model_of_gauges where m.model == MessageWindowGauge.AboutGauge.SelectedModel select m.model_of_gaugeId).FirstOrDefault();
+
+                
+                gaugeToAddToDatabase.client_id = ClientId;
+                gaugeToAddToDatabase.model_of_gauges = ModelOfGauge;
+                gaugeToAddToDatabase.serial_number = MessageWindowGauge.AboutGauge.SerialNumber;
+                
+
+                    
+
+                    //if (gaugeToAddToDatabase)
+                    {
+                        client SelectedClient = new client();
+
+                        SelectedClient = (client)MainWindowViewModel.selectedNode;
+
+                        int index = MainWindowViewModel.rootElement.Children.IndexOf(SelectedClient);
+
+                        MainWindowViewModel.rootElement.Children[index].Children.Add(gaugeToAddToDatabase);
+
+
+                        context.gauges.Add(gaugeToAddToDatabase);
+                        context.SaveChanges();
+                    }
 
 
                     //var r = MainWindowViewModel.rootElement.Items.IndexOf((client)MainWindowViewModel.selectedNode);
@@ -216,6 +248,11 @@ namespace LaboratoryApp.ViewModel
                                           where c.clientId == this.ClientId
                                           select c).FirstOrDefault();
                     //context.clients.
+
+                    client klientka =(client) MainWindowViewModel.selectedNode;
+
+                    MainWindowViewModel.rootElement.Children.Remove(klientka);
+
                     context.clients.Remove(clientToDelete);
                     context.SaveChanges();
                 }
@@ -296,7 +333,15 @@ namespace LaboratoryApp.ViewModel
 
                         context.SaveChanges();
 
-                        MainWindowViewModel.LoadView();
+                        client SelectedClient = new client();
+
+                        SelectedClient = (client)MainWindowViewModel.selectedNode;
+
+                        int index = MainWindowViewModel.rootElement.Children.IndexOf(SelectedClient);
+
+                        MainWindowViewModel.rootElement.Children[index] = clientToEdit;
+                        
+                        //MainWindowViewModel.LoadView();
 
                         //var r = MainWindowViewModel.rootElement.Items.IndexOf((client)MainWindowViewModel.selectedNode);
                         //MainWindowViewModel.rootElement.Items[r] = clientToEdit;
@@ -345,10 +390,19 @@ namespace LaboratoryApp.ViewModel
                 using (LaboratoryEntities context = new LaboratoryEntities())
                 {
 
+                    
+
+                    client SelectedClient = new client();
+
+                    SelectedClient = (client)MainWindowViewModel.selectedNode;
+
+                    int index = MainWindowViewModel.rootElement.Children.IndexOf(SelectedClient);
+
+                    MainWindowViewModel.rootElement.Children[index].Children.Add(officeToAddToDatabase);
+
                     context.offices.Add(officeToAddToDatabase);
                     context.SaveChanges();
 
-                    MainWindowViewModel.LoadView();
                     //var r = MainWindowViewModel.rootElement.Items.IndexOf((client)MainWindowViewModel.selectedNode);
                     //MainWindowViewModel.rootElement.Items[r].Items.Add(officeToAddToDatabase);
 

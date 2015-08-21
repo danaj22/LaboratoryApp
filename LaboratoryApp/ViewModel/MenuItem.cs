@@ -11,7 +11,7 @@ namespace LaboratoryApp.ViewModel
     {
         public MenuItem()
         {
-            this.Items = new ObservableCollection<client>();
+            this.Children = new ObservableCollection<MenuItem>();
         }
 
         protected string nameOfItem;
@@ -24,27 +24,16 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("NameOfItem");
             }
         }
-        private List<client> clients;
 
-        public List<client> Clients
-        {
-            get { return clients; }
-            set 
-            { 
-                clients = value;
-                OnPropertyChanged("Clients");
-            }
-        }
-
-        private ObservableCollection<client> items;
-        public ObservableCollection<client> Items
+        private ObservableCollection<MenuItem> children;
+        public ObservableCollection<MenuItem> Children
         {
             get
-            { return items; }
+            { return children; }
             set
             {
-                items = value;
-                OnPropertyChanged("Items");
+                children = value;
+                OnPropertyChanged("Children");
             }
         }
     }

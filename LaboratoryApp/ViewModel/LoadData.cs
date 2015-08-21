@@ -32,19 +32,27 @@ namespace LaboratoryApp.ViewModel
             userInput = new UserInput();
             //Gauges g1 = new Gauges();
             //this.TreeOfClients = new ObservableCollection<Clients>();
-            //rootItem.Child.Clear();
+            rootItem.Children.Clear();
             try
             {
                 foreach (var t in LabEntities.clients)
                 {
                     //rootItem.Child.Add(t);
 
-                    rootItem.Items.Add(t);
-                    //foreach (var g in t.gauges)
-                    //    if (g.office_id == null)
-                    //        rootItem.Items.Last().Items.Add(g);
-                    //foreach (var o in t.offices)
-                    //    rootItem.Items.Last().Items.Add(o);
+                    rootItem.Children.Add(t);
+                    foreach (var g in t.gauges)
+                    {
+                        if (g.office_id == null)
+                        {
+                            rootItem.Children.Last().Children.Add(g);
+                        }
+                    }
+                    foreach (var o in t.offices)
+                    {
+                        rootItem.Children.Last().Children.Add(o);
+                    }
+
+
                     #region comments
                     //InformationAboutClient infoClient = new InformationAboutClient();
 

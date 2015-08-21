@@ -214,13 +214,16 @@ namespace LaboratoryApp.ViewModel
             {
                 LaboratoryEntities context = new LaboratoryEntities();
                 //delete selected client
-                var gaugeToDelete = (from g in context.gauges
-                                      where g.gaugeId == this.GaugeId
-                                      select g).FirstOrDefault();
+                var gaugeToDelete = //(gauge)MainWindowViewModel.selectedNode;
+                                     (from g in context.gauges
+                                     where g.gaugeId == this.GaugeId
+                                     select g).FirstOrDefault();
 
                 context.gauges.Remove(gaugeToDelete);
                 context.SaveChanges();
                 MainWindowViewModel.LoadView();
+                //gauge MainWindowViewModel.selectedNode;
+                
             }
         }
         public ICommand EditGaugeCommand
