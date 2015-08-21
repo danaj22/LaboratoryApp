@@ -78,6 +78,7 @@ namespace LaboratoryApp.ViewModel
 
                 if ((SelectedNode as client) != null)
                 {
+                    
                     client selectedClient = selectedNode as client;
                     CurrentViewModel = new InformationAboutClient()
                                                                     { 
@@ -389,10 +390,10 @@ namespace LaboratoryApp.ViewModel
                         MessageBox.Show(ex.ToString());
                     }
                     
-                    var index = RootElement.Items.IndexOf(RootElement.Items.Last())+1;
+                    //var index = RootElement.Items.IndexOf(RootElement.Items.Last())+1;
                     //AllItems.Remove((client)SelectedNode);
                     //Add new client to TreeView
-                    RootElement.Items.Insert(index, newClient);
+                    //RootElement.Items.Insert(index, newClient);
 
                     MessageBox.Show("dodanie użytkownika do bazy");
                     

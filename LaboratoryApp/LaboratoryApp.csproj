@@ -123,6 +123,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\Answer.cs" />
+    <Compile Include="ViewModel\ClientViewModel.cs" />
     <Compile Include="ViewModel\ConfigurationDialogViewModel.cs" />
     <Compile Include="ViewModel\ContentViewControl.cs" />
     <Compile Include="ViewModel\DialogCloser.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="ViewModel\NewWindowType.cs" />
     <Compile Include="ViewModel\NewWindowUsage.cs" />
     <Compile Include="ViewModel\OfficesViewModel.cs" />
+    <Compile Include="ViewModel\OfficeViewModel.cs" />
     <Compile Include="ViewModel\OpenNewWindow.cs" />
     <Compile Include="ViewModel\MenuItem.cs" />
     <Compile Include="ViewModel\TreeViewHelper.cs" />

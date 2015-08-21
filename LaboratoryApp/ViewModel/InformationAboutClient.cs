@@ -169,8 +169,9 @@ namespace LaboratoryApp.ViewModel
                     context.gauges.Add(gaugeToAddToDatabase);
                     context.SaveChanges();
 
-                    var r = MainWindowViewModel.rootElement.Items.IndexOf((client)MainWindowViewModel.selectedNode);
-                    MainWindowViewModel.rootElement.Items[r].Items.Add(gaugeToAddToDatabase);
+
+                    //var r = MainWindowViewModel.rootElement.Items.IndexOf((client)MainWindowViewModel.selectedNode);
+                    //MainWindowViewModel.rootElement.Items[r].Items.Add(gaugeToAddToDatabase);
                 }
                 MessageBox.Show("Miernik został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
 
@@ -200,10 +201,11 @@ namespace LaboratoryApp.ViewModel
             {
                 try
                 {
-                    var r = MainWindowViewModel.rootElement.Items.IndexOf((client)MainWindowViewModel.selectedNode);
+                    
+                    //var r = MainWindowViewModel.rootElement.Items.IndexOf((client)MainWindowViewModel.selectedNode);
                     //MainWindowViewModel.rootElement.Items.Remove(clientToDelete);
-                    MainWindowViewModel.rootElement.Items[r].Items.Clear();
-                    MainWindowViewModel.rootElement.Items.RemoveAt(r);
+                    //MainWindowViewModel.rootElement.Items[r].Items.Clear();
+                    //MainWindowViewModel.rootElement.Items.RemoveAt(r);
                     //MainWindowViewModel.LoadView();
 
 
@@ -294,8 +296,10 @@ namespace LaboratoryApp.ViewModel
 
                         context.SaveChanges();
 
-                        var r = MainWindowViewModel.rootElement.Items.IndexOf((client)MainWindowViewModel.selectedNode);
-                        MainWindowViewModel.rootElement.Items[r] = clientToEdit;
+                        MainWindowViewModel.LoadView();
+
+                        //var r = MainWindowViewModel.rootElement.Items.IndexOf((client)MainWindowViewModel.selectedNode);
+                        //MainWindowViewModel.rootElement.Items[r] = clientToEdit;
 
                         //set new data in main window view
                         Name = MessageWindowClient.AboutClient.Name;
@@ -344,8 +348,9 @@ namespace LaboratoryApp.ViewModel
                     context.offices.Add(officeToAddToDatabase);
                     context.SaveChanges();
 
-                    var r = MainWindowViewModel.rootElement.Items.IndexOf((client)MainWindowViewModel.selectedNode);
-                    MainWindowViewModel.rootElement.Items[r].Items.Add(officeToAddToDatabase);
+                    MainWindowViewModel.LoadView();
+                    //var r = MainWindowViewModel.rootElement.Items.IndexOf((client)MainWindowViewModel.selectedNode);
+                    //MainWindowViewModel.rootElement.Items[r].Items.Add(officeToAddToDatabase);
 
                     //MainWindowViewModel.rootElement.Items.[ind].Items.Add(officeToAddToDatabase);
                      
