@@ -46,6 +46,8 @@ namespace LaboratoryApp.ViewModel
 
         static public MenuItem rootElement = new MenuItem();
 
+        //static public List<client> ListOfClient = new List<client>();
+
         public MenuItem RootElement
         {
             get { return rootElement; }
@@ -67,9 +69,9 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
-        static public object selectedNode = 0;
+        static public MenuItem selectedNode = new MenuItem();
 
-        public object SelectedNode
+        public MenuItem SelectedNode
         {
             get { return selectedNode; }
             set
@@ -80,7 +82,7 @@ namespace LaboratoryApp.ViewModel
                 {
                     
                     client selectedClient = selectedNode as client;
-                    CurrentViewModel = new InformationAboutClient()
+                    CurrentViewModel = new InformationAboutClient(SelectedNode)
                                                                     { 
                                                                       ClientId = selectedClient.clientId,
                                                                       Name = selectedClient.name, 
@@ -94,7 +96,7 @@ namespace LaboratoryApp.ViewModel
                 if((SelectedNode as office)!=null)
                 {
                     office selectedOffice = selectedNode as office;
-                    CurrentViewModel = new InformationAboutOffice()
+                    CurrentViewModel = new InformationAboutOffice(SelectedNode)
                                                                     {
                                                                       OfficeId = selectedOffice.officeId,
                                                                       ClientId = selectedOffice.client_id,
@@ -107,7 +109,7 @@ namespace LaboratoryApp.ViewModel
                 if ((SelectedNode as gauge) != null)
                 {
                     gauge selectedGauge = selectedNode as gauge;
-                    CurrentViewModel = new ViewModel.InformationAboutGauge() {
+                    CurrentViewModel = new ViewModel.InformationAboutGauge(SelectedNode) {
                                                                       GaugeId = selectedGauge.gaugeId,
                                                                       SerialNumber = selectedGauge.serial_number,
                                                                       ModelOfGaugeItem = selectedGauge.model_of_gauges,
@@ -131,9 +133,8 @@ namespace LaboratoryApp.ViewModel
         }
       
         static public void LoadView()
-        {
-            data = new LoadData(rootElement);
-            selectedNode = 0;
+        {            
+            data = new LoadData(rootElement);            
         }
 
 
@@ -360,22 +361,23 @@ namespace LaboratoryApp.ViewModel
         
         private void AddClient()
         {
-            MessageWindowClient = new NewWindowClient { AboutClient = new InformationAboutClient() };
+            MessageWindowClient = new NewWindowClient { AboutClient = new client() };
             MessageWindowClient.IsOpen = true;
 
             if(MessageWindowClient.ToConfirm)
             {
-                if (MessageWindowClient.AboutClient.Name != null && MessageWindowClient.AboutClient.NIP != null)
+                if (MessageWindowClient.AboutClient.name != null && MessageWindowClient.AboutClient.NIP != null)
                 {
 
                     client newClient = new client();
-                    newClient.name = MessageWindowClient.AboutClient.Name;
-                    newClient.adress = MessageWindowClient.AboutClient.Address;
-                    newClient.mail = MessageWindowClient.AboutClient.Email;
-                    newClient.tel = MessageWindowClient.AboutClient.Telephone;
+                    newClient.name = MessageWindowClient.AboutClient.name;
+                    newClient.adress = MessageWindowClient.AboutClient.adress;
+                    newClient.mail = MessageWindowClient.AboutClient.mail;
+                    newClient.tel = MessageWindowClient.AboutClient.tel;
                     newClient.NIP = MessageWindowClient.AboutClient.NIP;
-                    newClient.contact_person_name = MessageWindowClient.AboutClient.ContactPerson;
-                    newClient.comments = MessageWindowClient.AboutClient.Comment;
+                    newClient.contact_person_name = MessageWindowClient.AboutClient.contact_person_name;
+                    newClient.comments = MessageWindowClient.AboutClient.comments;
+                    
 
                     try
                     {
@@ -394,6 +396,7 @@ namespace LaboratoryApp.ViewModel
                     //AllItems.Remove((client)SelectedNode);
                     //Add new client to TreeView
                     RootElement.Children.Add(newClient);
+                    RootElement.Children.Last().NameOfItem = newClient.name;
 
                     MessageBox.Show("dodanie użytkownika do bazy");
                     

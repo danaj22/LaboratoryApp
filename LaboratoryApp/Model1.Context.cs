@@ -18,7 +18,7 @@ namespace LaboratoryApp
     public partial class LaboratoryEntities : DbContext
     {
         public LaboratoryEntities()
-            : base("name=LaboratoryEntities")
+            : base("LaboratoryEntities")
         {
         }
     

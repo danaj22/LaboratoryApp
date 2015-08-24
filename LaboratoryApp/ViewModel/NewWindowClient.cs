@@ -16,9 +16,9 @@ namespace LaboratoryApp.ViewModel
 
         //public View.ModalWindowClient MWindow;
 
-        private InformationAboutClient aboutClient;
+        private client aboutClient;
 
-        public InformationAboutClient AboutClient
+        public client AboutClient
         {
             get { return aboutClient; }
             set 
@@ -32,6 +32,7 @@ namespace LaboratoryApp.ViewModel
         {
             OKCommand = new SimpleRelayCommand(Confirm);
             CancelCommand = new SimpleRelayCommand(Close);
+            AboutClient = new client();
         }
 
         private ICommand okCommand;

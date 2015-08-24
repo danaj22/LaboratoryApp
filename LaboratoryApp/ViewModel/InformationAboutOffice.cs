@@ -82,7 +82,15 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("Telephone");
             }
         }
+        
+        public InformationAboutOffice(object SelectedNode)
+        {
 
+        }
+        public InformationAboutOffice()
+        {
+
+        }
 
         private NewWindowOffice messageWindowOffice;
 
@@ -144,6 +152,7 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("GaugeIdToAdd");
             }
         }
+        
         private void AddGaugeExecute()
         {
             MessageWindowGauge = new NewWindowGauge() { AboutGauge = new InformationAboutGauge() };
@@ -263,6 +272,9 @@ namespace LaboratoryApp.ViewModel
                     {
                         MessageBox.Show("Wypełnij wszystkie pola");
                     }
+                    
+                    MainWindowViewModel.selectedNode = officeToEdit;
+                    MainWindowViewModel.selectedNode.NameOfItem = Name;
 
                 }
                 MessageWindowOffice.ToConfirm = false;

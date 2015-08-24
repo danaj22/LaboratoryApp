@@ -124,7 +124,6 @@
     </Compile>
     <Compile Include="ViewModel\Answer.cs" />
     <Compile Include="ViewModel\ClientViewModel.cs" />
-    <Compile Include="ViewModel\ConfigurationDialogViewModel.cs" />
     <Compile Include="ViewModel\ContentViewControl.cs" />
     <Compile Include="ViewModel\DialogCloser.cs" />
     <Compile Include="ViewModel\DialogWindowBase.cs" />

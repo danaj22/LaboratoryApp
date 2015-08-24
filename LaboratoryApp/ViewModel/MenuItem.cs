@@ -12,9 +12,10 @@ namespace LaboratoryApp.ViewModel
         public MenuItem()
         {
             this.Children = new ObservableCollection<MenuItem>();
+           
         }
 
-        protected string nameOfItem;
+        protected virtual string nameOfItem { get; set; }
         public string NameOfItem
         {
             get { return nameOfItem; }
@@ -25,7 +26,7 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
-        private ObservableCollection<MenuItem> children;
+        protected virtual ObservableCollection<MenuItem> children { get; set; }
         public ObservableCollection<MenuItem> Children
         {
             get

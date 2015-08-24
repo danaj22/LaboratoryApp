@@ -14,11 +14,18 @@ namespace LaboratoryApp.ViewModel
     public class InformationAboutClient : ObservableObject
     {
         #region
-        public InformationAboutClient()
+        public InformationAboutClient(MenuItem SelectedNode)
         {
             OfficeId = null;
+            sel = SelectedNode;
+            
+        }
+        public InformationAboutClient()
+        {
+
         }
 
+        private MenuItem sel;
         private int clientId;
         public int ClientId
         {
@@ -194,7 +201,7 @@ namespace LaboratoryApp.ViewModel
 
                         int index = MainWindowViewModel.rootElement.Children.IndexOf(SelectedClient);
 
-                        MainWindowViewModel.rootElement.Children[index].Children.Add(gaugeToAddToDatabase);
+                        //MainWindowViewModel.rootElement.Children[index].Children.Add(gaugeToAddToDatabase);
 
 
                         context.gauges.Add(gaugeToAddToDatabase);
@@ -249,10 +256,22 @@ namespace LaboratoryApp.ViewModel
                                           select c).FirstOrDefault();
                     //context.clients.
 
-                    client klientka =(client) MainWindowViewModel.selectedNode;
+                    client klientka = (client) MainWindowViewModel.selectedNode;
 
-                    MainWindowViewModel.rootElement.Children.Remove(klientka);
+                    MainWindowViewModel.rootElement.Children.Remove(MainWindowViewModel.selectedNode);
 
+
+                    //context.gauges.Select( x )
+                   
+                    var lista = (from g in context.gauges where g.client_id == klientka.clientId select g).ToList();
+                    foreach(gauge l in lista)
+                    {
+                        context.gauges.Remove(l);
+                    }
+                   
+                   // {
+                     //   List<gauge> gaugeToRemove = (from )
+                    //}
                     context.clients.Remove(clientToDelete);
                     context.SaveChanges();
                 }
@@ -283,22 +302,21 @@ namespace LaboratoryApp.ViewModel
         private void EditClientExecute()
         {
 
-            MessageWindowClient = new NewWindowClient() { AboutClient = new InformationAboutClient() };
-            
-            //create a new modal window
-            //DialogWindowBase newBaseWindow = new DialogWindowBase();
-            //NewWindowClient clientDialogWindow = new NewWindowClient() { AboutClient = new InformationAboutClient() };
-
-
+            MessageWindowClient = new NewWindowClient();
+           
             //filling in the data fields in new window
-            MessageWindowClient.AboutClient.ClientId = ClientId;
-            MessageWindowClient.AboutClient.Comment = Comment;
-            MessageWindowClient.AboutClient.Name = Name;
-            MessageWindowClient.AboutClient.ContactPerson = ContactPerson;
-            MessageWindowClient.AboutClient.Address = Address;
-            MessageWindowClient.AboutClient.Telephone = Telephone;
-            MessageWindowClient.AboutClient.NIP = NIP;
-            MessageWindowClient.AboutClient.Email = Email;
+            //MessageWindowClient.AboutClient.clientId = ClientId;
+            //MessageWindowClient.AboutClient.comments = Comment;
+            //MessageWindowClient.AboutClient.name = Name;
+            //MessageWindowClient.AboutClient.contact_person_name = ContactPerson;
+            //MessageWindowClient.AboutClient.adress = Address;
+            //MessageWindowClient.AboutClient.tel = Telephone;
+            //MessageWindowClient.AboutClient.NIP = NIP;
+            //MessageWindowClient.AboutClient.mail = Email;
+
+
+
+            messageWindowClient.AboutClient = (client) sel;
 
             //show window
             MessageWindowClient.IsOpen = true;
@@ -309,37 +327,37 @@ namespace LaboratoryApp.ViewModel
                 {
                     //finding selected client in database
                     var clientToEdit = (from c in context.clients
-                                        where c.clientId == MessageWindowClient.AboutClient.ClientId
+                                        where c.clientId == MessageWindowClient.AboutClient.clientId
                                         select c).FirstOrDefault();
 
 
                     //modify data in database
-                    if (MessageWindowClient.AboutClient.Name != ""
-                        && MessageWindowClient.AboutClient.Address != ""
-                        && MessageWindowClient.AboutClient.ContactPerson != ""
-                        && MessageWindowClient.AboutClient.Email != ""
-                        && MessageWindowClient.AboutClient.Telephone != ""
+                    if (MessageWindowClient.AboutClient.name != ""
+                        && MessageWindowClient.AboutClient.adress != ""
+                        && MessageWindowClient.AboutClient.contact_person_name != ""
+                        && MessageWindowClient.AboutClient.mail != ""
+                        && MessageWindowClient.AboutClient.tel != ""
                         && MessageWindowClient.AboutClient.NIP != ""
-                        && MessageWindowClient.AboutClient.Comment != "")
+                        && MessageWindowClient.AboutClient.comments != "")
                     {
 
-                        clientToEdit.name = MessageWindowClient.AboutClient.Name;
-                        clientToEdit.adress = MessageWindowClient.AboutClient.Address;
-                        clientToEdit.contact_person_name = MessageWindowClient.AboutClient.ContactPerson;
-                        clientToEdit.mail = MessageWindowClient.AboutClient.Email;
-                        clientToEdit.tel = MessageWindowClient.AboutClient.Telephone;
+                        clientToEdit.name = MessageWindowClient.AboutClient.name;
+                        clientToEdit.adress = MessageWindowClient.AboutClient.name;
+                        clientToEdit.contact_person_name = MessageWindowClient.AboutClient.contact_person_name;
+                        clientToEdit.mail = MessageWindowClient.AboutClient.mail;
+                        clientToEdit.tel = MessageWindowClient.AboutClient.tel;
                         clientToEdit.NIP = MessageWindowClient.AboutClient.NIP;
-                        clientToEdit.comments = MessageWindowClient.AboutClient.Comment;
+                        clientToEdit.comments = MessageWindowClient.AboutClient.comments;
 
                         context.SaveChanges();
 
-                        client SelectedClient = new client();
+                        //client SelectedClient = new client();
+                        
+                        //SelectedClient = (client)MainWindowViewModel.selectedNode;
 
-                        SelectedClient = (client)MainWindowViewModel.selectedNode;
+                        //int index = MainWindowViewModel.rootElement.Children.IndexOf(SelectedClient);
 
-                        int index = MainWindowViewModel.rootElement.Children.IndexOf(SelectedClient);
-
-                        MainWindowViewModel.rootElement.Children[index] = clientToEdit;
+                        //MainWindowViewModel.rootElement.Children[index] = clientToEdit;
                         
                         //MainWindowViewModel.LoadView();
 
@@ -347,13 +365,15 @@ namespace LaboratoryApp.ViewModel
                         //MainWindowViewModel.rootElement.Items[r] = clientToEdit;
 
                         //set new data in main window view
-                        Name = MessageWindowClient.AboutClient.Name;
-                        Address = MessageWindowClient.AboutClient.Address;
-                        ContactPerson = MessageWindowClient.AboutClient.ContactPerson;
-                        Email = MessageWindowClient.AboutClient.Email;
-                        Telephone = MessageWindowClient.AboutClient.Telephone;
+                        Name = MessageWindowClient.AboutClient.name;
+                        Address = MessageWindowClient.AboutClient.adress;
+                        ContactPerson = MessageWindowClient.AboutClient.contact_person_name;
+                        Email = MessageWindowClient.AboutClient.mail;
+                        Telephone = MessageWindowClient.AboutClient.tel;
                         NIP = MessageWindowClient.AboutClient.NIP;
-                        Comment = MessageWindowClient.AboutClient.Comment;
+                        Comment = MessageWindowClient.AboutClient.comments;
+
+                        MainWindowViewModel.selectedNode.NameOfItem = Name;
                     }
                     else
                     {
@@ -398,7 +418,7 @@ namespace LaboratoryApp.ViewModel
 
                     int index = MainWindowViewModel.rootElement.Children.IndexOf(SelectedClient);
 
-                    MainWindowViewModel.rootElement.Children[index].Children.Add(officeToAddToDatabase);
+                    //MainWindowViewModel.rootElement.Children[index].Children.Add(officeToAddToDatabase);
 
                     context.offices.Add(officeToAddToDatabase);
                     context.SaveChanges();
@@ -409,6 +429,8 @@ namespace LaboratoryApp.ViewModel
                     //MainWindowViewModel.rootElement.Items.[ind].Items.Add(officeToAddToDatabase);
                      
                 }
+                MainWindowViewModel.selectedNode.Children.Add(officeToAddToDatabase);
+                MainWindowViewModel.selectedNode.Children.Last().NameOfItem = officeToAddToDatabase.name;
                 MessageBox.Show("Oddział został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 //var index = AllItems.IndexOf(AllItems.Last()) + 1;

@@ -195,12 +195,16 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
-        public InformationAboutGauge()
+        public InformationAboutGauge(object SelectedNode)
         {
             InitializeCollectionOfManufacturers();
             //collectionOfModels = new List<string>();
             //collectionOfManufacturers = new List<string>();
         }
+        public InformationAboutGauge()
+        { 
+        }
+
 
 
         public ICommand DeleteGaugeCommand
@@ -221,7 +225,16 @@ namespace LaboratoryApp.ViewModel
 
                 context.gauges.Remove(gaugeToDelete);
                 context.SaveChanges();
-                MainWindowViewModel.LoadView();
+
+                gauge gau = (gauge) MainWindowViewModel.selectedNode;
+                int index_client = gau.client_id;
+                int? index_office = gau.office_id;
+                //int
+
+
+
+                //MainWindowViewModel.rootElement.Children[MainWindowViewModel.selectedNode]
+                //MainWindowViewModel.LoadView();
                 //gauge MainWindowViewModel.selectedNode;
                 
             }

@@ -13,7 +13,7 @@
 
     <Window.Resources>
         <!-- To a treeView -->
-        <HierarchicalDataTemplate DataType="{x:Type local:client}"  ItemsSource="{Binding Children}">
+        <!--<HierarchicalDataTemplate DataType="{x:Type local:client}"  ItemsSource="{Binding Children}">
             <Grid>
                 <TextBlock Text="{Binding name}" />
             </Grid>
@@ -29,7 +29,7 @@
             <Grid>
                 <TextBlock Text="{Binding model_of_gauges.model}" />
             </Grid>
-        </HierarchicalDataTemplate>
+        </HierarchicalDataTemplate>-->
 
 
         <DataTemplate DataType="{x:Type vm:InformationAboutClient}">
@@ -81,6 +81,15 @@
 
         <TreeView Name="tvwAllClients" ItemContainerStyle="{StaticResource ItemContainerStyle}" Grid.Row="4" Grid.RowSpan="2" ItemsSource="{Binding RootElement.Children,UpdateSourceTrigger=PropertyChanged}" 
                   vm:TreeViewHelper.SelectedItem="{Binding SelectedNode, Mode=TwoWay}" VirtualizingPanel.IsVirtualizing="True" Grid.Column="0" Grid.ColumnSpan="2">
+           
+            <TreeView.ItemTemplate >
+               
+                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                    <Grid>
+                        <TextBlock Text="{Binding NameOfItem}"/>
+                    </Grid>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
         </TreeView>
 
 

@@ -30,5 +30,29 @@ namespace LaboratoryApp
     
         public virtual client client { get; set; }
         public virtual ObservableCollection<gauge> gauges { get; set; }
+
+        protected override string nameOfItem
+        {
+            get
+            {
+                return base.nameOfItem;
+            }
+            set
+            {
+                base.nameOfItem = name;
+            }
+        }
+
+        protected override ObservableCollection<ViewModel.MenuItem> children
+        {
+            get
+            {
+                return base.children;
+            }
+            set
+            {
+                base.children = value;
+            }
+        }
     }
 }

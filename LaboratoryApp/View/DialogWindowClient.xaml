@@ -39,13 +39,13 @@
     <Label Content="Telefon: " HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center"/>
     <Label Content="NIP: " HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Center"/>
     <Label Content="Dodatkowe informacje: " HorizontalAlignment="Left" Grid.Row="6" VerticalAlignment="Center"/>
-    <TextBox HorizontalAlignment="Center" Text="{Binding AboutClient.Name}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Width="156" Height="24"/>
-    <TextBox HorizontalAlignment="Center" Text="{Binding AboutClient.Address}" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Width="156" Height="24"/>
-    <TextBox HorizontalAlignment="Center" Text="{Binding AboutClient.ContactPerson}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Width="156" Height="24"/>
-    <TextBox HorizontalAlignment="Center" Text="{Binding AboutClient.Email}" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Width="156" Height="24"/>
-    <TextBox HorizontalAlignment="Center" Text="{Binding AboutClient.Telephone}" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" Width="156" Height="24"/>
+    <TextBox HorizontalAlignment="Center" Text="{Binding AboutClient.name}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Width="156" Height="24"/>
+    <TextBox HorizontalAlignment="Center" Text="{Binding AboutClient.adress}" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Width="156" Height="24"/>
+    <TextBox HorizontalAlignment="Center" Text="{Binding AboutClient.contact_person_name}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Width="156" Height="24"/>
+    <TextBox HorizontalAlignment="Center" Text="{Binding AboutClient.mail}" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Width="156" Height="24"/>
+    <TextBox HorizontalAlignment="Center" Text="{Binding AboutClient.tel}" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" Width="156" Height="24"/>
     <TextBox HorizontalAlignment="Center" Text="{Binding AboutClient.NIP}" VerticalAlignment="Center" Grid.Row="5" Grid.Column="1" Width="156" Height="24"/>
-    <TextBox HorizontalAlignment="Center" Text="{Binding AboutClient.Comment}" VerticalAlignment="Center" Grid.Row="6" Grid.Column="1" Width="156" Height="24"/>
+    <TextBox HorizontalAlignment="Center" Text="{Binding AboutClient.comments}" VerticalAlignment="Center" Grid.Row="6" Grid.Column="1" Width="156" Height="24"/>
     
     <Button Grid.ColumnSpan="2" Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="79,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="75"/>
     <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1" HorizontalAlignment="Left" Margin="23,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="75"/>
