@@ -16,7 +16,7 @@ namespace LaboratoryApp.ViewModel
     {
         // Using a DependencyProperty as the backing store for SelectedItem.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.RegisterAttached("SelectedItem", //name of property
-                                                                        typeof(object), //type of property 
+                                                                        typeof(MenuItem), //type of property 
                                                                         typeof(TreeViewHelper), //type of owner property
                                                                         new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, SelectedItemChanged));//metadata
 

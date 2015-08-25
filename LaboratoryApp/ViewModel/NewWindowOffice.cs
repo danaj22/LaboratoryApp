@@ -10,9 +10,9 @@ namespace LaboratoryApp.ViewModel
 {
     public class NewWindowOffice : ObservableObject
     {
-        private InformationAboutOffice aboutOffice;
+        private office aboutOffice;
 
-        public InformationAboutOffice AboutOffice
+        public office AboutOffice
         {
             get { return aboutOffice; }
             set 

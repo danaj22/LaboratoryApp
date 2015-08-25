@@ -43,24 +43,28 @@ namespace LaboratoryApp.ViewModel
                     
                     rootItem.Children.Add((client)t);
                     rootItem.Children.Last().NameOfItem = t.name;
+                   
+                    
 
                     foreach (var g in t.gauges)
                     {
                         if (g.office_id == null)
                         {
-
                             rootItem.Children.Last().Children.Add(g);
                             rootItem.Children.Last().Children.Last().NameOfItem = g.model_of_gauges.model;
+                            rootItem.Children.Last().Children.Last().Parent = t;
                         }
                     }
                     foreach (var o in t.offices)
                     {
                         rootItem.Children.Last().Children.Add(o);
                         rootItem.Children.Last().Children.Last().NameOfItem = o.name;
+                        rootItem.Children.Last().Children.Last().Parent = t;
                         foreach (var g in o.gauges)
                         {
                             rootItem.Children.Last().Children.Last().Children.Add(g);
                             rootItem.Children.Last().Children.Last().Children.Last().NameOfItem = g.model_of_gauges.model;
+                            rootItem.Parent = o;
                         }
                     }
 

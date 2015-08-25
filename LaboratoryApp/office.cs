@@ -39,7 +39,8 @@ namespace LaboratoryApp
             }
             set
             {
-                base.nameOfItem = name;
+                base.nameOfItem = value;
+                OnPropertyChanged("nameOfItem");
             }
         }
 
@@ -52,6 +53,7 @@ namespace LaboratoryApp
             set
             {
                 base.children = value;
+                OnPropertyChanged("children");
             }
         }
     }

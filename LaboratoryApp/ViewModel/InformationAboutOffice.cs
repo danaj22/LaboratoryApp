@@ -85,13 +85,31 @@ namespace LaboratoryApp.ViewModel
         
         public InformationAboutOffice(object SelectedNode)
         {
+            SelectedOffice = (office)SelectedNode;
 
+            OfficeId = SelectedOffice.officeId;
+            ClientId = SelectedOffice.client_id;
+            Name = SelectedOffice.name;
+            Address = SelectedOffice.adress;
+            Telephone = SelectedOffice.tel;
+            ContactPerson = SelectedOffice.contact_person_name;
+            Email = SelectedOffice.mail;
         }
         public InformationAboutOffice()
         {
 
         }
+        private office selectedOffice;
 
+        public office SelectedOffice
+        {
+            get { return selectedOffice; }
+            set 
+            {
+                selectedOffice = value;
+                OnPropertyChanged("SelectedOffice");
+            }
+        }
         private NewWindowOffice messageWindowOffice;
 
         public NewWindowOffice MessageWindowOffice
@@ -155,7 +173,7 @@ namespace LaboratoryApp.ViewModel
         
         private void AddGaugeExecute()
         {
-            MessageWindowGauge = new NewWindowGauge() { AboutGauge = new InformationAboutGauge() };
+            MessageWindowGauge = new NewWindowGauge() { AboutGauge = new gauge() };
             MessageWindowGauge.IsOpen = true;
 
             if (MessageWindowGauge.ToConfirm)
@@ -164,40 +182,44 @@ namespace LaboratoryApp.ViewModel
 
                 using (LaboratoryEntities context = new LaboratoryEntities())
                 {
-                    GaugeIdToAdd = (from m in context.model_of_gauges where m.model == MessageWindowGauge.AboutGauge.SelectedModel select m.model_of_gaugeId).FirstOrDefault();
+                    GaugeIdToAdd = (from m in context.model_of_gauges where m.model == MessageWindowGauge.AboutGauge.model_of_gauges.model select m.model_of_gaugeId).FirstOrDefault();
                 }
                 gaugeToAddToDatabase.client_id = ClientId;
                 gaugeToAddToDatabase.office_id = OfficeId;
                 gaugeToAddToDatabase.model_of_gauge_id = GaugeIdToAdd;
-                gaugeToAddToDatabase.serial_number = MessageWindowGauge.AboutGauge.SerialNumber;
+                gaugeToAddToDatabase.serial_number = MessageWindowGauge.AboutGauge.serial_number;
 
                 using (LaboratoryEntities context = new LaboratoryEntities())
                 {
                     context.gauges.Add(gaugeToAddToDatabase);
                     context.SaveChanges();
                     
-
+                    ////////////////////////////////////////////////
+                    //////////////////////////////////////////
+                    //////////////////////////////////////
                     MainWindowViewModel.LoadView();
                     
                     //var r = MainWindowViewModel.rootElement.Items.IndexOf(i);
                     //var q = MainWindowViewModel.rootElement.Items[r].Items.IndexOf(of);
 
                     //MainWindowViewModel.rootElement.Items[r].Items[q].Items.Add(gaugeToAddToDatabase);
+
+                    MessageBox.Show("Miernik został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-                MessageBox.Show("Miernik został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 //var index = AllItems.IndexOf(AllItems.Last()) + 1;
                 //AllItems.Remove((client)SelectedNode);
                 ////Add new client to TreeView
                 //AllItems.Insert(index+1, newClient);
 
-                MessageWindowGauge.ToConfirm = false;
+                
                 //MainWindowViewModel.LoadView();
             }
             else
             {
 
             }
+            MessageWindowGauge.ToConfirm = false;
 
         }
 
@@ -209,17 +231,30 @@ namespace LaboratoryApp.ViewModel
             var result = MessageBox.Show("Czy na pewno chcesz usunąć bezzwłocznie i definitywnie ten oddział?", "Usuwanie oddziału", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
-                using(LaboratoryEntities context = new LaboratoryEntities())
+                try
                 {
-                    //delete selected client
-                    var officeToDelete = (from o in context.offices
-                                           where o.officeId == this.OfficeId
-                                           select o).FirstOrDefault();
+                    using (LaboratoryEntities context = new LaboratoryEntities())
+                    {
+                        //delete selected client
+                        var officeToDelete = (from o in context.offices
+                                              where o.officeId == SelectedOffice.officeId
+                                              select o).FirstOrDefault();
 
-                    context.offices.Remove(officeToDelete);
-                    context.SaveChanges();
+                        context.offices.Remove(officeToDelete);
+                        context.SaveChanges();
+                       // MainWindowViewModel.rootElement.Children.Remove(MainWindowViewModel.rootElement.)
+
+                        int index = MainWindowViewModel.rootElement.Children.IndexOf(SelectedOffice.Parent);
+                        MainWindowViewModel.rootElement.Children[index].Children.Remove(MainWindowViewModel.selectedNode);
+
+                        MessageBox.Show("Usunięto oddział.","Informacja",MessageBoxButton.OK,MessageBoxImage.Information);
+                    }
                 }
-                MainWindowViewModel.LoadView();
+                catch
+                {
+                    MessageBox.Show("Nie udało się usunąć oddziału. Sprawdź połączenie.","Błąd",MessageBoxButton.OK,MessageBoxImage.Error);
+                }
+                
             }
         }
 
@@ -228,16 +263,9 @@ namespace LaboratoryApp.ViewModel
 
         private void EditOfficeExecute()
         {
-            MessageWindowOffice = new NewWindowOffice() { AboutOffice = new InformationAboutOffice() };
-            
-
-            MessageWindowOffice.AboutOffice.OfficeId = OfficeId;
-
-            MessageWindowOffice.AboutOffice.Name = Name;
-            MessageWindowOffice.AboutOffice.ContactPerson = ContactPerson;
-            MessageWindowOffice.AboutOffice.Address = Address;
-            MessageWindowOffice.AboutOffice.Telephone = Telephone;
-            MessageWindowOffice.AboutOffice.Email = Email;
+            MessageWindowOffice = new NewWindowOffice();
+                     
+            MessageWindowOffice.AboutOffice = (office) SelectedOffice;
 
             MessageWindowOffice.IsOpen = true;
 
@@ -253,29 +281,30 @@ namespace LaboratoryApp.ViewModel
                     //modify data in database
                     if (Name != "" && Address != "" && ContactPerson != "" && Email != "" && Telephone != "")
                     {
-                        officeToEdit.name = MessageWindowOffice.AboutOffice.Name;
-                        officeToEdit.adress = MessageWindowOffice.AboutOffice.Address;
-                        officeToEdit.contact_person_name = MessageWindowOffice.AboutOffice.ContactPerson;
-                        officeToEdit.mail = MessageWindowOffice.AboutOffice.Email;
-                        officeToEdit.tel = MessageWindowOffice.AboutOffice.Telephone;
+                        officeToEdit.name = MessageWindowOffice.AboutOffice.name;
+                        officeToEdit.adress = MessageWindowOffice.AboutOffice.adress;
+                        officeToEdit.contact_person_name = MessageWindowOffice.AboutOffice.contact_person_name;
+                        officeToEdit.mail = MessageWindowOffice.AboutOffice.mail;
+                        officeToEdit.tel = MessageWindowOffice.AboutOffice.tel;
 
                         context.SaveChanges();
 
                         //set new data in main window view
-                        Name = MessageWindowOffice.AboutOffice.Name;
-                        ContactPerson = MessageWindowOffice.AboutOffice.ContactPerson;
-                        Address = MessageWindowOffice.AboutOffice.Address;
-                        Telephone = MessageWindowOffice.AboutOffice.Telephone;
-                        Email = MessageWindowOffice.AboutOffice.Email;
+                        Name = MessageWindowOffice.AboutOffice.name;
+                        ContactPerson = MessageWindowOffice.AboutOffice.contact_person_name;
+                        Address = MessageWindowOffice.AboutOffice.adress;
+                        Telephone = MessageWindowOffice.AboutOffice.tel;
+                        Email = MessageWindowOffice.AboutOffice.mail;
+
                     }
                     else
                     {
                         MessageBox.Show("Wypełnij wszystkie pola");
                     }
-                    
-                    MainWindowViewModel.selectedNode = officeToEdit;
-                    MainWindowViewModel.selectedNode.NameOfItem = Name;
 
+                    MainWindowViewModel.selectedNode.NameOfItem = MessageWindowOffice.AboutOffice.name;
+                    MainWindowViewModel.selectedNode = SelectedOffice;
+                    
                 }
                 MessageWindowOffice.ToConfirm = false;
                 //MainWindowViewModel.LoadView();

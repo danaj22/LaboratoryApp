@@ -26,9 +26,9 @@
         </Grid.RowDefinitions>
         <TextBlock Text="informacje o mierniku" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center" Height="16" Margin="115,0" Width="116"/>
         <TextBlock Text="Model: " Grid.Column="0" Grid.Row="1"/>
-        <TextBlock Text="{Binding Gauge.model}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3"/>
+        <TextBlock Text="{Binding SelectedModel}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3"/>
         <TextBlock Text="Producent przyrządu: " Grid.Column="0" Grid.Row="2"/>
-        <TextBlock Text="{Binding Gauge.manufacturer_name}" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3"/>
+        <TextBlock Text="{Binding SelectedManufacturer}" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3"/>
         <TextBlock Text="Nr fabryczny: " Grid.Column="0" Grid.Row="3"/>
         <TextBlock Text="{Binding SerialNumber}" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3"/>
         <TextBlock Text="Zastosowanie: " Grid.Column="0" Grid.Row="4"/>

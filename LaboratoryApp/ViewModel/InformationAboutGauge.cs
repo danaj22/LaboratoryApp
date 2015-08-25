@@ -86,17 +86,6 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
-        private office office;
-        public office Office
-        {
-            get { return office; }
-            set
-            { 
-                office = value;
-                OnPropertyChanged("Office");
-            }
-        }
-
 
         List<string> collectionOfManufacturers;
         public List<string> CollectionOfManufacturers
@@ -194,10 +183,28 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("GaugeIdToAdd");
             }
         }
+        private gauge selectedGauge;
+
+        public gauge SelectedGauge
+        {
+            get { return selectedGauge; }
+            set 
+            {
+                selectedGauge = value;
+                OnPropertyChanged("SelectedGauge");
+            }
+        }
 
         public InformationAboutGauge(object SelectedNode)
         {
+            SelectedGauge = (gauge) SelectedNode;
             InitializeCollectionOfManufacturers();
+
+            ModelOfGaugeItem = new model_of_gauges();
+            SerialNumber = SelectedGauge.serial_number;
+            ModelOfGaugeItem.model = SelectedGauge.model_of_gauges.model;
+            ModelOfGaugeItem.manufacturer_name = SelectedGauge.model_of_gauges.manufacturer_name;
+
             //collectionOfModels = new List<string>();
             //collectionOfManufacturers = new List<string>();
         }
@@ -249,8 +256,8 @@ namespace LaboratoryApp.ViewModel
         private void GenerateRaportExecute()
         
         {
-            MessageWindowRaport = new NewWindowRaport() { AboutGauge = new InformationAboutGauge() };
-            MessageWindowRaport.AboutGauge = this;
+            MessageWindowRaport = new NewWindowRaport();
+            MessageWindowRaport.AboutGauge = (gauge) SelectedGauge;
             MessageWindowRaport.IsOpen = true;
 
 
@@ -499,27 +506,27 @@ namespace LaboratoryApp.ViewModel
             row.Cells[0].Format.Font.Bold = true;
             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
             row.Cells[0].AddParagraph("Zgłaszający: ");
-            row.Cells[1].AddParagraph(raport.AboutGauge.Office.client.name + " " + raport.AboutGauge.Office.client.adress);
+            //row.Cells[1].AddParagraph(raport.AboutGauge.Office.client.name + " " + raport.AboutGauge.Office.client.adress);
             row = table.AddRow();
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].AddParagraph("Oddział: ");
-            row.Cells[1].AddParagraph(raport.AboutGauge.Office.name.ToString());
+            //row.Cells[1].AddParagraph(raport.AboutGauge.Office.name.ToString());
             row = table.AddRow();
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].AddParagraph("Producent przyrządu: ");
-            row.Cells[1].AddParagraph(raport.AboutGauge.ModelOfGaugeItem.manufacturer_name.ToString());
+            //row.Cells[1].AddParagraph(raport.AboutGauge.ModelOfGaugeItem.manufacturer_name.ToString());
             row = table.AddRow();
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].AddParagraph("Model:");
-            row.Cells[1].AddParagraph(raport.AboutGauge.ModelOfGaugeItem.model.ToString());
+            //row.Cells[1].AddParagraph(raport.AboutGauge.ModelOfGaugeItem.model.ToString());
             row = table.AddRow();
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].AddParagraph("Nr fabryczny: ");
-            row.Cells[1].AddParagraph(raport.AboutGauge.SerialNumber.ToString());
+            //row.Cells[1].AddParagraph(raport.AboutGauge.SerialNumber.ToString());
             row = table.AddRow();
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].AddParagraph("Zastosowanie urządzenia: ");
-            row.Cells[1].AddParagraph(raport.AboutGauge.ModelOfGaugeItem.usage.description);
+            //row.Cells[1].AddParagraph(raport.AboutGauge.ModelOfGaugeItem.usage.description);
             row = table.AddRow();
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].AddParagraph("Metoda wzorcowania: ");
@@ -572,11 +579,11 @@ namespace LaboratoryApp.ViewModel
         private void EditGaugeExecute()
         {
             
-            MessageWindowGauge = new NewWindowGauge() { AboutGauge = new InformationAboutGauge() { ModelOfGaugeItem = new model_of_gauges() } };
+            MessageWindowGauge = new NewWindowGauge() { AboutGauge = new gauge() { model_of_gauges = new model_of_gauges() } };
 
-            MessageWindowGauge.AboutGauge.SerialNumber = SerialNumber;
-            MessageWindowGauge.AboutGauge.SelectedManufacturer = ModelOfGaugeItem.manufacturer_name;
-            MessageWindowGauge.AboutGauge.SelectedModel = ModelOfGaugeItem.model;
+            MessageWindowGauge.AboutGauge.serial_number = SerialNumber;
+            MessageWindowGauge.AboutGauge.model_of_gauges.manufacturer_name = ModelOfGaugeItem.manufacturer_name;
+            MessageWindowGauge.AboutGauge.model_of_gauges.model = ModelOfGaugeItem.model;
 
 
             MessageWindowGauge.IsOpen = true;
@@ -587,22 +594,22 @@ namespace LaboratoryApp.ViewModel
                 {
                     var gaugeToEdit = (from g in context.gauges where g.gaugeId == this.GaugeId select g).FirstOrDefault();
 
-                    if(!String.IsNullOrEmpty(MessageWindowGauge.AboutGauge.SelectedManufacturer)
-                       && !String.IsNullOrEmpty(MessageWindowGauge.AboutGauge.SelectedModel)
-                       && !String.IsNullOrEmpty(MessageWindowGauge.AboutGauge.SerialNumber.ToString()))
+                    if(!String.IsNullOrEmpty(MessageWindowGauge.AboutGauge.model_of_gauges.manufacturer_name.ToString())
+                       && !String.IsNullOrEmpty(MessageWindowGauge.AboutGauge.model_of_gauges.model.ToString())
+                       && !String.IsNullOrEmpty(MessageWindowGauge.AboutGauge.serial_number.ToString()))
                     
                     {
-                        gaugeToEdit.serial_number = MessageWindowGauge.AboutGauge.SerialNumber;
-                        GaugeIdToAdd = (from m in context.model_of_gauges where m.model == MessageWindowGauge.AboutGauge.SelectedModel select m.model_of_gaugeId).FirstOrDefault();
+                        gaugeToEdit.serial_number = MessageWindowGauge.AboutGauge.serial_number;
+                        GaugeIdToAdd = (from m in context.model_of_gauges where m.model == MessageWindowGauge.AboutGauge.model_of_gauges.model select m.model_of_gaugeId).FirstOrDefault();
                         gaugeToEdit.model_of_gauges.model_of_gaugeId = GaugeIdToAdd;
 
                         context.SaveChanges();
 
                         //set new data in main window view
-                        this.SerialNumber = MessageWindowGauge.AboutGauge.SerialNumber;
-                        this.ModelOfGaugeItem.manufacturer_name = gaugeToEdit.model_of_gauges.manufacturer_name;
-                        this.ModelOfGaugeItem.model = gaugeToEdit.model_of_gauges.model;
-                        this.ModelOfGaugeItem.usage.description = gaugeToEdit.model_of_gauges.usage.description;
+                        SerialNumber = MessageWindowGauge.AboutGauge.serial_number;
+                        ModelOfGaugeItem.manufacturer_name = gaugeToEdit.model_of_gauges.manufacturer_name;
+                        ModelOfGaugeItem.model = gaugeToEdit.model_of_gauges.model;
+                        ModelOfGaugeItem.usage.description = gaugeToEdit.model_of_gauges.usage.description;
                     }
                 }
                 MessageWindowGauge.ToConfirm = false;

@@ -18,7 +18,6 @@ namespace LaboratoryApp
         {
             this.offices = new ObservableCollection<office>();
             this.gauges = new ObservableCollection<gauge>();
-            NameOfItem = name;
         }
     
         public int clientId { get; set; }
@@ -43,6 +42,18 @@ namespace LaboratoryApp
             {
                 base.nameOfItem = value;
                 OnPropertyChanged("nameOfItem");
+            }
+        }
+        protected override ViewModel.MenuItem parent
+        {
+            get
+            {
+                return base.parent;
+            }
+            set
+            {
+                base.parent = value;
+                OnPropertyChanged("parent");
             }
         }
         protected override ObservableCollection<ViewModel.MenuItem> children

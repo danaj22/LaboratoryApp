@@ -31,7 +31,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock Text="informacje o klientach" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" TextAlignment="Center"/>
-        <TextBlock Text="{Binding Comment}" Background="Aquamarine" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="63,0,24,0" Width="0"/>
+        <TextBlock Text="{Binding Comment}" Background="Aquamarine" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center"/>
         <TextBlock Text="Nazwa:" Grid.Column="0" Grid.Row="3"/>
         <TextBlock Text="{Binding Name}" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3"/>
         <TextBlock Text="Osoba kontaktowa:" Grid.Column="0" Grid.Row="4"/>

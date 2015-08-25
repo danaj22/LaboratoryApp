@@ -10,10 +10,17 @@
 namespace LaboratoryApp
 {
     using System;
+    using System.Linq;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
 
     public partial class gauge : ViewModel.MenuItem
     {
+        public gauge()
+        
+        {
+            
+        }
         public int gaugeId { get; set; }
         public int serial_number { get; set; }
         public int client_id { get; set; }
@@ -32,10 +39,10 @@ namespace LaboratoryApp
             }
             set
             {
-                base.nameOfItem = model_of_gauges.model;
+                base.nameOfItem = value;
+                OnPropertyChanged("nameOfItem");
             }
         }
-
         protected override ObservableCollection<ViewModel.MenuItem> children
         {
             get
@@ -45,7 +52,11 @@ namespace LaboratoryApp
             set
             {
                 base.children = value;
+                OnPropertyChanged("children");
             }
         }
+
+
+
     }
 }

@@ -79,42 +79,20 @@ namespace LaboratoryApp.ViewModel
                 selectedNode = value;
 
                 if ((SelectedNode as client) != null)
+                
                 {
-                    
-                    client selectedClient = selectedNode as client;
-                    CurrentViewModel = new InformationAboutClient(SelectedNode)
-                                                                    { 
-                                                                      ClientId = selectedClient.clientId,
-                                                                      Name = selectedClient.name, 
-                                                                      Address = selectedClient.adress, 
-                                                                      NIP = selectedClient.NIP, 
-                                                                      Telephone = selectedClient.tel,
-                                                                      ContactPerson = selectedClient.contact_person_name,
-                                                                      Comment = selectedClient.comments,
-                                                                      Email = selectedClient.mail};
+                    CurrentViewModel = new InformationAboutClient(SelectedNode);
                 }
+
                 if((SelectedNode as office)!=null)
                 {
-                    office selectedOffice = selectedNode as office;
-                    CurrentViewModel = new InformationAboutOffice(SelectedNode)
-                                                                    {
-                                                                      OfficeId = selectedOffice.officeId,
-                                                                      ClientId = selectedOffice.client_id,
-                                                                      Name = selectedOffice.name,
-                                                                      Address = selectedOffice.adress,
-                                                                      Telephone = selectedOffice.tel,
-                                                                      ContactPerson = selectedOffice.contact_person_name,
-                                                                      Email = selectedOffice.mail};
+                    office selectedOffice = SelectedNode as office;
+                    CurrentViewModel = new InformationAboutOffice(SelectedNode);
                 }
                 if ((SelectedNode as gauge) != null)
                 {
-                    gauge selectedGauge = selectedNode as gauge;
-                    CurrentViewModel = new ViewModel.InformationAboutGauge(SelectedNode) {
-                                                                      GaugeId = selectedGauge.gaugeId,
-                                                                      SerialNumber = selectedGauge.serial_number,
-                                                                      ModelOfGaugeItem = selectedGauge.model_of_gauges,
-                                                                      Office = selectedGauge.office
-                                                                      };
+                    gauge selectedGauge = SelectedNode as gauge;
+                    CurrentViewModel = new ViewModel.InformationAboutGauge(SelectedNode);
                 }
                 OnPropertyChanged("SelectedNode");
             }

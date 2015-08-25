@@ -9,9 +9,9 @@ namespace LaboratoryApp.ViewModel
 {
     public class NewWindowRaport : ObservableObject
     {
-        private InformationAboutGauge aboutGauge;
+        private gauge aboutGauge;
 
-        public InformationAboutGauge AboutGauge
+        public gauge AboutGauge
         {
             get { return aboutGauge; }
             set

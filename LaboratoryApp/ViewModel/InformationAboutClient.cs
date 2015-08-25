@@ -8,6 +8,7 @@ using LaboratoryApp.View;
 using System.Windows.Input;
 using LaboratoryApp;
 using System.Windows;
+using System.Data.Entity.Validation;
 
 namespace LaboratoryApp.ViewModel
 {
@@ -17,15 +18,32 @@ namespace LaboratoryApp.ViewModel
         public InformationAboutClient(MenuItem SelectedNode)
         {
             OfficeId = null;
-            sel = SelectedNode;
-            
+            SelectedClient = (client) SelectedNode;
+            Address = SelectedClient.adress;
+            Name = SelectedClient.name;
+            ContactPerson = SelectedClient.contact_person_name;
+            Email = SelectedClient.mail;
+            Telephone = SelectedClient.tel;
+            NIP = SelectedClient.NIP;
+            Comment = SelectedClient.comments;
         }
+
         public InformationAboutClient()
         {
 
         }
+        #region
+        private client selectedClient;
 
-        private MenuItem sel;
+        public client SelectedClient
+        {
+            get { return selectedClient; }
+            set 
+            {
+                selectedClient = value;
+                OnPropertyChanged("SelectedClient");
+            }
+        }
         private int clientId;
         public int ClientId
         {
@@ -50,7 +68,7 @@ namespace LaboratoryApp.ViewModel
         public string Name
         {
             get { return name; }
-            set 
+            set
             {
                 name = value;
                 OnPropertyChanged("Name");
@@ -60,8 +78,8 @@ namespace LaboratoryApp.ViewModel
         public string Address
         {
             get { return address; }
-            set 
-            { 
+            set
+            {
                 address = value;
                 OnPropertyChanged("Address");
             }
@@ -70,8 +88,8 @@ namespace LaboratoryApp.ViewModel
         public string ContactPerson
         {
             get { return contactPerson; }
-            set 
-            { 
+            set
+            {
                 contactPerson = value;
                 OnPropertyChanged("ContactPerson");
             }
@@ -81,7 +99,7 @@ namespace LaboratoryApp.ViewModel
         {
             get { return email; }
             set
-            { 
+            {
                 email = value;
                 OnPropertyChanged("Email");
             }
@@ -90,7 +108,7 @@ namespace LaboratoryApp.ViewModel
         public string Telephone
         {
             get { return telephone; }
-            set 
+            set
             {
                 telephone = value;
                 OnPropertyChanged("Telephone");
@@ -100,8 +118,8 @@ namespace LaboratoryApp.ViewModel
         public string NIP
         {
             get { return nIP; }
-            set 
-            { 
+            set
+            {
                 nIP = value;
                 OnPropertyChanged("NIP");
             }
@@ -110,8 +128,8 @@ namespace LaboratoryApp.ViewModel
         public string Comment
         {
             get { return comment; }
-            set 
-            { 
+            set
+            {
                 comment = value;
                 OnPropertyChanged("Comment");
             }
@@ -161,59 +179,107 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("MessageWindowGauge");
             }
         }
+        #endregion
 
         public ICommand AddGaugeCommand
         { get { return new SimpleRelayCommand(AddGaugeExecute); } }
 
         private void AddGaugeExecute()
         {
-            MessageWindowGauge = new NewWindowGauge() { AboutGauge = new InformationAboutGauge() };
+            MessageWindowGauge = new NewWindowGauge() { AboutGauge = new gauge() };
+
             MessageWindowGauge.IsOpen = true;
 
             if (MessageWindowGauge.ToConfirm)
             {
                 gauge gaugeToAddToDatabase = new gauge();
-                ModelOfGauge = new model_of_gauges();
+                gaugeToAddToDatabase.serial_number = MessageWindowGauge.AboutGauge.serial_number;
+                //gaugeToAddToDatabase.model_of_gauges.model = MessageWindowGauge.SelectedModel;
+                //gaugeToAddToDatabase.model_of_gauges.manufacturer_name = MessageWindowGauge.SelectedManufacturer;
+                
 
                 using (LaboratoryEntities context = new LaboratoryEntities())
                 {
-                    GaugeIdToAdd = (from m in context.model_of_gauges where m.model == MessageWindowGauge.AboutGauge.SelectedModel select m.model_of_gaugeId).FirstOrDefault();
+                    GaugeIdToAdd = (from m in context.model_of_gauges where m.model == MessageWindowGauge.SelectedModel select m.model_of_gaugeId).FirstOrDefault();
 
                     //nie mogę pobrać całego rekordu
-                    ModelOfGauge = (from m in context.model_of_gauges where m.model_of_gaugeId == GaugeIdToAdd select m).FirstOrDefault();
+                    model_of_gauges ModelOfGauge = (from m in context.model_of_gauges where m.model_of_gaugeId == GaugeIdToAdd select m).FirstOrDefault();
 
 
                     //GaugeIdToAdd = (from m in context.model_of_gauges where m.model == MessageWindowGauge.AboutGauge.SelectedModel select m.model_of_gaugeId).FirstOrDefault();
 
                 
-                gaugeToAddToDatabase.client_id = ClientId;
-                gaugeToAddToDatabase.model_of_gauges = ModelOfGauge;
-                gaugeToAddToDatabase.serial_number = MessageWindowGauge.AboutGauge.SerialNumber;
-                
+                    gaugeToAddToDatabase.client_id = SelectedClient.clientId;
+                    //gaugeToAddToDatabase.client.NIP = SelectedClient.NIP;
+                    //gaugeToAddToDatabase.client.name = SelectedClient.name;
 
+                    //gaugeToAddToDatabase.model_of_gauges = ModelOfGauge;
+
+                    gaugeToAddToDatabase.model_of_gauge_id = ModelOfGauge.model_of_gaugeId;
                     
+                    //gaugeToAddToDatabase.model_of_gauges.model = ModelOfGauge.model;
+                    //gaugeToAddToDatabase.model_of_gauges.manufacturer_name = ModelOfGauge.manufacturer_name;
+
+                    gaugeToAddToDatabase.serial_number = MessageWindowGauge.AboutGauge.serial_number;
+
+
+                    //office of = new office();
+                    //of.adress = "df";
+                    //of.name = "aaaa";
+                    //of.mail = "dfadfadfa";
+                    //of.tel = "1212";
+                    //of.contact_person_name = "fdsafsd";
+                    //of.client_id = 1043;
+
+
+
+                    //gaugeToAddToDatabase.office = of;
+
 
                     //if (gaugeToAddToDatabase)
                     {
-                        client SelectedClient = new client();
+                        //client SelectedClient = new client();
 
-                        SelectedClient = (client)MainWindowViewModel.selectedNode;
+                        //SelectedClient = (client)MainWindowViewModel.selectedNode;
 
                         int index = MainWindowViewModel.rootElement.Children.IndexOf(SelectedClient);
 
                         //MainWindowViewModel.rootElement.Children[index].Children.Add(gaugeToAddToDatabase);
 
+                        try
+                        {
+                            context.gauges.Add(gaugeToAddToDatabase);
+                            context.SaveChanges();
 
-                        context.gauges.Add(gaugeToAddToDatabase);
-                        context.SaveChanges();
+                            MainWindowViewModel.selectedNode.Children.Add(gaugeToAddToDatabase);
+                            MainWindowViewModel.selectedNode.Children.Last().NameOfItem = MessageWindowGauge.SelectedModel;
+                            MainWindowViewModel.selectedNode.Children.Last().Parent = SelectedClient;
+
+                            MessageBox.Show("Miernik został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        }
+                        catch (DbEntityValidationException e)
+                        {
+                            foreach (var eve in e.EntityValidationErrors)
+                            {
+                                MessageBox.Show(String.Format("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                                    eve.Entry.Entity.GetType().Name, eve.Entry.State));
+                                foreach (var ve in eve.ValidationErrors)
+                                {
+                                    MessageBox.Show(String.Format("- Property: \"{0}\", Error: \"{1}\"",
+                                        ve.PropertyName, ve.ErrorMessage));
+                                }
+                            }
+                        }
+                        catch(Exception e)
+                        { MessageBox.Show(e.ToString()); }
                     }
 
 
                     //var r = MainWindowViewModel.rootElement.Items.IndexOf((client)MainWindowViewModel.selectedNode);
                     //MainWindowViewModel.rootElement.Items[r].Items.Add(gaugeToAddToDatabase);
                 }
-                MessageBox.Show("Miernik został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
-
+                
                 //var index = AllItems.IndexOf(AllItems.Last()) + 1;
                 //AllItems.Remove((client)SelectedNode);
                 ////Add new client to TreeView
@@ -240,40 +306,35 @@ namespace LaboratoryApp.ViewModel
             {
                 try
                 {
-                    
-                    //var r = MainWindowViewModel.rootElement.Items.IndexOf((client)MainWindowViewModel.selectedNode);
-                    //MainWindowViewModel.rootElement.Items.Remove(clientToDelete);
-                    //MainWindowViewModel.rootElement.Items[r].Items.Clear();
-                    //MainWindowViewModel.rootElement.Items.RemoveAt(r);
-                    //MainWindowViewModel.LoadView();
 
-
-
-                    LaboratoryEntities context = new LaboratoryEntities();
-                    //delete selected client
-                    var clientToDelete = (from c in context.clients
-                                          where c.clientId == this.ClientId
-                                          select c).FirstOrDefault();
-                    //context.clients.
-
-                    client klientka = (client) MainWindowViewModel.selectedNode;
-
-                    MainWindowViewModel.rootElement.Children.Remove(MainWindowViewModel.selectedNode);
-
-
-                    //context.gauges.Select( x )
-                   
-                    var lista = (from g in context.gauges where g.client_id == klientka.clientId select g).ToList();
-                    foreach(gauge l in lista)
+                    using (LaboratoryEntities context = new LaboratoryEntities())
                     {
-                        context.gauges.Remove(l);
+                        //delete selected client
+                        var clientToDelete = (from c in context.clients
+                                              where c.clientId == SelectedClient.clientId
+                                              select c).FirstOrDefault();
+
+                        try
+                        {
+                            client ClientToDelete = (client)MainWindowViewModel.selectedNode;
+
+                            var lista = (from g in context.gauges where g.client_id == ClientToDelete.clientId select g).ToList();
+                            foreach (gauge l in lista)
+                            {
+                                context.gauges.Remove(l);
+                            }
+
+                            context.clients.Remove(clientToDelete);
+                            context.SaveChanges();
+
+                            MainWindowViewModel.rootElement.Children.Remove(MainWindowViewModel.selectedNode);
+                            MessageBox.Show("Usunięto klienta.","Informacja",MessageBoxButton.OK,MessageBoxImage.Information);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Nie udało się usunąć klienta. Sprawdź połączenie.");
+                        }
                     }
-                   
-                   // {
-                     //   List<gauge> gaugeToRemove = (from )
-                    //}
-                    context.clients.Remove(clientToDelete);
-                    context.SaveChanges();
                 }
                 catch(Exception ex)
                 {
@@ -284,7 +345,6 @@ namespace LaboratoryApp.ViewModel
         }
 
         private NewWindowClient messageWindowClient;
-
         public NewWindowClient MessageWindowClient
         {
             get { return messageWindowClient; }
@@ -303,20 +363,8 @@ namespace LaboratoryApp.ViewModel
         {
 
             MessageWindowClient = new NewWindowClient();
-           
-            //filling in the data fields in new window
-            //MessageWindowClient.AboutClient.clientId = ClientId;
-            //MessageWindowClient.AboutClient.comments = Comment;
-            //MessageWindowClient.AboutClient.name = Name;
-            //MessageWindowClient.AboutClient.contact_person_name = ContactPerson;
-            //MessageWindowClient.AboutClient.adress = Address;
-            //MessageWindowClient.AboutClient.tel = Telephone;
-            //MessageWindowClient.AboutClient.NIP = NIP;
-            //MessageWindowClient.AboutClient.mail = Email;
-
-
-
-            messageWindowClient.AboutClient = (client) sel;
+          
+            MessageWindowClient.AboutClient = (client) SelectedClient;
 
             //show window
             MessageWindowClient.IsOpen = true;
@@ -342,7 +390,7 @@ namespace LaboratoryApp.ViewModel
                     {
 
                         clientToEdit.name = MessageWindowClient.AboutClient.name;
-                        clientToEdit.adress = MessageWindowClient.AboutClient.name;
+                        clientToEdit.adress = MessageWindowClient.AboutClient.adress;
                         clientToEdit.contact_person_name = MessageWindowClient.AboutClient.contact_person_name;
                         clientToEdit.mail = MessageWindowClient.AboutClient.mail;
                         clientToEdit.tel = MessageWindowClient.AboutClient.tel;
@@ -373,7 +421,8 @@ namespace LaboratoryApp.ViewModel
                         NIP = MessageWindowClient.AboutClient.NIP;
                         Comment = MessageWindowClient.AboutClient.comments;
 
-                        MainWindowViewModel.selectedNode.NameOfItem = Name;
+                        MainWindowViewModel.selectedNode.NameOfItem = MessageWindowClient.AboutClient.name;
+                        MainWindowViewModel.selectedNode = SelectedClient;
                     }
                     else
                     {
@@ -391,7 +440,7 @@ namespace LaboratoryApp.ViewModel
 
         private void AddOfficeExecute()
         {
-            MessageWindowOffice = new NewWindowOffice() { AboutOffice = new InformationAboutOffice() };
+            MessageWindowOffice = new NewWindowOffice() { AboutOffice = new office() };
             
             //open a new modal window
             messageWindowOffice.IsOpen = true;
@@ -400,28 +449,29 @@ namespace LaboratoryApp.ViewModel
             if (MessageWindowOffice.ToConfirm)
             {
                 officeToAddToDatabase = new office();
-                officeToAddToDatabase.adress = MessageWindowOffice.AboutOffice.Address;
-                officeToAddToDatabase.mail = MessageWindowOffice.AboutOffice.Email;
-                officeToAddToDatabase.contact_person_name = MessageWindowOffice.AboutOffice.ContactPerson;
-                officeToAddToDatabase.name = MessageWindowOffice.AboutOffice.Name;
-                officeToAddToDatabase.tel = MessageWindowOffice.AboutOffice.Telephone;
-                officeToAddToDatabase.client_id = this.ClientId;
+                officeToAddToDatabase.adress = MessageWindowOffice.AboutOffice.adress;
+                officeToAddToDatabase.mail = MessageWindowOffice.AboutOffice.mail;
+                officeToAddToDatabase.contact_person_name = MessageWindowOffice.AboutOffice.contact_person_name;
+                officeToAddToDatabase.name = MessageWindowOffice.AboutOffice.name;
+                officeToAddToDatabase.tel = MessageWindowOffice.AboutOffice.tel;
+                officeToAddToDatabase.client_id = SelectedClient.clientId;
 
                 using (LaboratoryEntities context = new LaboratoryEntities())
                 {
 
                     
 
-                    client SelectedClient = new client();
+                    //client SelectedClient = new client();
 
-                    SelectedClient = (client)MainWindowViewModel.selectedNode;
+                    //SelectedClient = (client)MainWindowViewModel.selectedNode;
 
-                    int index = MainWindowViewModel.rootElement.Children.IndexOf(SelectedClient);
+                    //int index = MainWindowViewModel.rootElement.Children.IndexOf(SelectedClient);
 
                     //MainWindowViewModel.rootElement.Children[index].Children.Add(officeToAddToDatabase);
 
                     context.offices.Add(officeToAddToDatabase);
                     context.SaveChanges();
+
 
                     //var r = MainWindowViewModel.rootElement.Items.IndexOf((client)MainWindowViewModel.selectedNode);
                     //MainWindowViewModel.rootElement.Items[r].Items.Add(officeToAddToDatabase);
@@ -431,6 +481,8 @@ namespace LaboratoryApp.ViewModel
                 }
                 MainWindowViewModel.selectedNode.Children.Add(officeToAddToDatabase);
                 MainWindowViewModel.selectedNode.Children.Last().NameOfItem = officeToAddToDatabase.name;
+                MainWindowViewModel.selectedNode.Children.Last().Parent = SelectedClient;
+
                 MessageBox.Show("Oddział został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 //var index = AllItems.IndexOf(AllItems.Last()) + 1;
