@@ -33,8 +33,8 @@
         <Label Content="Numer seryjny: " HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center"/>
 
         <TextBox HorizontalAlignment="Left" Text="{Binding AboutGauge.serial_number}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Width="187" Height="24" />
-        <ComboBox ItemsSource="{Binding CollectionOfManufacturers}" SelectedItem="{Binding SelectedManufacturer}"  Grid.Column="1" Grid.RowSpan="1" Width="187" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-        <ComboBox ItemsSource="{Binding CollectionOfModels}" SelectedItem="{Binding SelectedModel}" Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="1" VerticalAlignment="Center" Width="187" Height="25"/>
+        <ComboBox ItemsSource="{Binding AboutGauge.model_of_gauges.CollectionOfManufacturers}" SelectedItem="{Binding AboutGauge.model_of_gauges.manufacturer_name}"  Grid.Column="1" Grid.RowSpan="1" Width="187" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <ComboBox ItemsSource="{Binding AboutGauge.model_of_gauges.CollectionOfModels}" SelectedItem="{Binding AboutGauge.model_of_gauges.model}" Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="1" VerticalAlignment="Center" Width="187" Height="25"/>
 
         <Button Grid.ColumnSpan="2" Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="79,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="75"/>
         <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1" HorizontalAlignment="Left" Margin="66,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="75"/>

@@ -92,7 +92,7 @@ namespace LaboratoryApp.ViewModel
                 if ((SelectedNode as gauge) != null)
                 {
                     gauge selectedGauge = SelectedNode as gauge;
-                    CurrentViewModel = new ViewModel.InformationAboutGauge(SelectedNode);
+                    CurrentViewModel = new InformationAboutGauge(SelectedNode);
                 }
                 OnPropertyChanged("SelectedNode");
             }
@@ -194,8 +194,8 @@ namespace LaboratoryApp.ViewModel
                     )
                 {
                     var newGauge = new model_of_gauges();
-                    newGauge.manufacturer_name = MessageWindowModelOfGauge.AboutModelOfGauge.ManufacturerName;
-                    newGauge.model = MessageWindowModelOfGauge.AboutModelOfGauge.Model;
+                    newGauge.Manufacturer_name = MessageWindowModelOfGauge.AboutModelOfGauge.ManufacturerName;
+                    newGauge.Model = MessageWindowModelOfGauge.AboutModelOfGauge.Model;
 
                     try
                     {

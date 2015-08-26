@@ -32,7 +32,7 @@
         <TextBlock Text="Nr fabryczny: " Grid.Column="0" Grid.Row="3"/>
         <TextBlock Text="{Binding SerialNumber}" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3"/>
         <TextBlock Text="Zastosowanie: " Grid.Column="0" Grid.Row="4"/>
-        <TextBlock Text="{Binding Gauge.usage.description}" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3"/>
+        <TextBlock Text="{Binding ModelOfGaugeItem.usage.description}" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3"/>
 
         <vm:ModalDialogManager DataContext="{Binding MessageWindowGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
 			DialogWidth="300" DialogResizeMode="NoResize" />

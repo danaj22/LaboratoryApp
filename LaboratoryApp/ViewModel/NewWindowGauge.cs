@@ -25,7 +25,7 @@ namespace LaboratoryApp.ViewModel
 
         public NewWindowGauge()
         {
-            InitializeCollectionOfManufacturers();
+            //InitializeCollectionOfManufacturers();
             OKCommand = new SimpleRelayCommand(Confirm);
             CancelCommand = new SimpleRelayCommand(Close);
             
@@ -92,69 +92,69 @@ namespace LaboratoryApp.ViewModel
 
 
 
-        List<string> collectionOfManufacturers;
-        public List<string> CollectionOfManufacturers
-        {
-            get { return this.collectionOfManufacturers; }
-            set
-            {
-                collectionOfManufacturers = value;
-                OnPropertyChanged("CollectionOfManufacturers");
-            }
+        //List<string> collectionOfManufacturers;
+        //public List<string> CollectionOfManufacturers
+        //{
+        //    get { return this.collectionOfManufacturers; }
+        //    set
+        //    {
+        //        collectionOfManufacturers = value;
+        //        OnPropertyChanged("CollectionOfManufacturers");
+        //    }
 
-        }
-        List<string> collectionOfModels;
-        public List<string> CollectionOfModels
-        {
-            get { return collectionOfModels; }
-            set
-            {
-                collectionOfModels = value;
-                OnPropertyChanged("CollectionOfModels");
-            }
-        }
+        //}
+        //List<string> collectionOfModels;
+        //public List<string> CollectionOfModels
+        //{
+        //    get { return collectionOfModels; }
+        //    set
+        //    {
+        //        collectionOfModels = value;
+        //        OnPropertyChanged("CollectionOfModels");
+        //    }
+        //}
 
-        private void InitializeCollectionOfManufacturers()
-        {
-            LaboratoryEntities context = new LaboratoryEntities();
-            CollectionOfManufacturers = (from m in context.model_of_gauges select m.manufacturer_name).Distinct().ToList();
-        }
+        //private void InitializeCollectionOfManufacturers()
+        //{
+        //    LaboratoryEntities context = new LaboratoryEntities();
+        //    CollectionOfManufacturers = (from m in context.model_of_gauges select m.manufacturer_name).Distinct().ToList();
+        //}
 
 
-        private string selectedManufacturer;
-        public string SelectedManufacturer
-        {
-            get { return selectedManufacturer; }
-            set
-            {
-                selectedManufacturer = value;
-                InitializeCollectionOfModels();
-                OnPropertyChanged("SelectedManufacturer");
-            }
-        }
-        private string selectedModel;
-        public string SelectedModel
-        {
-            get { return selectedModel; }
-            set
-            {
-                selectedModel = value;
-                OnPropertyChanged("SelectedModel");
-            }
+        //private string selectedManufacturer;
+        //public string SelectedManufacturer
+        //{
+        //    get { return selectedManufacturer; }
+        //    set
+        //    {
+        //        selectedManufacturer = value;
+        //        InitializeCollectionOfModels();
+        //        OnPropertyChanged("SelectedManufacturer");
+        //    }
+        //}
+        //private string selectedModel;
+        //public string SelectedModel
+        //{
+        //    get { return selectedModel; }
+        //    set
+        //    {
+        //        selectedModel = value;
+        //        OnPropertyChanged("SelectedModel");
+        //    }
 
-        }
+        //}
 
-        private void InitializeCollectionOfModels()
-        {
-            if (SelectedManufacturer != null)
-            {
-                using (LaboratoryEntities context = new LaboratoryEntities())
-                {
-                    CollectionOfModels = (from g in context.model_of_gauges where g.manufacturer_name == SelectedManufacturer select g.model).ToList();
+        //private void InitializeCollectionOfModels()
+        //{
+        //    if (SelectedManufacturer != null)
+        //    {
+        //        using (LaboratoryEntities context = new LaboratoryEntities())
+        //        {
+        //            CollectionOfModels = (from g in context.model_of_gauges where g.manufacturer_name == SelectedManufacturer select g.model).ToList();
 
-                }
-            }
-        }
+        //        }
+        //    }
+        //}
     }
 
 

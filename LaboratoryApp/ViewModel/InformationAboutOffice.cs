@@ -7,6 +7,7 @@ using LaboratoryApp.View;
 using System.Windows.Input;
 using LaboratoryApp;
 using System.Windows;
+using System.Data.Entity.Validation;
 
 namespace LaboratoryApp.ViewModel
 {
@@ -179,32 +180,59 @@ namespace LaboratoryApp.ViewModel
             if (MessageWindowGauge.ToConfirm)
             {
                 gauge gaugeToAddToDatabase = new gauge();
+                model_of_gauges ModelOfGauge = new model_of_gauges();
 
                 using (LaboratoryEntities context = new LaboratoryEntities())
                 {
-                    GaugeIdToAdd = (from m in context.model_of_gauges where m.model == MessageWindowGauge.AboutGauge.model_of_gauges.model select m.model_of_gaugeId).FirstOrDefault();
+                    //GaugeIdToAdd = (from m in context.model_of_gauges where m.model == MessageWindowGauge.SelectedModel select m.model_of_gaugeId).FirstOrDefault();
+                    ModelOfGauge = (from m in context.model_of_gauges where m.Model == MessageWindowGauge.AboutGauge.model_of_gauges.Model select m).FirstOrDefault();
+
                 }
                 gaugeToAddToDatabase.client_id = ClientId;
                 gaugeToAddToDatabase.office_id = OfficeId;
-                gaugeToAddToDatabase.model_of_gauge_id = GaugeIdToAdd;
+                gaugeToAddToDatabase.model_of_gauge_id = ModelOfGauge.model_of_gaugeId;
+                gaugeToAddToDatabase.model_of_gauges = ModelOfGauge;
                 gaugeToAddToDatabase.serial_number = MessageWindowGauge.AboutGauge.serial_number;
 
                 using (LaboratoryEntities context = new LaboratoryEntities())
                 {
-                    context.gauges.Add(gaugeToAddToDatabase);
-                    context.SaveChanges();
-                    
-                    ////////////////////////////////////////////////
-                    //////////////////////////////////////////
-                    //////////////////////////////////////
-                    MainWindowViewModel.LoadView();
-                    
-                    //var r = MainWindowViewModel.rootElement.Items.IndexOf(i);
-                    //var q = MainWindowViewModel.rootElement.Items[r].Items.IndexOf(of);
+                    try
+                    {
+                        context.gauges.Add(gaugeToAddToDatabase);
+                        context.SaveChanges();
 
-                    //MainWindowViewModel.rootElement.Items[r].Items[q].Items.Add(gaugeToAddToDatabase);
+                        ////////////////////////////////////////////////
+                        //////////////////////////////////////////
+                        //////////////////////////////////////
+                        //MainWindowViewModel.LoadView();
 
-                    MessageBox.Show("Miernik został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+                        //var r = MainWindowViewModel.rootElement.Items.IndexOf(i);
+                        //var q = MainWindowViewModel.rootElement.Items[r].Items.IndexOf(of);
+
+                        //MainWindowViewModel.rootElement.Items[r].Items[q].Items.Add(gaugeToAddToDatabase);
+
+                        MainWindowViewModel.selectedNode.Children.Add(gaugeToAddToDatabase);
+                        MainWindowViewModel.selectedNode.Children.Last().NameOfItem = MessageWindowGauge.AboutGauge.model_of_gauges.Model;
+                        MainWindowViewModel.selectedNode.Children.Last().Parent = SelectedOffice;
+
+                        MessageBox.Show("Miernik został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+
+                    catch (DbEntityValidationException e)
+                    {
+                        foreach (var eve in e.EntityValidationErrors)
+                        {
+                            MessageBox.Show(String.Format("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                                eve.Entry.Entity.GetType().Name, eve.Entry.State));
+                            foreach (var ve in eve.ValidationErrors)
+                            {
+                                MessageBox.Show(String.Format("- Property: \"{0}\", Error: \"{1}\"",
+                                    ve.PropertyName, ve.ErrorMessage));
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    { MessageBox.Show(e.ToString()); }
                 }
 
                 //var index = AllItems.IndexOf(AllItems.Last()) + 1;

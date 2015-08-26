@@ -8,6 +8,7 @@ using PdfSharp.Pdf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace LaboratoryApp.ViewModel
             set
             {
                 serialNumber = value;
-                OnPropertyChanged("SerialNumer");
+                OnPropertyChanged("SerialNumber");
             }
         }
 
@@ -124,7 +125,7 @@ namespace LaboratoryApp.ViewModel
         private void InitializeCollectionOfManufacturers()
         {
             LaboratoryEntities context = new LaboratoryEntities();
-            CollectionOfManufacturers = (from m in context.model_of_gauges select m.manufacturer_name).Distinct().ToList();
+            CollectionOfManufacturers = (from m in context.model_of_gauges select m.Manufacturer_name).Distinct().ToList();
         }
 
 
@@ -198,15 +199,13 @@ namespace LaboratoryApp.ViewModel
         public InformationAboutGauge(object SelectedNode)
         {
             SelectedGauge = (gauge) SelectedNode;
-            InitializeCollectionOfManufacturers();
+            //InitializeCollectionOfManufacturers();
 
-            ModelOfGaugeItem = new model_of_gauges();
+            //ModelOfGaugeItem = new model_of_gauges();
             SerialNumber = SelectedGauge.serial_number;
-            ModelOfGaugeItem.model = SelectedGauge.model_of_gauges.model;
-            ModelOfGaugeItem.manufacturer_name = SelectedGauge.model_of_gauges.manufacturer_name;
-
-            //collectionOfModels = new List<string>();
-            //collectionOfManufacturers = new List<string>();
+            SelectedManufacturer = SelectedGauge.model_of_gauges.Manufacturer_name;
+            SelectedModel = SelectedGauge.model_of_gauges.Model;
+            
         }
         public InformationAboutGauge()
         { 
@@ -223,26 +222,53 @@ namespace LaboratoryApp.ViewModel
 
             if (result == MessageBoxResult.Yes)
             {
-                LaboratoryEntities context = new LaboratoryEntities();
-                //delete selected client
-                var gaugeToDelete = //(gauge)MainWindowViewModel.selectedNode;
-                                     (from g in context.gauges
-                                     where g.gaugeId == this.GaugeId
-                                     select g).FirstOrDefault();
+                using (LaboratoryEntities context = new LaboratoryEntities())
+                {
+                    try
+                    {
+                        //delete selected client
+                        var gaugeToDelete = //(gauge)MainWindowViewModel.selectedNode;
+                                             (from g in context.gauges
+                                              where g.gaugeId == SelectedGauge.gaugeId
+                                              select g).FirstOrDefault();
 
-                context.gauges.Remove(gaugeToDelete);
-                context.SaveChanges();
+                        context.gauges.Remove(gaugeToDelete);
+                        context.SaveChanges();
 
-                gauge gau = (gauge) MainWindowViewModel.selectedNode;
-                int index_client = gau.client_id;
-                int? index_office = gau.office_id;
-                //int
+                        int index = MainWindowViewModel.rootElement.Children.IndexOf(SelectedGauge.Parent);
+                        MenuItem Node = SelectedGauge.Parent;
+
+                        //int IndexRoot = MainWindowViewModel.rootElement.Children[index].Children.IndexOf(Node.Parent);
+
+                        MainWindowViewModel.rootElement.Children[index].Children.Remove(SelectedGauge);
 
 
+                       // gauge gau = (gauge)MainWindowViewModel.selectedNode;
+                       // int index_client = gau.client_id;
+                       // int? index_office = gau.office_id;
+                        //int
+                    }
+                    catch (DbEntityValidationException e)
+                    {
+                        foreach (var eve in e.EntityValidationErrors)
+                        {
+                            MessageBox.Show(String.Format("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                                eve.Entry.Entity.GetType().Name, eve.Entry.State));
+                            foreach (var ve in eve.ValidationErrors)
+                            {
+                                MessageBox.Show(String.Format("- Property: \"{0}\", Error: \"{1}\"",
+                                    ve.PropertyName, ve.ErrorMessage));
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    { MessageBox.Show(e.ToString()); }
 
-                //MainWindowViewModel.rootElement.Children[MainWindowViewModel.selectedNode]
-                //MainWindowViewModel.LoadView();
-                //gauge MainWindowViewModel.selectedNode;
+
+                    //MainWindowViewModel.rootElement.Children[MainWindowViewModel.selectedNode]
+                    //MainWindowViewModel.LoadView();
+                    //gauge MainWindowViewModel.selectedNode;
+                }
                 
             }
         }
@@ -473,8 +499,6 @@ namespace LaboratoryApp.ViewModel
 
             DemonstrateAlignment(document, raport);           
         }
-
-        
         
         //this one!!!! is a my table
         public static void DemonstrateAlignment(Document document, NewWindowRaport raport)
@@ -578,44 +602,72 @@ namespace LaboratoryApp.ViewModel
 
         private void EditGaugeExecute()
         {
-            
-            MessageWindowGauge = new NewWindowGauge() { AboutGauge = new gauge() { model_of_gauges = new model_of_gauges() } };
-
-            MessageWindowGauge.AboutGauge.serial_number = SerialNumber;
-            MessageWindowGauge.AboutGauge.model_of_gauges.manufacturer_name = ModelOfGaugeItem.manufacturer_name;
-            MessageWindowGauge.AboutGauge.model_of_gauges.model = ModelOfGaugeItem.model;
-
+            MessageWindowGauge = new NewWindowGauge();
+            MessageWindowGauge.AboutGauge = (gauge)SelectedGauge;
 
             MessageWindowGauge.IsOpen = true;
 
             if(MessageWindowGauge.ToConfirm)
             {
-                using (LaboratoryEntities context = new LaboratoryEntities())
-                {
-                    var gaugeToEdit = (from g in context.gauges where g.gaugeId == this.GaugeId select g).FirstOrDefault();
+                SerialNumber = MessageWindowGauge.AboutGauge.serial_number;
+                SelectedManufacturer = MessageWindowGauge.AboutGauge.model_of_gauges.Manufacturer_name;
+                
+                SelectedModel = MessageWindowGauge.AboutGauge.model_of_gauges.Model;
+                //SelectedGauge.model_of_gauges.manufacturer_name = SelectedManufacturer;
+                //SelectedGauge.model_of_gauges.model = SelectedModel;
 
-                    if(!String.IsNullOrEmpty(MessageWindowGauge.AboutGauge.model_of_gauges.manufacturer_name.ToString())
-                       && !String.IsNullOrEmpty(MessageWindowGauge.AboutGauge.model_of_gauges.model.ToString())
-                       && !String.IsNullOrEmpty(MessageWindowGauge.AboutGauge.serial_number.ToString()))
-                    
-                    {
-                        gaugeToEdit.serial_number = MessageWindowGauge.AboutGauge.serial_number;
-                        GaugeIdToAdd = (from m in context.model_of_gauges where m.model == MessageWindowGauge.AboutGauge.model_of_gauges.model select m.model_of_gaugeId).FirstOrDefault();
-                        gaugeToEdit.model_of_gauges.model_of_gaugeId = GaugeIdToAdd;
-
-                        context.SaveChanges();
-
-                        //set new data in main window view
-                        SerialNumber = MessageWindowGauge.AboutGauge.serial_number;
-                        ModelOfGaugeItem.manufacturer_name = gaugeToEdit.model_of_gauges.manufacturer_name;
-                        ModelOfGaugeItem.model = gaugeToEdit.model_of_gauges.model;
-                        ModelOfGaugeItem.usage.description = gaugeToEdit.model_of_gauges.usage.description;
-                    }
-                }
-                MessageWindowGauge.ToConfirm = false;
-                MainWindowViewModel.LoadView();
-            
+                MainWindowViewModel.selectedNode.NameOfItem = MessageWindowGauge.AboutGauge.model_of_gauges.Model;
+                MainWindowViewModel.selectedNode = SelectedGauge;
+                //ModelOfGaugeItem.usage.description = SelectedGauge.model_of_gauges.usage.description;
             }
+           // MessageWindowGauge = new NewWindowGauge();//{ AboutGauge = new gauge() { model_of_gauges = new model_of_gauges() } };
+           // MessageWindowGauge.AboutGauge = (gauge)SelectedGauge;
+
+
+           // //fill data in edit window 
+           // //MessageWindowGauge.AboutGauge.serial_number = SerialNumber;
+           //// MessageWindowGauge.AboutGauge.model_of_gauges = ModelOfGaugeItem;
+           // //MessageWindowGauge.SelectedManufacturer = ModelOfGaugeItem.manufacturer_name;
+           // //MessageWindowGauge.SelectedModel = ModelOfGaugeItem.model;
+            
+
+           // MessageWindowGauge.IsOpen = true;
+
+           // if(MessageWindowGauge.ToConfirm)
+           // {
+           //     using (LaboratoryEntities context = new LaboratoryEntities())
+           //     {
+           //         var gaugeToEdit = (from g in context.gauges where g.gaugeId == SelectedGauge.gaugeId select g).FirstOrDefault();
+
+           //         if(!String.IsNullOrEmpty(MessageWindowGauge.AboutGauge.model_of_gauges.model.ToString())
+           //            && !String.IsNullOrEmpty(MessageWindowGauge.AboutGauge.model_of_gauges.manufacturer_name.ToString())
+           //            && !String.IsNullOrEmpty(MessageWindowGauge.AboutGauge.serial_number.ToString()))
+                    
+           //         {
+           //             var ModelOfGaugeToAdd = (from m in context.model_of_gauges where m.model == MessageWindowGauge.SelectedModel select m).FirstOrDefault();
+           //             gaugeToEdit.model_of_gauges = ModelOfGaugeToAdd;
+
+           //             gaugeToEdit.serial_number = MessageWindowGauge.AboutGauge.serial_number;
+           //             //gaugeToEdit.model_of_gauges.manufacturer_name = ModelOfGaugeToAdd.manufacturer_name;
+           //             //gaugeToEdit.model_of_gauges.model = ModelOfGaugeToAdd.model;
+
+                        
+
+           //             context.SaveChanges();
+
+           //             //set new data in main window view
+           //             SerialNumber = MessageWindowGauge.AboutGauge.serial_number;
+           //             ModelOfGaugeItem.manufacturer_name = MessageWindowGauge.SelectedManufacturer;
+           //             ModelOfGaugeItem.model = MessageWindowGauge.SelectedModel;
+           //             //ModelOfGaugeItem.usage.description = gaugeToEdit.model_of_gauges.usage.description;
+
+           //             MainWindowViewModel.selectedNode.NameOfItem = MessageWindowGauge.AboutGauge.model_of_gauges.model;
+           //             MainWindowViewModel.selectedNode = SelectedGauge;
+           //         }
+           //     }
+           //     MessageWindowGauge.ToConfirm = false;
+            
+           // }
             else
             {
 

@@ -200,7 +200,7 @@ namespace LaboratoryApp.ViewModel
 
                 using (LaboratoryEntities context = new LaboratoryEntities())
                 {
-                    GaugeIdToAdd = (from m in context.model_of_gauges where m.model == MessageWindowGauge.SelectedModel select m.model_of_gaugeId).FirstOrDefault();
+                    GaugeIdToAdd = (from m in context.model_of_gauges where m.Model == MessageWindowGauge.AboutGauge.model_of_gauges.Model select m.model_of_gaugeId).FirstOrDefault();
 
                     //nie mogę pobrać całego rekordu
                     model_of_gauges ModelOfGauge = (from m in context.model_of_gauges where m.model_of_gaugeId == GaugeIdToAdd select m).FirstOrDefault();
@@ -252,7 +252,7 @@ namespace LaboratoryApp.ViewModel
                             context.SaveChanges();
 
                             MainWindowViewModel.selectedNode.Children.Add(gaugeToAddToDatabase);
-                            MainWindowViewModel.selectedNode.Children.Last().NameOfItem = MessageWindowGauge.SelectedModel;
+                            MainWindowViewModel.selectedNode.Children.Last().NameOfItem = MessageWindowGauge.AboutGauge.model_of_gauges.Model;
                             MainWindowViewModel.selectedNode.Children.Last().Parent = SelectedClient;
 
                             MessageBox.Show("Miernik został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
