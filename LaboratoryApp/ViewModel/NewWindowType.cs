@@ -74,5 +74,17 @@ namespace LaboratoryApp.ViewModel
         {
             IsOpen = false;
         }
+
+        private string nameOfType;
+
+        public string NameOfType
+        {
+            get { return nameOfType; }
+            set 
+            {
+                nameOfType = value;
+                OnPropertyChanged("NameOfType");
+            }
+        }
     }
 }

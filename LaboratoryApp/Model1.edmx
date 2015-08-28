@@ -10,10 +10,11 @@
             <PropertyRef Name="certifacateId" />
           </Key>
           <Property Name="certifacateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="date" Type="date" Nullable="false" />
-          <Property Name="cost" Type="real" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="40" />
+          <Property Name="date" Type="date" />
+          <Property Name="cost" Type="real" />
           <Property Name="authorized_by" Type="nvarchar" MaxLength="70" />
+          <Property Name="gauge_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="clients">
           <Key>
@@ -75,6 +76,18 @@
           <Property Name="usageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="description" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
+        <Association Name="FK_certificates_gauges">
+          <End Role="gauges" Type="Self.gauges" Multiplicity="1" />
+          <End Role="certificates" Type="Self.certificates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="gauges">
+              <PropertyRef Name="gaugeId" />
+            </Principal>
+            <Dependent Role="certificates">
+              <PropertyRef Name="gauge_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_gauges_clients">
           <End Role="clients" Type="Self.clients" Multiplicity="1" />
           <End Role="gauges" Type="Self.gauges" Multiplicity="*" />
@@ -190,6 +203,10 @@
           <EntitySet Name="offices" EntityType="Self.offices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="types" EntityType="Self.types" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="usages" EntityType="Self.usages" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_certificates_gauges" Association="Self.FK_certificates_gauges">
+            <End Role="gauges" EntitySet="gauges" />
+            <End Role="certificates" EntitySet="certificates" />
+          </AssociationSet>
           <AssociationSet Name="FK_gauges_clients" Association="Self.FK_gauges_clients">
             <End Role="clients" EntitySet="clients" />
             <End Role="gauges" EntitySet="gauges" />
@@ -219,16 +236,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="laboratoryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="certificate">
-          <Key>
-            <PropertyRef Name="certifacateId" />
-          </Key>
-          <Property Name="certifacateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="cost" Type="Single" Nullable="false" />
-          <Property Name="authorized_by" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="type">
           <Key>
             <PropertyRef Name="typeId" />
@@ -238,7 +245,6 @@
           <NavigationProperty Name="model_of_gauges" Relationship="laboratoryModel.FK_gauges_types1" FromRole="type" ToRole="model_of_gauges" />
         </EntityType>
         <EntityContainer Name="laboratoryEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="certificates" EntityType="Self.certificate" />
           <EntitySet Name="types" EntityType="Self.type" />
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -286,7 +292,12 @@
             <End Role="client" EntitySet="clients" />
             <End Role="office" EntitySet="offices" />
           </AssociationSet>
+          <EntitySet Name="certificates" EntityType="laboratoryModel.certificate" />
           <EntitySet Name="gauges" EntityType="laboratoryModel.gauge" />
+          <AssociationSet Name="FK_certificates_gauges" Association="laboratoryModel.FK_certificates_gauges">
+            <End Role="gauge" EntitySet="gauges" />
+            <End Role="certificate" EntitySet="certificates" />
+          </AssociationSet>
           <AssociationSet Name="FK_gauges_clients" Association="laboratoryModel.FK_gauges_clients">
             <End Role="client" EntitySet="clients" />
             <End Role="gauge" EntitySet="gauges" />
@@ -299,7 +310,7 @@
             <End Role="office" EntitySet="offices" />
             <End Role="gauge" EntitySet="gauges" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
           <Property Type="Binary" Name="definition" Nullable="true" />
@@ -398,6 +409,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="certificate">
+          <Key>
+            <PropertyRef Name="certifacateId" />
+          </Key>
+          <Property Name="certifacateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Precision="0" />
+          <Property Name="cost" Type="Single" />
+          <Property Name="authorized_by" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="gauge_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="gauge" Relationship="laboratoryModel.FK_certificates_gauges" FromRole="certificate" ToRole="gauge" />
+        </EntityType>
         <EntityType Name="gauge">
           <Key>
             <PropertyRef Name="gaugeId" />
@@ -407,10 +430,23 @@
           <Property Name="client_id" Type="Int32" Nullable="false" />
           <Property Name="office_id" Type="Int32" />
           <Property Name="model_of_gauge_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="certificates" Relationship="laboratoryModel.FK_certificates_gauges" FromRole="gauge" ToRole="certificate" />
           <NavigationProperty Name="client" Relationship="laboratoryModel.FK_gauges_clients" FromRole="gauge" ToRole="client" />
           <NavigationProperty Name="model_of_gauges" Relationship="laboratoryModel.FK_gauges_model_of_gauges" FromRole="gauge" ToRole="model_of_gauges" />
           <NavigationProperty Name="office" Relationship="laboratoryModel.FK_gauges_offices" FromRole="gauge" ToRole="office" />
         </EntityType>
+        <Association Name="FK_certificates_gauges">
+          <End Type="laboratoryModel.gauge" Role="gauge" Multiplicity="1" />
+          <End Type="laboratoryModel.certificate" Role="certificate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="gauge">
+              <PropertyRef Name="gaugeId" />
+            </Principal>
+            <Dependent Role="certificate">
+              <PropertyRef Name="gauge_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_gauges_clients">
           <End Type="laboratoryModel.client" Role="client" Multiplicity="1" />
           <End Type="laboratoryModel.gauge" Role="gauge" Multiplicity="*" />
@@ -436,7 +472,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_gauges_offices">
-          <End Type="laboratoryModel.office" Role="office" Multiplicity="0..1" />
+          <End Type="laboratoryModel.office" Role="office" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="laboratoryModel.gauge" Role="gauge" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="office">
@@ -447,23 +485,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="laboratoryModelStoreContainer" CdmEntityContainer="laboratoryEntities">
-          <EntitySetMapping Name="certificates">
-            <EntityTypeMapping TypeName="laboratoryModel.certificate">
-              <MappingFragment StoreEntitySet="certificates">
-                <ScalarProperty Name="certifacateId" ColumnName="certifacateId" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="cost" ColumnName="cost" />
-                <ScalarProperty Name="authorized_by" ColumnName="authorized_by" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="types">
             <EntityTypeMapping TypeName="laboratoryModel.type">
               <MappingFragment StoreEntitySet="types">
@@ -540,6 +567,18 @@
                 <ScalarProperty Name="adress" ColumnName="adress" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="clientId" ColumnName="clientId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="certificates">
+            <EntityTypeMapping TypeName="laboratoryModel.certificate">
+              <MappingFragment StoreEntitySet="certificates">
+                <ScalarProperty Name="gauge_id" ColumnName="gauge_id" />
+                <ScalarProperty Name="authorized_by" ColumnName="authorized_by" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="certifacateId" ColumnName="certifacateId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

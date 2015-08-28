@@ -63,13 +63,15 @@
         <Label Content="Data badania: " HorizontalAlignment="Left" Grid.Row="15" VerticalAlignment="Center"/>
         <Label Content="Zalecenia dotyczące kolejnego wzorcowania: " HorizontalAlignment="Left" Grid.Row="16" VerticalAlignment="Center"/>
         <Label Content="Pomiary zatwierdził: " HorizontalAlignment="Left" Grid.Row="17" VerticalAlignment="Center"/>
+        <Label Content="Koszt: " HorizontalAlignment="Left" Grid.Row="18" VerticalAlignment="Center"/>
 
-        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.Office.client.name}" VerticalAlignment="center" Grid.Row="1" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.Office.name}" VerticalAlignment="center" Grid.Row="2" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.Gauge.manufacturer_name}" VerticalAlignment="center" Grid.Row="3" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.Gauge.model}" VerticalAlignment="center" Grid.Row="4" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.SerialNumber}" VerticalAlignment="center" Grid.Row="5" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.Gauge.usage.description}" VerticalAlignment="center" Grid.Row="6" Grid.Column="1" Width="156" Height="24"/>
+
+        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.client.name}" VerticalAlignment="center" Grid.Row="1" Grid.Column="1" Width="156" Height="24"/>
+        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.office.name}" VerticalAlignment="center" Grid.Row="2" Grid.Column="1" Width="156" Height="24"/>
+        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.model_of_gauges.manufacturer_name}" VerticalAlignment="center" Grid.Row="3" Grid.Column="1" Width="156" Height="24"/>
+        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.model_of_gauges.model}" VerticalAlignment="center" Grid.Row="4" Grid.Column="1" Width="156" Height="24"/>
+        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.serial_number}" VerticalAlignment="center" Grid.Row="5" Grid.Column="1" Width="156" Height="24"/>
+        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.model_of_gauges.usage.description}" VerticalAlignment="center" Grid.Row="6" Grid.Column="1" Width="156" Height="24"/>
         <TextBox HorizontalAlignment="center" Text="{Binding TheCalibrationMethod}" VerticalAlignment="center" Grid.Row="7" Grid.Column="1" Width="156" Height="24"/>
         <TextBox HorizontalAlignment="center" Text="{Binding NationalPattern}" VerticalAlignment="center" Grid.Row="8" Grid.Column="1" Width="156" Height="24"/>
         <TextBox HorizontalAlignment="center" Text="{Binding Temperature}" VerticalAlignment="center" Grid.Row="9" Grid.Column="1" Width="156" Height="24"/>
@@ -79,14 +81,15 @@
         <TextBox HorizontalAlignment="center" Text="{Binding Uncertainty}" VerticalAlignment="center" Grid.Row="13" Grid.Column="1" Width="156" Height="24"/>
         <TextBox HorizontalAlignment="center" Text="{Binding NumberOfCertificate}" VerticalAlignment="center" Grid.Row="14" Grid.Column="1" Width="156" Height="24"/>
 
-        <TextBox HorizontalAlignment="center" Text="{Binding DateSurvey}" VerticalAlignment="center" Grid.Row="15" Grid.Column="1" Width="156" Height="24" Margin="47,0,48,3"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding Recommendations}" VerticalAlignment="center" Grid.Row="16" Grid.Column="1" Width="156" Height="24" Margin="47,0,48,3"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding Author}" VerticalAlignment="center" Grid.Row="17" Grid.Column="1" Width="156" Height="24" Margin="47,2,48,1"/>
+        <TextBox HorizontalAlignment="center" Text="{Binding DateSurvey}" VerticalAlignment="center" Grid.Row="15" Grid.Column="1" Width="156" Height="24" />
+        <TextBox HorizontalAlignment="center" Text="{Binding Recommendations}" VerticalAlignment="center" Grid.Row="16" Grid.Column="1" Width="156" Height="24" />
+        <TextBox HorizontalAlignment="center" Text="{Binding Author}" VerticalAlignment="center" Grid.Row="17" Grid.Column="1" Width="156" Height="24" />
+        <TextBox HorizontalAlignment="center" Text="{Binding Cost}" VerticalAlignment="center" Grid.Row="18" Grid.Column="1" Width="156" Height="24" />
 
-        <Button Grid.ColumnSpan="2" Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="79,10,0,0" Grid.Row="18" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1" HorizontalAlignment="Left" Margin="23,10,0,0" Grid.Row="18" VerticalAlignment="Top" Width="75"/>
+        <Button Grid.ColumnSpan="2" Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="79,10,0,0" Grid.Row="19" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1" HorizontalAlignment="Left" Margin="23,10,0,0" Grid.Row="19" VerticalAlignment="Top" Width="75"/>
 
-        <Label Content="{Binding Footer}" Grid.Row="19" Grid.ColumnSpan="2" />
+        <Label Content="{Binding Footer}" Grid.Row="20" Grid.ColumnSpan="2" />
         
     </Grid>
 </UserControl>

@@ -10,6 +10,11 @@ namespace LaboratoryApp.ViewModel
     public class NewWindowUsage : ObservableObject
     {
 
+        public NewWindowUsage()
+        {
+            OKCommand = new SimpleRelayCommand(Confirm);
+            CancelCommand = new SimpleRelayCommand(Close);
+        }
         private ICommand okCommand;
 
         public ICommand OKCommand
@@ -67,6 +72,18 @@ namespace LaboratoryApp.ViewModel
         public void Close()
         {
             IsOpen = false;
+        }
+
+        private string nameOfUsage;
+
+        public string NameOfUsage
+        {
+            get { return nameOfUsage; }
+            set 
+            {
+                nameOfUsage = value;
+                OnPropertyChanged("NameOfUsage");
+            }
         }
     }
 }

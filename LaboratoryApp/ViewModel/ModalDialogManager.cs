@@ -34,7 +34,6 @@ namespace LaboratoryApp.ViewModel
         /// </summary>
         /// 
         
-
         public ICommand CloseCommand
         {
             get { return (ICommand)GetValue(CloseCommandProperty); }

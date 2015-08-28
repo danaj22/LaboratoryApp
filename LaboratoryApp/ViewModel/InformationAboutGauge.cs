@@ -21,6 +21,7 @@ namespace LaboratoryApp.ViewModel
 {
     public class InformationAboutGauge : ObservableObject
     {
+        #region fields
         private int gaugeId;
         public int GaugeId
         {
@@ -87,19 +88,6 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
-
-        List<string> collectionOfManufacturers;
-        public List<string> CollectionOfManufacturers
-        {
-            get { return this.collectionOfManufacturers; }
-            set 
-            {
-                collectionOfManufacturers = value;
-                OnPropertyChanged("CollectionOfManufacturers");
-            }
-
-        }
-
         private NewWindowGauge messageWindowGauge;
         public NewWindowGauge MessageWindowGauge
         {
@@ -122,54 +110,37 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
-        private void InitializeCollectionOfManufacturers()
-        {
-            LaboratoryEntities context = new LaboratoryEntities();
-            CollectionOfManufacturers = (from m in context.model_of_gauges select m.Manufacturer_name).Distinct().ToList();
-        }
 
-
-        private string selectedManufacturer;
-        public string SelectedManufacturer
+        private string manufacturer;
+        public string Manufacturer
         {
-            get { return selectedManufacturer; }
-            set 
-            { 
-                selectedManufacturer = value;
-                InitializeCollectionOfModels();
-                OnPropertyChanged("SelectedManufacturer");
-            }
-        }
-
-        private void InitializeCollectionOfModels()
-        {
-            if(SelectedManufacturer != null)
-            {
-                LaboratoryEntities context = new LaboratoryEntities();               
-                CollectionOfModels = (from g in context.model_of_gauges where g.manufacturer_name == SelectedManufacturer select g.model).ToList(); 
-            }
-        }
-
-
-        List<string> collectionOfModels;
-        public List<string> CollectionOfModels
-        {
-            get { return collectionOfModels; }
-          set 
-          { 
-              collectionOfModels = value;
-              OnPropertyChanged("CollectionOfModels");
-          }
-        }
-        
-        private string selectedModel;
-        public string SelectedModel
-        {
-            get { return selectedModel; }
+            get { return manufacturer; }
             set
             {
-                selectedModel = value;
-                OnPropertyChanged("SelectedModel");
+                manufacturer = value;
+                OnPropertyChanged("Manufacturer");
+            }
+        }
+
+        private string model;
+        public string Model
+        {
+            get { return model; }
+            set
+            {
+                model = value;
+                OnPropertyChanged("model");
+            }
+
+        }
+        private string description;
+        public string Description
+        {
+            get { return description; }
+            set
+            {
+                description = value;
+                OnPropertyChanged("Description");
             }
 
         }
@@ -184,8 +155,8 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("GaugeIdToAdd");
             }
         }
-        private gauge selectedGauge;
 
+        private gauge selectedGauge;
         public gauge SelectedGauge
         {
             get { return selectedGauge; }
@@ -196,6 +167,9 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
+        #endregion
+
+
         public InformationAboutGauge(object SelectedNode)
         {
             SelectedGauge = (gauge) SelectedNode;
@@ -203,15 +177,14 @@ namespace LaboratoryApp.ViewModel
 
             //ModelOfGaugeItem = new model_of_gauges();
             SerialNumber = SelectedGauge.serial_number;
-            SelectedManufacturer = SelectedGauge.model_of_gauges.Manufacturer_name;
-            SelectedModel = SelectedGauge.model_of_gauges.Model;
+            Manufacturer = SelectedGauge.model_of_gauges.manufacturer_name;
+            Model = SelectedGauge.model_of_gauges.model;
+            Description = SelectedGauge.model_of_gauges.usage.description;
             
         }
         public InformationAboutGauge()
         { 
         }
-
-
 
         public ICommand DeleteGaugeCommand
         { get { return new SimpleRelayCommand(DeleteGaugeExecute); } }
@@ -232,16 +205,26 @@ namespace LaboratoryApp.ViewModel
                                               where g.gaugeId == SelectedGauge.gaugeId
                                               select g).FirstOrDefault();
 
+
+                        MenuItem Node = SelectedGauge.Parent;
+                        int IndexNode = MainWindowViewModel.rootElement.Children.IndexOf(SelectedGauge.Parent);
+
+                        if (SelectedGauge.Parent.Parent != null)
+                        {
+                            int IndexClient = MainWindowViewModel.rootElement.Children.IndexOf(Node.Parent);
+                            int IndexOffice = MainWindowViewModel.rootElement.Children[IndexClient].Children.IndexOf(Node);
+
+                            //int IndexRoot = MainWindowViewModel.rootElement.Children[index].Children.IndexOf(Node.Parent);
+
+
+                            MainWindowViewModel.rootElement.Children[IndexClient].Children[IndexOffice].Children.Remove(SelectedGauge);
+                        }
+                        else
+                        {
+                            MainWindowViewModel.rootElement.Children[IndexNode].Children.Remove(SelectedGauge);
+                        }
                         context.gauges.Remove(gaugeToDelete);
                         context.SaveChanges();
-
-                        int index = MainWindowViewModel.rootElement.Children.IndexOf(SelectedGauge.Parent);
-                        MenuItem Node = SelectedGauge.Parent;
-
-                        //int IndexRoot = MainWindowViewModel.rootElement.Children[index].Children.IndexOf(Node.Parent);
-
-                        MainWindowViewModel.rootElement.Children[index].Children.Remove(SelectedGauge);
-
 
                        // gauge gau = (gauge)MainWindowViewModel.selectedNode;
                        // int index_client = gau.client_id;
@@ -275,7 +258,7 @@ namespace LaboratoryApp.ViewModel
         public ICommand EditGaugeCommand
         { get { return new SimpleRelayCommand(EditGaugeExecute); } }
 
-
+        #region create raport pdf 
         public ICommand GenerateRaportCommand
         { get { return new SimpleRelayCommand(GenerateRaportExecute); } }
 
@@ -287,48 +270,47 @@ namespace LaboratoryApp.ViewModel
             MessageWindowRaport.IsOpen = true;
 
 
-            //// Create a new PDF document
-            //PdfDocument document = new PdfDocument();
-            //document.Info.TitleOfItem = "Created with PDFsharp";
-
-            //// Create an empty page
-            //PdfPage page = document.AddPage();
-
-            //// Get an XGraphics object for drawing
-            //XGraphics gfx = XGraphics.FromPdfPage(page);
-
-            //// Create a font
-            //XFont font = new XFont("Verdana", 10, XFontStyle.BoldItalic);
-
-            //XRect rect = new XRect(40, 100, 250, 220);
-            //XRect rect2 = new XRect(0, 0, 250, 220);
-            //// generate random number
-            //Random rnd = new Random();
-            //int month = rnd.Next(1, 13); // creates a number between 1 and 12
-            //int dice = rnd.Next(1, 7); // creates a number between 1 and 6
-            //int card = rnd.Next(52); // creates a number between 0 and 51
-
-            //gfx.DrawRectangle(XBrushes.SeaShell, rect);
-            //gfx.DrawRectangle(XBrushes.BurlyWood, rect2);
-            //// Draw the text
-            //gfx.DrawString(MessageWindowRaport.AboutGauge.ModelOfGaugeItem.manufacturer_name, font, XBrushes.Black, rect, XStringFormats.Center);
-
-            //gfx.DrawString(MessageWindowRaport.AboutGauge.ModelOfGaugeItem.model, font, XBrushes.Black, rect2, XStringFormats.Center);
-
-            //gfx.DrawString(MessageWindowRaport.AboutGauge.ModelOfGaugeItem.usage.description, font, XBrushes.Black, rect, XStringFormats.Center);
-
-            
-
-            //// Save the document...
-            //string filename = "HelloWorld.pdf";
-            //filename = month.ToString() + filename;
-            //document.Save(filename);
-            //// ...and start a viewer.
-            //Process.Start(filename);
-
-
             if (MessageWindowRaport.ToConfirm)
             {
+
+                try
+                {
+                    LaboratoryEntities context = new LaboratoryEntities();
+                    {
+                        certificate cert = new certificate();
+                        cert.gauge_id = SelectedGauge.gaugeId;
+                        //cert.gauge = SelectedGauge;
+                        cert.cost = MessageWindowRaport.Cost;
+                        //DateTime dt = new DateTime();
+
+                        DateTime dt = DateTime.Today;
+
+                        cert.date = dt;
+                        cert.name = "bbb"; //MessageWindowRaport.NumberOfCertificate;
+                        cert.authorized_by = "aaa";
+
+                        context.certificates.Add(cert);
+                        context.SaveChanges();
+
+                    }
+                }
+                catch (DbEntityValidationException e)
+                {
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        MessageBox.Show(String.Format("Encja typu \"{0}\" w stanie \"{1}\" ma następujące błędy walidacji:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State));
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            MessageBox.Show(String.Format("- Właściwość: \"{0}\", Błąd: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage));
+                        }
+                    }
+                }
+                catch (Exception e)
+                { MessageBox.Show(e.ToString()); }
+
+
                 ///////////////////////////////////////////////////////
                 NewWindowRaport raport;
                 // Create a MigraDoc document
@@ -345,9 +327,16 @@ namespace LaboratoryApp.ViewModel
 
                 // Save the document...
                 string filename = "1HelloMigraDoc.pdf";
-                renderer.PdfDocument.Save(filename);
-                // ...and start a viewer.
-                Process.Start(filename);
+                
+                if (!string.IsNullOrEmpty(raport.Author) && !string.IsNullOrEmpty(raport.Temperature))
+                {
+                    renderer.PdfDocument.Save(filename);
+                    // ...and start a viewer.
+                    Process.Start(filename);
+                }
+
+                
+
             }
  
         }
@@ -448,7 +437,11 @@ namespace LaboratoryApp.ViewModel
             HeaderFooter header = section.Headers.Primary;
 
             Paragraph paragraph1 = section.Headers.FirstPage.AddParagraph();
-            header.AddParagraph("Laboratorium Przyrządów Pomiarowych\nŚWIADECTWO WZORCOWANIA");
+            //header.AddImage("C:\\Users\\daniel\\Desktop\\dasllogo.png");
+            //header.AddParagraph("Laboratorium Przyrządów Pomiarowych\nŚWIADECTWO WZORCOWANIA");
+            //Table t = new Table();
+            //header.AddTable();
+           
             //paragraph1.AddText("\nCreated on ");
             //paragraph1.AddFormattedText(CreateDate, TextFormat.Bold);
             //paragraph1.AddFormattedText("\n" + Properties.Length, TextFormat.Bold);
@@ -461,13 +454,15 @@ namespace LaboratoryApp.ViewModel
             //header.AddParagraph("Laboratorium Przyrządów Pomiarowych\nŚWIADECTWO WZORCOWANIA");
             
             // Header image
-            Image image = header.AddImage("C:\\Users\\daniel\\Desktop\\dasllogo.png");
-            image.Height = "2.5cm";
+            Image image = header.AddImage("C:\\Users\\daniel\\Desktop\\header2.png");
+            
+            image.Height = "2.1cm";
+            image.Width = "17.6cm";
             image.LockAspectRatio = true;
             image.RelativeVertical = RelativeVertical.Line;
             image.RelativeHorizontal = RelativeHorizontal.Margin;
             image.Top = ShapePosition.Top;
-            image.Left = ShapePosition.Inside;
+            image.Left = ShapePosition.Left;
             image.WrapFormat.Style = WrapStyle.Through;
             
 
@@ -480,10 +475,10 @@ namespace LaboratoryApp.ViewModel
             Paragraph paragraph = new Paragraph();
             
             paragraph.AddTab();
-            paragraph.AddText("Świadectwo składa się z 1 strony. Może być okazywane lub kopiowane tylko w całości.\n");
+            paragraph.AddText("Świadectwo składa się z 1 strony. Może być okazywane lub kopiowane tylko w całości.\nDASL Systems ul.Wadowicka 8A, 30-415 Kraków, tel./fax : +48 12 29 42 001, lab@dasl.pl, www.dasl.pl");
 
 
-            paragraph.AddPageField();
+            //paragraph.AddPageField();
             // Add paragraph to footer for odd pages.
             section.Footers.Primary.Add(paragraph);
             // Add clone of paragraph to footer for odd pages. Cloning is necessary because an object must
@@ -507,8 +502,8 @@ namespace LaboratoryApp.ViewModel
 
             Table table = document.LastSection.AddTable();
             table.Borders.Visible = false;
-            table.Format.Shading.Color = Colors.LavenderBlush;
-            table.Shading.Color = Colors.LightBlue;
+            //table.Format.Shading.Color = Colors.LavenderBlush;
+            //table.Shading.Color = Colors.LightBlue;
             table.TopPadding = 5;
             table.BottomPadding = 5;
 
@@ -530,27 +525,31 @@ namespace LaboratoryApp.ViewModel
             row.Cells[0].Format.Font.Bold = true;
             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
             row.Cells[0].AddParagraph("Zgłaszający: ");
-            //row.Cells[1].AddParagraph(raport.AboutGauge.Office.client.name + " " + raport.AboutGauge.Office.client.adress);
-            row = table.AddRow();
-            row.Cells[0].Format.Font.Bold = true;
-            row.Cells[0].AddParagraph("Oddział: ");
-            //row.Cells[1].AddParagraph(raport.AboutGauge.Office.name.ToString());
+            row.Cells[1].AddParagraph(raport.AboutGauge.Parent.NameOfItem + " " /*+ raport.AboutGauge.client.adress*/);
+            
+            if (raport.AboutGauge.office != null)
+            {
+                row = table.AddRow();
+                row.Cells[0].Format.Font.Bold = true;
+                row.Cells[0].AddParagraph("Oddział: ");
+                row.Cells[1].AddParagraph(raport.AboutGauge.office.name.ToString());
+            }
             row = table.AddRow();
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].AddParagraph("Producent przyrządu: ");
-            //row.Cells[1].AddParagraph(raport.AboutGauge.ModelOfGaugeItem.manufacturer_name.ToString());
+            row.Cells[1].AddParagraph(raport.AboutGauge.model_of_gauges.manufacturer_name.ToString());
             row = table.AddRow();
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].AddParagraph("Model:");
-            //row.Cells[1].AddParagraph(raport.AboutGauge.ModelOfGaugeItem.model.ToString());
+            row.Cells[1].AddParagraph(raport.AboutGauge.model_of_gauges.model.ToString());
             row = table.AddRow();
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].AddParagraph("Nr fabryczny: ");
-            //row.Cells[1].AddParagraph(raport.AboutGauge.SerialNumber.ToString());
+            row.Cells[1].AddParagraph(raport.AboutGauge.serial_number.ToString());
             row = table.AddRow();
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].AddParagraph("Zastosowanie urządzenia: ");
-            //row.Cells[1].AddParagraph(raport.AboutGauge.ModelOfGaugeItem.usage.description);
+            row.Cells[1].AddParagraph(raport.AboutGauge.model_of_gauges.usage.description);
             row = table.AddRow();
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].AddParagraph("Metoda wzorcowania: ");
@@ -559,10 +558,17 @@ namespace LaboratoryApp.ViewModel
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].AddParagraph("Odniesienie do wzorca państwowego: ");
             row.Cells[1].AddParagraph(raport.NationalPattern.ToString());
-            row = table.AddRow();
-            row.Cells[0].Format.Font.Bold = true;
-            row.Cells[0].AddParagraph("Temperatura otoczenia: ");
-            row.Cells[1].AddParagraph(raport.Temperature.ToString());
+            try
+            {
+                row = table.AddRow();
+                row.Cells[0].Format.Font.Bold = true;
+                row.Cells[0].AddParagraph("Temperatura otoczenia: ");
+                row.Cells[1].AddParagraph("(" + raport.Temperature.ToString() + "± 2) °C");
+            }
+            catch
+            {
+                MessageBox.Show("Podaj temperaturę.");
+            }
             row = table.AddRow();
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].AddParagraph("Wilgotność powietrza: ");
@@ -591,14 +597,23 @@ namespace LaboratoryApp.ViewModel
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].AddParagraph("Zalecenia dotyczące kolejnego wzorcowania: ");
             row.Cells[1].AddParagraph(raport.Recommendations);
-            row = table.AddRow();
-            row.Cells[0].Format.Font.Bold = true;
-            row.Cells[0].AddParagraph("Pomiary zatwierdził: ");
-            row.Cells[1].AddParagraph(raport.Author);
+            try 
+            {
+                row = table.AddRow();
+                row.Cells[0].Format.Font.Bold = true;
+                row.Cells[0].AddParagraph("Pomiary zatwierdził: ");
+                row.Cells[1].AddParagraph(raport.Author);
+            }
+            catch
+            {
+                MessageBox.Show("Podaj swoje dane do świadectwa.");
+            }
+
             
             
         }
- 
+#endregion
+
 
         private void EditGaugeExecute()
         {
@@ -607,19 +622,89 @@ namespace LaboratoryApp.ViewModel
 
             MessageWindowGauge.IsOpen = true;
 
+            model_of_gauges ModelOfGauge = new model_of_gauges();
+
             if(MessageWindowGauge.ToConfirm)
             {
-                SerialNumber = MessageWindowGauge.AboutGauge.serial_number;
-                SelectedManufacturer = MessageWindowGauge.AboutGauge.model_of_gauges.Manufacturer_name;
-                
-                SelectedModel = MessageWindowGauge.AboutGauge.model_of_gauges.Model;
-                //SelectedGauge.model_of_gauges.manufacturer_name = SelectedManufacturer;
-                //SelectedGauge.model_of_gauges.model = SelectedModel;
+                try
+                {
+                    using(LaboratoryEntities context = new LaboratoryEntities())
+                    { 
+                        //find selected gauge in database
+                        var GaugeToEdit = (from g in context.gauges
+                                           where g.gaugeId == SelectedGauge.gaugeId
+                                           select g).FirstOrDefault();
+                        
+                        ModelOfGauge = (from m in context.model_of_gauges where m.model == MessageWindowGauge.SelectedModel select m).FirstOrDefault();
+                       
+                        GaugeToEdit.model_of_gauges = ModelOfGauge;
+                        GaugeToEdit.serial_number = MessageWindowGauge.AboutGauge.serial_number;
 
-                MainWindowViewModel.selectedNode.NameOfItem = MessageWindowGauge.AboutGauge.model_of_gauges.Model;
-                MainWindowViewModel.selectedNode = SelectedGauge;
-                //ModelOfGaugeItem.usage.description = SelectedGauge.model_of_gauges.usage.description;
+
+                        context.SaveChanges();
+
+                        SerialNumber = MessageWindowGauge.AboutGauge.serial_number;
+                        Manufacturer = MessageWindowGauge.SelectedManufacturer;
+                        Model = MessageWindowGauge.SelectedModel;
+                        Description = ModelOfGauge.usage.description;
+
+                        MainWindowViewModel.selectedNode.NameOfItem = MessageWindowGauge.SelectedModel;
+
+                        SelectedGauge.model_of_gauges = ModelOfGauge;
+
+                        MainWindowViewModel.selectedNode = SelectedGauge;
+                  }
+                
+                
             }
+                catch (DbEntityValidationException e)
+                {
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        MessageBox.Show(String.Format("Encja typu \"{0}\" w stanie \"{1}\" ma następujące błędy walidacji:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State));
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            MessageBox.Show(String.Format("- Właściwość: \"{0}\", Błąd: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage));
+                        }
+                    }
+                }
+                catch (Exception e)
+                { MessageBox.Show(e.ToString()); }
+            
+               
+            }
+
+
+
+            else
+            {
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
            // MessageWindowGauge = new NewWindowGauge();//{ AboutGauge = new gauge() { model_of_gauges = new model_of_gauges() } };
            // MessageWindowGauge.AboutGauge = (gauge)SelectedGauge;
 
@@ -627,7 +712,7 @@ namespace LaboratoryApp.ViewModel
            // //fill data in edit window 
            // //MessageWindowGauge.AboutGauge.serial_number = SerialNumber;
            //// MessageWindowGauge.AboutGauge.model_of_gauges = ModelOfGaugeItem;
-           // //MessageWindowGauge.SelectedManufacturer = ModelOfGaugeItem.manufacturer_name;
+           // //MessageWindowGauge.Manufacturer = ModelOfGaugeItem.manufacturer_name;
            // //MessageWindowGauge.SelectedModel = ModelOfGaugeItem.model;
             
 
@@ -657,7 +742,7 @@ namespace LaboratoryApp.ViewModel
 
            //             //set new data in main window view
            //             SerialNumber = MessageWindowGauge.AboutGauge.serial_number;
-           //             ModelOfGaugeItem.manufacturer_name = MessageWindowGauge.SelectedManufacturer;
+           //             ModelOfGaugeItem.manufacturer_name = MessageWindowGauge.Manufacturer;
            //             ModelOfGaugeItem.model = MessageWindowGauge.SelectedModel;
            //             //ModelOfGaugeItem.usage.description = gaugeToEdit.model_of_gauges.usage.description;
 
@@ -668,10 +753,7 @@ namespace LaboratoryApp.ViewModel
            //     MessageWindowGauge.ToConfirm = false;
             
            // }
-            else
-            {
 
-            }
 
         }
     }

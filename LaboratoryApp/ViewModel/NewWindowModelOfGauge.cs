@@ -151,11 +151,52 @@ namespace LaboratoryApp.ViewModel
         {
             MessageWindowType = new NewWindowType();
             MessageWindowType.IsOpen = true;
+
+            if(MessageWindowType.ToConfirm)
+            {
+                if(!string.IsNullOrEmpty(MessageWindowType.NameOfType))
+                {
+                    using(LaboratoryEntities context = new LaboratoryEntities())
+                    {
+                        type TypeToAdd = new type();
+                        TypeToAdd.name = MessageWindowType.NameOfType;
+
+                        context.types.Add(TypeToAdd);
+                        context.SaveChanges();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Nie wpisano typu.");
+                }
+            }
+            MessageWindowType.ToConfirm = false;
         }
         public void AddUsage()
         {
             MessageWindowUsage = new NewWindowUsage();
             MessageWindowUsage.IsOpen = true;
+
+            if(MessageWindowUsage.ToConfirm)
+            {
+                if(!string.IsNullOrEmpty(MessageWindowUsage.NameOfUsage))
+                {
+
+                    using(LaboratoryEntities context = new LaboratoryEntities())
+                    {
+                        usage UsageToAdd = new usage();
+                        UsageToAdd.description = MessageWindowUsage.NameOfUsage;
+
+                        context.usages.Add(UsageToAdd);
+                        context.SaveChanges();
+                    }
+                }
+                else
+                { MessageBox.Show("Nie wpisano zastosowania."); }
+            }
+            MessageWindowUsage.ToConfirm = false;
+
+
         }
 
     }

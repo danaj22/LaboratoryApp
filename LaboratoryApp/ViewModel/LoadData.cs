@@ -51,7 +51,7 @@ namespace LaboratoryApp.ViewModel
                         if (g.office_id == null)
                         {
                             rootItem.Children.Last().Children.Add(g);
-                            rootItem.Children.Last().Children.Last().NameOfItem = g.model_of_gauges.Model;
+                            rootItem.Children.Last().Children.Last().NameOfItem = g.model_of_gauges.model;
                             rootItem.Children.Last().Children.Last().Parent = t;
                         }
                     }
@@ -63,14 +63,14 @@ namespace LaboratoryApp.ViewModel
                         foreach (var g in o.gauges)
                         {
                             rootItem.Children.Last().Children.Last().Children.Add(g);
-                            rootItem.Children.Last().Children.Last().Children.Last().NameOfItem = g.model_of_gauges.Model;
-                            rootItem.Parent = o;
+                            rootItem.Children.Last().Children.Last().Children.Last().NameOfItem = g.model_of_gauges.model;
+                            rootItem.Children.Last().Children.Last().Children.Last().Parent = o;
                         }
                     }
 
                 }
-
-//                    #region comments
+                #region comments
+                //                    
 //                    //InformationAboutClient infoClient = new InformationAboutClient();
 
 //                    ///Create an instance of Clients 
@@ -126,8 +126,9 @@ namespace LaboratoryApp.ViewModel
 //                    //}
 
 //                    //treeOfClients.Add(ClientTree);
-//#endregion comments
-//                }
+//
+                //                }
+                #endregion
             }
             catch(Exception ex)
             {

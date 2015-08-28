@@ -20,6 +20,17 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("AboutGauge");
             }
         }
+        private float cost;
+
+        public float Cost
+        {
+            get { return cost; }
+            set 
+            { 
+                cost = value;
+                OnPropertyChanged("Cost");
+            }
+        }
         private string footer;
 
         public string Footer
@@ -180,8 +191,9 @@ namespace LaboratoryApp.ViewModel
                                 "-kallibratora napięć i prądów C-101FB firmy Calmet nr fabr. 20036\n"+
                                 "-kalibratora rezystancji CR-10 firmy Camlet nr fabr. 20037\n"+
                                 "-opornika dekadowego OD-1-D9b firmy ZELAP nr fabr. 5/2010\n";
-            Temperature = "[Temperatura]";
-            Humidity = "[Wilgotność]";
+            
+            Temperature = MainWindowViewModel.temperature;
+            Humidity = "(30-60) %";
             Compatibility = new List<string>();
             Compatibility.Add("Na podstawie przeprowadzonych badań oraz ich wyników stwierdzono, że przyrząd spełnia deklarowane parametry użytkowe i funkcjinalne");
             Compatibility.Add("Na podstawie przeprowadzonych badań oraz ich wyników stwierdzono, że przyrząd nie spełnia deklarowane parametry użytkowe i funkcjinalne");
@@ -193,9 +205,11 @@ namespace LaboratoryApp.ViewModel
             Uncertainty = "Maksymalna niepewność odwzorowania wartości poprawnej wynosi +/- 0,5 % przy poziomie ufności 95 % na podstawie Publikacji EA-4/02";
             NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM")+"/ /DASL";
             Recommendations = "Jeśli harmonogram Zleceniodawcy nie przewiduje inaczej, to następne wzorcowanie zaleca się przeprowadzić przed upływem ostatniego dnia analogicznego miesiąca następnego roku (w stosunku do daty wystawienia) lub w przypadku uszkodzenia";
-            Author = "[Autor]";
-        }
+            Author = MainWindowViewModel.nameAndSurname;
 
+
+        }
+        
 
         private ICommand okCommand;
 

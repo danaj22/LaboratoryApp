@@ -27,12 +27,12 @@ namespace LaboratoryApp
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<certificate> certificates { get; set; }
         public virtual DbSet<type> types { get; set; }
         public virtual DbSet<usage> usages { get; set; }
         public virtual DbSet<model_of_gauges> model_of_gauges { get; set; }
         public virtual DbSet<office> offices { get; set; }
         public virtual DbSet<client> clients { get; set; }
+        public virtual DbSet<certificate> certificates { get; set; }
         public virtual DbSet<gauge> gauges { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)

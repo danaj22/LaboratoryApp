@@ -51,11 +51,11 @@
 
         <ComboBox HorizontalAlignment="Center" ItemsSource="{Binding AboutModelOfGauge.CollectionOfType}" SelectedItem="{Binding AboutModelOfGauge.SelectedType}" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="1" Margin="1,3,0,3" Width="220"/>
 
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowType}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="77" 
-			DialogWidth="293" DialogResizeMode="NoResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowType}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="200" 
+			DialogWidth="320" DialogResizeMode="CanResize" />
 
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowUsage}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  
-			 DialogResizeMode="NoResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowUsage}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}" DialogHeight="300" 
+			DialogWidth="600" DialogResizeMode="CanResize"/>
 
         <Button Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="10,7,0,0" Grid.Row="7" VerticalAlignment="Top" Width="75" Grid.Column="1"/>
         <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1" HorizontalAlignment="Left" Margin="137,7,0,0" Grid.Row="7" VerticalAlignment="Top" Width="75"/>

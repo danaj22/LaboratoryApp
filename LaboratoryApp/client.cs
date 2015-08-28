@@ -11,7 +11,7 @@ namespace LaboratoryApp
 {
     using System;
     using System.Collections.ObjectModel;
-
+    
     public partial class client : ViewModel.MenuItem
     {
         public client()
@@ -32,16 +32,11 @@ namespace LaboratoryApp
         public virtual ObservableCollection<office> offices { get; set; }
         public virtual ObservableCollection<gauge> gauges { get; set; }
 
-        protected override string nameOfItem
+        protected override string displayImagePath
         {
             get
             {
-                return base.nameOfItem;
-            }
-            set
-            {
-                base.nameOfItem = value;
-                OnPropertyChanged("nameOfItem");
+                return @"C:\Users\daniel\Documents\Visual Studio 2013\Projects\LaboratoryApp\LaboratoryApp\icon\Office-Customer-Male-Light-icon.png";
             }
         }
         protected override ViewModel.MenuItem parent

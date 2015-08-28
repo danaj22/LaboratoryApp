@@ -16,7 +16,7 @@ namespace LaboratoryApp.ViewModel
     {
         // Using a DependencyProperty as the backing store for SelectedItem.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.RegisterAttached("SelectedItem", //name of property
-                                                                        typeof(MenuItem), //type of property 
+                                                                        typeof(object), //type of property 
                                                                         typeof(TreeViewHelper), //type of owner property
                                                                         new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, SelectedItemChanged));//metadata
 
@@ -36,6 +36,41 @@ namespace LaboratoryApp.ViewModel
         /// <summary>
         /// It is a Dependency Property which set a DialogResult after click on a button in dialog window
         /// </summary>
+        /// 
+
+        //public String SelectedManufacturer
+        //{
+        //    get { return (String)GetValue(SelectedManufacturerProperty); }
+        //    set { SetValue(SelectedManufacturerProperty, value); }
+        //}
+        //public static readonly DependencyProperty SelectedManufacturerProperty =
+        //    DependencyProperty.Register("SelectedManufacturer", typeof(String), typeof(ModalDialogManager), new UIPropertyMetadata(false, SelectedManufacturerChanged));
+
+        //public static void SelectedManufacturerChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    ModalDialogManager m = d as ModalDialogManager;
+        //    bool newVal = (bool)e.NewValue;
+        //}
+
+
+        //public String SelectedModel
+        //{
+        //    get { return (String)GetValue(SelectedModelProperty); }
+        //    set { SetValue(SelectedModelProperty, value); }
+        //}
+
+        //public static readonly DependencyProperty SelectedModelProperty =
+        //    DependencyProperty.Register("SelectedModel", typeof(String), typeof(ModalDialogManager), new UIPropertyMetadata(false, SelectedModelChanged));
+
+        //public static void SelectedModelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    ModalDialogManager m = d as ModalDialogManager;
+        //    bool newVal = (bool)e.NewValue;
+        //}
+
+
+
+
         public static readonly DependencyProperty DialogResultProperty = DependencyProperty.RegisterAttached(
                                                                             "DialogResult",
                                                                             typeof(bool?),

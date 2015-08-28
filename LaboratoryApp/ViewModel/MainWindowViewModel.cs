@@ -15,14 +15,29 @@ namespace LaboratoryApp.ViewModel
 {
     public class MainWindowViewModel : ObservableObject
     {
-        private string nameAndSurname = "Janina Powygina";
+        public static string nameAndSurname;
 
         public string NameAndSurname
         {
             get { return nameAndSurname; }
-            set { nameAndSurname = value; }
+            set 
+            { 
+                nameAndSurname = value;
+                OnPropertyChanged("NameAndSurname");
+            }
         }
-        
+
+        public static string temperature;
+
+        public string Temperature
+        {
+            get { return temperature; }
+            set 
+            { 
+                temperature = value;
+                OnPropertyChanged("Temperature");
+            }
+        }
         
         static private LoadData data;
 
@@ -142,6 +157,9 @@ namespace LaboratoryApp.ViewModel
             {
                 LaboratoryEntities context = new LaboratoryEntities();
 
+                var tmp = (from g in context.gauges where g.serial_number == SearchItem select g).FirstOrDefault();
+                this.SelectedNode = tmp;
+                
                 //var tmp = (from searchedGauge in context.model_of_gauges
                 //           where SearchItem == searchedGauge.gaugeId
                 //           select new { searchedGauge. }).ToList();
@@ -180,6 +198,8 @@ namespace LaboratoryApp.ViewModel
 
         private void AddGauge()
         {
+            LaboratoryEntities context = new LaboratoryEntities();
+
             MessageWindowModelOfGauge = new NewWindowModelOfGauge 
             { AboutModelOfGauge = new InformationAboutModelOfGauge() };
             
@@ -194,12 +214,12 @@ namespace LaboratoryApp.ViewModel
                     )
                 {
                     var newGauge = new model_of_gauges();
-                    newGauge.Manufacturer_name = MessageWindowModelOfGauge.AboutModelOfGauge.ManufacturerName;
-                    newGauge.Model = MessageWindowModelOfGauge.AboutModelOfGauge.Model;
+                    newGauge.manufacturer_name = MessageWindowModelOfGauge.AboutModelOfGauge.ManufacturerName;
+                    newGauge.model = MessageWindowModelOfGauge.AboutModelOfGauge.Model;
 
                     try
                     {
-                        using (LaboratoryEntities context = new LaboratoryEntities())
+                        
                         {
                             newGauge.type_id = (from t in context.types where t.name == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedType select t.typeId).FirstOrDefault();
                             newGauge.usage_id = (from u in context.usages where u.description == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedUsage select u.usageId).FirstOrDefault();
@@ -211,7 +231,7 @@ namespace LaboratoryApp.ViewModel
                     }
                     try
                     {
-                        using (LaboratoryEntities context = new LaboratoryEntities())
+                        
                         {
 
                             context.model_of_gauges.Add(newGauge);
@@ -359,7 +379,7 @@ namespace LaboratoryApp.ViewModel
 
                     try
                     {
-                        using (LaboratoryEntities context = new LaboratoryEntities())
+                        LaboratoryEntities context = new LaboratoryEntities();
                         {
                             context.clients.Add(newClient);
                             context.SaveChanges();

@@ -50,5 +50,11 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("Children");
             }
         }
+        protected virtual string displayImagePath { get; set; }
+
+        public string DisplayImagePath
+        {
+            get { return displayImagePath; }
+        }
     }
 }

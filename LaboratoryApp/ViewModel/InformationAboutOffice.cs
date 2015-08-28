@@ -185,7 +185,7 @@ namespace LaboratoryApp.ViewModel
                 using (LaboratoryEntities context = new LaboratoryEntities())
                 {
                     //GaugeIdToAdd = (from m in context.model_of_gauges where m.model == MessageWindowGauge.SelectedModel select m.model_of_gaugeId).FirstOrDefault();
-                    ModelOfGauge = (from m in context.model_of_gauges where m.Model == MessageWindowGauge.AboutGauge.model_of_gauges.Model select m).FirstOrDefault();
+                    ModelOfGauge = (from m in context.model_of_gauges where m.model == MessageWindowGauge.SelectedModel select m).FirstOrDefault();
 
                 }
                 gaugeToAddToDatabase.client_id = ClientId;
@@ -212,7 +212,7 @@ namespace LaboratoryApp.ViewModel
                         //MainWindowViewModel.rootElement.Items[r].Items[q].Items.Add(gaugeToAddToDatabase);
 
                         MainWindowViewModel.selectedNode.Children.Add(gaugeToAddToDatabase);
-                        MainWindowViewModel.selectedNode.Children.Last().NameOfItem = MessageWindowGauge.AboutGauge.model_of_gauges.Model;
+                        MainWindowViewModel.selectedNode.Children.Last().NameOfItem = MessageWindowGauge.SelectedModel;
                         MainWindowViewModel.selectedNode.Children.Last().Parent = SelectedOffice;
 
                         MessageBox.Show("Miernik został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -303,7 +303,7 @@ namespace LaboratoryApp.ViewModel
                 {
                     //find selected office in database
                     var officeToEdit = (from o in context.offices
-                                        where o.officeId == this.OfficeId
+                                        where o.officeId == SelectedOffice.officeId
                                         select o).FirstOrDefault();
 
                     //modify data in database

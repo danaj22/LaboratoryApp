@@ -31,6 +31,14 @@ namespace LaboratoryApp
         public virtual client client { get; set; }
         public virtual ObservableCollection<gauge> gauges { get; set; }
 
+        protected override string displayImagePath
+        {
+            get
+            {
+                return @"C:\Users\daniel\Documents\Visual Studio 2013\Projects\LaboratoryApp\LaboratoryApp\icon\office-building-icon.png";
+            }
+        }
+
         protected override string nameOfItem
         {
             get

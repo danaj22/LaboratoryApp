@@ -10,93 +10,23 @@
 namespace LaboratoryApp
 {
     using System;
-    using System.Linq;
-    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     
-    public partial class model_of_gauges: LaboratoryApp.ViewModel.ObservableObject
+    public partial class model_of_gauges
     {
         public model_of_gauges()
         {
             this.gauges = new ObservableCollection<gauge>();
-            InitializeCollectionOfManufacturers();
         }
     
         public int model_of_gaugeId { get; set; }
         public string manufacturer_name { get; set; }
-
-
-        public string Manufacturer_name
-        {
-            get { return manufacturer_name; }
-            set 
-            {
-                manufacturer_name = value;
-                InitializeCollectionOfModels();
-                OnPropertyChanged("Manufacturer_name");
-            }
-        }
-
         public string model { get; set; }
-
-        public string Model
-        {
-            get { return model; }
-            set
-            {
-                model = value;
-                OnPropertyChanged("Model");
-            }
-        }
         public int usage_id { get; set; }
         public int type_id { get; set; }
     
         public virtual type type { get; set; }
         public virtual usage usage { get; set; }
         public virtual ObservableCollection<gauge> gauges { get; set; }
-
-
-
-
-        List<string> collectionOfManufacturers;
-        public List<string> CollectionOfManufacturers
-        {
-            get { return this.collectionOfManufacturers; }
-            set
-            {
-                collectionOfManufacturers = value;
-                OnPropertyChanged("CollectionOfManufacturers");
-            }
-
-        }
-        List<string> collectionOfModels;
-        public List<string> CollectionOfModels
-        {
-            get { return collectionOfModels; }
-            set
-            {
-                collectionOfModels = value;
-                OnPropertyChanged("CollectionOfModels");
-            }
-        }
-
-        private void InitializeCollectionOfManufacturers()
-        {
-            LaboratoryEntities context = new LaboratoryEntities();
-            CollectionOfManufacturers = (from m in context.model_of_gauges select m.manufacturer_name).Distinct().ToList();
-
-        }
-
-        public void InitializeCollectionOfModels()
-        {
-            if (Manufacturer_name != null)
-            {
-                using (LaboratoryEntities context = new LaboratoryEntities())
-                {
-                    CollectionOfModels = (from g in context.model_of_gauges where g.Manufacturer_name ==Manufacturer_name select g.model).Distinct().ToList();
-
-                }
-            }
-        }
     }
 }
