@@ -6,44 +6,75 @@
              xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
              xmlns:local="clr-namespace:LaboratoryApp"
              
-             mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="500"
+             mc:Ignorable="d" Width="540" Height="711"
              >
-    <UserControl.Resources>
-
-    </UserControl.Resources>
-    <!--<d:DataContext>
+        <UserControl.Resources>
+            <ControlTemplate x:Key="errorTemplate">
+                <DockPanel LastChildFill="true">
+                    <Border Background="OrangeRed" DockPanel.Dock="right"
+                    Margin="3,0,0,0" Width="20" Height="20" CornerRadius="5"
+                    ToolTip="{Binding ElementName=adoner,
+                        Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">
+                        <TextBlock Text="!" VerticalAlignment="center" HorizontalAlignment="center"
+                           FontWeight="Bold" Foreground="white" />
+                    </Border>
+                    <AdornedElementPlaceholder Name="adoner" VerticalAlignment="Center">
+                        <Border BorderBrush="OrangeRed" BorderThickness="1" />
+                    </AdornedElementPlaceholder>
+                </DockPanel>
+            </ControlTemplate>
+            <Style x:Key="ComboBoxError" TargetType="ComboBox">
+                <Style.Triggers>
+                    <Trigger Property="Validation.HasError" Value="true">
+                        <Setter Property="ToolTip"
+                        Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                        Path=(Validation.Errors)[0].ErrorContent}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="textBoxError" TargetType="TextBox">
+                <Style.Triggers>
+                    <Trigger Property="Validation.HasError" Value="true">
+                        <Setter Property="ToolTip"
+                        Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                        Path=(Validation.Errors)[0].ErrorContent}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </UserControl.Resources>
+        <!--<d:DataContext>
         <local:MainWindowViewModel/>
     </d:DataContext>-->
-    <Grid >
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto" MinWidth="156"/>
 
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="80" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="60"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
         </Grid.RowDefinitions>
 
         <Label Content="Zgłaszający: " HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1"/>
@@ -54,42 +85,100 @@
         <Label Content="Zastosowanie urządzenia: " HorizontalAlignment="Left" Grid.Row="6" VerticalAlignment="Center"/>
         <Label Content="Metoda wzorcowania: " HorizontalAlignment="Left" Grid.Row="7" VerticalAlignment="Center"/>
         <Label Content="Odniesienie do wzorca państwowego: " HorizontalAlignment="Left" Grid.Row="8" VerticalAlignment="Center"/>
-        <Label Content="Temperatura otoczenia: " HorizontalAlignment="Left" Grid.Row="9" VerticalAlignment="Center"/>
-        <Label Content="Wilgotność powietrza: " HorizontalAlignment="Left" Grid.Row="10" VerticalAlignment="Center"/>
-        <Label Content="Stwierdzenie zgodności: " HorizontalAlignment="Left" Grid.Row="11" VerticalAlignment="Center"/>
-        <Label Content="Sprawdzone funkcje: " HorizontalAlignment="Left" Grid.Row="12" VerticalAlignment="Center"/>
-        <Label Content="Niepewność pomiaru: " HorizontalAlignment="Left" Grid.Row="13" VerticalAlignment="Center"/>
-        <Label Content="Nr świadectwa: " HorizontalAlignment="Left" Grid.Row="14" VerticalAlignment="Center"/>
-        <Label Content="Data badania: " HorizontalAlignment="Left" Grid.Row="15" VerticalAlignment="Center"/>
-        <Label Content="Zalecenia dotyczące kolejnego wzorcowania: " HorizontalAlignment="Left" Grid.Row="16" VerticalAlignment="Center"/>
-        <Label Content="Pomiary zatwierdził: " HorizontalAlignment="Left" Grid.Row="17" VerticalAlignment="Center"/>
-        <Label Content="Koszt: " HorizontalAlignment="Left" Grid.Row="18" VerticalAlignment="Center"/>
+        <Label Content="Temperatura otoczenia: " HorizontalAlignment="Left" Grid.Row="10" VerticalAlignment="Center"/>
+        <Label Content="Wilgotność powietrza: " HorizontalAlignment="Left" Grid.Row="11" VerticalAlignment="Center"/>
+        <Label Content="Stwierdzenie zgodności: " HorizontalAlignment="Left" Grid.Row="12" VerticalAlignment="Center"/>
+        <Label Content="Sprawdzone funkcje: " HorizontalAlignment="Left" Grid.Row="13" VerticalAlignment="Center"/>
+        <Label Content="Niepewność pomiaru: " HorizontalAlignment="Left" Grid.Row="14" VerticalAlignment="Center"/>
+        <Label Content="Nr świadectwa: " HorizontalAlignment="Left" Grid.Row="15" VerticalAlignment="Center"/>
+        <Label Content="Data badania: " HorizontalAlignment="Left" Grid.Row="16" VerticalAlignment="Center"/>
+        <Label Content="Zalecenia dotyczące kolejnego wzorcowania: " HorizontalAlignment="Left" Grid.Row="17" VerticalAlignment="Center"/>
+        <Label Content="Pomiary zatwierdził: " HorizontalAlignment="Left" Grid.Row="18" VerticalAlignment="Center"/>
+        <Label Content="Koszt: " HorizontalAlignment="Left" Grid.Row="19" VerticalAlignment="Center"/>
 
 
-        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.client.name}" VerticalAlignment="center" Grid.Row="1" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.office.name}" VerticalAlignment="center" Grid.Row="2" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.model_of_gauges.manufacturer_name}" VerticalAlignment="center" Grid.Row="3" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.model_of_gauges.model}" VerticalAlignment="center" Grid.Row="4" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.serial_number}" VerticalAlignment="center" Grid.Row="5" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding AboutGauge.model_of_gauges.usage.description}" VerticalAlignment="center" Grid.Row="6" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding TheCalibrationMethod}" VerticalAlignment="center" Grid.Row="7" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding NationalPattern}" VerticalAlignment="center" Grid.Row="8" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding Temperature}" VerticalAlignment="center" Grid.Row="9" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding Humidity}" VerticalAlignment="center" Grid.Row="10" Grid.Column="1" Width="156" Height="24"/>
-        <ComboBox ItemsSource="{Binding Compatibility}" SelectedItem="{Binding SelectedCompatibility}"  HorizontalAlignment="Center" VerticalAlignment="center" Grid.Row="11" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding CheckedFunction}" VerticalAlignment="center" Grid.Row="12" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding Uncertainty}" VerticalAlignment="center" Grid.Row="13" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="center" Text="{Binding NumberOfCertificate}" VerticalAlignment="center" Grid.Row="14" Grid.Column="1" Width="156" Height="24"/>
-
-        <TextBox HorizontalAlignment="center" Text="{Binding DateSurvey}" VerticalAlignment="center" Grid.Row="15" Grid.Column="1" Width="156" Height="24" />
-        <TextBox HorizontalAlignment="center" Text="{Binding Recommendations}" VerticalAlignment="center" Grid.Row="16" Grid.Column="1" Width="156" Height="24" />
-        <TextBox HorizontalAlignment="center" Text="{Binding Author}" VerticalAlignment="center" Grid.Row="17" Grid.Column="1" Width="156" Height="24" />
-        <TextBox HorizontalAlignment="center" Text="{Binding Cost}" VerticalAlignment="center" Grid.Row="18" Grid.Column="1" Width="156" Height="24" />
-
-        <Button Grid.ColumnSpan="2" Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="79,10,0,0" Grid.Row="19" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1" HorizontalAlignment="Left" Margin="23,10,0,0" Grid.Row="19" VerticalAlignment="Top" Width="75"/>
-
-        <Label Content="{Binding Footer}" Grid.Row="20" Grid.ColumnSpan="2" />
+        <TextBox HorizontalAlignment="Left" Text="{Binding AboutGauge.client.name}" VerticalAlignment="center" Grid.Row="1" Grid.Column="1" Width="256" Height="24"/>
+        <TextBox HorizontalAlignment="Left" Text="{Binding AboutGauge.office.name}" VerticalAlignment="center" Grid.Row="2" Grid.Column="1" Width="256" Height="24"/>
+        <TextBox HorizontalAlignment="Left" Text="{Binding AboutGauge.model_of_gauges.manufacturer_name}" VerticalAlignment="center" Grid.Row="3" Grid.Column="1" Width="256" Height="24"/>
+        <TextBox HorizontalAlignment="Left" Text="{Binding AboutGauge.model_of_gauges.model}" VerticalAlignment="center" Grid.Row="4" Grid.Column="1" Width="256" Height="24"/>
+        <TextBox HorizontalAlignment="Left" Text="{Binding AboutGauge.serial_number}" VerticalAlignment="center" Grid.Row="5" Grid.Column="1" Width="256" Height="24"/>
+        <TextBox HorizontalAlignment="Left" Text="{Binding AboutGauge.model_of_gauges.usage.description}" VerticalAlignment="center" Grid.Row="6" Grid.Column="1" Width="256" Height="24" />
+        <TextBox HorizontalAlignment="Left" Text="{Binding TheCalibrationMethod}" VerticalAlignment="center" Grid.Row="7" Grid.Column="1" Width="256" Height="24"/>
+        <TextBox HorizontalAlignment="Left" Text="{Binding NationalPattern}" VerticalAlignment="center" Grid.Row="8" Grid.Column="1" Width="256" Height="24"/>
+        <TextBox HorizontalAlignment="Left" Text="{Binding Temperature}" VerticalAlignment="center" Grid.Row="10" Grid.Column="1" Width="156" Height="24"/>
+        <TextBox HorizontalAlignment="Left" Text="{Binding Humidity}" VerticalAlignment="center" Grid.Row="11" Grid.Column="1" Width="156" Height="24"/>
+        <ComboBox ItemsSource="{Binding Compatibility}" SelectedItem="{Binding SelectedCompatibility}"  HorizontalAlignment="Left" VerticalAlignment="center" Grid.Row="12" Grid.Column="1" Width="256" Height="24"/>
+        <TextBox HorizontalAlignment="Left" Text="{Binding CheckedFunction}" VerticalAlignment="center" Grid.Row="13" Grid.Column="1" Width="256" Height="24"/>
+        <TextBox HorizontalAlignment="Left" Text="{Binding Uncertainty}" VerticalAlignment="center" Grid.Row="14" Grid.Column="1" Width="256" Height="24"/>
         
+        <TextBox Name="TxtBoxNumberOfCertificate" HorizontalAlignment="Left" VerticalAlignment="center" Grid.Row="15" Grid.Column="1" Width="256" Height="24"
+            Validation.ErrorTemplate="{StaticResource errorTemplate}"
+            Style="{StaticResource textBoxError}">
+            <TextBox.Text>
+                <Binding Path="NumberOfCertificate" UpdateSourceTrigger="PropertyChanged" >
+                    <Binding.ValidationRules>
+                        <vm:StandardFieldValidation ValidatesOnTargetUpdated="True"
+                                     ValidationStep="RawProposedValue"
+                                      />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+
+        </TextBox>
+
+        <TextBox Text="{Binding DateSurvey}" HorizontalAlignment="Left" VerticalAlignment="center" Grid.Row="16" Grid.Column="1" Width="256" Height="24" />
+
+        <ScrollViewer Grid.Row="17" Grid.Column="1" Width="256" VerticalScrollBarVisibility="Auto" Height="60">
+            <TextBox HorizontalAlignment="Left" Text="{Binding Recommendations}" VerticalAlignment="center"  TextWrapping="Wrap"   />
+        </ScrollViewer>
+
+        <TextBox Name="TxtBoxAuthor" HorizontalAlignment="Left" VerticalAlignment="center" Grid.Row="18" Grid.Column="1" Width="256" Height="24" 
+                 Validation.ErrorTemplate="{StaticResource errorTemplate}"
+            Style="{StaticResource textBoxError}">
+            <TextBox.Text>
+                <Binding Path="Author" UpdateSourceTrigger="PropertyChanged" >
+                    <Binding.ValidationRules>
+                        <vm:AllowNullFieldValidation ValidatesOnTargetUpdated="True"
+                                     ValidationStep="RawProposedValue"
+                                     ErrorMessage="Wpisz numer seryjny [max. 50 znaków]." />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        
+        </TextBox>
+        <TextBox HorizontalAlignment="Left" Text="{Binding Cost}" VerticalAlignment="center" Grid.Row="19" Grid.Column="1" Width="256" Height="24" />
+
+        <Button Grid.ColumnSpan="2" Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Center"  Grid.Row="20" VerticalAlignment="Center" Width="75">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="IsEnabled" Value="false" />
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <Setter Property="IsEnabled" Value="true" />
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=TxtBoxNumberOfCertificate,
+                            Path=(Validation.HasError)}" Value="false" />
+                                <Condition Binding="{Binding ElementName=ComboBoxManufacturer,
+                            Path=(Validation.HasError)}" Value="false"/>
+                                <Condition Binding="{Binding ElementName=TxtBoxSerial,
+                            Path=(Validation.HasError)}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1" HorizontalAlignment="Center"  Grid.Row="20" VerticalAlignment="Center" Width="75"/>
+
+        <Label Content="{Binding Footer}" Grid.Row="21" Grid.ColumnSpan="2" />
+
+        <ListBox Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="9" VerticalAlignment="Top"  ItemsSource="{Binding CollectionOfCalibrators}" Width="256" Height="78" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
     </Grid>
 </UserControl>

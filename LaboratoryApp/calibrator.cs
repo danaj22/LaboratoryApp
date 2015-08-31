@@ -12,21 +12,21 @@ namespace LaboratoryApp
     using System;
     using System.Collections.ObjectModel;
     
-    public partial class model_of_gauges
+    public partial class calibrator : ViewModel.ObservableObject
     {
-        public model_of_gauges()
+        public int calibratorId { get; set; }
+        public string name { get; set; }
+
+        private bool isChecked;
+
+        public bool IsChecked
         {
-            this.gauges = new ObservableCollection<gauge>();
+            get { return isChecked; }
+            set
+            {
+                isChecked = value;
+                OnPropertyChanged("IsChecked");
+            }
         }
-    
-        public int model_of_gaugeId { get; set; }
-        public string manufacturer_name { get; set; }
-        public string model { get; set; }
-        public int usage_id { get; set; }
-        public int type_id { get; set; }
-    
-        public virtual ObservableCollection<gauge> gauges { get; set; }
-        public virtual type type { get; set; }
-        public virtual usage usage { get; set; }
     }
 }

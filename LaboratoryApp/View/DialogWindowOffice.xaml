@@ -3,8 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="330">
+    <UserControl.Resources>
+        <ControlTemplate x:Key="errorTemplate">
+            <DockPanel LastChildFill="true">
+                <Border Background="OrangeRed" DockPanel.Dock="right"
+                    Margin="3,0,0,0" Width="20" Height="20" CornerRadius="5"
+                    ToolTip="{Binding ElementName=adoner,
+                        Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">
+                    <TextBlock Text="!" VerticalAlignment="center" HorizontalAlignment="center"
+                           FontWeight="Bold" Foreground="white" />
+                </Border>
+                <AdornedElementPlaceholder Name="adoner" VerticalAlignment="Center">
+                    <Border BorderBrush="OrangeRed" BorderThickness="1" />
+                </AdornedElementPlaceholder>
+            </DockPanel>
+        </ControlTemplate>
+        <Style x:Key="textBoxError" TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip"
+                        Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                        Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -12,31 +38,56 @@
 
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="50"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
         </Grid.RowDefinitions>
 
-        <Label Content="Nazwa: " HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="Adres: " HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center"/>
-        <Label Content="Osoba kontaktowa: " HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center"/>
-        <Label Content="E-mail: " HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center"/>
-        <Label Content="Telefon: " HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center"/>
+        <Label Content="Nazwa: " HorizontalAlignment="Left" VerticalAlignment="Center" Height="26" Width="51"/>
+        <Label Content="Adres: " HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" Height="26"  Width="46"/>
+        <Label Content="Osoba kontaktowa: " HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Height="26" Width="115"/>
+        <Label Content="E-mail: " HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" Height="26"  Width="49"/>
+        <Label Content="Telefon: " HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center" Height="26" Width="55"/>
 
-       <TextBox HorizontalAlignment="Center" Text="{Binding AboutOffice.name}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="Center" Text="{Binding AboutOffice.adress}" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Width="156" Height="24"/>
+        <TextBox Name="TxtBoxName" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Width="156" Height="24"
+            Validation.ErrorTemplate="{StaticResource errorTemplate}"
+                 Style="{StaticResource textBoxError}">
+            <TextBox.Text>
+                <Binding Path="AboutOffice.name" UpdateSourceTrigger="PropertyChanged" >
+                    <Binding.ValidationRules>
+                        <vm:SerialNumberValidation ValidatesOnTargetUpdated="True"
+                                     ValidationStep="RawProposedValue"
+                                     ErrorMessage="Wpisz nazwę [max. 100 znaków]." />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox HorizontalAlignment="Center" Text="{Binding AboutOffice.adress}" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Width="156" Height="42" TextWrapping="Wrap"/>
         <TextBox HorizontalAlignment="Center" Text="{Binding AboutOffice.contact_person_name}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="Center" Text="{Binding AboutOffice.mail}" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Width="156" Height="24"/>
-        <TextBox HorizontalAlignment="Center" Text="{Binding AboutOffice.tel}" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" Width="156" Height="24"/>
+        <TextBox HorizontalAlignment="Center" Text="{Binding AboutOffice.mail}" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Width="156" Height="24" />
+        <TextBox HorizontalAlignment="Center" Text="{Binding AboutOffice.tel}" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" Width="156" Height="24" />
 
-        <Button Grid.ColumnSpan="2" Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="79,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1" HorizontalAlignment="Left" Margin="44,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="75"/>
+        <Button Grid.ColumnSpan="2" Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="79,10,0,0" Grid.Row="5" VerticalAlignment="Top" Width="75" Height="22">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="IsEnabled" Value="false" />
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <Setter Property="IsEnabled" Value="true" />
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=TxtBoxName,
+                            Path=(Validation.HasError)}" Value="false" />
+                            </MultiDataTrigger.Conditions>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1" HorizontalAlignment="Left" Margin="44,10,0,0" Grid.Row="5" VerticalAlignment="Top" Width="75" Height="22"/>
 
     </Grid>
 </UserControl>

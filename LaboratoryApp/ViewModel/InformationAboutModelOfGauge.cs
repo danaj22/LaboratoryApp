@@ -22,23 +22,41 @@ namespace LaboratoryApp.ViewModel
 
         private void InitializeCollectionOfType()
         {
-            LaboratoryEntities context = new LaboratoryEntities();
-            CollectionOfType = (from t in context.types select t.name).Distinct().ToList();
-            SelectedType = CollectionOfType[0];
+
+            using (LaboratoryEntities context = new LaboratoryEntities())
+            {
+
+                CollectionOfType = (from t in context.types select t.name).Distinct().ToList();
+                bool IsEmpty = !CollectionOfType.Any();
+                if (!IsEmpty)
+                {
+                    SelectedType = CollectionOfType[0];
+                }
+            }
+
         }
 
         private void InitializeCollectionOfUsage()
         {
-            LaboratoryEntities context = new LaboratoryEntities();
-            //var t = (from u in context.usages select u.description).Count();
-            List<usage> t = (from u in context.usages select u).ToList();
-
-            foreach(var element in t)
+            using (LaboratoryEntities context = new LaboratoryEntities())
             {
-                CollectionOfUsage.Add(element.description);
+
+                //var t = (from u in context.usages select u.description).Count();
+                List<usage> t = (from u in context.usages select u).ToList();
+
+                //if list of usages is not null select usage and create a list to bind to combobox
+                bool IsEmpty = !t.Any();
+                if (!IsEmpty)
+                {
+                    foreach (var element in t)
+                    {
+                        CollectionOfUsage.Add(element.description);
+                    }
+                    //(from u in context.usages select u.usageId.ToString()).Distinct().ToList();
+                    SelectedUsage = t[0].description;
+                }
+
             }
-                //(from u in context.usages select u.usageId.ToString()).Distinct().ToList();
-            SelectedUsage = t[0].description;
         }
 
         private int modelOfGaugeId;
@@ -46,7 +64,7 @@ namespace LaboratoryApp.ViewModel
         public int ModelOfGaugeId
         {
             get { return modelOfGaugeId; }
-            set 
+            set
             {
                 modelOfGaugeId = value;
                 OnPropertyChanged("ModelOfGaugeId");
@@ -57,8 +75,8 @@ namespace LaboratoryApp.ViewModel
         public string ManufacturerName
         {
             get { return manufacturerName; }
-            set 
-            { 
+            set
+            {
                 manufacturerName = value;
                 OnPropertyChanged("ManufacturerName");
             }
@@ -68,8 +86,8 @@ namespace LaboratoryApp.ViewModel
         public string Model
         {
             get { return model; }
-            set 
-            { 
+            set
+            {
                 model = value;
                 OnPropertyChanged("Model");
             }
@@ -79,7 +97,7 @@ namespace LaboratoryApp.ViewModel
         public int UsageId
         {
             get { return usageId; }
-            set 
+            set
             {
                 usageId = value;
                 OnPropertyChanged("UsageId");
@@ -90,8 +108,8 @@ namespace LaboratoryApp.ViewModel
         public int TypeId
         {
             get { return typeId; }
-            set 
-            { 
+            set
+            {
                 typeId = value;
                 OnPropertyChanged("TypeId");
             }
@@ -101,7 +119,7 @@ namespace LaboratoryApp.ViewModel
         public type TypeOfGauge
         {
             get { return typeOfGauge; }
-            set 
+            set
             {
                 typeOfGauge = value;
                 OnPropertyChanged("TypeOfGauge");
@@ -113,7 +131,7 @@ namespace LaboratoryApp.ViewModel
         public ObservableCollection<gauge> Products
         {
             get { return gauges; }
-            set 
+            set
             {
                 gauges = value;
                 OnPropertyChanged("Products");
@@ -158,7 +176,7 @@ namespace LaboratoryApp.ViewModel
         public List<string> CollectionOfType
         {
             get { return collectionOfType; }
-            set 
+            set
             {
                 collectionOfType = value;
                 OnPropertyChanged("CollectionOfType");
@@ -170,7 +188,7 @@ namespace LaboratoryApp.ViewModel
         {
             get { return selectedType; }
             set
-            { 
+            {
                 selectedType = value;
                 OnPropertyChanged("SelectedType");
             }
@@ -188,8 +206,8 @@ namespace LaboratoryApp.ViewModel
                 LaboratoryEntities context = new LaboratoryEntities();
                 //delete selected client
                 var gaugeToDelete = (from g in context.gauges
-                                      where g.gaugeId == this.ModelOfGaugeId
-                                      select g).FirstOrDefault();
+                                     where g.gaugeId == this.ModelOfGaugeId
+                                     select g).FirstOrDefault();
 
                 context.gauges.Remove(gaugeToDelete);
                 context.SaveChanges();
@@ -234,6 +252,6 @@ namespace LaboratoryApp.ViewModel
             MainWindowViewModel.LoadView();
 
         }
-        
+
     }
 }

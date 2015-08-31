@@ -84,6 +84,7 @@ namespace LaboratoryApp.ViewModel
             if (_window != null) Close();
 
             Window w = new Window();
+            w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             _window = w;
             w.Closing += w_Closing;
             w.Owner = GetParentWindow(this);

@@ -80,6 +80,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="calibrator.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="certificate.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -123,6 +126,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\Answer.cs" />
+    <Compile Include="ViewModel\CalibratorMultimetr.cs" />
     <Compile Include="ViewModel\ClientViewModel.cs" />
     <Compile Include="ViewModel\ContentViewControl.cs" />
     <Compile Include="ViewModel\DialogCloser.cs" />
@@ -134,6 +138,7 @@
     <Compile Include="ViewModel\InformationAboutGauge.cs" />
     <Compile Include="ViewModel\LoadData.cs" />
     <Compile Include="ViewModel\ModalDialogManager.cs" />
+    <Compile Include="ViewModel\NameValidation.cs" />
     <Compile Include="ViewModel\NewWindowClient.cs" />
     <Compile Include="ViewModel\NewWindowModelOfGauge.cs" />
     <Compile Include="ViewModel\NewWindowOffice.cs" />

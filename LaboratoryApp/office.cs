@@ -39,30 +39,5 @@ namespace LaboratoryApp
             }
         }
 
-        protected override string nameOfItem
-        {
-            get
-            {
-                return base.nameOfItem;
-            }
-            set
-            {
-                base.nameOfItem = value;
-                OnPropertyChanged("nameOfItem");
-            }
-        }
-
-        protected override ObservableCollection<ViewModel.MenuItem> children
-        {
-            get
-            {
-                return base.children;
-            }
-            set
-            {
-                base.children = value;
-                OnPropertyChanged("children");
-            }
-        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -179,31 +180,70 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
+        private ObservableCollection<calibrator> collectionOfCalibrators;
+
+        public ObservableCollection<calibrator> CollectionOfCalibrators
+        {
+            get { return collectionOfCalibrators; }
+            set 
+            {
+                collectionOfCalibrators = value;
+                OnPropertyChanged("collectionOfCalibrators");
+            }
+        }
+
+
+
 
         public NewWindowRaport()
         {
+            CollectionOfCalibrators = new ObservableCollection<calibrator>();
+            LaboratoryEntities context = new LaboratoryEntities();
+            var ListOfCalibrators = (from c in context.calibrators select c).ToList();
+
+            foreach(var item in ListOfCalibrators)
+            {
+                CollectionOfCalibrators.Add(item);
+            }
+
+            
             OKCommand = new SimpleRelayCommand(Confirm);
             CancelCommand = new SimpleRelayCommand(Close);
             Footer = "Świadectwo składa się z 1 strony. Może być okazywane lub kopiowane tylko w całości.";
             TheCalibrationMethod = "Porównanie wartości mierzonej miernikiem sprawdzanym z wielkością wzorcową na podstawie instrukcji IZ/001/DASL i pozostałych";
-            NationalPattern = "Wyniki wzorcowania zostały odniesione do państwowych wzorców jednostek miar poprzez zastosowanie:\n\n"+
-                                "-multimetru Fluke 8864A nr fabr. 1220002\n"+
-                                "-kallibratora napięć i prądów C-101FB firmy Calmet nr fabr. 20036\n"+
-                                "-kalibratora rezystancji CR-10 firmy Camlet nr fabr. 20037\n"+
-                                "-opornika dekadowego OD-1-D9b firmy ZELAP nr fabr. 5/2010\n";
-            
+            NationalPattern = "Wyniki wzorcowania zostały odniesione do państwowych wzorców jednostek miar poprzez zastosowanie:\n\n";
+                                          
             Temperature = MainWindowViewModel.temperature;
             Humidity = "(30-60) %";
+            
             Compatibility = new List<string>();
-            Compatibility.Add("Na podstawie przeprowadzonych badań oraz ich wyników stwierdzono, że przyrząd spełnia deklarowane parametry użytkowe i funkcjinalne");
-            Compatibility.Add("Na podstawie przeprowadzonych badań oraz ich wyników stwierdzono, że przyrząd nie spełnia deklarowane parametry użytkowe i funkcjinalne");
-            SelectedCompatibility = "Na podstawie przeprowadzonych badań oraz ich wyników stwierdzono, że przyrząd spełnia deklarowane parametry użytkowe i funkcjinalne";
+            Compatibility.Add("Zgodny");
+            Compatibility.Add("Niezgodny");
+            SelectedCompatibility = Compatibility.First();
 
             DateSurvey = DateTime.Now.ToString("dd'/'MM'/'yyyy");
 
-            CheckedFunction = "[Sprawdzone funkcje]";
+            CheckedFunction = "[Wpisz sprawdzane funkcje funkcje]";
             Uncertainty = "Maksymalna niepewność odwzorowania wartości poprawnej wynosi +/- 0,5 % przy poziomie ufności 95 % na podstawie Publikacji EA-4/02";
-            NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM")+"/ /DASL";
+
+            gauge SelectedGauge = (gauge)MainWindowViewModel.selectedNode;
+            if ( SelectedGauge.model_of_gauges.type.name == "Elektryczny")
+            {
+                NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM") + "/E/DASL";
+            }
+            else if (SelectedGauge.model_of_gauges.type.name == "Manometr")
+            {
+                NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM") + "/M/DASL";
+            }
+            else if (SelectedGauge.model_of_gauges.type.name == "Luksomierz")
+            {
+                NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM") + "/L/DASL";
+            }
+            else
+            {
+                NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM") + "/DASL";
+            }
+
             Recommendations = "Jeśli harmonogram Zleceniodawcy nie przewiduje inaczej, to następne wzorcowanie zaleca się przeprowadzić przed upływem ostatniego dnia analogicznego miesiąca następnego roku (w stosunku do daty wystawienia) lub w przypadku uszkodzenia";
             Author = MainWindowViewModel.nameAndSurname;
 

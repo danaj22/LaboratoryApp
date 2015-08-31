@@ -7,10 +7,46 @@
              xmlns:local="clr-namespace:LaboratoryApp"
              
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    
+             d:DesignHeight="300" d:DesignWidth="320">
+
+    <UserControl.Resources>
+        <ControlTemplate x:Key="errorTemplate">
+            <DockPanel LastChildFill="true">
+                <Border Background="OrangeRed" DockPanel.Dock="right"
+                    Margin="3,0,0,0" Width="20" Height="20" CornerRadius="5"
+                    ToolTip="{Binding ElementName=adoner,
+                        Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">
+                    <TextBlock Text="!" VerticalAlignment="center" HorizontalAlignment="center"
+                           FontWeight="Bold" Foreground="white" />
+                </Border>
+                <AdornedElementPlaceholder Name="adoner" VerticalAlignment="Center">
+                    <Border BorderBrush="OrangeRed" BorderThickness="1" />
+                </AdornedElementPlaceholder>
+            </DockPanel>
+        </ControlTemplate>
+        <Style x:Key="ComboBoxError" TargetType="ComboBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip"
+                        Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                        Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="textBoxError" TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip"
+                        Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                        Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+
     <Grid Margin="0,0,10,0">
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
@@ -31,12 +67,77 @@
         <Label Content="Producent: " HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Label Content="Model: " HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center"/>
         <Label Content="Numer seryjny: " HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center"/>
-        
-        <TextBox HorizontalAlignment="Left" Text="{Binding AboutGauge.serial_number}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Width="187" Height="24" />
-        <ComboBox ItemsSource="{Binding CollectionOfManufacturers}" SelectedItem="{Binding SelectedManufacturer}"  Grid.Column="1" Grid.RowSpan="1" Width="187" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-        <ComboBox ItemsSource="{Binding CollectionOfModels}" SelectedItem="{Binding SelectedModel}" Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="1" VerticalAlignment="Center" Width="187" Height="25"/>
 
-        <Button Grid.ColumnSpan="2" Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="79,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="75"/>
+
+
+        <TextBox  Name="TxtBoxSerial" HorizontalAlignment="Left"
+                 VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Width="187" Height="24"
+                 Validation.ErrorTemplate="{StaticResource errorTemplate}"
+         Style="{StaticResource textBoxError}">
+
+            <TextBox.Text>
+                <Binding Path="AboutGauge.serial_number" UpdateSourceTrigger="PropertyChanged" >
+                    <Binding.ValidationRules>
+                        <vm:SerialNumberValidation ValidatesOnTargetUpdated="True"
+                                     ValidationStep="RawProposedValue"
+                                     ErrorMessage="Wpisz numer seryjny [max. 100 znaków]." />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+
+        </TextBox>
+
+        <ComboBox Name="ComboBoxManufacturer" ItemsSource="{Binding CollectionOfManufacturers}"
+                  Grid.Column="1" Grid.RowSpan="1" Width="187" Height="25"
+                  VerticalAlignment="Center" HorizontalAlignment="Left"
+                  Validation.ErrorTemplate="{StaticResource errorTemplate}"
+                  Style="{StaticResource ComboBoxError}">
+            <ComboBox.SelectedItem>
+                <Binding Path="SelectedManufacturer" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <vm:SelectedItemValidation ValidatesOnTargetUpdated="True"
+                                     ValidationStep="RawProposedValue"
+                                     ErrorMessage="Wybierz producenta."/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </ComboBox.SelectedItem>
+        </ComboBox>
+        <ComboBox Name="ComboBoxModel" ItemsSource="{Binding CollectionOfModels}"
+                  Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="1" 
+                  VerticalAlignment="Center" Width="187" Height="25"
+                  Validation.ErrorTemplate="{StaticResource errorTemplate}"
+                  Style="{StaticResource ComboBoxError}">
+            <ComboBox.SelectedItem>
+                <Binding Path="SelectedModel" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <vm:SelectedItemValidation ValidatesOnTargetUpdated="True"
+                                     ValidationStep="RawProposedValue"
+                                     ErrorMessage="Wybierz model."/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </ComboBox.SelectedItem>
+        </ComboBox>
+
+        <Button Grid.ColumnSpan="2" Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="79,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="75">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="IsEnabled" Value="false" />
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <Setter Property="IsEnabled" Value="true" />
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=ComboBoxModel,
+                            Path=(Validation.HasError)}" Value="false" />
+                                <Condition Binding="{Binding ElementName=ComboBoxManufacturer,
+                            Path=(Validation.HasError)}" Value="false"/>
+                                <Condition Binding="{Binding ElementName=TxtBoxSerial,
+                            Path=(Validation.HasError)}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
         <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1" HorizontalAlignment="Left" Margin="66,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="75"/>
 
     </Grid>

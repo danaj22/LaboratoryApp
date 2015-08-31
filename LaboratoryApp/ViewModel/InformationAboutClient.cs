@@ -18,7 +18,7 @@ namespace LaboratoryApp.ViewModel
         public InformationAboutClient(MenuItem SelectedNode)
         {
             OfficeId = null;
-            SelectedClient = (client) SelectedNode;
+            SelectedClient = (client)SelectedNode;
             Address = SelectedClient.adress;
             Name = SelectedClient.name;
             ContactPerson = SelectedClient.contact_person_name;
@@ -38,7 +38,7 @@ namespace LaboratoryApp.ViewModel
         public client SelectedClient
         {
             get { return selectedClient; }
-            set 
+            set
             {
                 selectedClient = value;
                 OnPropertyChanged("SelectedClient");
@@ -48,8 +48,8 @@ namespace LaboratoryApp.ViewModel
         public int ClientId
         {
             get { return clientId; }
-            set 
-            { 
+            set
+            {
                 clientId = value;
                 OnPropertyChanged("ClientId");
             }
@@ -161,7 +161,7 @@ namespace LaboratoryApp.ViewModel
         public NewWindowOffice MessageWindowOffice
         {
             get { return messageWindowOffice; }
-            set 
+            set
             {
                 messageWindowOffice = value;
                 OnPropertyChanged("MessageWindowOffice");
@@ -208,7 +208,7 @@ namespace LaboratoryApp.ViewModel
 
                     //GaugeIdToAdd = (from m in context.model_of_gauges where m.model == MessageWindowGauge.AboutGauge.SelectedModel select m.model_of_gaugeId).FirstOrDefault();
 
-                
+
                     gaugeToAddToDatabase.client_id = SelectedClient.clientId;
                     //gaugeToAddToDatabase.client.NIP = SelectedClient.NIP;
                     //gaugeToAddToDatabase.client.name = SelectedClient.name;
@@ -218,7 +218,7 @@ namespace LaboratoryApp.ViewModel
                     gaugeToAddToDatabase.model_of_gauge_id = ModelOfGauge.model_of_gaugeId;
                     gaugeToAddToDatabase.model_of_gauges = ModelOfGauge;
                     //gaugeToAddToDatabase.client = SelectedClient;
-                    
+
                     //gaugeToAddToDatabase.model_of_gauges.model = ModelOfGauge.model;
                     //gaugeToAddToDatabase.model_of_gauges.manufacturer_name = ModelOfGauge.manufacturer_name;
 
@@ -253,7 +253,10 @@ namespace LaboratoryApp.ViewModel
                             context.gauges.Add(gaugeToAddToDatabase);
                             context.SaveChanges();
 
-                            MainWindowViewModel.selectedNode.Children.Add(gaugeToAddToDatabase);
+                            gauge GaugeToAddToList = gaugeToAddToDatabase;
+                            GaugeToAddToList.client = SelectedClient;
+
+                            MainWindowViewModel.selectedNode.Children.Add(GaugeToAddToList);
                             MainWindowViewModel.selectedNode.Children.Last().NameOfItem = MessageWindowGauge.SelectedModel;
                             MainWindowViewModel.selectedNode.Children.Last().Parent = SelectedClient;
 
@@ -273,7 +276,7 @@ namespace LaboratoryApp.ViewModel
                                 }
                             }
                         }
-                        catch(Exception e)
+                        catch (Exception e)
                         { MessageBox.Show(e.ToString()); }
                     }
 
@@ -281,7 +284,7 @@ namespace LaboratoryApp.ViewModel
                     //var r = MainWindowViewModel.rootElement.Items.IndexOf((client)MainWindowViewModel.selectedNode);
                     //MainWindowViewModel.rootElement.Items[r].Items.Add(gaugeToAddToDatabase);
                 }
-                
+
                 //var index = AllItems.IndexOf(AllItems.Last()) + 1;
                 //AllItems.Remove((client)SelectedNode);
                 ////Add new client to TreeView
@@ -296,15 +299,15 @@ namespace LaboratoryApp.ViewModel
             }
 
         }
-        
+
         public ICommand DeleteCommand
         { get { return new SimpleRelayCommand(DeleteClientExecute); } }
 
         private void DeleteClientExecute()
         {
-            var result = MessageBox.Show("Czy na pewno chcesz usunąć bezzwłocznie i definitywnie tego klienta?","Usuwanie klienta",MessageBoxButton.YesNo,MessageBoxImage.Question);
-            
-            if(result == MessageBoxResult.Yes)
+            var result = MessageBox.Show("Czy na pewno chcesz usunąć bezzwłocznie i definitywnie tego klienta?", "Usuwanie klienta", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
             {
                 try
                 {
@@ -330,7 +333,7 @@ namespace LaboratoryApp.ViewModel
                             context.SaveChanges();
 
                             MainWindowViewModel.rootElement.Children.Remove(MainWindowViewModel.selectedNode);
-                            MessageBox.Show("Usunięto klienta.","Informacja",MessageBoxButton.OK,MessageBoxImage.Information);
+                            MessageBox.Show("Usunięto klienta.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                         catch
                         {
@@ -338,7 +341,7 @@ namespace LaboratoryApp.ViewModel
                         }
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.ToString());
                 }
@@ -358,15 +361,15 @@ namespace LaboratoryApp.ViewModel
         }
 
         public ICommand EditCommand
-        { get { return new SimpleRelayCommand(EditClientExecute);} }
+        { get { return new SimpleRelayCommand(EditClientExecute); } }
 
 
         private void EditClientExecute()
         {
 
             MessageWindowClient = new NewWindowClient();
-          
-            MessageWindowClient.AboutClient = (client) SelectedClient;
+
+            MessageWindowClient.AboutClient = (client)SelectedClient;
 
             //show window
             MessageWindowClient.IsOpen = true;
@@ -402,13 +405,13 @@ namespace LaboratoryApp.ViewModel
                         context.SaveChanges();
 
                         //client SelectedClient = new client();
-                        
+
                         //SelectedClient = (client)MainWindowViewModel.selectedNode;
 
                         //int index = MainWindowViewModel.rootElement.Children.IndexOf(SelectedClient);
 
                         //MainWindowViewModel.rootElement.Children[index] = clientToEdit;
-                        
+
                         //MainWindowViewModel.LoadView();
 
                         //var r = MainWindowViewModel.rootElement.Items.IndexOf((client)MainWindowViewModel.selectedNode);
@@ -443,11 +446,11 @@ namespace LaboratoryApp.ViewModel
         private void AddOfficeExecute()
         {
             MessageWindowOffice = new NewWindowOffice() { AboutOffice = new office() };
-            
+
             //open a new modal window
             messageWindowOffice.IsOpen = true;
             office officeToAddToDatabase;
-            
+
             if (MessageWindowOffice.ToConfirm)
             {
                 officeToAddToDatabase = new office();
@@ -461,7 +464,7 @@ namespace LaboratoryApp.ViewModel
                 LaboratoryEntities context = new LaboratoryEntities();
                 {
 
-                    
+
 
                     //client SelectedClient = new client();
 
@@ -479,7 +482,9 @@ namespace LaboratoryApp.ViewModel
                     //MainWindowViewModel.rootElement.Items[r].Items.Add(officeToAddToDatabase);
 
                     //MainWindowViewModel.rootElement.Items.[ind].Items.Add(officeToAddToDatabase);
-                     
+                    office OfficeToAddToList = officeToAddToDatabase;
+                    OfficeToAddToList.client = SelectedClient;
+
                 }
                 MainWindowViewModel.selectedNode.Children.Add(officeToAddToDatabase);
                 MainWindowViewModel.selectedNode.Children.Last().NameOfItem = officeToAddToDatabase.name;
@@ -492,19 +497,19 @@ namespace LaboratoryApp.ViewModel
                 ////Add new client to TreeView
                 //AllItems.Insert(index+1, newClient);
                 //MainWindowViewModel.LoadView();
-                
+
                 //int ind = MainWindowViewModel.rootElement.Items[this.ClientId];
-                
+
                 //(client)MainWindowViewModel.selectedNode;
                 //client temporaryClient = (client)MainWindowViewModel.selectedNode;
-                
+
                 //MainWindowViewModel.rootElement.Items.[ind].Items.Add(officeToAddToDatabase);
             }
             else
             { }
 
             MessageWindowOffice.ToConfirm = false;
-            
+
         }
     }
 }

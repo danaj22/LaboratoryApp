@@ -11,13 +11,13 @@ using System.Data.Entity.Validation;
 
 namespace LaboratoryApp.ViewModel
 {
-    public class InformationAboutOffice: ObservableObject
+    public class InformationAboutOffice : ObservableObject
     {
         private int officeId;
         public int OfficeId
         {
             get { return officeId; }
-            set 
+            set
             {
                 officeId = value;
                 OnPropertyChanged("OfficeId");
@@ -27,7 +27,7 @@ namespace LaboratoryApp.ViewModel
         public int ClientId
         {
             get { return clientId; }
-            set 
+            set
             {
                 clientId = value;
                 OnPropertyChanged("ClientId");
@@ -37,8 +37,8 @@ namespace LaboratoryApp.ViewModel
         public string Name
         {
             get { return name; }
-            set 
-            { 
+            set
+            {
                 name = value;
                 OnPropertyChanged("Name");
             }
@@ -47,7 +47,7 @@ namespace LaboratoryApp.ViewModel
         public string Address
         {
             get { return address; }
-            set 
+            set
             {
                 address = value;
                 OnPropertyChanged("Address");
@@ -57,8 +57,8 @@ namespace LaboratoryApp.ViewModel
         public string ContactPerson
         {
             get { return contactPerson; }
-            set 
-            { 
+            set
+            {
                 contactPerson = value;
                 OnPropertyChanged("ContactPerson");
             }
@@ -68,7 +68,7 @@ namespace LaboratoryApp.ViewModel
         {
             get { return email; }
             set
-            { 
+            {
                 email = value;
                 OnPropertyChanged("Email");
             }
@@ -77,13 +77,13 @@ namespace LaboratoryApp.ViewModel
         public string Telephone
         {
             get { return telephone; }
-            set 
-            { 
+            set
+            {
                 telephone = value;
                 OnPropertyChanged("Telephone");
             }
         }
-        
+
         public InformationAboutOffice(object SelectedNode)
         {
             SelectedOffice = (office)SelectedNode;
@@ -105,7 +105,7 @@ namespace LaboratoryApp.ViewModel
         public office SelectedOffice
         {
             get { return selectedOffice; }
-            set 
+            set
             {
                 selectedOffice = value;
                 OnPropertyChanged("SelectedOffice");
@@ -134,7 +134,7 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("MessageWindowGauge");
             }
         }
-        
+
         public ICommand AddGaugeCommand
         { get { return new SimpleRelayCommand(AddGaugeExecute); } }
 
@@ -143,8 +143,8 @@ namespace LaboratoryApp.ViewModel
         public int? ClientIdToAdd
         {
             get { return clientIdToAdd; }
-            set 
-            { 
+            set
+            {
                 clientIdToAdd = value;
                 OnPropertyChanged("ClientIdToAdd");
             }
@@ -171,10 +171,10 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("GaugeIdToAdd");
             }
         }
-        
+
         private void AddGaugeExecute()
         {
-            MessageWindowGauge = new NewWindowGauge() { AboutGauge = new gauge() };
+            MessageWindowGauge = new NewWindowGauge() { AboutGauge = new gauge() { model_of_gauges = new model_of_gauges() } };
             MessageWindowGauge.IsOpen = true;
 
             if (MessageWindowGauge.ToConfirm)
@@ -187,15 +187,16 @@ namespace LaboratoryApp.ViewModel
                     //GaugeIdToAdd = (from m in context.model_of_gauges where m.model == MessageWindowGauge.SelectedModel select m.model_of_gaugeId).FirstOrDefault();
                     ModelOfGauge = (from m in context.model_of_gauges where m.model == MessageWindowGauge.SelectedModel select m).FirstOrDefault();
 
-                }
-                gaugeToAddToDatabase.client_id = ClientId;
-                gaugeToAddToDatabase.office_id = OfficeId;
-                gaugeToAddToDatabase.model_of_gauge_id = ModelOfGauge.model_of_gaugeId;
-                gaugeToAddToDatabase.model_of_gauges = ModelOfGauge;
-                gaugeToAddToDatabase.serial_number = MessageWindowGauge.AboutGauge.serial_number;
+                    gaugeToAddToDatabase.client_id = ClientId;
+                    gaugeToAddToDatabase.office_id = OfficeId;
+                    gaugeToAddToDatabase.model_of_gauge_id = ModelOfGauge.model_of_gaugeId;
 
-                using (LaboratoryEntities context = new LaboratoryEntities())
-                {
+                    gaugeToAddToDatabase.model_of_gauges = ModelOfGauge;
+                    gaugeToAddToDatabase.model_of_gauges.usage = ModelOfGauge.usage;
+                    gaugeToAddToDatabase.model_of_gauges.type = ModelOfGauge.type;
+
+                    gaugeToAddToDatabase.serial_number = MessageWindowGauge.AboutGauge.serial_number;
+
                     try
                     {
                         context.gauges.Add(gaugeToAddToDatabase);
@@ -211,7 +212,12 @@ namespace LaboratoryApp.ViewModel
 
                         //MainWindowViewModel.rootElement.Items[r].Items[q].Items.Add(gaugeToAddToDatabase);
 
-                        MainWindowViewModel.selectedNode.Children.Add(gaugeToAddToDatabase);
+                        gauge GaugeToAddToList = gaugeToAddToDatabase;
+                        gaugeToAddToDatabase.client = SelectedOffice.client;
+                        GaugeToAddToList.office = SelectedOffice;
+
+
+                        MainWindowViewModel.selectedNode.Children.Add(GaugeToAddToList);
                         MainWindowViewModel.selectedNode.Children.Last().NameOfItem = MessageWindowGauge.SelectedModel;
                         MainWindowViewModel.selectedNode.Children.Last().Parent = SelectedOffice;
 
@@ -240,7 +246,7 @@ namespace LaboratoryApp.ViewModel
                 ////Add new client to TreeView
                 //AllItems.Insert(index+1, newClient);
 
-                
+
                 //MainWindowViewModel.LoadView();
             }
             else
@@ -270,19 +276,19 @@ namespace LaboratoryApp.ViewModel
 
                         context.offices.Remove(officeToDelete);
                         context.SaveChanges();
-                       // MainWindowViewModel.rootElement.Children.Remove(MainWindowViewModel.rootElement.)
+                        // MainWindowViewModel.rootElement.Children.Remove(MainWindowViewModel.rootElement.)
 
                         int index = MainWindowViewModel.rootElement.Children.IndexOf(SelectedOffice.Parent);
                         MainWindowViewModel.rootElement.Children[index].Children.Remove(MainWindowViewModel.selectedNode);
 
-                        MessageBox.Show("Usunięto oddział.","Informacja",MessageBoxButton.OK,MessageBoxImage.Information);
+                        MessageBox.Show("Usunięto oddział.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
                 catch
                 {
-                    MessageBox.Show("Nie udało się usunąć oddziału. Sprawdź połączenie.","Błąd",MessageBoxButton.OK,MessageBoxImage.Error);
+                    MessageBox.Show("Nie udało się usunąć oddziału. Sprawdź połączenie.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                
+
             }
         }
 
@@ -292,8 +298,8 @@ namespace LaboratoryApp.ViewModel
         private void EditOfficeExecute()
         {
             MessageWindowOffice = new NewWindowOffice();
-                     
-            MessageWindowOffice.AboutOffice = (office) SelectedOffice;
+
+            MessageWindowOffice.AboutOffice = (office)SelectedOffice;
 
             MessageWindowOffice.IsOpen = true;
 
@@ -332,7 +338,7 @@ namespace LaboratoryApp.ViewModel
 
                     MainWindowViewModel.selectedNode.NameOfItem = MessageWindowOffice.AboutOffice.name;
                     MainWindowViewModel.selectedNode = SelectedOffice;
-                    
+
                 }
                 MessageWindowOffice.ToConfirm = false;
                 //MainWindowViewModel.LoadView();

@@ -145,7 +145,7 @@ namespace LaboratoryApp.ViewModel
         }
        
 
-        public int SearchItem { get; set; }
+        public string SearchItem { get; set; }
         public ICommand LoadContent { get; set; }
         public ICommand SearchCommand 
         {

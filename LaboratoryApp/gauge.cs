@@ -20,14 +20,14 @@ namespace LaboratoryApp
         }
     
         public int gaugeId { get; set; }
-        public int serial_number { get; set; }
+        public string serial_number { get; set; }
         public int client_id { get; set; }
         public Nullable<int> office_id { get; set; }
         public int model_of_gauge_id { get; set; }
     
-        public virtual ObservableCollection<certificate> certificates { get; set; }
         public virtual client client { get; set; }
         public virtual model_of_gauges model_of_gauges { get; set; }
+        public virtual ObservableCollection<certificate> certificates { get; set; }
         public virtual office office { get; set; }
 
         protected override string displayImagePath
@@ -37,31 +37,5 @@ namespace LaboratoryApp
                 return @"C:\Users\daniel\Documents\Visual Studio 2013\Projects\LaboratoryApp\LaboratoryApp\icon\Computer-2-icon.png";
             }
         }
-
-        protected override string nameOfItem
-        {
-            get
-            {
-                return base.nameOfItem;
-            }
-            set
-            {
-                base.nameOfItem = value;
-                OnPropertyChanged("nameOfItem");
-            }
-        }
-        protected override ObservableCollection<ViewModel.MenuItem> children
-        {
-            get
-            {
-                return base.children;
-            }
-            set
-            {
-                base.children = value;
-                OnPropertyChanged("children");
-            }
-        }
-
     }
 }

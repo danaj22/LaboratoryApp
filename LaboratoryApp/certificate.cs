@@ -11,7 +11,7 @@ namespace LaboratoryApp
 {
     using System;
     using System.Collections.ObjectModel;
-
+    
     public partial class certificate
     {
         public int certifacateId { get; set; }

@@ -12,12 +12,12 @@ namespace LaboratoryApp
     using System;
     using System.Collections.ObjectModel;
     
-    public partial class client : ViewModel.MenuItem
+    public partial class client :ViewModel.MenuItem
     {
         public client()
         {
-            this.offices = new ObservableCollection<office>();
             this.gauges = new ObservableCollection<gauge>();
+            this.offices = new ObservableCollection<office>();
         }
     
         public int clientId { get; set; }
@@ -29,38 +29,14 @@ namespace LaboratoryApp
         public string NIP { get; set; }
         public string comments { get; set; }
     
-        public virtual ObservableCollection<office> offices { get; set; }
         public virtual ObservableCollection<gauge> gauges { get; set; }
+        public virtual ObservableCollection<office> offices { get; set; }
 
         protected override string displayImagePath
         {
             get
             {
                 return @"C:\Users\daniel\Documents\Visual Studio 2013\Projects\LaboratoryApp\LaboratoryApp\icon\Office-Customer-Male-Light-icon.png";
-            }
-        }
-        protected override ViewModel.MenuItem parent
-        {
-            get
-            {
-                return base.parent;
-            }
-            set
-            {
-                base.parent = value;
-                OnPropertyChanged("parent");
-            }
-        }
-        protected override ObservableCollection<ViewModel.MenuItem> children
-        {
-            get
-            {
-                return base.children;
-            }
-            set
-            {
-                base.children = value;
-                OnPropertyChanged("children");
             }
         }
     }
