@@ -139,8 +139,7 @@
                 <Binding Path="Author" UpdateSourceTrigger="PropertyChanged" >
                     <Binding.ValidationRules>
                         <vm:AllowNullFieldValidation ValidatesOnTargetUpdated="True"
-                                     ValidationStep="RawProposedValue"
-                                     ErrorMessage="Wpisz numer seryjny [max. 50 znaków]." />
+                                     ValidationStep="RawProposedValue" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>

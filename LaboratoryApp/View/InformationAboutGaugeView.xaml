@@ -8,8 +8,8 @@
         
              mc:Ignorable="d" 
              x:Name="uc"
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Margin="0,0,-99,0">
+             d:DesignHeight="300" Width="376">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
@@ -22,7 +22,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
         <TextBlock Text="informacje o mierniku" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center" Height="16" Margin="115,0" Width="116"/>
         <TextBlock Text="Model: " Grid.Column="0" Grid.Row="1"/>
@@ -42,9 +43,17 @@
 
         <Button Content="Usuń miernik" Command="{Binding DeleteGaugeCommand}"  Grid.Row="5" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Center" Height="22" Margin="12,0,10,0" Width="76" />
 
-        <Button Content="Edytuj dane miernika" Command="{Binding EditGaugeCommand}" Grid.Row="5" VerticalAlignment="Top" Grid.Column="3" HorizontalAlignment="Center" Height="22" Margin="8,0,6,0" Width="116" />
-        <Button Content="Generuj raport" Command="{Binding GenerateRaportCommand}" Grid.Column="3" HorizontalAlignment="Left" Margin="9,27,0,0" Grid.Row="5" VerticalAlignment="Top" Width="116" Height="22"/>
+        <Button Content="Edytuj dane miernika" Command="{Binding EditGaugeCommand}" Grid.Row="5" VerticalAlignment="Top" Grid.Column="3" HorizontalAlignment="Center" Height="22" Margin="33,0,-17,0" Width="116" />
+        <Button Content="Generuj raport" Command="{Binding GenerateRaportCommand}" Grid.Column="3" HorizontalAlignment="Left" Margin="33,27,-18,0" Grid.Row="5" VerticalAlignment="Top" Width="116" Height="22"/>
 
+        <DataGrid Grid.Row="6" Grid.ColumnSpan="4" Margin="10,10,-16,-74" Name="DataGridCertificates" IsReadOnly="True" CanUserResizeColumns="True" CanUserAddRows="False" CanUserSortColumns="True" ItemsSource="{Binding CollectionOfCertificate}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nazwa certyfikatu" Binding="{Binding name}" />
+                <DataGridTextColumn Header="Data" Binding="{Binding date}" />
+                <DataGridTextColumn Header="Autor" Binding="{Binding authorized_by}" />
+                <DataGridTextColumn Header="Koszt" Binding="{Binding cost}" />
+            </DataGrid.Columns>
+        </DataGrid>
 
     </Grid>
 </UserControl>

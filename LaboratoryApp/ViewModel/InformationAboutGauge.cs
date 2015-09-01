@@ -167,6 +167,18 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
+        private ObservableCollection<certificate> collectionOfCertificate;
+
+        public ObservableCollection<certificate> CollectionOfCertificate
+        {
+            get { return collectionOfCertificate; }
+            set 
+            {
+                collectionOfCertificate = value;
+                OnPropertyChanged("CollectionOfCertificate");
+            }
+        }
+
         #endregion
 
 
@@ -180,6 +192,15 @@ namespace LaboratoryApp.ViewModel
             Manufacturer = SelectedGauge.model_of_gauges.manufacturer_name;
             Model = SelectedGauge.model_of_gauges.model;
             Description = SelectedGauge.model_of_gauges.usage.description;
+
+            CollectionOfCertificate = new ObservableCollection<certificate>();
+            LaboratoryEntities context = new LaboratoryEntities();
+            var CertificatesOfSelectedGauge = (from c in context.certificates where c.gauge_id == SelectedGauge.gaugeId select c).ToList();
+
+            foreach(var certificate in CertificatesOfSelectedGauge)
+            {
+                CollectionOfCertificate.Add(certificate);
+            }
 
         }
         public InformationAboutGauge()

@@ -50,8 +50,7 @@
                 <Binding Path="NameOfType" UpdateSourceTrigger="PropertyChanged" >
                     <Binding.ValidationRules>
                         <vm:StandardFieldValidation ValidatesOnTargetUpdated="True"
-                                     ValidationStep="RawProposedValue"
-                                     ErrorMessage="Wpisz typ [max. 50 znaków]." />
+                                     ValidationStep="RawProposedValue"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
