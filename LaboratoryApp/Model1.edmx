@@ -5,12 +5,9 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="laboratoryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'laboratory.dbo.calibrators' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="calibrators">
           <Key>
             <PropertyRef Name="calibratorId" />
-            <PropertyRef Name="name" />
           </Key>
           <Property Name="calibratorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="300" Nullable="false" />
@@ -206,6 +203,7 @@ warning 6002: The table/view 'laboratory.dbo.calibrators' does not have a primar
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="laboratoryModelStoreContainer">
+          <EntitySet Name="calibrators" EntityType="Self.calibrators" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="certificates" EntityType="Self.certificates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="clients" EntityType="Self.clients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="gauges" EntityType="Self.gauges" Schema="dbo" store:Type="Tables" />
@@ -213,12 +211,6 @@ warning 6002: The table/view 'laboratory.dbo.calibrators' does not have a primar
           <EntitySet Name="offices" EntityType="Self.offices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="types" EntityType="Self.types" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="usages" EntityType="Self.usages" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="calibrators" EntityType="Self.calibrators" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [calibrators].[calibratorId] AS [calibratorId], 
-    [calibrators].[name] AS [name]
-    FROM [dbo].[calibrators] AS [calibrators]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_certificates_gauges" Association="Self.FK_certificates_gauges">
             <End Role="gauges" EntitySet="gauges" />
             <End Role="certificates" EntitySet="certificates" />
@@ -507,7 +499,6 @@ warning 6002: The table/view 'laboratory.dbo.calibrators' does not have a primar
         <EntityType Name="calibrator">
           <Key>
             <PropertyRef Name="calibratorId" />
-            <PropertyRef Name="name" />
           </Key>
           <Property Name="calibratorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />

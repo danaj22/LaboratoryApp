@@ -45,7 +45,7 @@
         <!--<d:DataContext>
         <local:MainWindowViewModel/>
     </d:DataContext>-->
-    <Grid>
+    <Grid Margin="0,0,-14,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto" MinWidth="156"/>
@@ -157,10 +157,6 @@
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding ElementName=TxtBoxNumberOfCertificate,
                             Path=(Validation.HasError)}" Value="false" />
-                                <Condition Binding="{Binding ElementName=ComboBoxManufacturer,
-                            Path=(Validation.HasError)}" Value="false"/>
-                                <Condition Binding="{Binding ElementName=TxtBoxSerial,
-                            Path=(Validation.HasError)}" Value="false"/>
                             </MultiDataTrigger.Conditions>
                         </MultiDataTrigger>
                     </Style.Triggers>
@@ -178,6 +174,10 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <Button Content="Dodaj" Command="{Binding AddCalibratorCommand}" Grid.Column="1" HorizontalAlignment="Left" Margin="261,23,-77,0" Grid.Row="9" VerticalAlignment="Top" Width="Auto"/>
+
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowCalibrator}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="200" 
+			DialogWidth="370" DialogResizeMode="CanResize" />
 
     </Grid>
 </UserControl>

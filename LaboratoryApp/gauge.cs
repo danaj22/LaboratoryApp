@@ -18,13 +18,13 @@ namespace LaboratoryApp
         {
             this.certificates = new ObservableCollection<certificate>();
         }
-    
+
         public int gaugeId { get; set; }
         public string serial_number { get; set; }
         public int client_id { get; set; }
         public Nullable<int> office_id { get; set; }
         public int model_of_gauge_id { get; set; }
-    
+
         public virtual client client { get; set; }
         public virtual model_of_gauges model_of_gauges { get; set; }
         public virtual ObservableCollection<certificate> certificates { get; set; }

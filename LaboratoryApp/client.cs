@@ -11,15 +11,15 @@ namespace LaboratoryApp
 {
     using System;
     using System.Collections.ObjectModel;
-    
-    public partial class client :ViewModel.MenuItem
+
+    public partial class client : ViewModel.MenuItem
     {
         public client()
         {
             this.gauges = new ObservableCollection<gauge>();
             this.offices = new ObservableCollection<office>();
         }
-    
+
         public int clientId { get; set; }
         public string name { get; set; }
         public string adress { get; set; }
@@ -28,7 +28,7 @@ namespace LaboratoryApp
         public string tel { get; set; }
         public string NIP { get; set; }
         public string comments { get; set; }
-    
+
         public virtual ObservableCollection<gauge> gauges { get; set; }
         public virtual ObservableCollection<office> offices { get; set; }
 

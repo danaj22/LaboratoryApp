@@ -139,6 +139,7 @@
     <Compile Include="ViewModel\LoadData.cs" />
     <Compile Include="ViewModel\ModalDialogManager.cs" />
     <Compile Include="ViewModel\NameValidation.cs" />
+    <Compile Include="ViewModel\NewWindowCalibrator.cs" />
     <Compile Include="ViewModel\NewWindowClient.cs" />
     <Compile Include="ViewModel\NewWindowModelOfGauge.cs" />
     <Compile Include="ViewModel\NewWindowOffice.cs" />
@@ -157,6 +158,9 @@
     <Compile Include="ViewModel\ObservableObject.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
     <Compile Include="ViewModel\UserInput.cs" />
+    <Compile Include="View\DialogWindowCalibrator.xaml.cs">
+      <DependentUpon>DialogWindowCalibrator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DialogWindowClient.xaml.cs">
       <DependentUpon>DialogWindowClient.xaml</DependentUpon>
     </Compile>
@@ -199,6 +203,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\DialogWindowCalibrator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DialogWindowClient.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

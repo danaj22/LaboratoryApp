@@ -20,6 +20,7 @@ namespace LaboratoryApp
         public LaboratoryEntities()
             : base("LaboratoryEntities")
         {
+            Database.SetInitializer<LaboratoryEntities>(new CreateDatabaseIfNotExists<LaboratoryEntities>());
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -9,9 +9,32 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         
-        Title="{Binding Title}" Height="600" Width="705">
+        Title="{Binding Title}" Height="600" Width="805">
 
     <Window.Resources>
+        <ControlTemplate x:Key="errorTemplate">
+            <DockPanel LastChildFill="true">
+                <Border Background="OrangeRed" DockPanel.Dock="right"
+                    Margin="3,0,0,0" Width="20" Height="20" CornerRadius="5"
+                    ToolTip="{Binding ElementName=adoner,
+                        Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">
+                    <TextBlock Text="!" VerticalAlignment="center" HorizontalAlignment="center"
+                           FontWeight="Bold" Foreground="white" />
+                </Border>
+                <AdornedElementPlaceholder Name="adoner" VerticalAlignment="Center">
+                    <Border BorderBrush="OrangeRed" BorderThickness="1" />
+                </AdornedElementPlaceholder>
+            </DockPanel>
+        </ControlTemplate>
+        <Style x:Key="textBoxError" TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip"
+                        Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                        Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <!-- To a treeView -->
         <!--<HierarchicalDataTemplate DataType="{x:Type local:client}"  ItemsSource="{Binding Children}">
             <Grid>
@@ -59,7 +82,7 @@
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto" MinWidth="435"/>
+            <ColumnDefinition MinWidth="435"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" MinHeight="25"/>
@@ -74,16 +97,41 @@
         <!--<Label Content="Data:" Grid.ColumnSpan="2" />
         <DatePicker Grid.Column="1"  FirstDayOfWeek="Monday"  />-->
         <Label Content="Temperatura:"  Grid.Row="1" VerticalAlignment="Center"/>
-        <TextBox Text="{Binding Temperature}" Grid.Column="1" Grid.Row="1" Width="145" VerticalAlignment="Center" />
+        <TextBox Grid.Column="1" Grid.Row="1" Width="145" VerticalAlignment="Center"
+            Validation.ErrorTemplate="{StaticResource errorTemplate}"
+         Style="{StaticResource textBoxError}" >
+
+            <TextBox.Text>
+                <Binding Path="Temperature" UpdateSourceTrigger="PropertyChanged" >
+                    <Binding.ValidationRules>
+                        <vm:CalibratorValidation ValidatesOnTargetUpdated="True"
+                                     ValidationStep="RawProposedValue" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <Label Content="Imię i Nazwisko:" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center"/>
-        <TextBox Grid.Column="1" Grid.Row="2" Width="145" Text="{Binding NameAndSurname}" VerticalAlignment="Center" />
+        <TextBox Grid.Column="1" Grid.Row="2" Width="145" VerticalAlignment="Center"
+                 Validation.ErrorTemplate="{StaticResource errorTemplate}"
+         Style="{StaticResource textBoxError}" >
+
+            <TextBox.Text>
+                <Binding Path="NameAndSurname" UpdateSourceTrigger="PropertyChanged" >
+                    <Binding.ValidationRules>
+                        <vm:NameValidation ValidatesOnTargetUpdated="True"
+                                     ValidationStep="RawProposedValue"
+                                     ErrorMessage="Wpisz imię i nazwisko [max. 100 znaków]." />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
 
 
         <TreeView Background="Bisque" Name="tvwAllClients" ItemContainerStyle="{StaticResource ItemContainerStyle}" Grid.Row="4" Grid.RowSpan="2" ItemsSource="{Binding RootElement.Children,UpdateSourceTrigger=PropertyChanged}" 
                   vm:TreeViewHelper.SelectedItem="{Binding SelectedNode, Mode=TwoWay}" VirtualizingPanel.IsVirtualizing="True" Grid.Column="0" Grid.ColumnSpan="2">
-           
+
             <TreeView.ItemTemplate >
-               
+
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                     <Grid>
                         <StackPanel Orientation="Horizontal" >
@@ -94,7 +142,7 @@
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
-        
+
 
 
         <!--<TreeView Name="tvwAllClients" ItemContainerStyle="{StaticResource ItemContainerStyle}" Grid.Row="4" Grid.RowSpan="2" ItemsSource="{Binding AllItems,UpdateSourceTrigger=PropertyChanged}" 
@@ -134,7 +182,7 @@
             </TreeView.ItemTemplate>
         </TreeView>-->
 
-        <ContentControl Background="LightBlue" Grid.RowSpan="2" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="3" Content="{Binding CurrentViewModel}">
+        <ContentControl Background="LightBlue" Grid.RowSpan="2" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2" Content="{Binding CurrentViewModel}">
         </ContentControl>
         <Button Content="Wyszukaj" Command="{Binding SearchCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Width="80"/>
 

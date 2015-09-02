@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
+using System.Data.Entity;
 //using System.Windows;
 //using System.Windows.Input;
 //todelet 2 lib^^
@@ -133,7 +134,7 @@ namespace LaboratoryApp.ViewModel
 
         public MainWindowViewModel()
         {
-
+            
             //TaskCommand = new SimpleRelayCommand(TaskCom);
             Title = "Laboratorium";
             AddNewClientCommand = new SimpleRelayCommand(AddClient);

@@ -326,6 +326,31 @@ namespace LaboratoryApp.ViewModel
         }
     }
 
+    public class CalibratorValidation : ValidationRule
+    {
+
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            string FieldContent;
+            if (!string.IsNullOrEmpty((string)value))
+            {
+
+                FieldContent = value as string;
+
+                if (FieldContent.Length > 300)
+                {
+                    return new ValidationResult(false, "Podana wartość jest za długa. [max. 300 znaków]");
+                }
+                else
+                {
+                    return ValidationResult.ValidResult;
+                }
+            }
+            else
+                return new ValidationResult(false, "Nie wprowadzono danych.");
+        }
+    }
+
     
 
 }

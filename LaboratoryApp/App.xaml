@@ -28,7 +28,10 @@
             <v:DialogWindowGauge />
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:NewWindowRaport}">
-            <v:Raport />
+            <v:Raport />        
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewWindowCalibrator}">
+            <v:DialogWindowCalibrator />
         </DataTemplate>
 
     </Application.Resources>

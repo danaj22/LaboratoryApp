@@ -312,6 +312,8 @@ namespace LaboratoryApp.ViewModel
                         context.certificates.Add(cert);
                         context.SaveChanges();
 
+                        CollectionOfCertificate.Add(cert);
+
                     }
                 }
                 catch (DbEntityValidationException e)

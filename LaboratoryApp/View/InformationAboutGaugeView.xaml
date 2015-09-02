@@ -8,13 +8,14 @@
         
              mc:Ignorable="d" 
              x:Name="uc"
-             d:DesignHeight="300" Width="376">
+             d:DesignHeight="300" d:DesignWidth="600">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto" MinWidth="97"/>
-            <ColumnDefinition Width="Auto" MinWidth="129"/>
+            <ColumnDefinition Width="100" MinWidth="120"/>
+            <ColumnDefinition  Width="100" MinWidth="120"/>
+            <ColumnDefinition  Width="100" MinWidth="90"/>
+            <ColumnDefinition  />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -22,7 +23,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
             <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
         <TextBlock Text="informacje o mierniku" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center" Height="16" Margin="115,0" Width="116"/>
@@ -38,20 +39,20 @@
         <vm:ModalDialogManager DataContext="{Binding MessageWindowGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
 			DialogWidth="320" DialogResizeMode="CanResize" />
 
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowRaport}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="750" 
-			DialogWidth="555" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowRaport}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="760" 
+			DialogWidth="575" DialogResizeMode="CanResize" />
 
-        <Button Content="Usuń miernik" Command="{Binding DeleteGaugeCommand}"  Grid.Row="5" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Center" Height="22" Margin="12,0,10,0" Width="76" />
+        <Button Content="Usuń miernik" Command="{Binding DeleteGaugeCommand}"  Grid.Row="5" VerticalAlignment="Center" Grid.Column="3" HorizontalAlignment="Center" Height="22" Width="76"  />
 
-        <Button Content="Edytuj dane miernika" Command="{Binding EditGaugeCommand}" Grid.Row="5" VerticalAlignment="Top" Grid.Column="3" HorizontalAlignment="Center" Height="22" Margin="33,0,-17,0" Width="116" />
-        <Button Content="Generuj raport" Command="{Binding GenerateRaportCommand}" Grid.Column="3" HorizontalAlignment="Left" Margin="33,27,-18,0" Grid.Row="5" VerticalAlignment="Top" Width="116" Height="22"/>
+        <Button Content="Edytuj dane miernika" Command="{Binding EditGaugeCommand}" Grid.Row="5" VerticalAlignment="Center" Grid.Column="2" HorizontalAlignment="Center" Height="22"  Width="116" />
+        <Button Content="Generuj raport" Command="{Binding GenerateRaportCommand}" Grid.Column="1" HorizontalAlignment="Right"  Grid.Row="5" VerticalAlignment="Center" Width="116" Height="22" />
 
-        <DataGrid Grid.Row="6" Grid.ColumnSpan="4" Margin="10,10,-16,-74" Name="DataGridCertificates" IsReadOnly="True" CanUserResizeColumns="True" CanUserAddRows="False" CanUserSortColumns="True" ItemsSource="{Binding CollectionOfCertificate}">
+        <DataGrid Grid.Row="6" Grid.ColumnSpan="4" Grid.Column="0" Name="DataGridCertificates" IsReadOnly="True" CanUserResizeColumns="True" AutoGenerateColumns="False"  CanUserAddRows="False" CanUserSortColumns="True" ItemsSource="{Binding CollectionOfCertificate}" HorizontalAlignment="Left" Width="460" Margin="0,0,0,-93"  >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nazwa certyfikatu" Binding="{Binding name}" />
-                <DataGridTextColumn Header="Data" Binding="{Binding date}" />
-                <DataGridTextColumn Header="Autor" Binding="{Binding authorized_by}" />
-                <DataGridTextColumn Header="Koszt" Binding="{Binding cost}" />
+                <DataGridTextColumn MinWidth="100" Header="Nazwa certyfikatu" Binding="{Binding name}" />
+                <DataGridTextColumn MinWidth="100" Header="Data" Binding="{Binding date}" />
+                <DataGridTextColumn MinWidth="100" Header="Autor" Binding="{Binding authorized_by}" />
+                <DataGridTextColumn MinWidth="100" Header="Koszt" Binding="{Binding cost}" />
             </DataGrid.Columns>
         </DataGrid>
 

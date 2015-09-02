@@ -192,11 +192,59 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
+        private ICommand addCalibratorCommand;
+        public ICommand AddCalibratorCommand
+        {
+            get { return addCalibratorCommand; }
+            set
+            {
+                addCalibratorCommand = value;
+                base.OnPropertyChanged("AddCalibratorCommand");
+            }
+        }
+
+        private NewWindowCalibrator messageWindowCalibrator;
+
+        public NewWindowCalibrator MessageWindowCalibrator
+        {
+            get { return messageWindowCalibrator; }
+            set
+            {
+                messageWindowCalibrator = value;
+                OnPropertyChanged("MessageWindowCalibrator");
+            }
+        }
+
+        public void AddCalibrator()
+        {
+            MessageWindowCalibrator = new NewWindowCalibrator();
+            MessageWindowCalibrator.IsOpen = true;
+
+            if (MessageWindowCalibrator.ToConfirm)
+            {
+                if (!string.IsNullOrEmpty(MessageWindowCalibrator.NameOfCalibrator))
+                {
+                    using (LaboratoryEntities context = new LaboratoryEntities())
+                    {
+                        calibrator CalibratorToAdd = new calibrator();
+                        CalibratorToAdd.name = MessageWindowCalibrator.NameOfCalibrator;
+
+                        context.calibrators.Add(CalibratorToAdd);
+                        context.SaveChanges();
+
+                        CollectionOfCalibrators.Add(CalibratorToAdd);
+                    }
+                }
+                
+            }
+            MessageWindowCalibrator.ToConfirm = false;
+        }
 
 
 
         public NewWindowRaport()
         {
+            AddCalibratorCommand = new SimpleRelayCommand(AddCalibrator);
             CollectionOfCalibrators = new ObservableCollection<calibrator>();
             LaboratoryEntities context = new LaboratoryEntities();
             var ListOfCalibrators = (from c in context.calibrators select c).ToList();
@@ -246,6 +294,7 @@ namespace LaboratoryApp.ViewModel
 
             Recommendations = "Jeśli harmonogram Zleceniodawcy nie przewiduje inaczej, to następne wzorcowanie zaleca się przeprowadzić przed upływem ostatniego dnia analogicznego miesiąca następnego roku (w stosunku do daty wystawienia) lub w przypadku uszkodzenia";
             Author = MainWindowViewModel.nameAndSurname;
+
 
 
         }
