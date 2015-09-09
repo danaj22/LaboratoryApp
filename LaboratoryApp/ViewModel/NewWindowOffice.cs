@@ -29,6 +29,8 @@ namespace LaboratoryApp.ViewModel
         }
 
 
+
+
         private ICommand okCommand;
 
         public ICommand OKCommand
@@ -108,7 +110,37 @@ namespace LaboratoryApp.ViewModel
             IsOpen = false;
         }
 
+        private bool isSelected;
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set
+            {
+                if (value != isSelected)
+                {
+                    isSelected = value;
+                    this.OnPropertyChanged("IsSelected");
+                }
+            }
+        }
 
+        private bool isExpanded;
+        public bool IsExpanded
+        {
+            get { return isExpanded; }
+            set
+            {
+                if (value != isExpanded)
+                {
+                    isExpanded = value;
+                    this.OnPropertyChanged("IsExpanded");
+                }
+
+                // Expand all the way up to the root.
+                if (isExpanded && AboutOffice.Parent != null)
+                    this.IsExpanded = true;
+            }
+        }
        
     }
 }

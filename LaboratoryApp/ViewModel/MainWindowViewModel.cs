@@ -16,13 +16,16 @@ namespace LaboratoryApp.ViewModel
 {
     public class MainWindowViewModel : ObservableObject
     {
+
+
+        public static LaboratoryEntities Context = new LaboratoryEntities();
         public static string nameAndSurname;
 
         public string NameAndSurname
         {
             get { return nameAndSurname; }
-            set 
-            { 
+            set
+            {
                 nameAndSurname = value;
                 OnPropertyChanged("NameAndSurname");
             }
@@ -33,20 +36,20 @@ namespace LaboratoryApp.ViewModel
         public string Temperature
         {
             get { return temperature; }
-            set 
-            { 
+            set
+            {
                 temperature = value;
                 OnPropertyChanged("Temperature");
             }
         }
-        
+
         static private LoadData data;
 
         public LoadData Data
         {
             get { return data; }
-            set 
-            { 
+            set
+            {
                 data = value;
                 OnPropertyChanged("Data");
             }
@@ -67,8 +70,8 @@ namespace LaboratoryApp.ViewModel
         public MenuItem RootElement
         {
             get { return rootElement; }
-            set 
-            { 
+            set
+            {
                 rootElement = value;
                 OnPropertyChanged("RootElement");
             }
@@ -79,7 +82,8 @@ namespace LaboratoryApp.ViewModel
         public ObservableCollection<client> AllItems
         {
             get { return allItems; }
-            set {
+            set
+            {
                 allItems = value;
                 OnPropertyChanged("AllItems");
             }
@@ -95,12 +99,11 @@ namespace LaboratoryApp.ViewModel
                 selectedNode = value;
 
                 if ((SelectedNode as client) != null)
-                
                 {
                     CurrentViewModel = new InformationAboutClient(SelectedNode);
                 }
 
-                if((SelectedNode as office)!=null)
+                if ((SelectedNode as office) != null)
                 {
                     office selectedOffice = SelectedNode as office;
                     CurrentViewModel = new InformationAboutOffice(SelectedNode);
@@ -119,22 +122,22 @@ namespace LaboratoryApp.ViewModel
         public ObservableObject CurrentViewModel
         {
             get { return currentViewModel; }
-            set 
+            set
             {
                 currentViewModel = value;
                 this.OnPropertyChanged("CurrentViewModel");
             }
         }
-      
+
         static public void LoadView()
-        {            
-            data = new LoadData(rootElement);            
+        {
+            data = new LoadData(rootElement);
         }
 
 
         public MainWindowViewModel()
         {
-            
+
             //TaskCommand = new SimpleRelayCommand(TaskCom);
             Title = "Laboratorium";
             AddNewClientCommand = new SimpleRelayCommand(AddClient);
@@ -144,24 +147,116 @@ namespace LaboratoryApp.ViewModel
             LoadView();
 
         }
-       
 
+        private bool isCheckedName;
+        public bool IsCheckedName
+        {
+            get { return isCheckedName; }
+            set
+            {
+                isCheckedName = value;
+                OnPropertyChanged("IsCheckedName");
+            }
+        }
+
+        private bool isCheckedNip;
+        public bool IsCheckedNip
+        {
+            get { return isCheckedNip; }
+            set
+            {
+                isCheckedNip = value;
+                OnPropertyChanged("IsCheckedNip");
+            }
+        }
+        private bool isCheckedSerial = true;
+        public bool IsCheckedSerial
+        {
+            get { return isCheckedSerial; }
+            set
+            {
+                isCheckedSerial = value;
+                OnPropertyChanged("IsCheckedSerial");
+            }
+        }
         public string SearchItem { get; set; }
         public ICommand LoadContent { get; set; }
-        public ICommand SearchCommand 
+        public ICommand SearchCommand
         {
-            get { return new SimpleRelayCommand(SearchGauge); }
+            get { return new SimpleRelayCommand(Search); }
         }
-        private void SearchGauge()
+        private void Search()
         {
             try
             {
-                LaboratoryEntities context = new LaboratoryEntities();
-
-                var tmp = (from g in context.gauges where g.serial_number == SearchItem select g).FirstOrDefault();
-                this.SelectedNode = tmp;
                 
-                //var tmp = (from searchedGauge in context.model_of_gauges
+
+
+                if (IsCheckedSerial)
+                {
+                    gauge tmp = (from g in Context.gauges where g.serial_number == SearchItem select g).FirstOrDefault();
+
+                    foreach (client cli in RootElement.Children)
+                    {
+                        if (tmp.client.name == cli.name)
+                        {
+                            cli.IsExpanded = true;
+                            foreach(gauge g in cli.gauges)
+                            {
+                                if (g.serial_number == SearchItem)
+                                {
+                                    if(g.office!=null)
+                                    {
+                                        g.office.IsExpanded = true;
+                                    }
+                                    g.IsSelected = true;
+                                }
+                            }
+                        }
+                    }
+                    //}
+                    //tmp.IsExpanded = true;
+                    //tmp.IsSelected = true;
+                    SelectedNode = tmp;
+                    
+                }
+                else if (IsCheckedNip)
+                {
+                    foreach (client cli in RootElement.Children)
+                    {
+                        if (cli.NIP == SearchItem)
+                        {
+                           
+                            cli.IsSelected = true;
+                        }
+
+                    }
+                    //tmp.IsSelected = true;
+                    
+
+                }
+                else if (IsCheckedName)
+                {
+                    foreach(client cli in RootElement.Children)
+                    {
+                        if (cli.name == SearchItem)
+                        {
+                            
+                            cli.IsSelected = true;
+                        }
+
+                    }
+                    //tmp.IsExpanded = true;
+
+                    //tmp.IsSelected = true;
+                    //SelectedNode.NameOfItem = "ttttttttttttttttttt";
+                    //SelectedNode.IsExpanded = true;
+                   // SelectedNode = tmp;
+                }
+                else
+                { MessageBox.Show("Nie znaleziono wyników."); }
+
+                //var tmp = (from searchedGauge in Context.model_of_gauges
                 //           where SearchItem == searchedGauge.gaugeId
                 //           select new { searchedGauge. }).ToList();
 
@@ -169,13 +264,13 @@ namespace LaboratoryApp.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show("Nie znaleziono wyników.");
             }
-            
+
         }
-        private bool CanSearchGauge()
+        private bool CanSearch()
         {
-            return true; 
+            return true;
         }
 
         /// <summary>
@@ -184,12 +279,12 @@ namespace LaboratoryApp.ViewModel
         /// 
         private ICommand addNewGaugeCommand;
         public ICommand AddNewGaugeCommand
-        { 
+        {
 
-            get 
-            { 
+            get
+            {
                 return addNewGaugeCommand;
-            } 
+            }
             set
             {
                 addNewGaugeCommand = value;
@@ -199,11 +294,9 @@ namespace LaboratoryApp.ViewModel
 
         private void AddGauge()
         {
-            LaboratoryEntities context = new LaboratoryEntities();
 
-            MessageWindowModelOfGauge = new NewWindowModelOfGauge 
-            { AboutModelOfGauge = new InformationAboutModelOfGauge() };
-            
+            MessageWindowModelOfGauge = new NewWindowModelOfGauge { AboutModelOfGauge = new InformationAboutModelOfGauge() };
+
             MessageWindowModelOfGauge.IsOpen = true;
 
             if (MessageWindowModelOfGauge.ToConfirm)
@@ -214,32 +307,67 @@ namespace LaboratoryApp.ViewModel
                     && !String.IsNullOrEmpty(MessageWindowModelOfGauge.AboutModelOfGauge.SelectedType)
                     )
                 {
-                    var newGauge = new model_of_gauges();
+                    model_of_gauges newGauge = new model_of_gauges();
                     newGauge.manufacturer_name = MessageWindowModelOfGauge.AboutModelOfGauge.ManufacturerName;
                     newGauge.model = MessageWindowModelOfGauge.AboutModelOfGauge.Model;
 
+
+                    //MessageWindowModelOfGauge.AboutModelOfGauge.
+
                     try
                     {
-                        
+
                         {
-                            newGauge.type_id = (from t in context.types where t.name == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedType select t.typeId).FirstOrDefault();
-                            newGauge.usage_id = (from u in context.usages where u.description == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedUsage select u.usageId).FirstOrDefault();
+                            {
+                                newGauge.type_id = (from t in Context.types where t.name == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedType select t.typeId).FirstOrDefault();
+                                newGauge.usage_id = (from u in Context.usages where u.description == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedUsage select u.usageId).FirstOrDefault();
+
+                                Context.model_of_gauges.Add(newGauge);
+                                Context.SaveChanges();
+                            }
                         }
                     }
-                    catch(Exception ex)
-                    { 
+                    catch (Exception ex)
+                    {
                         MessageBox.Show(ex.ToString());
                     }
                     try
                     {
-                        
-                        {
 
-                            context.model_of_gauges.Add(newGauge);
-                            context.SaveChanges();
+                        int LastModelId = (from m in Context.model_of_gauges orderby m.model_of_gaugeId descending select m.model_of_gaugeId).First();
+
+                        foreach (calibrator zmienna in MessageWindowModelOfGauge.CollectionOfCalibrators)
+                        {
+                            if (zmienna.IsChecked)
+                            {
+                                try
+                                {
+
+                                    calibrators_model_of_gauges calib_gauge_model = new calibrators_model_of_gauges();
+                                    calib_gauge_model.calibrator = zmienna;
+                                    calib_gauge_model.calibrator_id = zmienna.calibratorId;
+                                    //MessageBox.Show(LastModelId.ToString());
+                                    model_of_gauges model = (from m in Context.model_of_gauges orderby m.model_of_gaugeId descending select m).First();
+
+                                    calib_gauge_model.model_of_gauges = model;
+                                    calib_gauge_model.model_of_gaug_id = model.model_of_gaugeId;
+
+
+
+                                    Context.calibrators_model_of_gauges.Add(calib_gauge_model);
+                                    Context.SaveChanges();
+
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show(e.ToString());
+                                }
+                            }
+                            //newGauge.calibrator_model_of_gauge.Add(zmienna);
                         }
+
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         MessageBox.Show(ex.ToString());
                     }
@@ -267,15 +395,15 @@ namespace LaboratoryApp.ViewModel
 
             //    gaugeToAddToDatabase.manufacturer_name = gaugeDialogWindow.AboutModelOfGauge.ManufacturerName;
             //    gaugeToAddToDatabase.model = gaugeDialogWindow.AboutModelOfGauge.Model;
-                
+
             //    //trzeba dorobić wyszukiwanie w bazie "po nazwie znajdź ID"
             //    gaugeToAddToDatabase.type_id = 1;
             //    gaugeToAddToDatabase.usage_id = 1;
 
-            //    using (LaboratoryEntities context = new LaboratoryEntities())
+            //    using (LaboratoryEntities Context = new LaboratoryEntities())
             //    {
-            //        context.gauges.Add(gaugeToAddToDatabase);
-            //        context.SaveChanges();
+            //        Context.gauges.Add(gaugeToAddToDatabase);
+            //        Context.SaveChanges();
             //    }
             //}
             //else
@@ -289,7 +417,7 @@ namespace LaboratoryApp.ViewModel
             ////set owner of this window
             //newModal.Owner = Application.Current.MainWindow;
             //newModal.ShowDialog();
-            
+
             //if (newModal.DialogResult == true)
             //{
             //    MessageBox.Show(newModal.DialogResult.ToString());
@@ -299,11 +427,11 @@ namespace LaboratoryApp.ViewModel
             //    newGauge.type_id = 1;
             //    newGauge.usage_id = 1;
 
-            //    using (LaboratoryEntities context = new LaboratoryEntities())
+            //    using (LaboratoryEntities Context = new LaboratoryEntities())
             //    {
 
-            //        context.gauges.Add(newGauge);
-            //        context.SaveChanges();
+            //        Context.gauges.Add(newGauge);
+            //        Context.SaveChanges();
             //    }
             //}
             //else
@@ -323,22 +451,22 @@ namespace LaboratoryApp.ViewModel
             {
                 return addNewClientCommand;
             }
-            set 
-            { 
+            set
+            {
                 addNewClientCommand = value;
                 OnPropertyChanged("AddNewClientCommand");
             }
         }
 
         //public View.ModalWindowClient NClient = new View.ModalWindowClient();
-        
+
         private bool? dialogResultValue;
 
         public bool? DialogResultValue
         {
             get { return dialogResultValue; }
-            set 
-            { 
+            set
+            {
                 dialogResultValue = value;
                 OnPropertyChanged("DialogResultValue");
             }
@@ -349,21 +477,21 @@ namespace LaboratoryApp.ViewModel
         public DialogWindowBase DialogWindow
         {
             get { return dialogWindow; }
-            set 
+            set
             {
                 dialogWindow = value;
                 OnPropertyChanged("DialogWindow");
             }
         }
 
-            
-        
+
+
         private void AddClient()
         {
             MessageWindowClient = new NewWindowClient { AboutClient = new client() };
             MessageWindowClient.IsOpen = true;
 
-            if(MessageWindowClient.ToConfirm)
+            if (MessageWindowClient.ToConfirm)
             {
                 if (MessageWindowClient.AboutClient.name != null && MessageWindowClient.AboutClient.NIP != null)
                 {
@@ -376,21 +504,20 @@ namespace LaboratoryApp.ViewModel
                     newClient.NIP = MessageWindowClient.AboutClient.NIP;
                     newClient.contact_person_name = MessageWindowClient.AboutClient.contact_person_name;
                     newClient.comments = MessageWindowClient.AboutClient.comments;
-                    
+
 
                     try
                     {
-                        LaboratoryEntities context = new LaboratoryEntities();
                         {
-                            context.clients.Add(newClient);
-                            context.SaveChanges();
+                            Context.clients.Add(newClient);
+                            Context.SaveChanges();
                         }
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         MessageBox.Show(ex.ToString());
                     }
-                    
+
                     //var index = RootElement.Items.IndexOf(RootElement.Items.Last())+1;
                     //AllItems.Remove((client)SelectedNode);
                     //Add new client to TreeView
@@ -398,9 +525,9 @@ namespace LaboratoryApp.ViewModel
                     RootElement.Children.Last().NameOfItem = newClient.name;
 
                     MessageBox.Show("dodanie użytkownika do bazy");
-                    
+
                 }
-                
+
             }
             MessageWindowClient.ToConfirm = false;
 
@@ -434,10 +561,10 @@ namespace LaboratoryApp.ViewModel
             //    newClient.contact_person_name = newBaseClient.AboutClient.ContactPerson;
             //    newClient.comments = newBaseClient.AboutClient.Comment;
 
-            //    using (LaboratoryEntities context = new LaboratoryEntities())
+            //    using (LaboratoryEntities Context = new LaboratoryEntities())
             //    {
-            //        context.clients.Add(newClient);
-            //        context.SaveChanges();
+            //        Context.clients.Add(newClient);
+            //        Context.SaveChanges();
             //        //if (Name != "" && Address != "" && ContactPerson != "" && Email != "" && Telephone != "" && NIP != "" && Comment != "")
             //        //{
             //        //    clientToEdit.name = Name;
@@ -448,7 +575,7 @@ namespace LaboratoryApp.ViewModel
             //        //    clientToEdit.NIP = NIP;
             //        //    clientToEdit.comments = Comment;
 
-            //        //    context.SaveChanges();
+            //        //    Context.SaveChanges();
             //        //}
             //        //else
             //        //{
@@ -468,7 +595,7 @@ namespace LaboratoryApp.ViewModel
         public NewWindowModelOfGauge MessageWindowModelOfGauge
         {
             get { return messageWindowModelOfGauge; }
-            set 
+            set
             {
                 messageWindowModelOfGauge = value;
                 base.OnPropertyChanged("MessageWindowModelOfGauge");
@@ -494,13 +621,12 @@ namespace LaboratoryApp.ViewModel
             get { return messageWindowClient; }
             set
             {
-                
+
                 messageWindowClient = value;
                 base.OnPropertyChanged("MessageWindowClient");
             }
         }
 
-       
         private string status;
         public string Status
         {

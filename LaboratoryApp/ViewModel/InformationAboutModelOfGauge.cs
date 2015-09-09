@@ -20,13 +20,21 @@ namespace LaboratoryApp.ViewModel
             InitializeCollectionOfType();
         }
 
-        private void InitializeCollectionOfType()
+        public void InitializeCollectionOfType()
         {
 
             using (LaboratoryEntities context = new LaboratoryEntities())
             {
 
-                CollectionOfType = (from t in context.types select t.name).Distinct().ToList();
+                var ListOfTypesFromDatabase = (from t in context.types select t.name).Distinct().ToList();
+                
+                if(ListOfTypesFromDatabase.Any())
+                {
+                    foreach(string z in ListOfTypesFromDatabase)
+                    {
+                        CollectionOfType.Add(z);
+                    }
+                }
                 bool IsEmpty = !CollectionOfType.Any();
                 if (!IsEmpty)
                 {
@@ -36,12 +44,12 @@ namespace LaboratoryApp.ViewModel
 
         }
 
-        private void InitializeCollectionOfUsage()
+        public void InitializeCollectionOfUsage()
         {
             using (LaboratoryEntities context = new LaboratoryEntities())
             {
 
-                //var t = (from u in context.usages select u.description).Count();
+                //var t = (from u in Context.usages select u.description).Count();
                 List<usage> t = (from u in context.usages select u).ToList();
 
                 //if list of usages is not null select usage and create a list to bind to combobox
@@ -52,7 +60,7 @@ namespace LaboratoryApp.ViewModel
                     {
                         CollectionOfUsage.Add(element.description);
                     }
-                    //(from u in context.usages select u.usageId.ToString()).Distinct().ToList();
+                    //(from u in Context.usages select u.usageId.ToString()).Distinct().ToList();
                     SelectedUsage = t[0].description;
                 }
 
@@ -150,13 +158,13 @@ namespace LaboratoryApp.ViewModel
         }
 
 
-        private List<string> collectionOfusage = new List<string>();
-        public List<string> CollectionOfUsage
+        private ObservableCollection<string> collectionOfusage = new ObservableCollection<string>();
+        public ObservableCollection<string> CollectionOfUsage
         {
             get { return collectionOfusage; }
             set
             {
-                collectionOfusage = CollectionOfUsage;
+                collectionOfusage = value;
                 OnPropertyChanged("CollectionOfUsage");
             }
         }
@@ -172,8 +180,8 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
-        private List<string> collectionOfType = new List<string>();
-        public List<string> CollectionOfType
+        private ObservableCollection<string> collectionOfType = new ObservableCollection<string>();
+        public ObservableCollection<string> CollectionOfType
         {
             get { return collectionOfType; }
             set
@@ -203,7 +211,7 @@ namespace LaboratoryApp.ViewModel
             var result = MessageBox.Show("Czy na pewno chcesz usunąć bezzwłocznie i definitywnie ten miernik?", "aaaaa", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
-                LaboratoryEntities context = new LaboratoryEntities();
+                LaboratoryEntities context = MainWindowViewModel.Context;
                 //delete selected client
                 var gaugeToDelete = (from g in context.gauges
                                      where g.gaugeId == this.ModelOfGaugeId
@@ -224,9 +232,9 @@ namespace LaboratoryApp.ViewModel
 
             //if (newModal.DialogResult == true)
             //{
-            //    using (LaboratoryEntities context = new LaboratoryEntities())
+            //    using (LaboratoryEntities Context = new LaboratoryEntities())
             //    {
-            //        var gaugeToEdit = (from g in context.gauges
+            //        var gaugeToEdit = (from g in Context.gauges
             //                            where g.gaugeId == this.ModelOfGaugeId
             //                            select g).FirstOrDefault();
 
@@ -240,7 +248,7 @@ namespace LaboratoryApp.ViewModel
             //            gaugeToEdit.NIP = NIP;
             //            gaugeToEdit.comments = Comment;
 
-            //            context.SaveChanges();
+            //            Context.SaveChanges();
             //        }
             //        else
             //        {

@@ -71,11 +71,7 @@
     </Window.DataContext>
     <Grid>
         <Grid.Resources>
-            <Style x:Key="ItemContainerStyle" TargetType="TreeViewItem">
-                <Setter Property="IsSelected" Value="{Binding Path=Selected}"/>
-                <Setter Property="IsExpanded" Value="{Binding Path=Expanded}"/>
-                <!--<Setter Property="Background" Value="Khaki" />-->
-            </Style>
+           
         </Grid.Resources>
 
         <Grid.ColumnDefinitions>
@@ -86,6 +82,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" MinHeight="25"/>
+            <RowDefinition Height="Auto" MinHeight="30"/>
             <RowDefinition Height="Auto" MinHeight="30"/>
             <RowDefinition Height="Auto" MinHeight="30"/>
             <RowDefinition Height="Auto" MinHeight="30"/>
@@ -127,14 +124,37 @@
         </TextBox>
 
 
-        <TreeView Background="Bisque" Name="tvwAllClients" ItemContainerStyle="{StaticResource ItemContainerStyle}" Grid.Row="4" Grid.RowSpan="2" ItemsSource="{Binding RootElement.Children,UpdateSourceTrigger=PropertyChanged}" 
+        <TreeView Background="Bisque" Name="tvwAllClients" Grid.Row="5" Grid.RowSpan="2" ItemsSource="{Binding RootElement.Children,UpdateSourceTrigger=PropertyChanged}" 
                   vm:TreeViewHelper.SelectedItem="{Binding SelectedNode, Mode=TwoWay}" VirtualizingPanel.IsVirtualizing="True" Grid.Column="0" Grid.ColumnSpan="2">
+            <TreeView.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
+                      Color="Aquamarine" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"
+                      Color="Black" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"
+                      Color="Aquamarine" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}"
+                      Color="Black" />
+            </TreeView.Resources>
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="TreeViewItem">
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
+                    <!--<Setter Property="Background" Value="Khaki" />-->
+                    <Setter Property="FontWeight" Value="Normal" />
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Trigger>
+                    </Style.Triggers>
 
+                </Style>
+            </TreeView.ItemContainerStyle>
             <TreeView.ItemTemplate >
 
-                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                <HierarchicalDataTemplate ItemsSource="{Binding Children}" >
                     <Grid>
-                        <StackPanel Orientation="Horizontal" >
+                        <StackPanel Orientation="Horizontal">
                             <Image Width="20" Height="18" Stretch="Fill" Source="{Binding DisplayImagePath}"/>
                             <TextBlock Text="{Binding NameOfItem}"/>
                         </StackPanel>
@@ -182,22 +202,22 @@
             </TreeView.ItemTemplate>
         </TreeView>-->
 
-        <ContentControl Background="LightBlue" Grid.RowSpan="2" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2" Content="{Binding CurrentViewModel}">
+        <ContentControl Background="LightBlue" Grid.RowSpan="2" Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="2" Content="{Binding CurrentViewModel}">
         </ContentControl>
         <Button Content="Wyszukaj" Command="{Binding SearchCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Width="80"/>
 
         <vm:ModalDialogManager DataContext="{Binding MessageWindowClient}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="400" 
 			DialogWidth="390" DialogResizeMode="CanResize" />
 
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowModelOfGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="200" 
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowModelOfGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
 			DialogWidth="470" DialogResizeMode="CanResize"/>
-
 
         <TextBox Text="{Binding SearchItem}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Background="AliceBlue" Width="145" />
         <Button Content="Dodaj klienta" Command="{Binding AddNewClientCommand}" Grid.Column="3" HorizontalAlignment="Right"  VerticalAlignment="center" Width="123" />
         <Button Content="Dodaj model miernika" Command="{Binding AddNewGaugeCommand}" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right"  VerticalAlignment="center" />
-
-
+        <RadioButton Content="Nr seryjny" IsChecked="{Binding IsCheckedSerial}" HorizontalAlignment="Left" Margin="10,9,0,0" Grid.Row="4" VerticalAlignment="Top"/>
+        <RadioButton Content="NIP" IsChecked ="{Binding IsCheckedNip}" Grid.Column="1" HorizontalAlignment="Left" Margin="-9,9,0,0" Grid.Row="4" VerticalAlignment="Top"/>
+        <RadioButton Content="Nazwa klienta" IsChecked="{Binding IsCheckedName}" Grid.Column="1" HorizontalAlignment="Left" Margin="60,9,0,0" Grid.Row="4" VerticalAlignment="Top"/>
 
         <!--<Button Content="Edytuj klienta" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Right"  VerticalAlignment="center"/>
         <Button Content="Usuń klienta" Grid.Column="3" Grid.Row="2" HorizontalAlignment="Right"  VerticalAlignment="center"/>-->

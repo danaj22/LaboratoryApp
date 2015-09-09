@@ -37,5 +37,32 @@ namespace LaboratoryApp
                 return @"C:\Users\daniel\Documents\Visual Studio 2013\Projects\LaboratoryApp\LaboratoryApp\icon\Computer-2-icon.png";
             }
         }
+        private bool isSelected;
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set
+            {
+                if (value != isSelected)
+                {
+                    isSelected = value;
+                    this.OnPropertyChanged("IsSelected");
+                }
+            }
+        }
+
+        private bool isExpanded;
+        public bool IsExpanded
+        {
+            get { return true; }
+            set
+            {
+                if (value != isExpanded)
+                {
+                    isExpanded = value;
+                    OnPropertyChanged("IsExpanded");
+                }
+            }
+        }
     }
 }

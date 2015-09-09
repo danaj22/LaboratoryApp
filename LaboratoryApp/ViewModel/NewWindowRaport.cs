@@ -10,8 +10,7 @@ namespace LaboratoryApp.ViewModel
 {
     public class NewWindowRaport : ObservableObject
     {
-        private gauge aboutGauge;
-
+        private gauge aboutGauge = new gauge();
         public gauge AboutGauge
         {
             get { return aboutGauge; }
@@ -21,13 +20,20 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("AboutGauge");
             }
         }
-        private float cost;
+        private ObservableCollection<function> collectionOfCheckedFunction = new ObservableCollection<function>();
 
+        public ObservableCollection<function> CollectionOfCheckedFunction
+        {
+            get { return collectionOfCheckedFunction; }
+            set { collectionOfCheckedFunction = value; }
+        }
+
+        private float cost;
         public float Cost
         {
             get { return cost; }
-            set 
-            { 
+            set
+            {
                 cost = value;
                 OnPropertyChanged("Cost");
             }
@@ -106,7 +112,7 @@ namespace LaboratoryApp.ViewModel
         public string NationalPattern
         {
             get { return nationalPattern; }
-            set 
+            set
             {
                 nationalPattern = value;
                 OnPropertyChanged("NationalPattern");
@@ -117,7 +123,7 @@ namespace LaboratoryApp.ViewModel
         public string Temperature
         {
             get { return temperature; }
-            set 
+            set
             {
                 temperature = value;
                 OnPropertyChanged("Temperature");
@@ -128,8 +134,8 @@ namespace LaboratoryApp.ViewModel
         public string Humidity
         {
             get { return humidity; }
-            set 
-            { 
+            set
+            {
                 humidity = value;
                 OnPropertyChanged("Humidity");
             }
@@ -139,7 +145,7 @@ namespace LaboratoryApp.ViewModel
         public List<string> Compatibility
         {
             get { return compatibility; }
-            set 
+            set
             {
                 compatibility = value;
                 OnPropertyChanged("Compability");
@@ -162,8 +168,8 @@ namespace LaboratoryApp.ViewModel
         public string CheckedFunction
         {
             get { return checkedFunction; }
-            set 
-            { 
+            set
+            {
                 checkedFunction = value;
                 OnPropertyChanged("CheckedFunction");
             }
@@ -173,7 +179,7 @@ namespace LaboratoryApp.ViewModel
         public string Author
         {
             get { return author; }
-            set 
+            set
             {
                 author = value;
                 OnPropertyChanged("Author");
@@ -185,7 +191,7 @@ namespace LaboratoryApp.ViewModel
         public ObservableCollection<calibrator> CollectionOfCalibrators
         {
             get { return collectionOfCalibrators; }
-            set 
+            set
             {
                 collectionOfCalibrators = value;
                 OnPropertyChanged("collectionOfCalibrators");
@@ -235,35 +241,51 @@ namespace LaboratoryApp.ViewModel
                         CollectionOfCalibrators.Add(CalibratorToAdd);
                     }
                 }
-                
+
             }
             MessageWindowCalibrator.ToConfirm = false;
         }
 
 
 
-        public NewWindowRaport()
+        public NewWindowRaport(gauge NewGauge)
         {
             AddCalibratorCommand = new SimpleRelayCommand(AddCalibrator);
             CollectionOfCalibrators = new ObservableCollection<calibrator>();
-            LaboratoryEntities context = new LaboratoryEntities();
+            LaboratoryEntities context = MainWindowViewModel.Context;
+            AboutGauge = NewGauge;
+
+            var ListOfFunctions = (from f in context.functions select f).ToList();
+            foreach(function fun in ListOfFunctions)
+            {
+                CollectionOfCheckedFunction.Add(fun);
+            }
             var ListOfCalibrators = (from c in context.calibrators select c).ToList();
 
-            foreach(var item in ListOfCalibrators)
+            var rrrr = (from cm in context.calibrators_model_of_gauges where cm.model_of_gaug_id == AboutGauge.model_of_gauge_id select cm.calibrator_id).ToList();
+
+            foreach (var item in ListOfCalibrators)
             {
+                if (rrrr.Contains(item.calibratorId))
+                {
+                    item.IsChecked = true;
+                }
+
                 CollectionOfCalibrators.Add(item);
+
+
             }
 
-            
+
             OKCommand = new SimpleRelayCommand(Confirm);
             CancelCommand = new SimpleRelayCommand(Close);
             Footer = "Świadectwo składa się z 1 strony. Może być okazywane lub kopiowane tylko w całości.";
             TheCalibrationMethod = "Porównanie wartości mierzonej miernikiem sprawdzanym z wielkością wzorcową na podstawie instrukcji IZ/001/DASL i pozostałych";
             NationalPattern = "Wyniki wzorcowania zostały odniesione do państwowych wzorców jednostek miar poprzez zastosowanie:\n\n";
-                                          
+
             Temperature = MainWindowViewModel.temperature;
             Humidity = "(30-60) %";
-            
+
             Compatibility = new List<string>();
             Compatibility.Add("Zgodny");
             Compatibility.Add("Niezgodny");
@@ -271,25 +293,35 @@ namespace LaboratoryApp.ViewModel
 
             DateSurvey = DateTime.Now.ToString("dd'/'MM'/'yyyy");
 
-            CheckedFunction = "[Wpisz sprawdzane funkcje funkcje]";
             Uncertainty = "Maksymalna niepewność odwzorowania wartości poprawnej wynosi +/- 0,5 % przy poziomie ufności 95 % na podstawie Publikacji EA-4/02";
 
+            var firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+
+            //System.Windows.MessageBox.Show(firstDayOfMonth.ToString());
+
             gauge SelectedGauge = (gauge)MainWindowViewModel.selectedNode;
-            if ( SelectedGauge.model_of_gauges.type.name == "Elektryczny")
+            if (SelectedGauge.model_of_gauges.type.name == "Elektryczny")
             {
-                NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM") + "/E/DASL";
+                var count = (from c in context.certificates where c.date >= firstDayOfMonth && c.date <= lastDayOfMonth && c.gauge.model_of_gauges.type.name == "Elektryczny" select c).Count();
+                NumberOfCertificate = DateTime.Now.ToString("yyyy'-'MM") + "-" + (count+1) + "-E-DASL";
             }
             else if (SelectedGauge.model_of_gauges.type.name == "Manometr")
             {
-                NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM") + "/M/DASL";
+                var count = (from c in context.certificates where c.date >= firstDayOfMonth && c.date <= lastDayOfMonth && c.gauge.model_of_gauges.type.name == "Manometr" select c).Count();
+
+                NumberOfCertificate = DateTime.Now.ToString("yyyy'-'MM") + "-" + (count+1) + "-M-DASL";
             }
             else if (SelectedGauge.model_of_gauges.type.name == "Luksomierz")
             {
-                NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM") + "/L/DASL";
+                var count = (from c in context.certificates where c.date >= firstDayOfMonth && c.date <= lastDayOfMonth && c.gauge.model_of_gauges.type.name == "Luksomierz" select c).Count();
+                NumberOfCertificate = DateTime.Now.ToString("yyyy'-'MM") + "-" + (count+1) + "-L-DASL";
             }
             else
             {
-                NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM") + "/DASL";
+                var count = (from c in context.certificates where c.date >= firstDayOfMonth && c.date <= lastDayOfMonth && c.gauge.model_of_gauges.type.name != "Luksomierz" && c.gauge.model_of_gauges.type.name != "Manometr" && c.gauge.model_of_gauges.type.name != "Elektryczny" select c).Count();
+
+                NumberOfCertificate = DateTime.Now.ToString("yyyy'-'MM") + "-" + (count+1) + "-DASL";
             }
 
             Recommendations = "Jeśli harmonogram Zleceniodawcy nie przewiduje inaczej, to następne wzorcowanie zaleca się przeprowadzić przed upływem ostatniego dnia analogicznego miesiąca następnego roku (w stosunku do daty wystawienia) lub w przypadku uszkodzenia";
@@ -298,7 +330,7 @@ namespace LaboratoryApp.ViewModel
 
 
         }
-        
+
 
         private ICommand okCommand;
 

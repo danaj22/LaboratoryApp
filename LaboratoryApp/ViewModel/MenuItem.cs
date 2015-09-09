@@ -56,5 +56,33 @@ namespace LaboratoryApp.ViewModel
         {
             get { return displayImagePath; }
         }
+
+        protected virtual bool isSelected { get; set; }
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set
+            {
+                if (value != isSelected)
+                {
+                    isSelected = value;
+                    this.OnPropertyChanged("IsSelected");
+                }
+            }
+        }
+
+        //protected virtual bool isExpanded;
+        //public bool IsExpanded
+        //{
+        //    get { return true; }
+        //    set
+        //    {
+        //        if (value != isExpanded)
+        //        {
+        //            isExpanded = value;
+        //            OnPropertyChanged("IsExpanded");
+        //        }
+        //    }
+        //}
     }
 }

@@ -20,7 +20,6 @@ namespace LaboratoryApp
         public LaboratoryEntities()
             : base("LaboratoryEntities")
         {
-            Database.SetInitializer<LaboratoryEntities>(new CreateDatabaseIfNotExists<LaboratoryEntities>());
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -36,6 +35,8 @@ namespace LaboratoryApp
         public virtual DbSet<usage> usages { get; set; }
         public virtual DbSet<office> offices { get; set; }
         public virtual DbSet<calibrator> calibrators { get; set; }
+        public virtual DbSet<calibrators_model_of_gauges> calibrators_model_of_gauges { get; set; }
+        public virtual DbSet<function> functions { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

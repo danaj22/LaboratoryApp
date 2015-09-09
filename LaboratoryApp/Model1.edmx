@@ -11,6 +11,15 @@
           </Key>
           <Property Name="calibratorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="model_of_gauge_id" Type="int" />
+        </EntityType>
+        <EntityType Name="calibrators_model_of_gauges">
+          <Key>
+            <PropertyRef Name="calibrator_modelId" />
+          </Key>
+          <Property Name="calibrator_modelId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="calibrator_id" Type="int" />
+          <Property Name="model_of_gaug_id" Type="int" />
         </EntityType>
         <EntityType Name="certificates">
           <Key>
@@ -35,6 +44,13 @@
           <Property Name="tel" Type="nvarchar" MaxLength="15" />
           <Property Name="NIP" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="comments" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="functions">
+          <Key>
+            <PropertyRef Name="functionId" />
+          </Key>
+          <Property Name="functionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="gauges">
           <Key>
@@ -83,6 +99,30 @@
           <Property Name="usageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="description" Type="nvarchar" MaxLength="500" Nullable="false" />
         </EntityType>
+        <Association Name="FK_calibrators_model_of_gauges_calibrators1">
+          <End Role="calibrators" Type="Self.calibrators" Multiplicity="0..1" />
+          <End Role="calibrators_model_of_gauges" Type="Self.calibrators_model_of_gauges" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="calibrators">
+              <PropertyRef Name="calibratorId" />
+            </Principal>
+            <Dependent Role="calibrators_model_of_gauges">
+              <PropertyRef Name="calibrator_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_calibrators_model_of_gauges_model_of_gauges">
+          <End Role="model_of_gauges" Type="Self.model_of_gauges" Multiplicity="0..1" />
+          <End Role="calibrators_model_of_gauges" Type="Self.calibrators_model_of_gauges" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="model_of_gauges">
+              <PropertyRef Name="model_of_gaugeId" />
+            </Principal>
+            <Dependent Role="calibrators_model_of_gauges">
+              <PropertyRef Name="model_of_gaug_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_certificates_gauges">
           <End Role="gauges" Type="Self.gauges" Multiplicity="1" />
           <End Role="certificates" Type="Self.certificates" Multiplicity="*" />
@@ -204,13 +244,23 @@
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="laboratoryModelStoreContainer">
           <EntitySet Name="calibrators" EntityType="Self.calibrators" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="calibrators_model_of_gauges" EntityType="Self.calibrators_model_of_gauges" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="certificates" EntityType="Self.certificates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="clients" EntityType="Self.clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="functions" EntityType="Self.functions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="gauges" EntityType="Self.gauges" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="model_of_gauges" EntityType="Self.model_of_gauges" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="offices" EntityType="Self.offices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="types" EntityType="Self.types" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="usages" EntityType="Self.usages" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_calibrators_model_of_gauges_calibrators1" Association="Self.FK_calibrators_model_of_gauges_calibrators1">
+            <End Role="calibrators" EntitySet="calibrators" />
+            <End Role="calibrators_model_of_gauges" EntitySet="calibrators_model_of_gauges" />
+          </AssociationSet>
+          <AssociationSet Name="FK_calibrators_model_of_gauges_model_of_gauges" Association="Self.FK_calibrators_model_of_gauges_model_of_gauges">
+            <End Role="model_of_gauges" EntitySet="model_of_gauges" />
+            <End Role="calibrators_model_of_gauges" EntitySet="calibrators_model_of_gauges" />
+          </AssociationSet>
           <AssociationSet Name="FK_certificates_gauges" Association="Self.FK_certificates_gauges">
             <End Role="gauges" EntitySet="gauges" />
             <End Role="certificates" EntitySet="certificates" />
@@ -311,6 +361,16 @@
             <End Role="gauge" EntitySet="gauges" />
           </AssociationSet>
           <EntitySet Name="calibrators" EntityType="laboratoryModel.calibrator" />
+          <EntitySet Name="calibrators_model_of_gauges" EntityType="laboratoryModel.calibrators_model_of_gauges" />
+          <AssociationSet Name="FK_calibrators_model_of_gauges_calibrators1" Association="laboratoryModel.FK_calibrators_model_of_gauges_calibrators1">
+            <End Role="calibrator" EntitySet="calibrators" />
+            <End Role="calibrators_model_of_gauges" EntitySet="calibrators_model_of_gauges" />
+          </AssociationSet>
+          <AssociationSet Name="FK_calibrators_model_of_gauges_model_of_gauges" Association="laboratoryModel.FK_calibrators_model_of_gauges_model_of_gauges">
+            <End Role="model_of_gauges" EntitySet="model_of_gauges" />
+            <End Role="calibrators_model_of_gauges" EntitySet="calibrators_model_of_gauges" />
+          </AssociationSet>
+          <EntitySet Name="functions" EntityType="laboratoryModel.function" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -335,6 +395,7 @@
           <NavigationProperty Name="gauges" Relationship="laboratoryModel.FK_gauges_model_of_gauges" FromRole="model_of_gauges" ToRole="gauge" />
           <NavigationProperty Name="type" Relationship="laboratoryModel.FK_gauges_types" FromRole="model_of_gauges" ToRole="type" />
           <NavigationProperty Name="usage" Relationship="laboratoryModel.FK_gauges_usage" FromRole="model_of_gauges" ToRole="usage" />
+          <NavigationProperty Name="calibrators_model_of_gauges" Relationship="laboratoryModel.FK_calibrators_model_of_gauges_model_of_gauges" FromRole="model_of_gauges" ToRole="calibrators_model_of_gauges" />
         </EntityType>
         <EntityType Name="client">
           <Key>
@@ -502,6 +563,49 @@
           </Key>
           <Property Name="calibratorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="model_of_gauge_id" Type="Int32" />
+          <NavigationProperty Name="calibrators_model_of_gauges" Relationship="laboratoryModel.FK_calibrators_model_of_gauges_calibrators1" FromRole="calibrator" ToRole="calibrators_model_of_gauges" />
+        </EntityType>
+        <EntityType Name="calibrators_model_of_gauges">
+          <Key>
+            <PropertyRef Name="calibrator_modelId" />
+          </Key>
+          <Property Name="calibrator_modelId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="calibrator_id" Type="Int32" />
+          <Property Name="model_of_gaug_id" Type="Int32" />
+          <NavigationProperty Name="calibrator" Relationship="laboratoryModel.FK_calibrators_model_of_gauges_calibrators1" FromRole="calibrators_model_of_gauges" ToRole="calibrator" />
+          <NavigationProperty Name="model_of_gauges" Relationship="laboratoryModel.FK_calibrators_model_of_gauges_model_of_gauges" FromRole="calibrators_model_of_gauges" ToRole="model_of_gauges" />
+        </EntityType>
+        <Association Name="FK_calibrators_model_of_gauges_calibrators1">
+          <End Type="laboratoryModel.calibrator" Role="calibrator" Multiplicity="0..1" />
+          <End Type="laboratoryModel.calibrators_model_of_gauges" Role="calibrators_model_of_gauges" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="calibrator">
+              <PropertyRef Name="calibratorId" />
+            </Principal>
+            <Dependent Role="calibrators_model_of_gauges">
+              <PropertyRef Name="calibrator_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_calibrators_model_of_gauges_model_of_gauges">
+          <End Type="laboratoryModel.model_of_gauges" Role="model_of_gauges" Multiplicity="0..1" />
+          <End Type="laboratoryModel.calibrators_model_of_gauges" Role="calibrators_model_of_gauges" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="model_of_gauges">
+              <PropertyRef Name="model_of_gaugeId" />
+            </Principal>
+            <Dependent Role="calibrators_model_of_gauges">
+              <PropertyRef Name="model_of_gaug_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="function">
+          <Key>
+            <PropertyRef Name="functionId" />
+          </Key>
+          <Property Name="functionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -614,8 +718,26 @@
           <EntitySetMapping Name="calibrators">
             <EntityTypeMapping TypeName="laboratoryModel.calibrator">
               <MappingFragment StoreEntitySet="calibrators">
+                <ScalarProperty Name="model_of_gauge_id" ColumnName="model_of_gauge_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="calibratorId" ColumnName="calibratorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="calibrators_model_of_gauges">
+            <EntityTypeMapping TypeName="laboratoryModel.calibrators_model_of_gauges">
+              <MappingFragment StoreEntitySet="calibrators_model_of_gauges">
+                <ScalarProperty Name="model_of_gaug_id" ColumnName="model_of_gaug_id" />
+                <ScalarProperty Name="calibrator_id" ColumnName="calibrator_id" />
+                <ScalarProperty Name="calibrator_modelId" ColumnName="calibrator_modelId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="functions">
+            <EntityTypeMapping TypeName="laboratoryModel.function">
+              <MappingFragment StoreEntitySet="functions">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="functionId" ColumnName="functionId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

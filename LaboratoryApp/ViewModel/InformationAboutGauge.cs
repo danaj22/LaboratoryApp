@@ -172,7 +172,7 @@ namespace LaboratoryApp.ViewModel
         public ObservableCollection<certificate> CollectionOfCertificate
         {
             get { return collectionOfCertificate; }
-            set 
+            set
             {
                 collectionOfCertificate = value;
                 OnPropertyChanged("CollectionOfCertificate");
@@ -194,10 +194,10 @@ namespace LaboratoryApp.ViewModel
             Description = SelectedGauge.model_of_gauges.usage.description;
 
             CollectionOfCertificate = new ObservableCollection<certificate>();
-            LaboratoryEntities context = new LaboratoryEntities();
+            LaboratoryEntities context = MainWindowViewModel.Context;
             var CertificatesOfSelectedGauge = (from c in context.certificates where c.gauge_id == SelectedGauge.gaugeId select c).ToList();
 
-            foreach(var certificate in CertificatesOfSelectedGauge)
+            foreach (var certificate in CertificatesOfSelectedGauge)
             {
                 CollectionOfCertificate.Add(certificate);
             }
@@ -285,7 +285,7 @@ namespace LaboratoryApp.ViewModel
 
         private void GenerateRaportExecute()
         {
-            MessageWindowRaport = new NewWindowRaport();
+            MessageWindowRaport = new NewWindowRaport(SelectedGauge);
             MessageWindowRaport.AboutGauge = (gauge)SelectedGauge;
             MessageWindowRaport.IsOpen = true;
 
@@ -295,7 +295,7 @@ namespace LaboratoryApp.ViewModel
 
                 try
                 {
-                    LaboratoryEntities context = new LaboratoryEntities();
+                    LaboratoryEntities context = MainWindowViewModel.Context;
                     {
                         certificate cert = new certificate();
                         cert.gauge_id = SelectedGauge.gaugeId;
@@ -303,16 +303,28 @@ namespace LaboratoryApp.ViewModel
                         cert.cost = MessageWindowRaport.Cost;
                         //DateTime dt = new DateTime();
 
-                        DateTime dt = DateTime.Today;
+                        DateTime dt = DateTime.Now;
+
+                        //if(SelectedGauge.model_of_gauges.type.name == "Luksomierz")
+                        //{
+                        //    var tmp = (from c in Context.gauges )
+                        //}
 
                         cert.date = dt;
-                        cert.name = "bbb"; //MessageWindowRaport.NumberOfCertificate;
-                        cert.authorized_by = "aaa";
+                        cert.name = MessageWindowRaport.NumberOfCertificate; //MessageWindowRaport.NumberOfCertificate;
+                        cert.authorized_by = MessageWindowRaport.Author;
+                        try
+                        {
+                            context.certificates.Add(cert);
+                            context.SaveChanges();
+                            CollectionOfCertificate.Add(cert);
+                        }
+                        catch (Exception)
+                        {
+                            MessageBox.Show("Nie udało się utworzyć certyfikatu w bazie.");
+                        }
 
-                        context.certificates.Add(cert);
-                        context.SaveChanges();
 
-                        CollectionOfCertificate.Add(cert);
 
                     }
                 }
@@ -348,7 +360,8 @@ namespace LaboratoryApp.ViewModel
                 renderer.RenderDocument();
 
                 // Save the document...
-                string filename = "1HelloMigraDoc.pdf";
+
+                string filename = raport.NumberOfCertificate + ".pdf";
 
                 if (!string.IsNullOrEmpty(raport.Author) && !string.IsNullOrEmpty(raport.Temperature))
                 {
@@ -455,13 +468,13 @@ namespace LaboratoryApp.ViewModel
             section.PageSetup.BottomMargin = 10;
             section.PageSetup.LeftMargin = 50;
             section.PageSetup.RightMargin = 50;
-            
+
             section.PageSetup.StartingNumber = 1;
 
             HeaderFooter header = section.Headers.Primary;
 
             Paragraph paragraph1 = section.Headers.FirstPage.AddParagraph();
-            
+
             //header.AddImage("C:\\Users\\daniel\\Desktop\\dasllogo.png");
             //header.AddParagraph("Laboratorium Przyrządów Pomiarowych\nŚWIADECTWO WZORCOWANIA");
             //Table t = new Table();
@@ -489,7 +502,7 @@ namespace LaboratoryApp.ViewModel
             image.Top = ShapePosition.Top;
             image.Left = ShapePosition.Left;
             image.WrapFormat.Style = WrapStyle.Through;
-            
+
 
 
             //section.AddImage("C:\\Users\\daniel\\Desktop\\dasllogo.png");
@@ -499,7 +512,7 @@ namespace LaboratoryApp.ViewModel
 
             // Create a paragraph with centered page number. See definition of style "Footer".
             Paragraph paragraph = new Paragraph();
-            
+
             paragraph.AddTab();
             paragraph.AddText("Świadectwo składa się z 1 strony. Może być okazywane lub kopiowane tylko w całości.\nDASL Systems ul.Wadowicka 8A, 30-415 Kraków, tel./fax : +48 12 29 42 001, lab@dasl.pl, www.dasl.pl");
 
@@ -583,14 +596,14 @@ namespace LaboratoryApp.ViewModel
             row.Cells[0].AddParagraph("Metoda wzorcowania: ");
             row.Cells[1].AddParagraph(raport.TheCalibrationMethod.ToString());
 
-            
+
             row = table.AddRow();
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].AddParagraph("Odniesienie do wzorca państwowego: ");
-            
-            foreach(calibrator calibrator in raport.CollectionOfCalibrators)
+
+            foreach (calibrator calibrator in raport.CollectionOfCalibrators)
             {
-                if(calibrator.IsChecked)
+                if (calibrator.IsChecked)
                 {
                     raport.NationalPattern += calibrator.name + "\n";
                 }
@@ -628,6 +641,25 @@ namespace LaboratoryApp.ViewModel
             row = table.AddRow();
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].AddParagraph("Sprawdzone funkcje: ");
+
+
+            foreach (calibrator calibrator in raport.CollectionOfCalibrators)
+            {
+                if (calibrator.IsChecked)
+                {
+                    raport.NationalPattern += calibrator.name + "\n";
+                }
+            }
+            row.Cells[1].AddParagraph(raport.NationalPattern.ToString());
+
+            foreach(function fun in raport.CollectionOfCheckedFunction)
+            {
+                if(fun.IsChecked)
+                {
+                    raport.CheckedFunction += fun.name + ",";
+                }
+            }
+
             row.Cells[1].AddParagraph(raport.CheckedFunction);
             row = table.AddRow();
             row.Cells[0].Format.Font.Bold = true;
@@ -768,16 +800,16 @@ namespace LaboratoryApp.ViewModel
 
             // if(MessageWindowGauge.ToConfirm)
             // {
-            //     using (LaboratoryEntities context = new LaboratoryEntities())
+            //     using (LaboratoryEntities Context = new LaboratoryEntities())
             //     {
-            //         var gaugeToEdit = (from g in context.gauges where g.gaugeId == SelectedGauge.gaugeId select g).FirstOrDefault();
+            //         var gaugeToEdit = (from g in Context.gauges where g.gaugeId == SelectedGauge.gaugeId select g).FirstOrDefault();
 
             //         if(!String.IsNullOrEmpty(MessageWindowGauge.AboutGauge.model_of_gauges.model.ToString())
             //            && !String.IsNullOrEmpty(MessageWindowGauge.AboutGauge.model_of_gauges.manufacturer_name.ToString())
             //            && !String.IsNullOrEmpty(MessageWindowGauge.AboutGauge.serial_number.ToString()))
 
             //         {
-            //             var ModelOfGaugeToAdd = (from m in context.model_of_gauges where m.model == MessageWindowGauge.SelectedModel select m).FirstOrDefault();
+            //             var ModelOfGaugeToAdd = (from m in Context.model_of_gauges where m.model == MessageWindowGauge.SelectedModel select m).FirstOrDefault();
             //             gaugeToEdit.model_of_gauges = ModelOfGaugeToAdd;
 
             //             gaugeToEdit.serial_number = MessageWindowGauge.AboutGauge.serial_number;
@@ -786,7 +818,7 @@ namespace LaboratoryApp.ViewModel
 
 
 
-            //             context.SaveChanges();
+            //             Context.SaveChanges();
 
             //             //set new data in main window view
             //             SerialNumber = MessageWindowGauge.AboutGauge.serial_number;

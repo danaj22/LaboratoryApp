@@ -6,7 +6,7 @@
              xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
              xmlns:local="clr-namespace:LaboratoryApp"
              
-             mc:Ignorable="d" Height="154" Width="453">
+             mc:Ignorable="d" Height="239" Width="453">
     <UserControl.Resources>
         <ControlTemplate x:Key="errorTemplate">
             <DockPanel LastChildFill="true">
@@ -113,7 +113,7 @@
                     <Binding.ValidationRules>
                         <vm:SelectedItemValidation ValidatesOnTargetUpdated="True"
                                      ValidationStep="RawProposedValue"
-                                     ErrorMessage="Wybierz producenta."/>
+                                     ErrorMessage="Wybierz zastosowanie."/>
                     </Binding.ValidationRules>
                 </Binding>
             </ComboBox.SelectedItem>
@@ -129,7 +129,7 @@
                     <Binding.ValidationRules>
                         <vm:SelectedItemValidation ValidatesOnTargetUpdated="True"
                                      ValidationStep="RawProposedValue"
-                                     ErrorMessage="Wybierz producenta."/>
+                                     ErrorMessage="Wybierz typ."/>
                     </Binding.ValidationRules>
                 </Binding>
             </ComboBox.SelectedItem>
@@ -140,8 +140,11 @@
 
         <vm:ModalDialogManager DataContext="{Binding MessageWindowUsage}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}" DialogHeight="300" 
 			DialogWidth="600" DialogResizeMode="CanResize"/>
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowCalibrator}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="200" 
+			DialogWidth="370" DialogResizeMode="CanResize" />
 
-        <Button Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" Grid.Row="7" VerticalAlignment="Center" Width="75" Grid.Column="1">
+
+        <Button Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" Grid.Row="8" VerticalAlignment="Center" Width="75" Grid.Column="1">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="IsEnabled" Value="false" />
@@ -163,9 +166,19 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="7" VerticalAlignment="Center" Width="75"/>
+        <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="8" VerticalAlignment="Center" Width="75"/>
         <Button Content="Dodaj zastosowanie" Command="{Binding AddUsageCommand}" Grid.Column="2" HorizontalAlignment="Left" Margin="31,2,-53,0" Grid.Row="2" VerticalAlignment="Top" Width="112"/>
         <Button Content="Dodaj typ" Command="{Binding AddTypeCommand}" Grid.Column="2" HorizontalAlignment="Left" Margin="31,2,-52,0" Grid.Row="3" VerticalAlignment="Top" Width="112"/>
+        <Button Content="Dodaj" Command="{Binding AddCalibratorCommand}" Grid.Column="2" HorizontalAlignment="center"  Grid.Row="7" VerticalAlignment="Center" Margin="31,31,23,26"/>
+
+        <ListBox Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="7" VerticalAlignment="Top"  ItemsSource="{Binding CollectionOfCalibrators}" Width="211" Height="78" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
 
     </Grid>
 </UserControl>

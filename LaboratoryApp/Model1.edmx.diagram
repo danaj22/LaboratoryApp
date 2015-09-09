@@ -20,6 +20,10 @@
         <AssociationConnector Association="laboratoryModel.FK_offices_clients" />
         <AssociationConnector Association="laboratoryModel.FK_gauges_offices" />
         <EntityTypeShape EntityType="laboratoryModel.calibrator" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="laboratoryModel.calibrators_model_of_gauges" Width="3" PointX="6.75" PointY="0.75" />
+        <AssociationConnector Association="laboratoryModel.FK_calibrators_model_of_gauges_calibrators1" />
+        <AssociationConnector Association="laboratoryModel.FK_calibrators_model_of_gauges_model_of_gauges" />
+        <EntityTypeShape EntityType="laboratoryModel.function" Width="1.5" PointX="3.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

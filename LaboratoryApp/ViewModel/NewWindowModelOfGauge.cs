@@ -9,15 +9,14 @@ using System.Windows.Input;
 namespace LaboratoryApp.ViewModel
 {
     public class NewWindowModelOfGauge : ObservableObject
-
     {
         private InformationAboutModelOfGauge aboutModelOfGauge;
 
         public InformationAboutModelOfGauge AboutModelOfGauge
         {
             get { return aboutModelOfGauge; }
-            set 
-            { 
+            set
+            {
                 aboutModelOfGauge = value;
                 OnPropertyChanged("AboutModelOfGauge");
             }
@@ -28,39 +27,107 @@ namespace LaboratoryApp.ViewModel
         public NewWindowType MessageWindowType
         {
             get { return messageWindowType; }
-            set 
-            { 
+            set
+            {
                 messageWindowType = value;
                 OnPropertyChanged("MessageWindowType");
             }
         }
         private NewWindowUsage messageWindowUsage;
-
         public NewWindowUsage MessageWindowUsage
         {
             get { return messageWindowUsage; }
-            set 
-            { 
+            set
+            {
                 messageWindowUsage = value;
                 OnPropertyChanged("MessageWindowUsage");
             }
         }
-       
+
+        private NewWindowCalibrator messageWindowCalibrator;
+
+        public NewWindowCalibrator MessageWindowCalibrator
+        {
+            get { return messageWindowCalibrator; }
+            set
+            {
+                messageWindowCalibrator = value;
+                OnPropertyChanged("MessageWindowCalibrator");
+            }
+        }
+
+        public void AddCalibrator()
+        {
+            MessageWindowCalibrator = new NewWindowCalibrator();
+            MessageWindowCalibrator.IsOpen = true;
+
+            if (MessageWindowCalibrator.ToConfirm)
+            {
+                if (!string.IsNullOrEmpty(MessageWindowCalibrator.NameOfCalibrator))
+                {
+                    using (LaboratoryEntities context = new LaboratoryEntities())
+                    {
+                        calibrator CalibratorToAdd = new calibrator();
+                        CalibratorToAdd.name = MessageWindowCalibrator.NameOfCalibrator;
+
+                        context.calibrators.Add(CalibratorToAdd);
+                        context.SaveChanges();
+
+                        CollectionOfCalibrators.Add(CalibratorToAdd);
+                    }
+                }
+            }
+            MessageWindowCalibrator.ToConfirm = false;
+        }
+        private ObservableCollection<calibrator> collectionOfCalibrators = new ObservableCollection<calibrator>();
+
+        public ObservableCollection<calibrator> CollectionOfCalibrators
+        {
+            get { return collectionOfCalibrators; }
+            set
+            {
+                collectionOfCalibrators = value;
+                OnPropertyChanged("collectionOfCalibrators");
+            }
+        }
+
+        private ICommand addCalibratorCommand;
+        public ICommand AddCalibratorCommand
+        {
+            get { return addCalibratorCommand; }
+            set
+            {
+                addCalibratorCommand = value;
+                base.OnPropertyChanged("AddCalibratorCommand");
+            }
+        }
+
+
         public NewWindowModelOfGauge()
         {
             OKCommand = new SimpleRelayCommand(Confirm);
             CancelCommand = new SimpleRelayCommand(Close);
             AddUsageCommand = new SimpleRelayCommand(AddUsage);
             AddTypeCommand = new SimpleRelayCommand(AddType);
+            AddCalibratorCommand = new SimpleRelayCommand(AddCalibrator);
+
+            LaboratoryEntities context = MainWindowViewModel.Context;
+            var ListOfCalibrators = (from c in context.calibrators select c).ToList();
+
+            foreach (var item in ListOfCalibrators)
+            {
+                item.IsChecked = false;
+                CollectionOfCalibrators.Add(item);
+            }
         }
 
         public NewWindowModelOfGauge(Window window) //: base (window)
         {
-            //LaboratoryEntities context = new LaboratoryEntities();
+            //LaboratoryEntities Context = new LaboratoryEntities();
             //MWindow = window;
             //MWindow.infoGauge = AboutModelOfGauge = new InformationAboutModelOfGauge();
 
-            //foreach(var tmp in context.usages)
+            //foreach(var tmp in Context.usages)
             //{
 
             //    AboutModelOfGauge.CollectionOfUsage.Add(tmp);
@@ -93,8 +160,8 @@ namespace LaboratoryApp.ViewModel
         public ICommand AddUsageCommand
         {
             get { return addUsageCommand; }
-            set 
-            { 
+            set
+            {
                 addUsageCommand = value;
                 base.OnPropertyChanged("AddUsageCommand");
             }
@@ -104,7 +171,7 @@ namespace LaboratoryApp.ViewModel
         public ICommand AddTypeCommand
         {
             get { return addTypeCommand; }
-            set 
+            set
             {
                 addTypeCommand = value;
                 base.OnPropertyChanged("AddTypeCommand");
@@ -137,7 +204,6 @@ namespace LaboratoryApp.ViewModel
         }
 
         public void Confirm()
-        
         {
             if (!ToConfirm) ToConfirm = true;
             IsOpen = false;
@@ -152,17 +218,18 @@ namespace LaboratoryApp.ViewModel
             MessageWindowType = new NewWindowType();
             MessageWindowType.IsOpen = true;
 
-            if(MessageWindowType.ToConfirm)
+            if (MessageWindowType.ToConfirm)
             {
-                if(!string.IsNullOrEmpty(MessageWindowType.NameOfType))
+                if (!string.IsNullOrEmpty(MessageWindowType.NameOfType))
                 {
-                    using(LaboratoryEntities context = new LaboratoryEntities())
+                    using (LaboratoryEntities context = new LaboratoryEntities())
                     {
                         type TypeToAdd = new type();
                         TypeToAdd.name = MessageWindowType.NameOfType;
 
                         context.types.Add(TypeToAdd);
                         context.SaveChanges();
+                        AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
                     }
                 }
                 else
@@ -177,18 +244,19 @@ namespace LaboratoryApp.ViewModel
             MessageWindowUsage = new NewWindowUsage();
             MessageWindowUsage.IsOpen = true;
 
-            if(MessageWindowUsage.ToConfirm)
+            if (MessageWindowUsage.ToConfirm)
             {
-                if(!string.IsNullOrEmpty(MessageWindowUsage.NameOfUsage))
+                if (!string.IsNullOrEmpty(MessageWindowUsage.NameOfUsage))
                 {
 
-                    using(LaboratoryEntities context = new LaboratoryEntities())
+                    using (LaboratoryEntities context = new LaboratoryEntities())
                     {
                         usage UsageToAdd = new usage();
                         UsageToAdd.description = MessageWindowUsage.NameOfUsage;
 
                         context.usages.Add(UsageToAdd);
                         context.SaveChanges();
+                        AboutModelOfGauge.CollectionOfUsage.Add(UsageToAdd.description);
                     }
                 }
                 else

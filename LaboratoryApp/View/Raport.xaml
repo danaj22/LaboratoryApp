@@ -109,6 +109,17 @@
         <TextBox HorizontalAlignment="Left" Text="{Binding Humidity}" VerticalAlignment="center" Grid.Row="11" Grid.Column="1" Width="156" Height="24"/>
         <ComboBox ItemsSource="{Binding Compatibility}" SelectedItem="{Binding SelectedCompatibility}"  HorizontalAlignment="Left" VerticalAlignment="center" Grid.Row="12" Grid.Column="1" Width="256" Height="24"/>
         <TextBox HorizontalAlignment="Left" Text="{Binding CheckedFunction}" VerticalAlignment="center" Grid.Row="13" Grid.Column="1" Width="256" Height="24"/>
+
+        <ListBox Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="13" VerticalAlignment="Top"  ItemsSource="{Binding CollectionOfCheckedFunction}" Width="256" Height="78" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Content="Dodaj" Command="{Binding AddCheckedFunctionCommand}" Grid.Column="1" HorizontalAlignment="Left" Margin="261,23,-77,0" Grid.Row="13" VerticalAlignment="Top" Width="Auto"/>
+
+
         <TextBox HorizontalAlignment="Left" Text="{Binding Uncertainty}" VerticalAlignment="center" Grid.Row="14" Grid.Column="1" Width="256" Height="24"/>
         
         <TextBox Name="TxtBoxNumberOfCertificate" HorizontalAlignment="Left" VerticalAlignment="center" Grid.Row="15" Grid.Column="1" Width="256" Height="24"

@@ -17,6 +17,7 @@ namespace LaboratoryApp
         public model_of_gauges()
         {
             this.gauges = new ObservableCollection<gauge>();
+            this.calibrators_model_of_gauges = new ObservableCollection<calibrators_model_of_gauges>();
         }
     
         public int model_of_gaugeId { get; set; }
@@ -28,5 +29,6 @@ namespace LaboratoryApp
         public virtual ObservableCollection<gauge> gauges { get; set; }
         public virtual type type { get; set; }
         public virtual usage usage { get; set; }
+        public virtual ObservableCollection<calibrators_model_of_gauges> calibrators_model_of_gauges { get; set; }
     }
 }

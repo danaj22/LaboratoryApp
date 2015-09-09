@@ -7,20 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.ObjectModel;
 namespace LaboratoryApp
 {
-    public partial class calibrator : ViewModel.ObservableObject
+    using System;
+    using System.Collections.ObjectModel;
+    
+    public partial class function : ViewModel.ObservableObject
     {
-        public calibrator()
-        {
-            this.calibrators_model_of_gauges = new ObservableCollection<calibrators_model_of_gauges>();
-        }
-
-        public int calibratorId { get; set; }
+        public int functionId { get; set; }
         public string name { get; set; }
-        public Nullable<int> model_of_gauge_id { get; set; }
 
         private bool isChecked;
 
@@ -33,7 +28,5 @@ namespace LaboratoryApp
                 OnPropertyChanged("IsChecked");
             }
         }
-
-        public virtual ObservableCollection<calibrators_model_of_gauges> calibrators_model_of_gauges { get; set; }
     }
 }
