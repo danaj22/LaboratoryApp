@@ -36,11 +36,13 @@
         <TextBlock Text="Zastosowanie: " Grid.Column="0" Grid.Row="4"/>
         <TextBlock Text="{Binding Description}" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3"/>
 
+        
+        
         <vm:ModalDialogManager DataContext="{Binding MessageWindowGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
 			DialogWidth="320" DialogResizeMode="CanResize" />
 
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowRaport}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="760" 
-			DialogWidth="575" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowRaport}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="825" 
+			DialogWidth="750" DialogResizeMode="CanResize" />
 
         <Button Content="Usuń miernik" Command="{Binding DeleteGaugeCommand}"  Grid.Row="5" VerticalAlignment="Center" Grid.Column="3" HorizontalAlignment="Center" Height="22" Width="76"  />
 

@@ -238,7 +238,10 @@ namespace LaboratoryApp.ViewModel
                         }
                     }
                     catch (Exception e)
-                    { MessageBox.Show(e.ToString()); }
+                    {
+                        MessageBox.Show("Błąd w dodawaniu miernika.");
+                        MainWindowViewModel.FileLog.WriteLine(e.ToString());
+                    }
                 }
 
                 //var index = AllItems.IndexOf(AllItems.Last()) + 1;

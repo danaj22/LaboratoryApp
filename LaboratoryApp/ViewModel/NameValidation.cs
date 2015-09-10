@@ -351,6 +351,31 @@ namespace LaboratoryApp.ViewModel
         }
     }
 
+    public class FunctionValidation : ValidationRule
+    {
+
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            string FieldContent;
+            if (!string.IsNullOrEmpty((string)value))
+            {
+
+                FieldContent = value as string;
+
+                if (FieldContent.Length > 150)
+                {
+                    return new ValidationResult(false, "Podana wartość jest za długa. [max. 150 znaków]");
+                }
+                else
+                {
+                    return ValidationResult.ValidResult;
+                }
+            }
+            else
+                return new ValidationResult(false, "Nie wprowadzono danych.");
+        }
+    }
+
     
 
 }

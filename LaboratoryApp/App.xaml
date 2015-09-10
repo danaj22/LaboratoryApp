@@ -33,6 +33,9 @@
         <DataTemplate DataType="{x:Type vm:NewWindowCalibrator}">
             <v:DialogWindowCalibrator />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewWindowFunction}">
+            <v:DialogWindowFunction />
+        </DataTemplate>
 
     </Application.Resources>
 </Application>

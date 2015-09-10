@@ -267,17 +267,20 @@ namespace LaboratoryApp.ViewModel
                         {
                             foreach (var eve in e.EntityValidationErrors)
                             {
-                                MessageBox.Show(String.Format("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                                 MainWindowViewModel.FileLog.WriteLine(String.Format("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
                                     eve.Entry.Entity.GetType().Name, eve.Entry.State));
                                 foreach (var ve in eve.ValidationErrors)
                                 {
-                                    MessageBox.Show(String.Format("- Property: \"{0}\", Error: \"{1}\"",
+                                     MainWindowViewModel.FileLog.WriteLine(String.Format("- Property: \"{0}\", Error: \"{1}\"",
                                         ve.PropertyName, ve.ErrorMessage));
                                 }
                             }
                         }
                         catch (Exception e)
-                        { MessageBox.Show(e.ToString()); }
+                        { 
+                            MessageBox.Show("Błąd w dodawaniu miernika.");
+                            MainWindowViewModel.FileLog.WriteLine(e.ToString());
+                        }
                     }
 
 
@@ -343,7 +346,8 @@ namespace LaboratoryApp.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.ToString());
+                    MessageBox.Show("Błąd w usuwaniu klienta.");
+                    MainWindowViewModel.FileLog.WriteLine(ex.ToString());
                 }
 
             }

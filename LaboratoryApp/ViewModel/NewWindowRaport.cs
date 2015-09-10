@@ -20,12 +20,16 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("AboutGauge");
             }
         }
-        private ObservableCollection<function> collectionOfCheckedFunction = new ObservableCollection<function>();
+        private ObservableCollection<function> collectionOfCheckedFunction;
 
         public ObservableCollection<function> CollectionOfCheckedFunction
         {
             get { return collectionOfCheckedFunction; }
-            set { collectionOfCheckedFunction = value; }
+            set 
+            {
+                collectionOfCheckedFunction = value;
+                OnPropertyChanged("CollectionOfCheckedFunction");
+            }
         }
 
         private float cost;
@@ -208,6 +212,16 @@ namespace LaboratoryApp.ViewModel
                 base.OnPropertyChanged("AddCalibratorCommand");
             }
         }
+        private ICommand addFunctionCommand;
+        public ICommand AddFunctionCommand
+        {
+            get { return addFunctionCommand; }
+            set
+            {
+                addFunctionCommand = value;
+                base.OnPropertyChanged("AddFunctionCommand");
+            }
+        }
 
         private NewWindowCalibrator messageWindowCalibrator;
 
@@ -218,6 +232,17 @@ namespace LaboratoryApp.ViewModel
             {
                 messageWindowCalibrator = value;
                 OnPropertyChanged("MessageWindowCalibrator");
+            }
+        }
+        private NewWindowFunction messageWindowFunction;
+
+        public NewWindowFunction MessageWindowFunction
+        {
+            get { return messageWindowFunction; }
+            set
+            {
+                messageWindowFunction = value;
+                OnPropertyChanged("MessageWindowFunction");
             }
         }
 
@@ -246,12 +271,40 @@ namespace LaboratoryApp.ViewModel
             MessageWindowCalibrator.ToConfirm = false;
         }
 
+        public void AddFunction()
+        {
+            MessageWindowFunction = new NewWindowFunction();
+            MessageWindowFunction.IsOpen = true;
+
+            if (MessageWindowFunction.ToConfirm)
+            {
+                
+                    using (LaboratoryEntities context = new LaboratoryEntities())
+                    {
+                        function FunctionToAdd = new function();
+                        FunctionToAdd.name = MessageWindowFunction.NameOfFunction;
+
+                        context.functions.Add(FunctionToAdd);
+                        context.SaveChanges();
+
+                        CollectionOfCheckedFunction.Add(FunctionToAdd);
+                    }
+                
+
+            }
+            MessageWindowFunction.ToConfirm = false;
+        }
+
 
 
         public NewWindowRaport(gauge NewGauge)
         {
             AddCalibratorCommand = new SimpleRelayCommand(AddCalibrator);
+            AddFunctionCommand = new SimpleRelayCommand(AddFunction);
+
+            CollectionOfCheckedFunction = new ObservableCollection<function>();
             CollectionOfCalibrators = new ObservableCollection<calibrator>();
+            
             LaboratoryEntities context = MainWindowViewModel.Context;
             AboutGauge = NewGauge;
 

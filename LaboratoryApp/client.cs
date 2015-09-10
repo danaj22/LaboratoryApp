@@ -36,7 +36,7 @@ namespace LaboratoryApp
         {
             get
             {
-                return @"C:\Users\daniel\Documents\Visual Studio 2013\Projects\LaboratoryApp\LaboratoryApp\icon\Office-Customer-Male-Light-icon.png";
+                return  @"C:\Users\daniel\Documents\Visual Studio 2013\Projects\LaboratoryApp\LaboratoryApp\icon\Office-Customer-Male-Light-icon.png";
             }
         }
 
@@ -57,7 +57,7 @@ namespace LaboratoryApp
         private bool isExpanded;
         public bool IsExpanded
         {
-            get { return true; }
+            get { return isExpanded; }
             set
             {
                 if (value != isExpanded)

@@ -130,6 +130,7 @@ namespace LaboratoryApp.ViewModel
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.ToString());
+                    MainWindowViewModel.FileLog.WriteLine(ex.ToString());
                 }
             }
         

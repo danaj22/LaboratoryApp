@@ -146,16 +146,19 @@
     <Compile Include="ViewModel\InformationAboutOffice.cs" />
     <Compile Include="ViewModel\InformationAboutGauge.cs" />
     <Compile Include="ViewModel\LoadData.cs" />
+    <Compile Include="ViewModel\Log.cs" />
     <Compile Include="ViewModel\ModalDialogManager.cs" />
     <Compile Include="ViewModel\NameValidation.cs" />
     <Compile Include="ViewModel\NewWindowCalibrator.cs" />
     <Compile Include="ViewModel\NewWindowClient.cs" />
+    <Compile Include="ViewModel\NewWindowFunction.cs" />
     <Compile Include="ViewModel\NewWindowModelOfGauge.cs" />
     <Compile Include="ViewModel\NewWindowOffice.cs" />
     <Compile Include="ViewModel\NewWindowGauge.cs" />
     <Compile Include="ViewModel\NewWindowRaport.cs" />
     <Compile Include="ViewModel\NewWindowType.cs" />
     <Compile Include="ViewModel\NewWindowUsage.cs" />
+    <Compile Include="ViewModel\NotifyAppender.cs" />
     <Compile Include="ViewModel\OfficesViewModel.cs" />
     <Compile Include="ViewModel\OfficeViewModel.cs" />
     <Compile Include="ViewModel\OpenNewWindow.cs" />
@@ -172,6 +175,9 @@
     </Compile>
     <Compile Include="View\DialogWindowClient.xaml.cs">
       <DependentUpon>DialogWindowClient.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowFunction.xaml.cs">
+      <DependentUpon>DialogWindowFunction.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DialogWindowModelOfGauge.xaml.cs">
       <DependentUpon>DialogWindowModelOfGauge.xaml</DependentUpon>
@@ -217,6 +223,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DialogWindowClient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowFunction.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -315,7 +325,9 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="icon\Letter J.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

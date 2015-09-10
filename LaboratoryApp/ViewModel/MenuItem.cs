@@ -71,18 +71,18 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
-        //protected virtual bool isExpanded;
-        //public bool IsExpanded
-        //{
-        //    get { return true; }
-        //    set
-        //    {
-        //        if (value != isExpanded)
-        //        {
-        //            isExpanded = value;
-        //            OnPropertyChanged("IsExpanded");
-        //        }
-        //    }
-        //}
+        protected virtual bool isExpanded {get; set;}
+        public bool IsExpanded
+        {
+            get { return true; }
+            set
+            {
+                if (value != isExpanded)
+                {
+                    isExpanded = value;
+                    OnPropertyChanged("IsExpanded");
+                }
+            }
+        }
     }
 }

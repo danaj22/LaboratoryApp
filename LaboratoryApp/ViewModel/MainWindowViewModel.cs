@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
 using System.Data.Entity;
+using System.IO;
 //using System.Windows;
 //using System.Windows.Input;
 //todelet 2 lib^^
@@ -134,6 +135,8 @@ namespace LaboratoryApp.ViewModel
             data = new LoadData(rootElement);
         }
 
+        public static StreamWriter FileLog;
+
 
         public MainWindowViewModel()
         {
@@ -145,6 +148,23 @@ namespace LaboratoryApp.ViewModel
             CurrentViewModel = null;
             userInput = new UserInput();
             LoadView();
+
+            string path = @"C:\Users\daniel\LaboratoryAppLog.txt";
+
+
+            if (!File.Exists(path))
+            {
+                File.Create(path);
+            }
+            else
+            {
+
+                // Create a file to write to. 
+                using (FileLog = File.CreateText(path))
+                {
+                    FileLog.WriteLine("LaboratoryAppLogger");
+                }
+            }
 
         }
 
@@ -265,6 +285,7 @@ namespace LaboratoryApp.ViewModel
             catch (Exception ex)
             {
                 MessageBox.Show("Nie znaleziono wyników.");
+                FileLog.WriteLine(ex.ToString());
             }
 
         }
@@ -329,7 +350,8 @@ namespace LaboratoryApp.ViewModel
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.ToString());
+                        MessageBox.Show("Nie udało się dodać modelu miernika.");
+                        FileLog.WriteLine(ex.ToString());
                     }
                     try
                     {
@@ -360,7 +382,8 @@ namespace LaboratoryApp.ViewModel
                                 }
                                 catch (Exception e)
                                 {
-                                    MessageBox.Show(e.ToString());
+                                    MessageBox.Show("Nie udało się dodać kalibratora do modelu miernika.");
+                                    FileLog.WriteLine(e.ToString());
                                 }
                             }
                             //newGauge.calibrator_model_of_gauge.Add(zmienna);
@@ -369,7 +392,8 @@ namespace LaboratoryApp.ViewModel
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.ToString());
+                        MessageBox.Show("Błąd");
+                        FileLog.WriteLine(ex.ToString());
                     }
                 }
 
@@ -515,7 +539,8 @@ namespace LaboratoryApp.ViewModel
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.ToString());
+                        MessageBox.Show("Nie udało się dodać klienta do bazy.");
+                        FileLog.WriteLine(ex.ToString());
                     }
 
                     //var index = RootElement.Items.IndexOf(RootElement.Items.Last())+1;

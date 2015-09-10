@@ -56,7 +56,7 @@ namespace LaboratoryApp
         private bool isExpanded;
         public bool IsExpanded
         {
-            get { return true; }
+            get { return isExpanded; }
             set
             {
                 if (value != isExpanded)

@@ -203,9 +203,6 @@ namespace LaboratoryApp.ViewModel
             }
 
         }
-        public InformationAboutGauge()
-        {
-        }
 
         public ICommand DeleteGaugeCommand
         { get { return new SimpleRelayCommand(DeleteGaugeExecute); } }
@@ -256,17 +253,20 @@ namespace LaboratoryApp.ViewModel
                     {
                         foreach (var eve in e.EntityValidationErrors)
                         {
-                            MessageBox.Show(String.Format("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                            MainWindowViewModel.FileLog.WriteLine(String.Format("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
                                 eve.Entry.Entity.GetType().Name, eve.Entry.State));
                             foreach (var ve in eve.ValidationErrors)
                             {
-                                MessageBox.Show(String.Format("- Property: \"{0}\", Error: \"{1}\"",
+                                MainWindowViewModel.FileLog.WriteLine(String.Format("- Property: \"{0}\", Error: \"{1}\"",
                                     ve.PropertyName, ve.ErrorMessage));
                             }
                         }
                     }
                     catch (Exception e)
-                    { MessageBox.Show(e.ToString()); }
+                    {
+                        MessageBox.Show(e.ToString());
+                        MainWindowViewModel.FileLog.WriteLine(e.ToString());
+                    }
 
 
                     //MainWindowViewModel.rootElement.Children[MainWindowViewModel.selectedNode]
@@ -319,9 +319,10 @@ namespace LaboratoryApp.ViewModel
                             context.SaveChanges();
                             CollectionOfCertificate.Add(cert);
                         }
-                        catch (Exception)
+                        catch (Exception e)
                         {
                             MessageBox.Show("Nie udało się utworzyć certyfikatu w bazie.");
+                            MainWindowViewModel.FileLog.WriteLine(e.ToString());
                         }
 
 
@@ -332,17 +333,20 @@ namespace LaboratoryApp.ViewModel
                 {
                     foreach (var eve in e.EntityValidationErrors)
                     {
-                        MessageBox.Show(String.Format("Encja typu \"{0}\" w stanie \"{1}\" ma następujące błędy walidacji:",
+                        MainWindowViewModel.FileLog.WriteLine(String.Format("Encja typu \"{0}\" w stanie \"{1}\" ma następujące błędy walidacji:",
                             eve.Entry.Entity.GetType().Name, eve.Entry.State));
                         foreach (var ve in eve.ValidationErrors)
                         {
-                            MessageBox.Show(String.Format("- Właściwość: \"{0}\", Błąd: \"{1}\"",
+                             MainWindowViewModel.FileLog.WriteLine(String.Format("- Właściwość: \"{0}\", Błąd: \"{1}\"",
                                 ve.PropertyName, ve.ErrorMessage));
                         }
                     }
                 }
                 catch (Exception e)
-                { MessageBox.Show(e.ToString()); }
+                { 
+                    MessageBox.Show(e.ToString());
+                    MainWindowViewModel.FileLog.WriteLine(e.ToString());
+                }
 
 
                 ///////////////////////////////////////////////////////
@@ -642,21 +646,11 @@ namespace LaboratoryApp.ViewModel
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].AddParagraph("Sprawdzone funkcje: ");
 
-
-            foreach (calibrator calibrator in raport.CollectionOfCalibrators)
-            {
-                if (calibrator.IsChecked)
-                {
-                    raport.NationalPattern += calibrator.name + "\n";
-                }
-            }
-            row.Cells[1].AddParagraph(raport.NationalPattern.ToString());
-
             foreach(function fun in raport.CollectionOfCheckedFunction)
             {
                 if(fun.IsChecked)
                 {
-                    raport.CheckedFunction += fun.name + ",";
+                    raport.CheckedFunction += fun.name + ";";
                 }
             }
 
@@ -751,7 +745,10 @@ namespace LaboratoryApp.ViewModel
                     }
                 }
                 catch (Exception e)
-                { MessageBox.Show(e.ToString()); }
+                {
+                    MessageBox.Show(e.ToString());
+                    MainWindowViewModel.FileLog.WriteLine(e.ToString());
+                }
 
 
             }
