@@ -9,33 +9,46 @@
     
     <Application.Resources>
 
-        <DataTemplate DataType="{x:Type vm:NewWindowClient}">
-            <v:DialogWindowClient />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:NewWindowModelOfGauge}">
-            <v:DialogWindowModelOfGauge />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:NewWindowType}">
-            <v:DialogWindowType />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:NewWindowUsage}">
-            <v:DialogWindowUsage />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:NewWindowOffice}">
-            <v:DialogWindowOffice />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:NewWindowGauge}">
-            <v:DialogWindowGauge />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:NewWindowRaport}">
-            <v:Raport />        
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:NewWindowCalibrator}">
-            <v:DialogWindowCalibrator />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:NewWindowFunction}">
-            <v:DialogWindowFunction />
-        </DataTemplate>
 
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                </ResourceDictionary.MergedDictionaries>
+            <DataTemplate DataType="{x:Type vm:NewWindowClient}">
+                <v:DialogWindowClient />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowModelOfGauge}">
+                <v:DialogWindowModelOfGauge />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowType}">
+                <v:DialogWindowType />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowUsage}">
+                <v:DialogWindowUsage />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowOffice}">
+                <v:DialogWindowOffice />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowGauge}">
+                <v:DialogWindowGauge />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowRaport}">
+                <v:Raport />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowCalibrator}">
+                <v:DialogWindowCalibrator />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowFunction}">
+                <v:DialogWindowFunction />
+            </DataTemplate>
+
+        </ResourceDictionary>
+
+
+       
     </Application.Resources>
 </Application>
