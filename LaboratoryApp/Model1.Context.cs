@@ -20,7 +20,15 @@ namespace LaboratoryApp
         public LaboratoryEntities()
             : base("LaboratoryEntities")
         {
-        }
+            try
+            {
+                Database.SetInitializer<LaboratoryEntities>(new CreateDatabaseIfNotExists<LaboratoryEntities>());
+            }
+            catch(Exception)
+            {
+                System.Windows.MessageBox.Show("Błąd przy tworzeniu bazy danych.");
+            }
+            }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

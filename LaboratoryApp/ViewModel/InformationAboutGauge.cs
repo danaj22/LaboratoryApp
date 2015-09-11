@@ -365,7 +365,24 @@ namespace LaboratoryApp.ViewModel
 
                 // Save the document...
 
-                string filename = raport.NumberOfCertificate + ".pdf";
+                string path = @"C:\Certyfikaty";
+
+                try
+                {
+                    // Determine whether the directory exists. 
+                    if (!Directory.Exists(path))
+                    {
+                        // Try to create the directory.
+                        DirectoryInfo di = Directory.CreateDirectory(path);
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.ToString());
+                }
+
+                string filename = path + "\\" + raport.NumberOfCertificate + ".pdf";
 
                 if (!string.IsNullOrEmpty(raport.Author) && !string.IsNullOrEmpty(raport.Temperature))
                 {

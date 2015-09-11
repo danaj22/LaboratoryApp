@@ -15,7 +15,7 @@
             <ColumnDefinition Width="100" MinWidth="120"/>
             <ColumnDefinition  Width="100" MinWidth="120"/>
             <ColumnDefinition  Width="100" MinWidth="90"/>
-            <ColumnDefinition  />
+            <ColumnDefinition   Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -36,8 +36,8 @@
         <TextBlock Text="Zastosowanie: " Grid.Column="0" Grid.Row="4"/>
         <TextBlock Text="{Binding Description}" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3"/>
 
-        
-        
+
+
         <vm:ModalDialogManager DataContext="{Binding MessageWindowGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
 			DialogWidth="320" DialogResizeMode="CanResize" />
 
@@ -49,7 +49,9 @@
         <Button Content="Edytuj dane miernika" Command="{Binding EditGaugeCommand}" Grid.Row="5" VerticalAlignment="Center" Grid.Column="2" HorizontalAlignment="Center" Height="22"  Width="116" />
         <Button Content="Generuj raport" Command="{Binding GenerateRaportCommand}" Grid.Column="1" HorizontalAlignment="Right"  Grid.Row="5" VerticalAlignment="Center" Width="116" Height="22" />
 
-        <DataGrid Grid.Row="6" Grid.ColumnSpan="4" Grid.Column="0" Name="DataGridCertificates" IsReadOnly="True" CanUserResizeColumns="True" AutoGenerateColumns="False"  CanUserAddRows="False" CanUserSortColumns="True" ItemsSource="{Binding CollectionOfCertificate}" HorizontalAlignment="Left" Width="460" Margin="0,0,0,-93"  >
+        <DataGrid Grid.Row="6" Grid.ColumnSpan="5" Grid.Column="0" Name="DataGridCertificates" IsReadOnly="True" 
+                  CanUserResizeColumns="True" AutoGenerateColumns="False"  CanUserAddRows="False" 
+                  CanUserSortColumns="True" ItemsSource="{Binding CollectionOfCertificate}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="580" Height="161" Margin="0,0,0,-80"   >
             <DataGrid.Columns>
                 <DataGridTextColumn MinWidth="100" Header="Nazwa certyfikatu" Binding="{Binding name}" />
                 <DataGridTextColumn MinWidth="100" Header="Data" Binding="{Binding date}" />
