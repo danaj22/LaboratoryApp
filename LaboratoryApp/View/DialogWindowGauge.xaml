@@ -7,7 +7,8 @@
              xmlns:local="clr-namespace:LaboratoryApp"
              
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="320">
+             d:DesignHeight="300" 
+             d:DesignWidth="320">
 
     <UserControl.Resources>
         <ControlTemplate x:Key="errorTemplate">

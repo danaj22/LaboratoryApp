@@ -34,7 +34,7 @@ namespace LaboratoryApp
         {
             get
             {
-                return @"C:\Users\daniel\Documents\Visual Studio 2013\Projects\LaboratoryApp\LaboratoryApp\icon\Computer-2-icon.png";
+                return @"Computer-2-icon.png";
             }
         }
         private bool isSelected;

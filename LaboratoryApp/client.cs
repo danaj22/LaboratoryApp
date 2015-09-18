@@ -36,7 +36,7 @@ namespace LaboratoryApp
         {
             get
             {
-                return  @"C:\Users\daniel\Documents\Visual Studio 2013\Projects\LaboratoryApp\LaboratoryApp\icon\Office-Customer-Male-Light-icon.png";
+                return  @"Office-Customer-Male-Light-icon.png";
             }
         }
 

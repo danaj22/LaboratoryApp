@@ -4,293 +4,262 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="laboratoryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="calibrators">
-          <Key>
-            <PropertyRef Name="calibratorId" />
-          </Key>
-          <Property Name="calibratorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="300" Nullable="false" />
-          <Property Name="model_of_gauge_id" Type="int" />
-        </EntityType>
-        <EntityType Name="calibrators_model_of_gauges">
-          <Key>
-            <PropertyRef Name="calibrator_modelId" />
-          </Key>
-          <Property Name="calibrator_modelId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="calibrator_id" Type="int" />
-          <Property Name="model_of_gaug_id" Type="int" />
-        </EntityType>
-        <EntityType Name="certificates">
-          <Key>
-            <PropertyRef Name="certifacateId" />
-          </Key>
-          <Property Name="certifacateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="50" />
-          <Property Name="date" Type="date" />
-          <Property Name="cost" Type="real" />
-          <Property Name="authorized_by" Type="nvarchar" MaxLength="50" />
-          <Property Name="gauge_id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="clients">
-          <Key>
-            <PropertyRef Name="clientId" />
-          </Key>
-          <Property Name="clientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="adress" Type="nvarchar" MaxLength="150" />
-          <Property Name="contact_person_name" Type="nvarchar" MaxLength="70" />
-          <Property Name="mail" Type="nvarchar" MaxLength="70" />
-          <Property Name="tel" Type="nvarchar" MaxLength="15" />
-          <Property Name="NIP" Type="nvarchar" MaxLength="15" Nullable="false" />
-          <Property Name="comments" Type="nvarchar" MaxLength="500" />
-        </EntityType>
-        <EntityType Name="functions">
-          <Key>
-            <PropertyRef Name="functionId" />
-          </Key>
-          <Property Name="functionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="150" />
-        </EntityType>
-        <EntityType Name="gauges">
-          <Key>
-            <PropertyRef Name="gaugeId" />
-          </Key>
-          <Property Name="gaugeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="serial_number" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="client_id" Type="int" Nullable="false" />
-          <Property Name="office_id" Type="int" />
-          <Property Name="model_of_gauge_id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="model_of_gauges">
-          <Key>
-            <PropertyRef Name="model_of_gaugeId" />
-          </Key>
-          <Property Name="model_of_gaugeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="manufacturer_name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="model" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="usage_id" Type="int" Nullable="false" />
-          <Property Name="type_id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="offices">
-          <Key>
-            <PropertyRef Name="officeId" />
-          </Key>
-          <Property Name="officeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="adress" Type="nvarchar" MaxLength="150" />
-          <Property Name="contact_person_name" Type="nvarchar" MaxLength="70" />
-          <Property Name="mail" Type="nvarchar" MaxLength="70" />
-          <Property Name="tel" Type="nvarchar" MaxLength="15" />
-          <Property Name="is_default" Type="nvarchar" MaxLength="10" />
-          <Property Name="client_id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="types">
-          <Key>
-            <PropertyRef Name="typeId" />
-          </Key>
-          <Property Name="typeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="usages">
-          <Key>
-            <PropertyRef Name="usageId" />
-          </Key>
-          <Property Name="usageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="description" Type="nvarchar" MaxLength="500" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_calibrators_model_of_gauges_calibrators1">
-          <End Role="calibrators" Type="Self.calibrators" Multiplicity="0..1" />
-          <End Role="calibrators_model_of_gauges" Type="Self.calibrators_model_of_gauges" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="calibrators">
-              <PropertyRef Name="calibratorId" />
-            </Principal>
-            <Dependent Role="calibrators_model_of_gauges">
-              <PropertyRef Name="calibrator_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_calibrators_model_of_gauges_model_of_gauges">
-          <End Role="model_of_gauges" Type="Self.model_of_gauges" Multiplicity="0..1" />
-          <End Role="calibrators_model_of_gauges" Type="Self.calibrators_model_of_gauges" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="model_of_gauges">
-              <PropertyRef Name="model_of_gaugeId" />
-            </Principal>
-            <Dependent Role="calibrators_model_of_gauges">
-              <PropertyRef Name="model_of_gaug_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_certificates_gauges">
-          <End Role="gauges" Type="Self.gauges" Multiplicity="1" />
-          <End Role="certificates" Type="Self.certificates" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="gauges">
-              <PropertyRef Name="gaugeId" />
-            </Principal>
-            <Dependent Role="certificates">
-              <PropertyRef Name="gauge_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_gauges_clients">
-          <End Role="clients" Type="Self.clients" Multiplicity="1" />
-          <End Role="gauges" Type="Self.gauges" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="clients">
-              <PropertyRef Name="clientId" />
-            </Principal>
-            <Dependent Role="gauges">
-              <PropertyRef Name="client_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_gauges_model_of_gauges">
-          <End Role="model_of_gauges" Type="Self.model_of_gauges" Multiplicity="1" />
-          <End Role="gauges" Type="Self.gauges" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="model_of_gauges">
-              <PropertyRef Name="model_of_gaugeId" />
-            </Principal>
-            <Dependent Role="gauges">
-              <PropertyRef Name="model_of_gauge_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_gauges_offices">
-          <End Role="offices" Type="Self.offices" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="gauges" Type="Self.gauges" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="offices">
-              <PropertyRef Name="officeId" />
-            </Principal>
-            <Dependent Role="gauges">
-              <PropertyRef Name="office_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_gauges_types">
-          <End Role="types" Type="Self.types" Multiplicity="1" />
-          <End Role="model_of_gauges" Type="Self.model_of_gauges" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="types">
-              <PropertyRef Name="typeId" />
-            </Principal>
-            <Dependent Role="model_of_gauges">
-              <PropertyRef Name="type_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_gauges_usage">
-          <End Role="usages" Type="Self.usages" Multiplicity="1" />
-          <End Role="model_of_gauges" Type="Self.model_of_gauges" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="usages">
-              <PropertyRef Name="usageId" />
-            </Principal>
-            <Dependent Role="model_of_gauges">
-              <PropertyRef Name="usage_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_offices_clients">
-          <End Role="clients" Type="Self.clients" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="offices" Type="Self.offices" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="clients">
-              <PropertyRef Name="clientId" />
-            </Principal>
-            <Dependent Role="offices">
-              <PropertyRef Name="client_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <EntityContainer Name="laboratoryModelStoreContainer">
-          <EntitySet Name="calibrators" EntityType="Self.calibrators" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="calibrators_model_of_gauges" EntityType="Self.calibrators_model_of_gauges" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="certificates" EntityType="Self.certificates" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="clients" EntityType="Self.clients" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="functions" EntityType="Self.functions" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="gauges" EntityType="Self.gauges" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="model_of_gauges" EntityType="Self.model_of_gauges" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="offices" EntityType="Self.offices" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="types" EntityType="Self.types" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="usages" EntityType="Self.usages" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_calibrators_model_of_gauges_calibrators1" Association="Self.FK_calibrators_model_of_gauges_calibrators1">
-            <End Role="calibrators" EntitySet="calibrators" />
-            <End Role="calibrators_model_of_gauges" EntitySet="calibrators_model_of_gauges" />
-          </AssociationSet>
-          <AssociationSet Name="FK_calibrators_model_of_gauges_model_of_gauges" Association="Self.FK_calibrators_model_of_gauges_model_of_gauges">
-            <End Role="model_of_gauges" EntitySet="model_of_gauges" />
-            <End Role="calibrators_model_of_gauges" EntitySet="calibrators_model_of_gauges" />
-          </AssociationSet>
-          <AssociationSet Name="FK_certificates_gauges" Association="Self.FK_certificates_gauges">
-            <End Role="gauges" EntitySet="gauges" />
-            <End Role="certificates" EntitySet="certificates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_gauges_clients" Association="Self.FK_gauges_clients">
-            <End Role="clients" EntitySet="clients" />
-            <End Role="gauges" EntitySet="gauges" />
-          </AssociationSet>
-          <AssociationSet Name="FK_gauges_model_of_gauges" Association="Self.FK_gauges_model_of_gauges">
-            <End Role="model_of_gauges" EntitySet="model_of_gauges" />
-            <End Role="gauges" EntitySet="gauges" />
-          </AssociationSet>
-          <AssociationSet Name="FK_gauges_offices" Association="Self.FK_gauges_offices">
-            <End Role="offices" EntitySet="offices" />
-            <End Role="gauges" EntitySet="gauges" />
-          </AssociationSet>
-          <AssociationSet Name="FK_gauges_types" Association="Self.FK_gauges_types">
-            <End Role="types" EntitySet="types" />
-            <End Role="model_of_gauges" EntitySet="model_of_gauges" />
-          </AssociationSet>
-          <AssociationSet Name="FK_gauges_usage" Association="Self.FK_gauges_usage">
-            <End Role="usages" EntitySet="usages" />
-            <End Role="model_of_gauges" EntitySet="model_of_gauges" />
-          </AssociationSet>
-          <AssociationSet Name="FK_offices_clients" Association="Self.FK_offices_clients">
-            <End Role="clients" EntitySet="clients" />
-            <End Role="offices" EntitySet="offices" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema></edmx:StorageModels>
+    <Schema Namespace="laboratoryModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="laboratoryModelStoreContainer">
+    <EntitySet Name="model_of_gauges" EntityType="laboratoryModel.Store.model_of_gauges" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="clients" EntityType="laboratoryModel.Store.clients" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="gauges" EntityType="laboratoryModel.Store.gauges" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="certificates" EntityType="laboratoryModel.Store.certificates" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="types" EntityType="laboratoryModel.Store.types" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="usages" EntityType="laboratoryModel.Store.usages" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="offices" EntityType="laboratoryModel.Store.offices" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="calibrators" EntityType="laboratoryModel.Store.calibrators" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="calibrators_model_of_gauges" EntityType="laboratoryModel.Store.calibrators_model_of_gauges" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="functions" EntityType="laboratoryModel.Store.functions" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_gauges_clients" Association="laboratoryModel.Store.FK_gauges_clients">
+      <End Role="client" EntitySet="clients" />
+      <End Role="gauge" EntitySet="gauges" />
+    </AssociationSet>
+    <AssociationSet Name="FK_gauges_model_of_gauges" Association="laboratoryModel.Store.FK_gauges_model_of_gauges">
+      <End Role="model_of_gauges" EntitySet="model_of_gauges" />
+      <End Role="gauge" EntitySet="gauges" />
+    </AssociationSet>
+    <AssociationSet Name="FK_certificates_gauges" Association="laboratoryModel.Store.FK_certificates_gauges">
+      <End Role="gauge" EntitySet="gauges" />
+      <End Role="certificate" EntitySet="certificates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_gauges_types" Association="laboratoryModel.Store.FK_gauges_types">
+      <End Role="type" EntitySet="types" />
+      <End Role="model_of_gauges" EntitySet="model_of_gauges" />
+    </AssociationSet>
+    <AssociationSet Name="FK_gauges_usage" Association="laboratoryModel.Store.FK_gauges_usage">
+      <End Role="usage" EntitySet="usages" />
+      <End Role="model_of_gauges" EntitySet="model_of_gauges" />
+    </AssociationSet>
+    <AssociationSet Name="FK_offices_clients" Association="laboratoryModel.Store.FK_offices_clients">
+      <End Role="client" EntitySet="clients" />
+      <End Role="office" EntitySet="offices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_gauges_offices" Association="laboratoryModel.Store.FK_gauges_offices">
+      <End Role="office" EntitySet="offices" />
+      <End Role="gauge" EntitySet="gauges" />
+    </AssociationSet>
+    <AssociationSet Name="FK_calibrators_model_of_gauges_calibrators1" Association="laboratoryModel.Store.FK_calibrators_model_of_gauges_calibrators1">
+      <End Role="calibrator" EntitySet="calibrators" />
+      <End Role="calibrators_model_of_gauges" EntitySet="calibrators_model_of_gauges" />
+    </AssociationSet>
+    <AssociationSet Name="FK_calibrators_model_of_gauges_model_of_gauges" Association="laboratoryModel.Store.FK_calibrators_model_of_gauges_model_of_gauges">
+      <End Role="model_of_gauges" EntitySet="model_of_gauges" />
+      <End Role="calibrators_model_of_gauges" EntitySet="calibrators_model_of_gauges" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="model_of_gauges">
+    <Key>
+      <PropertyRef Name="model_of_gaugeId" />
+    </Key>
+    <Property Name="model_of_gaugeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="manufacturer_name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="model" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="usage_id" Type="int" Nullable="false" />
+    <Property Name="type_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="clients">
+    <Key>
+      <PropertyRef Name="clientId" />
+    </Key>
+    <Property Name="clientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="adress" Type="nvarchar" Nullable="true" MaxLength="150" />
+    <Property Name="contact_person_name" Type="nvarchar" Nullable="true" MaxLength="70" />
+    <Property Name="mail" Type="nvarchar" Nullable="true" MaxLength="70" />
+    <Property Name="tel" Type="nvarchar" Nullable="true" MaxLength="15" />
+    <Property Name="NIP" Type="nvarchar" Nullable="false" MaxLength="15" />
+    <Property Name="comments" Type="nvarchar" Nullable="true" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="gauges">
+    <Key>
+      <PropertyRef Name="gaugeId" />
+    </Key>
+    <Property Name="gaugeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="serial_number" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="client_id" Type="int" Nullable="false" />
+    <Property Name="office_id" Type="int" Nullable="true" />
+    <Property Name="model_of_gauge_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="certificates">
+    <Key>
+      <PropertyRef Name="certifacateId" />
+    </Key>
+    <Property Name="certifacateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="date" Type="datetime" Nullable="true" />
+    <Property Name="cost" Type="real" Nullable="true" />
+    <Property Name="authorized_by" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="gauge_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="types">
+    <Key>
+      <PropertyRef Name="typeId" />
+    </Key>
+    <Property Name="typeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="usages">
+    <Key>
+      <PropertyRef Name="usageId" />
+    </Key>
+    <Property Name="usageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="description" Type="nvarchar" Nullable="false" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="offices">
+    <Key>
+      <PropertyRef Name="officeId" />
+    </Key>
+    <Property Name="officeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="adress" Type="nvarchar" Nullable="true" MaxLength="150" />
+    <Property Name="contact_person_name" Type="nvarchar" Nullable="true" MaxLength="70" />
+    <Property Name="mail" Type="nvarchar" Nullable="true" MaxLength="70" />
+    <Property Name="tel" Type="nvarchar" Nullable="true" MaxLength="15" />
+    <Property Name="is_default" Type="nvarchar" Nullable="true" MaxLength="10" />
+    <Property Name="client_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="calibrators">
+    <Key>
+      <PropertyRef Name="calibratorId" />
+    </Key>
+    <Property Name="calibratorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="300" />
+    <Property Name="model_of_gauge_id" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="calibrators_model_of_gauges">
+    <Key>
+      <PropertyRef Name="calibrator_modelId" />
+    </Key>
+    <Property Name="calibrator_modelId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="calibrator_id" Type="int" Nullable="true" />
+    <Property Name="model_of_gaug_id" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="functions">
+    <Key>
+      <PropertyRef Name="functionId" />
+    </Key>
+    <Property Name="functionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" Nullable="true" MaxLength="150" />
+  </EntityType>
+  <Association Name="FK_gauges_clients">
+    <End Role="client" Type="laboratoryModel.Store.clients" Multiplicity="1" />
+    <End Role="gauge" Type="laboratoryModel.Store.gauges" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="client">
+        <PropertyRef Name="clientId" />
+      </Principal>
+      <Dependent Role="gauge">
+        <PropertyRef Name="client_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_gauges_model_of_gauges">
+    <End Role="model_of_gauges" Type="laboratoryModel.Store.model_of_gauges" Multiplicity="1" />
+    <End Role="gauge" Type="laboratoryModel.Store.gauges" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="model_of_gauges">
+        <PropertyRef Name="model_of_gaugeId" />
+      </Principal>
+      <Dependent Role="gauge">
+        <PropertyRef Name="model_of_gauge_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_certificates_gauges">
+    <End Role="gauge" Type="laboratoryModel.Store.gauges" Multiplicity="1" />
+    <End Role="certificate" Type="laboratoryModel.Store.certificates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="gauge">
+        <PropertyRef Name="gaugeId" />
+      </Principal>
+      <Dependent Role="certificate">
+        <PropertyRef Name="gauge_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_gauges_types">
+    <End Role="type" Type="laboratoryModel.Store.types" Multiplicity="1" />
+    <End Role="model_of_gauges" Type="laboratoryModel.Store.model_of_gauges" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="type">
+        <PropertyRef Name="typeId" />
+      </Principal>
+      <Dependent Role="model_of_gauges">
+        <PropertyRef Name="type_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_gauges_usage">
+    <End Role="usage" Type="laboratoryModel.Store.usages" Multiplicity="1" />
+    <End Role="model_of_gauges" Type="laboratoryModel.Store.model_of_gauges" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usage">
+        <PropertyRef Name="usageId" />
+      </Principal>
+      <Dependent Role="model_of_gauges">
+        <PropertyRef Name="usage_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_offices_clients">
+    <End Role="client" Type="laboratoryModel.Store.clients" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="office" Type="laboratoryModel.Store.offices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="client">
+        <PropertyRef Name="clientId" />
+      </Principal>
+      <Dependent Role="office">
+        <PropertyRef Name="client_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_gauges_offices">
+    <End Role="office" Type="laboratoryModel.Store.offices" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="gauge" Type="laboratoryModel.Store.gauges" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="office">
+        <PropertyRef Name="officeId" />
+      </Principal>
+      <Dependent Role="gauge">
+        <PropertyRef Name="office_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_calibrators_model_of_gauges_calibrators1">
+    <End Role="calibrator" Type="laboratoryModel.Store.calibrators" Multiplicity="0..1" />
+    <End Role="calibrators_model_of_gauges" Type="laboratoryModel.Store.calibrators_model_of_gauges" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="calibrator">
+        <PropertyRef Name="calibratorId" />
+      </Principal>
+      <Dependent Role="calibrators_model_of_gauges">
+        <PropertyRef Name="calibrator_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_calibrators_model_of_gauges_model_of_gauges">
+    <End Role="model_of_gauges" Type="laboratoryModel.Store.model_of_gauges" Multiplicity="0..1" />
+    <End Role="calibrators_model_of_gauges" Type="laboratoryModel.Store.calibrators_model_of_gauges" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="model_of_gauges">
+        <PropertyRef Name="model_of_gaugeId" />
+      </Principal>
+      <Dependent Role="calibrators_model_of_gauges">
+        <PropertyRef Name="model_of_gaug_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="laboratoryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -611,139 +580,114 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="laboratoryModelStoreContainer" CdmEntityContainer="laboratoryEntities">
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="laboratoryModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="laboratoryModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="laboratoryModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="laboratoryModel.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="laboratoryModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="laboratoryModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="laboratoryModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="laboratoryModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="laboratoryModel.Store.sp_upgraddiagrams" />
-          <EntitySetMapping Name="model_of_gauges">
-            <EntityTypeMapping TypeName="laboratoryModel.model_of_gauges">
-              <MappingFragment StoreEntitySet="model_of_gauges">
-                <ScalarProperty Name="type_id" ColumnName="type_id" />
-                <ScalarProperty Name="usage_id" ColumnName="usage_id" />
-                <ScalarProperty Name="model" ColumnName="model" />
-                <ScalarProperty Name="manufacturer_name" ColumnName="manufacturer_name" />
-                <ScalarProperty Name="model_of_gaugeId" ColumnName="model_of_gaugeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="clients">
-            <EntityTypeMapping TypeName="laboratoryModel.client">
-              <MappingFragment StoreEntitySet="clients">
-                <ScalarProperty Name="comments" ColumnName="comments" />
-                <ScalarProperty Name="NIP" ColumnName="NIP" />
-                <ScalarProperty Name="tel" ColumnName="tel" />
-                <ScalarProperty Name="mail" ColumnName="mail" />
-                <ScalarProperty Name="contact_person_name" ColumnName="contact_person_name" />
-                <ScalarProperty Name="adress" ColumnName="adress" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="clientId" ColumnName="clientId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="gauges">
-            <EntityTypeMapping TypeName="laboratoryModel.gauge">
-              <MappingFragment StoreEntitySet="gauges">
-                <ScalarProperty Name="model_of_gauge_id" ColumnName="model_of_gauge_id" />
-                <ScalarProperty Name="office_id" ColumnName="office_id" />
-                <ScalarProperty Name="client_id" ColumnName="client_id" />
-                <ScalarProperty Name="serial_number" ColumnName="serial_number" />
-                <ScalarProperty Name="gaugeId" ColumnName="gaugeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="certificates">
-            <EntityTypeMapping TypeName="laboratoryModel.certificate">
-              <MappingFragment StoreEntitySet="certificates">
-                <ScalarProperty Name="gauge_id" ColumnName="gauge_id" />
-                <ScalarProperty Name="authorized_by" ColumnName="authorized_by" />
-                <ScalarProperty Name="cost" ColumnName="cost" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="certifacateId" ColumnName="certifacateId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="types">
-            <EntityTypeMapping TypeName="laboratoryModel.type">
-              <MappingFragment StoreEntitySet="types">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="typeId" ColumnName="typeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="usages">
-            <EntityTypeMapping TypeName="laboratoryModel.usage">
-              <MappingFragment StoreEntitySet="usages">
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="usageId" ColumnName="usageId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="offices">
-            <EntityTypeMapping TypeName="laboratoryModel.office">
-              <MappingFragment StoreEntitySet="offices">
-                <ScalarProperty Name="client_id" ColumnName="client_id" />
-                <ScalarProperty Name="is_default" ColumnName="is_default" />
-                <ScalarProperty Name="tel" ColumnName="tel" />
-                <ScalarProperty Name="mail" ColumnName="mail" />
-                <ScalarProperty Name="contact_person_name" ColumnName="contact_person_name" />
-                <ScalarProperty Name="adress" ColumnName="adress" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="officeId" ColumnName="officeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="calibrators">
-            <EntityTypeMapping TypeName="laboratoryModel.calibrator">
-              <MappingFragment StoreEntitySet="calibrators">
-                <ScalarProperty Name="model_of_gauge_id" ColumnName="model_of_gauge_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="calibratorId" ColumnName="calibratorId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="calibrators_model_of_gauges">
-            <EntityTypeMapping TypeName="laboratoryModel.calibrators_model_of_gauges">
-              <MappingFragment StoreEntitySet="calibrators_model_of_gauges">
-                <ScalarProperty Name="model_of_gaug_id" ColumnName="model_of_gaug_id" />
-                <ScalarProperty Name="calibrator_id" ColumnName="calibrator_id" />
-                <ScalarProperty Name="calibrator_modelId" ColumnName="calibrator_modelId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="functions">
-            <EntityTypeMapping TypeName="laboratoryModel.function">
-              <MappingFragment StoreEntitySet="functions">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="functionId" ColumnName="functionId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="laboratoryModelStoreContainer" CdmEntityContainer="laboratoryEntities">
+    <EntitySetMapping Name="model_of_gauges">
+      <EntityTypeMapping TypeName="IsTypeOf(laboratoryModel.model_of_gauges)">
+        <MappingFragment StoreEntitySet="model_of_gauges">
+          <ScalarProperty Name="model_of_gaugeId" ColumnName="model_of_gaugeId" />
+          <ScalarProperty Name="manufacturer_name" ColumnName="manufacturer_name" />
+          <ScalarProperty Name="model" ColumnName="model" />
+          <ScalarProperty Name="usage_id" ColumnName="usage_id" />
+          <ScalarProperty Name="type_id" ColumnName="type_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="clients">
+      <EntityTypeMapping TypeName="IsTypeOf(laboratoryModel.client)">
+        <MappingFragment StoreEntitySet="clients">
+          <ScalarProperty Name="clientId" ColumnName="clientId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="adress" ColumnName="adress" />
+          <ScalarProperty Name="contact_person_name" ColumnName="contact_person_name" />
+          <ScalarProperty Name="mail" ColumnName="mail" />
+          <ScalarProperty Name="tel" ColumnName="tel" />
+          <ScalarProperty Name="NIP" ColumnName="NIP" />
+          <ScalarProperty Name="comments" ColumnName="comments" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="gauges">
+      <EntityTypeMapping TypeName="IsTypeOf(laboratoryModel.gauge)">
+        <MappingFragment StoreEntitySet="gauges">
+          <ScalarProperty Name="gaugeId" ColumnName="gaugeId" />
+          <ScalarProperty Name="serial_number" ColumnName="serial_number" />
+          <ScalarProperty Name="client_id" ColumnName="client_id" />
+          <ScalarProperty Name="office_id" ColumnName="office_id" />
+          <ScalarProperty Name="model_of_gauge_id" ColumnName="model_of_gauge_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="certificates">
+      <EntityTypeMapping TypeName="IsTypeOf(laboratoryModel.certificate)">
+        <MappingFragment StoreEntitySet="certificates">
+          <ScalarProperty Name="certifacateId" ColumnName="certifacateId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="cost" ColumnName="cost" />
+          <ScalarProperty Name="authorized_by" ColumnName="authorized_by" />
+          <ScalarProperty Name="gauge_id" ColumnName="gauge_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="types">
+      <EntityTypeMapping TypeName="IsTypeOf(laboratoryModel.type)">
+        <MappingFragment StoreEntitySet="types">
+          <ScalarProperty Name="typeId" ColumnName="typeId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="usages">
+      <EntityTypeMapping TypeName="IsTypeOf(laboratoryModel.usage)">
+        <MappingFragment StoreEntitySet="usages">
+          <ScalarProperty Name="usageId" ColumnName="usageId" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="offices">
+      <EntityTypeMapping TypeName="IsTypeOf(laboratoryModel.office)">
+        <MappingFragment StoreEntitySet="offices">
+          <ScalarProperty Name="officeId" ColumnName="officeId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="adress" ColumnName="adress" />
+          <ScalarProperty Name="contact_person_name" ColumnName="contact_person_name" />
+          <ScalarProperty Name="mail" ColumnName="mail" />
+          <ScalarProperty Name="tel" ColumnName="tel" />
+          <ScalarProperty Name="is_default" ColumnName="is_default" />
+          <ScalarProperty Name="client_id" ColumnName="client_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="calibrators">
+      <EntityTypeMapping TypeName="IsTypeOf(laboratoryModel.calibrator)">
+        <MappingFragment StoreEntitySet="calibrators">
+          <ScalarProperty Name="calibratorId" ColumnName="calibratorId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="model_of_gauge_id" ColumnName="model_of_gauge_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="calibrators_model_of_gauges">
+      <EntityTypeMapping TypeName="IsTypeOf(laboratoryModel.calibrators_model_of_gauges)">
+        <MappingFragment StoreEntitySet="calibrators_model_of_gauges">
+          <ScalarProperty Name="calibrator_modelId" ColumnName="calibrator_modelId" />
+          <ScalarProperty Name="calibrator_id" ColumnName="calibrator_id" />
+          <ScalarProperty Name="model_of_gaug_id" ColumnName="model_of_gaug_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="functions">
+      <EntityTypeMapping TypeName="IsTypeOf(laboratoryModel.function)">
+        <MappingFragment StoreEntitySet="functions">
+          <ScalarProperty Name="functionId" ColumnName="functionId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -757,7 +701,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

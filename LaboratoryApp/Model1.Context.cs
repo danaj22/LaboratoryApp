@@ -14,21 +14,75 @@ namespace LaboratoryApp
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
+    using System.Data.SqlClient;
     
     public partial class LaboratoryEntities : DbContext
     {
+        public SqlConnection thisConnection;
         public LaboratoryEntities()
             : base("LaboratoryEntities")
         {
             try
             {
-                Database.SetInitializer<LaboratoryEntities>(new CreateDatabaseIfNotExists<LaboratoryEntities>());
+                
+                //if(!Database.Exists() )
+                {
+                    Database.SetInitializer<LaboratoryEntities>(new CreateDatabaseIfNotExists<LaboratoryEntities>());
+
+                    try
+                    {
+                        try
+                        {
+                            //@"Server=(local);Database=laboratory;Trusted_Connection=Yes;"
+                            thisConnection = new SqlConnection(@"Server=localhost;Database=laboratory;integrated security=True;multipleactiveresultsets=True");
+                            System.Windows.MessageBox.Show(thisConnection.ToString());
+
+                            if (thisConnection != null && thisConnection.State == System.Data.ConnectionState.Closed)
+                            {
+                                thisConnection.Open();
+                            }
+                            else if (thisConnection != null)
+                               {
+                                   thisConnection.Close();
+                               }
+
+                        }
+                        catch(Exception e)
+                        {
+                            System.Windows.MessageBox.Show(e + "db error");
+                            
+                        }
+
+                        string script = System.IO.File.ReadAllText(@"Model1.edmx.sql");
+
+                        // split script on GO command
+                        System.Collections.Generic.IEnumerable<string> commandStrings = System.Text.RegularExpressions.Regex.Split(script, @"^\s*GO\s*$",
+                                                 System.Text.RegularExpressions.RegexOptions.Multiline | System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+
+                        //thisConnection.Open();
+                        foreach (string commandString in commandStrings)
+                        {
+                            if (commandString.Trim() != "")
+                            {
+                                using (var command = new SqlCommand(commandString, thisConnection))
+                                {
+                                    command.ExecuteNonQuery();
+                                }
+                            }
+                        }
+                        thisConnection.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        System.Windows.MessageBox.Show(e.ToString());
+                    }
+                }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 System.Windows.MessageBox.Show("Błąd przy tworzeniu bazy danych.");
             }
-            }
+        }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
