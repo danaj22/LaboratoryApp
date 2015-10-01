@@ -16,18 +16,86 @@ namespace LaboratoryApp
     using System.Linq;
     using System.Data.SqlClient;
     
+    public class MyDBInitializer : CreateDatabaseIfNotExists<LaboratoryEntities>
+    {/*
+        public MyDBInitializer()
+        {
+            // your connection string
+            string connectionString = "Server=localhost;Database=laboratory;integrated security=True;multipleactiveresultsets=True";
+            
+            var conn = new SqlConnection(connectionString);
+            
+            // your query:
+            var query = GetDbCreationQuery(conn);
+
+            var command = new SqlCommand(query, conn);
+
+            try
+            {
+                conn.Open();
+                command.ExecuteNonQuery();
+                System.Windows.MessageBox.Show("Database is created successfully");
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                if ((conn.State == System.Data.ConnectionState.Open))
+                {
+                    conn.Close();
+                }
+            }
+        }
+
+        static string GetDbCreationQuery(SqlConnection conn)
+        {
+
+            string script = System.IO.File.ReadAllText(@"Model1.edmx.sql");
+
+            // split script on GO command
+            System.Collections.Generic.IEnumerable<string> commandStrings = System.Text.RegularExpressions.Regex.Split(script, @"^\s*GO\s*$",
+                                     System.Text.RegularExpressions.RegexOptions.Multiline | System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+
+            //thisConnection.Open();
+            foreach (string commandString in commandStrings)
+            {
+                if (commandString.Trim() != "")
+                {
+                    using (var command = new SqlCommand(commandString, conn))
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            conn.Close();
+
+            // your db name
+            string dbName = "laborator";
+
+            // db creation query
+            string query = "CREATE DATABASE " + dbName + ";";
+
+            return query;
+        }
+        */
+    }
+
+
     public partial class LaboratoryEntities : DbContext
     {
         public SqlConnection thisConnection;
         public LaboratoryEntities()
-            : base("LaboratoryEntities")
-        {
+            : base("Server=localhost;Database=laboratory;integrated security=True;multipleactiveresultsets=True")
+        {/*
             try
             {
                 
-                //if(!Database.Exists() )
+                if(!Database.Exists() )
                 {
-                    Database.SetInitializer<LaboratoryEntities>(new CreateDatabaseIfNotExists<LaboratoryEntities>());
+                    
+                    Database.SetInitializer(new MyDBInitializer());
 
                     try
                     {
@@ -82,6 +150,7 @@ namespace LaboratoryApp
             {
                 System.Windows.MessageBox.Show("Błąd przy tworzeniu bazy danych.");
             }
+          */
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
