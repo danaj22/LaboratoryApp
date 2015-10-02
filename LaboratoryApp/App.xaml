@@ -4,7 +4,7 @@
              xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
              xmlns:v="clr-namespace:LaboratoryApp.View"
              xmlns:local="clr-namespace:LaboratoryApp"
-             StartupUri="MainWindow.xaml"
+             Startup="Application_Startup"
               ShutdownMode= "OnMainWindowClose">
     
     <Application.Resources>
@@ -18,6 +18,10 @@
                     <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                     <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
                 </ResourceDictionary.MergedDictionaries>
+           
+                <DataTemplate DataType="{x:Type vm:NewWindowConnect}">
+                <v:ServerConnectWindow />
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vm:NewWindowClient}">
                 <v:DialogWindowClient />
             </DataTemplate>

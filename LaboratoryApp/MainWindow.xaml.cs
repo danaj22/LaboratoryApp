@@ -177,44 +177,7 @@ namespace LaboratoryApp
             InitializeComponent();
         }
 
-        /*
-        static string GetDbCreationQuery(SqlConnection conn)
-        {
-            Database.SetInitializer(new MyDBInitializer());
-            SqlConnection thisConnection = new SqlConnection(@"Server=localhost;integrated security=True;multipleactiveresultsets=True");
-            
-            if (thisConnection != null && thisConnection.State == System.Data.ConnectionState.Closed)
-            {
-                thisConnection.Open();
-            }
-            string script = System.IO.File.ReadAllText(@"Model1.edmx.sql");
-
-            // split script on GO command
-            System.Collections.Generic.IEnumerable<string> commandStrings = System.Text.RegularExpressions.Regex.Split(script, @"^\s*GO\s*$",
-                                     System.Text.RegularExpressions.RegexOptions.Multiline | System.Text.RegularExpressions.RegexOptions.IgnoreCase);
-
-            //thisConnection.Open();
-            foreach (string commandString in commandStrings)
-            {
-                if (commandString.Trim() != "")
-                {
-                    using (var command = new SqlCommand(commandString, thisConnection))
-                    {
-                        command.ExecuteNonQuery();
-                    }
-                }
-            }
-            thisConnection.Close();
-
-            //// your db name
-            //string dbName = "laborator";
-
-            //// db creation query
-            //string query = "CREATE DATABASE " + dbName + ";";
-
-            return "oo";
-        }
-        */
+        
     }
     
 }

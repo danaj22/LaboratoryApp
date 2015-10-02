@@ -210,6 +210,8 @@
         </ContentControl>
         <Button Content="Wyszukaj" Command="{Binding SearchCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Width="80" Height="22" Margin="10,4"/>
 
+        <!--<vm:ModalDialogManager DataContext="{Binding MessageWindowDatabase}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}" DialogHeight="400" DialogWidth="350"
+                               DialogResizeMode="CanResize" />-->
         <vm:ModalDialogManager DataContext="{Binding MessageWindowClient}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="400" 
 			DialogWidth="390" DialogResizeMode="CanResize" />
 

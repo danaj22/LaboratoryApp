@@ -78,6 +78,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
@@ -170,6 +171,7 @@
     <Compile Include="ViewModel\NameValidation.cs" />
     <Compile Include="ViewModel\NewWindowCalibrator.cs" />
     <Compile Include="ViewModel\NewWindowClient.cs" />
+    <Compile Include="ViewModel\NewWindowConnect.cs" />
     <Compile Include="ViewModel\NewWindowFunction.cs" />
     <Compile Include="ViewModel\NewWindowModelOfGauge.cs" />
     <Compile Include="ViewModel\NewWindowOffice.cs" />
@@ -194,6 +196,9 @@
     </Compile>
     <Compile Include="View\DialogWindowClient.xaml.cs">
       <DependentUpon>DialogWindowClient.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowConnect.xaml.cs">
+      <DependentUpon>DialogWindowConnect.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DialogWindowFunction.xaml.cs">
       <DependentUpon>DialogWindowFunction.xaml</DependentUpon>
@@ -225,6 +230,9 @@
     <Compile Include="View\Raport.xaml.cs">
       <DependentUpon>Raport.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ServerConnectWindow.xaml.cs">
+      <DependentUpon>ServerConnectWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -242,6 +250,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DialogWindowClient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowConnect.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -282,6 +294,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Raport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ServerConnectWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

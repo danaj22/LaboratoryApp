@@ -15,80 +15,98 @@ namespace LaboratoryApp
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     using System.Data.SqlClient;
-    
-    public class MyDBInitializer : CreateDatabaseIfNotExists<LaboratoryEntities>
-    {/*
-        public MyDBInitializer()
-        {
-            // your connection string
-            string connectionString = "Server=localhost;Database=laboratory;integrated security=True;multipleactiveresultsets=True";
-            
-            var conn = new SqlConnection(connectionString);
-            
-            // your query:
-            var query = GetDbCreationQuery(conn);
+    using System.Reflection;
+    using System.Data.Entity.Core.EntityClient;
 
-            var command = new SqlCommand(query, conn);
+    //public static class ConnectionTools
+    //{
+    //    // all params are optional
+    //    public static void ChangeDatabase(
+    //        this DbContext source,
+    //        string initialCatalog = "",
+    //        string dataSource = "",
+    //        string userId = "",
+    //        string password = "",
+    //        bool integratedSecuity = true,
+    //        string configConnectionStringName = "")
+    //    /* this would be used if the
+    //    *  connectionString name varied from 
+    //    *  the base EF class name */
+    //    {
+    //        try
+    //        {
+    //            // use the const name if it's not null, otherwise
+    //            // using the convention of connection string = EF contextname
+    //            // grab the type name and we're done
+    //            var configNameEf = string.IsNullOrEmpty(configConnectionStringName)
+    //                ? source.GetType().Name
+    //                : configConnectionStringName;
 
-            try
-            {
-                conn.Open();
-                command.ExecuteNonQuery();
-                System.Windows.MessageBox.Show("Database is created successfully");
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show(ex.ToString());
-            }
-            finally
-            {
-                if ((conn.State == System.Data.ConnectionState.Open))
-                {
-                    conn.Close();
-                }
-            }
-        }
+    //            // add a reference to System.Configuration
+    //            var entityCnxStringBuilder = new EntityConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings[configNameEf].ConnectionString);
 
-        static string GetDbCreationQuery(SqlConnection conn)
-        {
+    //            // init the sqlbuilder with the full EF connectionstring cargo
+    //            var sqlCnxStringBuilder = new SqlConnectionStringBuilder
+    //                (entityCnxStringBuilder.ProviderConnectionString);
 
-            string script = System.IO.File.ReadAllText(@"Model1.edmx.sql");
+    //            // only populate parameters with values if added
+    //            if (!string.IsNullOrEmpty(initialCatalog))
+    //                sqlCnxStringBuilder.InitialCatalog = initialCatalog;
+    //            if (!string.IsNullOrEmpty(dataSource))
+    //                sqlCnxStringBuilder.DataSource = dataSource;
+    //            if (!string.IsNullOrEmpty(userId))
+    //                sqlCnxStringBuilder.UserID = userId;
+    //            if (!string.IsNullOrEmpty(password))
+    //                sqlCnxStringBuilder.Password = password;
 
-            // split script on GO command
-            System.Collections.Generic.IEnumerable<string> commandStrings = System.Text.RegularExpressions.Regex.Split(script, @"^\s*GO\s*$",
-                                     System.Text.RegularExpressions.RegexOptions.Multiline | System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+    //            // set the integrated security status
+    //            sqlCnxStringBuilder.IntegratedSecurity = integratedSecuity;
 
-            //thisConnection.Open();
-            foreach (string commandString in commandStrings)
-            {
-                if (commandString.Trim() != "")
-                {
-                    using (var command = new SqlCommand(commandString, conn))
-                    {
-                        command.ExecuteNonQuery();
-                    }
-                }
-            }
-            conn.Close();
-
-            // your db name
-            string dbName = "laborator";
-
-            // db creation query
-            string query = "CREATE DATABASE " + dbName + ";";
-
-            return query;
-        }
-        */
-    }
-
+    //            // now flip the properties that were changed
+    //            source.Database.Connection.ConnectionString
+    //                = sqlCnxStringBuilder.ConnectionString;
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            // set log item if required
+    //        }
+    //    }
+    //}
 
     public partial class LaboratoryEntities : DbContext
     {
-        public SqlConnection thisConnection;
-        public LaboratoryEntities()
-            : base("Server=localhost;Database=laboratory;integrated security=True;multipleactiveresultsets=True")
-        {/*
+        public LaboratoryEntities() : base("LaboratoryEntities") { }
+        
+            public LaboratoryEntities(string connectionString)
+            : base(connectionString)
+        {
+        }
+
+        public static LaboratoryEntities ConnectToSqlServer()
+            {
+                SqlConnectionStringBuilder sqlBuilder = new SqlConnectionStringBuilder
+                {
+                    DataSource = "localhost",
+                    InitialCatalog = "laboratory",
+                    ApplicationName = "EntityFramework",
+                    PersistSecurityInfo = true,
+                    IntegratedSecurity = true,
+                    MultipleActiveResultSets = true,
+                    UserID="daniel",
+                    Password=""
+                };
+
+                // assumes a connectionString name in .config of MyDbEntities
+                //var entityConnectionStringBuilder = new EntityConnectionStringBuilder
+                //{
+                    //Provider = "System.Data.SqlClient",
+                    //ProviderConnectionString = sqlBuilder.ConnectionString
+                //};
+
+                return new LaboratoryEntities(sqlBuilder.ConnectionString);
+            }
+            /*"Server=localhost;integrated security=True;multipleactiveresultsets=True"
+           string connectionString
             try
             {
                 
@@ -151,8 +169,9 @@ namespace LaboratoryApp
                 System.Windows.MessageBox.Show("Błąd przy tworzeniu bazy danych.");
             }
           */
-        }
-    
+        //}
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
