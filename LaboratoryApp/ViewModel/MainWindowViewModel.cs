@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows;
 using System.Data.Entity;
 using System.IO;
+using LaboratoryApp.Models;
 //using System.Windows;
 //using System.Windows.Input;
 //todelet 2 lib^^
@@ -540,6 +541,7 @@ namespace LaboratoryApp.ViewModel
                     catch (Exception ex)
                     {
                         MessageBox.Show("Nie udało się dodać klienta do bazy.");
+                        MessageBox.Show(ex.ToString());
                         FileLog.WriteLine(ex.ToString());
                     }
 

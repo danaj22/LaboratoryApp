@@ -8,6 +8,7 @@ using System.Windows.Input;
 using LaboratoryApp;
 using System.Windows;
 using System.Collections.ObjectModel;
+using LaboratoryApp.Models;
 
 namespace LaboratoryApp.ViewModel
 {

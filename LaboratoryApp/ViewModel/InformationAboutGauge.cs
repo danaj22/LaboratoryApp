@@ -1,4 +1,5 @@
-﻿using MigraDoc.DocumentObjectModel;
+﻿using LaboratoryApp.Models;
+using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Shapes;
 using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;

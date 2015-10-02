@@ -9,6 +9,7 @@ using System.Windows.Input;
 using LaboratoryApp;
 using System.Windows;
 using System.Data.Entity.Validation;
+using LaboratoryApp.Models;
 
 namespace LaboratoryApp.ViewModel
 {

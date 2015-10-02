@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using LaboratoryApp;
+using LaboratoryApp.Models;
 
 namespace LaboratoryApp.ViewModel
 {
@@ -39,7 +40,7 @@ namespace LaboratoryApp.ViewModel
                 foreach (var t in LabEntities.clients)
                 {
                     //rootItem.Child.Add(t);
-
+                   
                     
                     rootItem.Children.Add((client)t);
                     rootItem.Children.Last().NameOfItem = t.name;

@@ -10,11 +10,13 @@ namespace LaboratoryApp.ViewModel
     public class MenuItem : ObservableObject
     {
 
+        public int Id { get; set; }
         public MenuItem()
         {
             this.Children = new ObservableCollection<MenuItem>();
            
         }
+
 
         protected virtual MenuItem parent { get; set; }
 

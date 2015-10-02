@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using LaboratoryApp.ViewModel;
 using System.Windows.Input;
 using System.Windows;
+using LaboratoryApp.Models;
 
 namespace LaboratoryApp.ViewModel
 {

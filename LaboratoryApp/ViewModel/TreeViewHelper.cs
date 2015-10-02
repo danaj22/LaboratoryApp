@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using LaboratoryApp;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using LaboratoryApp.Models;
 
 
 namespace LaboratoryApp.ViewModel
