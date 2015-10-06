@@ -32,33 +32,33 @@ namespace LaboratoryApp.Models
             }
         }
 
-        private bool isSelected;
-        public bool IsSelected
-        {
-            get { return isSelected; }
-            set
-            {
-                if (value != isSelected)
-                {
-                    isSelected = value;
-                    this.OnPropertyChanged("IsSelected");
-                }
-            }
-        }
+        //private bool isSelected;
+        //public bool IsSelected
+        //{
+        //    get { return isSelected; }
+        //    set
+        //    {
+        //        if (value != isSelected)
+        //        {
+        //            isSelected = value;
+        //            this.OnPropertyChanged("IsSelected");
+        //        }
+        //    }
+        //}
 
-        private bool isExpanded;
-        public bool IsExpanded
-        {
-            get { return isExpanded; }
-            set
-            {
-                if (value != isExpanded)
-                {
-                    isExpanded = value;
-                    OnPropertyChanged("IsExpanded");
-                }
-            }
-        }
+        //private bool isExpanded;
+        //public bool IsExpanded
+        //{
+        //    get { return isExpanded; }
+        //    set
+        //    {
+        //        if (value != isExpanded)
+        //        {
+        //            isExpanded = value;
+        //            OnPropertyChanged("IsExpanded");
+        //        }
+        //    }
+        //}
 
     }
 }

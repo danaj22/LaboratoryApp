@@ -10,6 +10,7 @@ namespace LaboratoryApp.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            
         }
 
         protected override void Seed(LaboratoryApp.Models.LaboratoryEntities context)

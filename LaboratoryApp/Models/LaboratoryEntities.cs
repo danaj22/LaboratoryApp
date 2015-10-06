@@ -12,7 +12,7 @@ namespace LaboratoryApp.Models
         }
 
         public LaboratoryEntities()
-            : base("LaboratoryEntities")
+            : base("name=LaboratoryEntities")
         {
         }
 
@@ -39,6 +39,13 @@ namespace LaboratoryApp.Models
             modelBuilder.Configurations.Add(new officeMap());
             modelBuilder.Configurations.Add(new typeMap());
             modelBuilder.Configurations.Add(new usageMap());
+            modelBuilder.Ignore<ViewModel.MenuItem>();
+            modelBuilder.Entity<ViewModel.MenuItem>().Ignore(x=> x.Id);
+            modelBuilder.Entity<ViewModel.MenuItem>().Ignore(x => x.IsExpanded);
+            modelBuilder.Entity<ViewModel.MenuItem>().Ignore(x => x.IsSelected);
+            modelBuilder.Entity<ViewModel.MenuItem>().Ignore(x => x.NameOfItem);
+            modelBuilder.Entity<ViewModel.MenuItem>().Ignore(x => x.DisplayImagePath);
         }
     }
 }
+

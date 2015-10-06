@@ -535,6 +535,7 @@ namespace LaboratoryApp.ViewModel
                     {
                         {
                             Context.clients.Add(newClient);
+                            MessageBox.Show("Dodanie użytkownika.");
                             Context.SaveChanges();
                         }
                     }

@@ -60,9 +60,11 @@ namespace LaboratoryApp.ViewModel
         }
 
         protected virtual bool isSelected { get; set; }
+        
         public bool IsSelected
         {
             get { return isSelected; }
+            
             set
             {
                 if (value != isSelected)
@@ -76,7 +78,9 @@ namespace LaboratoryApp.ViewModel
         protected virtual bool isExpanded {get; set;}
         public bool IsExpanded
         {
-            get { return true; }
+            get { return isExpanded; }
+
+
             set
             {
                 if (value != isExpanded)

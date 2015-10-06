@@ -42,20 +42,20 @@ namespace LaboratoryApp
         {
 
             // your connection string
-            string connectionString = "Server=localhost;integrated security=True;multipleactiveresultsets=True";
+            string connectionString = "Data Source=LABORATORIUM-PC\\SQLEXPRESS;integrated security=True;multipleactiveresultsets=True";
 
             // your query:
-            var query = GetDbCreationQuery();
+            //var query = GetDbCreationQuery();
 
             var conn = new SqlConnection(connectionString);
-            var command = new SqlCommand(query, conn);
+            //var command = new SqlCommand(query, conn);
 
             try
             {
                 conn.Open();
                 try
                 {
-                    command.ExecuteNonQuery();
+                    //command.ExecuteNonQuery();
 
                     string script = System.IO.File.ReadAllText(@"Model1.edmx.sql");
 
@@ -79,6 +79,7 @@ namespace LaboratoryApp
                 catch (Exception e)
                 {
                     //database doesn't exist
+                    MessageBox.Show(e.ToString());
                 }
 
                 conn.Close();
