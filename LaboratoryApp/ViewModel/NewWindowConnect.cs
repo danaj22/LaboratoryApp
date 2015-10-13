@@ -16,40 +16,31 @@ namespace LaboratoryApp.ViewModel
     {
         public NewWindowConnect()
         {
+
             OKCommand = new SimpleRelayCommand(Confirm);
             CancelCommand = new SimpleRelayCommand(Close);
             Models.LaboratoryEntities context = new Models.LaboratoryEntities();
 
+            ServerName = @"DASL_SERWER";
+            DatabaseName = "laboratory";
             
             //create database
             var dbExists = "SELECT COUNT(*) FROM master.dbo.sysdatabases WHERE name = 'laboratory'";
             var query = "CREATE DATABASE laboratory;";
-            string connectionString = "Data Source=DASL_SERWER;Integrated Security=True;MultipleActiveResultSets=True";
+            string connectionString = @"Data Source="+ServerName+";Integrated Security=True;MultipleActiveResultSets=True";
             var conn = new SqlConnection(connectionString);
             var command2 = new SqlCommand(dbExists, conn);
             var command = new SqlCommand(query, conn);
             
-            if((int)l != 0)
-            {
-
-            }
-            
             try
             {
                 conn.Open();
-                command2.ExecuteNonQuery();
-            }
-
-            catch(Exception e)
-            {
-                MessageBox.Show("Brak bazy danych.");
-            }
-            conn.Close();
-            try
-            {
-                conn.Open();
-                command.ExecuteNonQuery();
-                conn.Close();
+                if (command2.ExecuteNonQuery() == 0)
+                {
+                    command.ExecuteNonQuery();
+                    MessageBox.Show("Utworzono bazę laboratory.");
+                    conn.Close();
+                }
             }
             catch (Exception e)
             {
@@ -59,15 +50,12 @@ namespace LaboratoryApp.ViewModel
 
             try
             {
-                conn.Open();
-                command2.ExecuteNonQuery();
-                conn.Close();
+                if (conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
             }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.ToString());
-            }
-
+            catch { }
         }
 
         private ICommand okCommand;
@@ -131,70 +119,11 @@ namespace LaboratoryApp.ViewModel
         public void Confirm()
         {
 
-            //if (!this.ToConfirm) ToConfirm = true;
-
-            //// your connection string
-            //string connectionString = "Server=localhost;integrated security=True;multipleactiveresultsets=True";
-
-            //// your query:
-            //var query = GetDbCreationQuery();
-
-            //var conn = new SqlConnection(connectionString);
-            //var command = new SqlCommand(query, conn);
-
-            //conn.Open();
-            ////command.ExecuteNonQuery();
-
-            //try
-            //{
-            //    //conn.Open();
-            //    try
-            //    {
-            //        command.ExecuteNonQuery();
-
-            //        string script = System.IO.File.ReadAllText(@"Model1.edmx.sql");
-
-            //        // split script on GO command
-            //        System.Collections.Generic.IEnumerable<string> commandStrings = System.Text.RegularExpressions.Regex.Split(script, @"^\s*GO\s*$",
-            //                                 System.Text.RegularExpressions.RegexOptions.Multiline | System.Text.RegularExpressions.RegexOptions.IgnoreCase);
-
-            //        //thisConnection.Open();
-            //        foreach (string commandString in commandStrings)
-            //        {
-            //            if (commandString.Trim() != "")
-            //            {
-            //                using (var command2 = new SqlCommand(commandString, conn))
-            //                {
-            //                    command2.ExecuteNonQuery();
-            //                }
-            //            }
-            //        }
-            //    }
-
-            //    catch (Exception e)
-                
-            //    {
-            //        //database doesn't exist
-            //        MessageBox.Show(e.ToString());
-            //    }
-
-            //    //conn.Close();
-
-            //    //MessageBox.Show("Database is created successfully");
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("New window connect błąde\n\n" + ex.ToString());
-            //}
-
-
-
-
             try
             {
                 //"Server=localhost;integrated security=True;multipleactiveresultsets=True"
                 //Constructing connection string from the inputs
-                StringBuilder Con = new StringBuilder("data source=DASL_SERWER");
+                StringBuilder Con = new StringBuilder(@"data source="+ServerName);
                 //Con.Append(ServerName);
                 Con.Append(";integrated security=True;multipleactiveresultsets=True;initial catalog=laboratory");
                 //Con.Append(DatabaseName);
@@ -208,11 +137,8 @@ namespace LaboratoryApp.ViewModel
                 ConfigurationManager.RefreshSection("connectionStrings");
                 Db.ConnectionString = strCon;
                 //To check new connection string is working or not. Please use the existing table otherwise it will give error
-
-                SqlDataAdapter da = new SqlDataAdapter("select * from clients", Db);
-
+                
                 Application.Current.Windows[0].DialogResult = true;
-
             }
             catch (Exception E)
             {
@@ -222,8 +148,23 @@ namespace LaboratoryApp.ViewModel
 
         }
 
+
+        private void UpdateAppSettings(string theValue)
+        {
+            string theKey = "connectionStrings";
+            Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            if (ConfigurationManager.AppSettings.AllKeys.Contains(theKey))
+            {
+                configuration.AppSettings.Settings[theKey].Value = theValue;
+            }
+
+            configuration.Save(ConfigurationSaveMode.Modified);
+
+            ConfigurationManager.RefreshSection("appSettings");
+        }
         public void updateConfigFile(string con)
         {
+
             //updating config file
             XmlDocument XmlDoc = new XmlDocument();
             //Loading the Config file
@@ -236,6 +177,7 @@ namespace LaboratoryApp.ViewModel
                     xElement.FirstChild.Attributes[1].Value = con;
                 }
             }
+
             //writing the connection string in config file
             XmlDoc.Save(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
         }

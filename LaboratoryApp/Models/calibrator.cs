@@ -15,7 +15,7 @@ namespace LaboratoryApp.Models
         public string name { get; set; }
         public Nullable<int> model_of_gauge_id { get; set; }
 
-        private bool isChecked;
+        public bool isChecked;
 
         public bool IsChecked
         {

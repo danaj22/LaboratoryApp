@@ -20,6 +20,7 @@ namespace LaboratoryApp.Models.Mapping
             this.Property(t => t.calibratorId).HasColumnName("calibratorId");
             this.Property(t => t.name).HasColumnName("name");
             this.Property(t => t.model_of_gauge_id).HasColumnName("model_of_gauge_id");
+            this.Property(t => t.IsChecked).HasColumnName("IsChecked");
         }
     }
 }

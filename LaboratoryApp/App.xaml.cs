@@ -17,9 +17,7 @@ namespace LaboratoryApp
         {
             //Disable shutdown when the dialog closes
             Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
-
             var dialog = new View.ServerConnectWindow();
-            
             if (dialog.ShowDialog() == true)
             {
                 var mainWindow = new MainWindow();

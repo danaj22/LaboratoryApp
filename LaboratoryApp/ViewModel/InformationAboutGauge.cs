@@ -323,7 +323,7 @@ namespace LaboratoryApp.ViewModel
                         catch (Exception e)
                         {
                             MessageBox.Show("Nie udało się utworzyć certyfikatu w bazie.");
-                            MainWindowViewModel.FileLog.WriteLine(e.ToString());
+                            File.AppendAllText(MainWindowViewModel.path, e.ToString());
                         }
 
 
@@ -336,9 +336,13 @@ namespace LaboratoryApp.ViewModel
                     {
                         MainWindowViewModel.FileLog.WriteLine(String.Format("Encja typu \"{0}\" w stanie \"{1}\" ma następujące błędy walidacji:",
                             eve.Entry.Entity.GetType().Name, eve.Entry.State));
+                        File.AppendAllText(MainWindowViewModel.path, String.Format("Encja typu \"{0}\" w stanie \"{1}\" ma następujące błędy walidacji:",
+                         eve.Entry.Entity.GetType().Name, eve.Entry.State));
                         foreach (var ve in eve.ValidationErrors)
                         {
                              MainWindowViewModel.FileLog.WriteLine(String.Format("- Właściwość: \"{0}\", Błąd: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage));
+                             File.AppendAllText(MainWindowViewModel.path, String.Format("- Właściwość: \"{0}\", Błąd: \"{1}\"",
                                 ve.PropertyName, ve.ErrorMessage));
                         }
                     }
@@ -346,7 +350,7 @@ namespace LaboratoryApp.ViewModel
                 catch (Exception e)
                 { 
                     MessageBox.Show(e.ToString());
-                    MainWindowViewModel.FileLog.WriteLine(e.ToString());
+                    File.AppendAllText(MainWindowViewModel.path, e.ToString());
                 }
 
 
@@ -514,7 +518,7 @@ namespace LaboratoryApp.ViewModel
             //header.AddParagraph("Laboratorium Przyrządów Pomiarowych\nŚWIADECTWO WZORCOWANIA");
 
             // Header image
-            Image image = header.AddImage("C:\\Users\\daniel\\Desktop\\header2.png");
+            Image image = header.AddImage(@"header2.png");
 
             image.Height = "2.1cm";
             image.Width = "17.6cm";
@@ -755,17 +759,21 @@ namespace LaboratoryApp.ViewModel
                     {
                         MessageBox.Show(String.Format("Encja typu \"{0}\" w stanie \"{1}\" ma następujące błędy walidacji:",
                             eve.Entry.Entity.GetType().Name, eve.Entry.State));
+                        File.AppendAllText(MainWindowViewModel.path, String.Format("Encja typu \"{0}\" w stanie \"{1}\" ma następujące błędy walidacji:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State));
                         foreach (var ve in eve.ValidationErrors)
                         {
                             MessageBox.Show(String.Format("- Właściwość: \"{0}\", Błąd: \"{1}\"",
                                 ve.PropertyName, ve.ErrorMessage));
+                            File.AppendAllText(MainWindowViewModel.path, String.Format("Encja typu \"{0}\" w stanie \"{1}\" ma następujące błędy walidacji:",
+                           eve.Entry.Entity.GetType().Name, eve.Entry.State));
                         }
                     }
                 }
                 catch (Exception e)
                 {
                     MessageBox.Show(e.ToString());
-                    MainWindowViewModel.FileLog.WriteLine(e.ToString());
+                    File.AppendAllText(MainWindowViewModel.path,e.ToString());
                 }
 
 

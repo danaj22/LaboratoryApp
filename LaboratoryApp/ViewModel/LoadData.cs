@@ -34,18 +34,18 @@ namespace LaboratoryApp.ViewModel
             //Gauges g1 = new Gauges();
             //this.TreeOfClients = new ObservableCollection<Clients>();
             //rootItem.ListOfClient.Clear();
+
             try
             {
 
                 foreach (var t in LabEntities.clients)
                 {
                     //rootItem.Child.Add(t);
-                   
-                    
+
                     rootItem.Children.Add((client)t);
                     rootItem.Children.Last().NameOfItem = t.name;
-                   
-                    
+
+
 
                     foreach (var g in t.gauges)
                     {
@@ -135,7 +135,7 @@ namespace LaboratoryApp.ViewModel
             {
                 MessageBox.Show(ex.ToString());
             }
-
+            
         }
 
     }

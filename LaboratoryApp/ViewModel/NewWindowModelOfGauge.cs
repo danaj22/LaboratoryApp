@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using System.IO;
 
 namespace LaboratoryApp.ViewModel
 {
@@ -111,15 +112,26 @@ namespace LaboratoryApp.ViewModel
             AddUsageCommand = new SimpleRelayCommand(AddUsage);
             AddTypeCommand = new SimpleRelayCommand(AddType);
             AddCalibratorCommand = new SimpleRelayCommand(AddCalibrator);
-
+            
             LaboratoryEntities context = MainWindowViewModel.Context;
-            var ListOfCalibrators = (from c in context.calibrators select c).ToList();
-
-            foreach (var item in ListOfCalibrators)
+            try
             {
-                item.IsChecked = false;
-                CollectionOfCalibrators.Add(item);
+                List<Models.calibrator> ListOfCalibrators = context.calibrators.ToList();
+
+                if (ListOfCalibrators.Count > 0)
+                {
+                    foreach (Models.calibrator item in ListOfCalibrators)
+                    {
+                        item.IsChecked = false;
+                        CollectionOfCalibrators.Add(item);
+                    }
+                }
             }
+            catch(Exception e)
+            {
+                File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\LaboratoryAppLog.txt", e.ToString());
+            }
+            
         }
 
         public NewWindowModelOfGauge(Window window) //: base (window)

@@ -137,7 +137,7 @@ namespace LaboratoryApp.ViewModel
         }
 
         public static StreamWriter FileLog;
-
+        static public string path = @"C:\ProgramData\DASLSystems\LaboratoryApp\LaboratoryAppLog.txt";
 
         public MainWindowViewModel()
         {
@@ -149,10 +149,8 @@ namespace LaboratoryApp.ViewModel
             CurrentViewModel = null;
             userInput = new UserInput();
             LoadView();
-
-            string path = @"C:\Users\daniel\LaboratoryAppLog.txt";
-
-
+            System.IO.Directory.CreateDirectory(@"C:\ProgramData\DASLSystems\LaboratoryApp");
+            
             if (!File.Exists(path))
             {
                 File.Create(path);
@@ -163,10 +161,9 @@ namespace LaboratoryApp.ViewModel
                 // Create a file to write to. 
                 using (FileLog = File.CreateText(path))
                 {
-                    FileLog.WriteLine("LaboratoryAppLogger");
+                    
                 }
             }
-
         }
 
         private bool isCheckedName;
@@ -210,69 +207,70 @@ namespace LaboratoryApp.ViewModel
         {
             try
             {
-                
 
-
-                if (IsCheckedSerial)
+                if (SearchItem != null && SearchItem != "")
                 {
-                    gauge tmp = (from g in Context.gauges where g.serial_number == SearchItem select g).FirstOrDefault();
-
-                    foreach (client cli in RootElement.Children)
+                    if (IsCheckedSerial)
                     {
-                        if (tmp.client.name == cli.name)
+                        gauge tmp = (from g in Context.gauges where g.serial_number == SearchItem select g).FirstOrDefault();
+
+                        foreach (client cli in RootElement.Children)
                         {
-                            cli.IsExpanded = true;
-                            foreach(gauge g in cli.gauges)
+                            if (tmp.client.name == cli.name)
                             {
-                                if (g.serial_number == SearchItem)
+                                cli.IsExpanded = true;
+                                foreach (gauge g in cli.gauges)
                                 {
-                                    if(g.office!=null)
+                                    if (g.serial_number == SearchItem)
                                     {
-                                        g.office.IsExpanded = true;
+                                        if (g.office != null)
+                                        {
+                                            g.office.IsExpanded = true;
+                                        }
+                                        g.IsSelected = true;
                                     }
-                                    g.IsSelected = true;
                                 }
                             }
                         }
+                        //}
+                        //tmp.IsExpanded = true;
+                        //tmp.IsSelected = true;
+                        SelectedNode = tmp;
+
                     }
-                    //}
-                    //tmp.IsExpanded = true;
-                    //tmp.IsSelected = true;
-                    SelectedNode = tmp;
-                    
-                }
-                else if (IsCheckedNip)
-                {
-                    foreach (client cli in RootElement.Children)
+                    else if (IsCheckedNip)
                     {
-                        if (cli.NIP == SearchItem)
+                        foreach (client cli in RootElement.Children)
                         {
-                           
-                            cli.IsSelected = true;
+                            if (cli.NIP == SearchItem)
+                            {
+
+                                cli.IsSelected = true;
+                            }
+
                         }
+                        //tmp.IsSelected = true;
+
 
                     }
-                    //tmp.IsSelected = true;
-                    
-
-                }
-                else if (IsCheckedName)
-                {
-                    foreach(client cli in RootElement.Children)
+                    else if (IsCheckedName)
                     {
-                        if (cli.name == SearchItem)
+                        foreach (client cli in RootElement.Children)
                         {
-                            
-                            cli.IsSelected = true;
+                            if (cli.name == SearchItem)
+                            {
+
+                                cli.IsSelected = true;
+                            }
+
                         }
+                        //tmp.IsExpanded = true;
 
+                        //tmp.IsSelected = true;
+                        //SelectedNode.NameOfItem = "ttttttttttttttttttt";
+                        //SelectedNode.IsExpanded = true;
+                        // SelectedNode = tmp;
                     }
-                    //tmp.IsExpanded = true;
-
-                    //tmp.IsSelected = true;
-                    //SelectedNode.NameOfItem = "ttttttttttttttttttt";
-                    //SelectedNode.IsExpanded = true;
-                   // SelectedNode = tmp;
                 }
                 else
                 { MessageBox.Show("Nie znaleziono wyników."); }
@@ -283,10 +281,10 @@ namespace LaboratoryApp.ViewModel
 
                 //trzeba dopisać wyszukiwanie
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
                 MessageBox.Show("Nie znaleziono wyników.");
-                FileLog.WriteLine(ex.ToString());
+                File.AppendAllText(path, e.ToString());
             }
 
         }
@@ -316,7 +314,6 @@ namespace LaboratoryApp.ViewModel
 
         private void AddGauge()
         {
-
             MessageWindowModelOfGauge = new NewWindowModelOfGauge { AboutModelOfGauge = new InformationAboutModelOfGauge() };
 
             MessageWindowModelOfGauge.IsOpen = true;
@@ -333,9 +330,6 @@ namespace LaboratoryApp.ViewModel
                     newGauge.manufacturer_name = MessageWindowModelOfGauge.AboutModelOfGauge.ManufacturerName;
                     newGauge.model = MessageWindowModelOfGauge.AboutModelOfGauge.Model;
 
-
-                    //MessageWindowModelOfGauge.AboutModelOfGauge.
-
                     try
                     {
 
@@ -349,10 +343,10 @@ namespace LaboratoryApp.ViewModel
                             }
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception e)
                     {
                         MessageBox.Show("Nie udało się dodać modelu miernika.");
-                        FileLog.WriteLine(ex.ToString());
+                        File.AppendAllText(path, e.ToString());
                     }
                     try
                     {
@@ -384,7 +378,7 @@ namespace LaboratoryApp.ViewModel
                                 catch (Exception e)
                                 {
                                     MessageBox.Show("Nie udało się dodać kalibratora do modelu miernika.");
-                                    FileLog.WriteLine(e.ToString());
+                                    File.AppendAllText(path,e.ToString());
                                 }
                             }
                             //newGauge.calibrator_model_of_gauge.Add(zmienna);
@@ -401,68 +395,6 @@ namespace LaboratoryApp.ViewModel
             }
             MessageWindowModelOfGauge.ToConfirm = false;
 
-            //DialogWindowBase newBaseWindow = new DialogWindowBase();
-            //NewWindowModelOfGauge gaugeDialogWindow = new NewWindowModelOfGauge() { AboutModelOfGauge = new InformationAboutModelOfGauge() };
-
-            //newBaseWindow.BaseContent = gaugeDialogWindow;
-
-            //WindowService w = new WindowService();
-            //w.DataContext = newBaseWindow;
-            //w.Owner = Application.Current.MainWindow;
-            //w.ShowDialog();
-
-            //bool? result = w.DialogResult;
-
-            //if (result == true)
-            //{
-            //    MessageBox.Show(result.ToString());
-            //    var gaugeToAddToDatabase = new modelOfGaugeItem();
-
-            //    gaugeToAddToDatabase.manufacturer_name = gaugeDialogWindow.AboutModelOfGauge.ManufacturerName;
-            //    gaugeToAddToDatabase.model = gaugeDialogWindow.AboutModelOfGauge.Model;
-
-            //    //trzeba dorobić wyszukiwanie w bazie "po nazwie znajdź ID"
-            //    gaugeToAddToDatabase.type_id = 1;
-            //    gaugeToAddToDatabase.usage_id = 1;
-
-            //    using (LaboratoryEntities Context = new LaboratoryEntities())
-            //    {
-            //        Context.gauges.Add(gaugeToAddToDatabase);
-            //        Context.SaveChanges();
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show(w.DialogResult.ToString());
-            //}
-            //create a new modal window
-
-            //View.ModalWindowModelOfGauge newModal = new View.ModalWindowModelOfGauge();
-
-            ////set owner of this window
-            //newModal.Owner = Application.Current.MainWindow;
-            //newModal.ShowDialog();
-
-            //if (newModal.DialogResult == true)
-            //{
-            //    MessageBox.Show(newModal.DialogResult.ToString());
-            //    var newGauge = new modelOfGaugeItem();
-            //    newGauge.manufacturer_name = newModal.infoGauge.ManufacturerName;
-            //    newGauge.model = newModal.infoGauge.Model;
-            //    newGauge.type_id = 1;
-            //    newGauge.usage_id = 1;
-
-            //    using (LaboratoryEntities Context = new LaboratoryEntities())
-            //    {
-
-            //        Context.gauges.Add(newGauge);
-            //        Context.SaveChanges();
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show(newModal.DialogResult.ToString());
-            //}
         }
         /// <summary>
         /// command to show modal window where we can add new Client
@@ -543,7 +475,7 @@ namespace LaboratoryApp.ViewModel
                     {
                         MessageBox.Show("Nie udało się dodać klienta do bazy.");
                         MessageBox.Show(ex.ToString());
-                        FileLog.WriteLine(ex.ToString());
+                        File.AppendAllText(@"",ex.ToString());
                     }
 
                     //var index = RootElement.Items.IndexOf(RootElement.Items.Last())+1;
@@ -560,62 +492,7 @@ namespace LaboratoryApp.ViewModel
             MessageWindowClient.ToConfirm = false;
 
 
-            //DialogWindowBase newBaseWindow = new DialogWindowBase();
-            //NewWindowClient newBaseClient = new NewWindowClient() { AboutClient = new InformationAboutClient() };
-
-            //newBaseWindow.BaseContent = newBaseClient;
-
-            //WindowService w = new WindowService();
-            //w.DataContext = newBaseWindow;
-
-            //w.Owner = Application.Current.MainWindow;
-
-            //w.ShowDialog();
-
-            ////w.SetBinding(Window.ContentProperty, "");
-
-            //var result = w.DialogResult;
-
-            //if (result == true)
-            //{
-            //    MessageBox.Show(result.ToString());
-
-            //    client newClient = new client();
-            //    newClient.name = newBaseClient.AboutClient.Name;
-            //    newClient.adress = newBaseClient.AboutClient.Address;
-            //    newClient.mail = newBaseClient.AboutClient.Email;
-            //    newClient.tel = newBaseClient.AboutClient.Telephone;
-            //    newClient.NIP = newBaseClient.AboutClient.NIP;
-            //    newClient.contact_person_name = newBaseClient.AboutClient.ContactPerson;
-            //    newClient.comments = newBaseClient.AboutClient.Comment;
-
-            //    using (LaboratoryEntities Context = new LaboratoryEntities())
-            //    {
-            //        Context.clients.Add(newClient);
-            //        Context.SaveChanges();
-            //        //if (Name != "" && Address != "" && ContactPerson != "" && Email != "" && Telephone != "" && NIP != "" && Comment != "")
-            //        //{
-            //        //    clientToEdit.name = Name;
-            //        //    clientToEdit.adress = Address;
-            //        //    clientToEdit.contact_person_name = ContactPerson;
-            //        //    clientToEdit.mail = Email;
-            //        //    clientToEdit.tel = Telephone;
-            //        //    clientToEdit.NIP = NIP;
-            //        //    clientToEdit.comments = Comment;
-
-            //        //    Context.SaveChanges();
-            //        //}
-            //        //else
-            //        //{
-            //        //    MessageBox.Show("Wypełnij wszystkie pola");
-            //        //}
-
-            //    }
-            //}
-            //else
-            //{
-
-            //}
+           
 
         }
 
