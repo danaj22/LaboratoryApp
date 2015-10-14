@@ -80,7 +80,7 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="160"/>
             <ColumnDefinition Width="Auto" MinWidth="418"/>
             <ColumnDefinition MinWidth="130"/>
         </Grid.ColumnDefinitions>
@@ -89,7 +89,7 @@
             <RowDefinition Height="Auto" MinHeight="30"/>
             <RowDefinition Height="Auto" MinHeight="30"/>
             <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="Auto" MinHeight="35"/>
             <RowDefinition Height="Auto" MinHeight="30"/>
             <RowDefinition Height="*" MinHeight="35"/>
         </Grid.RowDefinitions>
@@ -219,11 +219,11 @@
 			DialogWidth="470" DialogResizeMode="CanResize"/>
 
         <TextBox Text="{Binding SearchItem}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Background="AliceBlue" Height="22" Margin="2,4" />
-        <Button Content="Dodaj klienta" Command="{Binding AddNewClientCommand}" Grid.Column="3" HorizontalAlignment="Right"  VerticalAlignment="center" Width="123" Height="22" Margin="0,2,0,1" />
-        <Button Content="Dodaj model miernika" Command="{Binding AddNewGaugeCommand}" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right"  VerticalAlignment="center" Height="22" Margin="0,4" Width="123" />
-        <RadioButton Content="Nr seryjny" IsChecked="{Binding IsCheckedSerial}" HorizontalAlignment="Left" Margin="10,9,0,0" Grid.Row="4" VerticalAlignment="Top" Height="16" Width="69"/>
-        <RadioButton Content="NIP" IsChecked ="{Binding IsCheckedNip}" HorizontalAlignment="Left" Margin="91,9,0,0" Grid.Row="4" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="16" Width="35"/>
-        <RadioButton Content="Nazwa klienta" IsChecked="{Binding IsCheckedName}" Grid.Column="1" HorizontalAlignment="Left" Margin="60,9,0,0" Grid.Row="4" VerticalAlignment="Top" Height="16" Width="90"/>
+        <Button Content="Dodaj klienta" Command="{Binding AddNewClientCommand}" Grid.Column="3" HorizontalAlignment="Right"  VerticalAlignment="center" Width="142" Height="22" Margin="0,2,0,1" />
+        <Button Content="Dodaj model miernika" Command="{Binding AddNewGaugeCommand}" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right"  VerticalAlignment="center" Height="22" Margin="0,4" Width="142" />
+        <RadioButton Content="Nr seryjny" IsChecked="{Binding IsCheckedSerial}" HorizontalAlignment="Left" Margin="10,1,0,0" Grid.Row="4" VerticalAlignment="Top" Height="24" Width="80"/>
+        <RadioButton Content="NIP" IsChecked ="{Binding IsCheckedNip}" HorizontalAlignment="Left" Margin="0,1,0,0" Grid.Row="4" VerticalAlignment="Top" Height="25" Width="48" Grid.Column="1"/>
+        <RadioButton Content="Nazwa klienta" IsChecked="{Binding IsCheckedName}" Grid.Column="1" HorizontalAlignment="Left" Margin="60,1,0,0" Grid.Row="4" VerticalAlignment="Top" Height="29" Width="101" Grid.ColumnSpan="2"/>
 
 
         <!--<Button Content="Edytuj klienta" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Right"  VerticalAlignment="center"/>

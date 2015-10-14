@@ -386,8 +386,9 @@ namespace LaboratoryApp.ViewModel
                 {
                     MessageBox.Show(e.ToString());
                 }
-
+                raport.NumberOfCertificate = raport.NumberOfCertificate.Replace('/','-');
                 string filename = path + "\\" + raport.NumberOfCertificate + ".pdf";
+                //filename.Replace('\\','-');
 
                 if (!string.IsNullOrEmpty(raport.Author) && !string.IsNullOrEmpty(raport.Temperature))
                 {
@@ -395,8 +396,6 @@ namespace LaboratoryApp.ViewModel
                     // ...and start a viewer.
                     Process.Start(filename);
                 }
-
-
 
             }
 
@@ -428,7 +427,7 @@ namespace LaboratoryApp.ViewModel
             // font of the whole document. Or, more exactly, it changes the font of
             // all styles and paragraphs that do not redefine the font.
             style.Font.Name = "Times New Roman";
-
+            style.Font.Size = 12;
             // Heading1 to Heading9 are predefined styles with an outline level. An outline level
             // other than OutlineLevel.BodyText automatically creates the outline (or bookmarks) 
             // in PDF.
@@ -464,7 +463,9 @@ namespace LaboratoryApp.ViewModel
             style.ParagraphFormat.SpaceBefore = 2;
 
             style = document.Styles[StyleNames.Footer];
-            style.ParagraphFormat.AddTabStop("8cm", TabAlignment.Center);
+            style.Font.Size = 10;
+            style.Font.Color = Colors.Black;
+            style.ParagraphFormat.AddTabStop("6cm", TabAlignment.Center);
 
             // Create a new style called TextBox based on style Normal
             style = document.Styles.AddStyle("TextBox", "Normal");
@@ -492,8 +493,8 @@ namespace LaboratoryApp.ViewModel
             section.PageSetup.PageHeight = PageSizeConverter.ToSize(PageSize.A4).Height;
             section.PageSetup.TopMargin = 100;
             section.PageSetup.BottomMargin = 10;
-            section.PageSetup.LeftMargin = 50;
-            section.PageSetup.RightMargin = 50;
+            section.PageSetup.LeftMargin = 20;
+            section.PageSetup.RightMargin = 10;
 
             section.PageSetup.StartingNumber = 1;
 
@@ -521,7 +522,7 @@ namespace LaboratoryApp.ViewModel
             Image image = header.AddImage(@"header2.png");
 
             image.Height = "2.1cm";
-            image.Width = "17.6cm";
+            image.Width = "19.6cm";
             image.LockAspectRatio = true;
             image.RelativeVertical = RelativeVertical.Line;
             image.RelativeHorizontal = RelativeHorizontal.Margin;
@@ -538,9 +539,22 @@ namespace LaboratoryApp.ViewModel
 
             // Create a paragraph with centered page number. See definition of style "Footer".
             Paragraph paragraph = new Paragraph();
-
+            
             paragraph.AddTab();
-            paragraph.AddText("Świadectwo składa się z 1 strony. Może być okazywane lub kopiowane tylko w całości.\nDASL Systems ul.Wadowicka 8A, 30-415 Kraków, tel./fax : +48 12 29 42 001, lab@dasl.pl, www.dasl.pl");
+            paragraph.AddFormattedText("Świadectwo składa się z 1 strony. Może być okazywane lub kopiowane tylko w całości.",TextFormat.Bold);
+            paragraph.AddLineBreak();
+            Image img = paragraph.AddImage(@"linia.jpg");
+            img.Height = "0.1cm";
+            img.Width = "19.6cm";
+            img.LockAspectRatio = true;
+            img.RelativeVertical = RelativeVertical.Line;
+            img.RelativeHorizontal = RelativeHorizontal.Margin;
+            img.Top = ShapePosition.Top;
+            img.Left = ShapePosition.Left;
+            img.WrapFormat.Style = WrapStyle.Through;
+
+            paragraph.Format.Alignment = ParagraphAlignment.Center;
+            paragraph.AddText("DASL Systems ul.Wadowicka 8A, 30-415 Kraków, tel./fax : +48 12 29 42 001, lab@dasl.pl, www.dasl.pl");
 
 
             //paragraph.AddPageField();
@@ -579,7 +593,7 @@ namespace LaboratoryApp.ViewModel
             column.Format.Alignment = ParagraphAlignment.Left;
 
             table.Columns[0].Width = 100;
-            table.Columns[1].Width = 400;
+            table.Columns[1].Width = 450;
 
             //column = table.AddColumn();
             //column.Format.Alignment = ParagraphAlignment.Right;
@@ -627,13 +641,17 @@ namespace LaboratoryApp.ViewModel
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].AddParagraph("Odniesienie do wzorca państwowego: ");
 
+            int numberOfLines = 5;
             foreach (calibrator calibrator in raport.CollectionOfCalibrators)
             {
+
                 if (calibrator.IsChecked)
                 {
                     raport.NationalPattern += calibrator.name + "\n";
                 }
+                
             }
+            //numberOfLines = numberOfLines - raport.CollectionOfCalibrators.Count();
             row.Cells[1].AddParagraph(raport.NationalPattern.ToString());
 
             try
@@ -718,7 +736,8 @@ namespace LaboratoryApp.ViewModel
 
             MessageWindowGauge.IsOpen = true;
 
-            model_of_gauges ModelOfGauge = new model_of_gauges();
+            model_of_gauges ModelOfGauge = new model_of_gauges() {type = new type(), usage = new usage() };
+            type TypeOfGauge = new type();
 
             if (MessageWindowGauge.ToConfirm)
             {
@@ -732,11 +751,11 @@ namespace LaboratoryApp.ViewModel
                                            select g).FirstOrDefault();
 
                         ModelOfGauge = (from m in context.model_of_gauges where m.model == MessageWindowGauge.SelectedModel select m).FirstOrDefault();
+                        
 
                         GaugeToEdit.model_of_gauges = ModelOfGauge;
                         GaugeToEdit.serial_number = MessageWindowGauge.AboutGauge.serial_number;
-
-
+                        
                         context.SaveChanges();
 
                         SerialNumber = MessageWindowGauge.AboutGauge.serial_number;
@@ -747,6 +766,8 @@ namespace LaboratoryApp.ViewModel
                         MainWindowViewModel.selectedNode.NameOfItem = MessageWindowGauge.SelectedModel;
 
                         SelectedGauge.model_of_gauges = ModelOfGauge;
+                        SelectedGauge.model_of_gauges.type = ModelOfGauge.type;
+                        SelectedGauge.model_of_gauges.usage = ModelOfGauge.usage;
 
                         MainWindowViewModel.selectedNode = SelectedGauge;
                     }

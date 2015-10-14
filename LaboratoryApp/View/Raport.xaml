@@ -6,7 +6,7 @@
              xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
              xmlns:local="clr-namespace:LaboratoryApp"
              
-             mc:Ignorable="d" Width="717" Height="800"
+             mc:Ignorable="d" Width="717" Height="810"
              >
     <UserControl.Resources>
         <ControlTemplate x:Key="errorTemplate">
@@ -45,11 +45,11 @@
     <!--<d:DataContext>
         <local:MainWindowViewModel/>
     </d:DataContext>-->
-    <Grid Margin="0,0,10,0">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto" MinWidth="418"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto" MinWidth="40"/>
 
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -103,7 +103,17 @@
         <TextBox HorizontalAlignment="Left" Text="{Binding AboutGauge.model_of_gauges.usage.description}" VerticalAlignment="center" Grid.Row="5" Grid.Column="1" Width="396" Height="24" Margin="0,4" />
         <TextBox HorizontalAlignment="Left" Text="{Binding TheCalibrationMethod}" VerticalAlignment="center" Grid.Row="6" Grid.Column="1" Width="396" Height="24" Margin="0,4"/>
         <TextBox HorizontalAlignment="Left" Text="{Binding NationalPattern}" VerticalAlignment="center" Grid.Row="7" Grid.Column="1" Width="396" Height="24" Margin="0,4"/>
-        <TextBox HorizontalAlignment="Left" Text="{Binding Temperature}" VerticalAlignment="center" Grid.Row="9" Grid.Column="1" Width="396" Height="24" Margin="0,3,0,4"/>
+        <TextBox Name="TxtBoxTemperature" HorizontalAlignment="Left" VerticalAlignment="center" Grid.Row="9" Grid.Column="1" Width="396" Height="24" Margin="0,3,0,4" Validation.ErrorTemplate="{StaticResource errorTemplate}"
+            Style="{StaticResource textBoxError}">
+            <TextBox.Text>
+                <Binding Path="Temperature" UpdateSourceTrigger="PropertyChanged" >
+                    <Binding.ValidationRules>
+                        <vm:StandardFieldValidation ValidatesOnTargetUpdated="True"
+                                     ValidationStep="RawProposedValue" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <TextBox HorizontalAlignment="Left" Text="{Binding Humidity}" VerticalAlignment="center" Grid.Row="10" Grid.Column="1" Width="396" Height="24" Margin="0,4"/>
         <ComboBox ItemsSource="{Binding Compatibility}" SelectedItem="{Binding SelectedCompatibility}"  HorizontalAlignment="Left" VerticalAlignment="center" Grid.Row="11" Grid.Column="1" Width="396" Height="24" Margin="0,4"/>
         <TextBox HorizontalAlignment="Left" Text="{Binding CheckedFunction}" VerticalAlignment="center" Grid.Row="12" Grid.Column="1" Width="256" Height="24" Margin="0,29,0,27"/>
@@ -147,7 +157,7 @@
             <TextBox.Text>
                 <Binding Path="Author" UpdateSourceTrigger="PropertyChanged" >
                     <Binding.ValidationRules>
-                        <vm:AllowNullFieldValidation ValidatesOnTargetUpdated="True"
+                        <vm:StandardFieldValidation ValidatesOnTargetUpdated="True"
                                      ValidationStep="RawProposedValue" />
                     </Binding.ValidationRules>
                 </Binding>
@@ -165,6 +175,10 @@
                             <Setter Property="IsEnabled" Value="true" />
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding ElementName=TxtBoxNumberOfCertificate,
+                            Path=(Validation.HasError)}" Value="false" />
+                                <Condition Binding="{Binding ElementName=TxtBoxAuthor,
+                            Path=(Validation.HasError)}" Value="false" />
+                                <Condition Binding="{Binding ElementName=TxtBoxTemperature,
                             Path=(Validation.HasError)}" Value="false" />
                             </MultiDataTrigger.Conditions>
                         </MultiDataTrigger>

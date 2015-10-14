@@ -27,8 +27,7 @@ namespace LaboratoryApp
                 mainWindow.Show();
             }
             else
-            {
-                MessageBox.Show("Unable to load data.", "Error", MessageBoxButton.OK);
+            { 
                 Current.Shutdown(-1);
             }
         }

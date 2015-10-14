@@ -358,24 +358,24 @@ namespace LaboratoryApp.ViewModel
             if (SelectedGauge.model_of_gauges.type.name == "Elektryczny")
             {
                 var count = (from c in context.certificates where c.date >= firstDayOfMonth && c.date <= lastDayOfMonth && c.gauge.model_of_gauges.type.name == "Elektryczny" select c).Count();
-                NumberOfCertificate = DateTime.Now.ToString("yyyy'-'MM") + "-" + (count+1) + "-E-DASL";
+                NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM") + "/" + (count+1) + "/E/DASL";
             }
             else if (SelectedGauge.model_of_gauges.type.name == "Manometr")
             {
                 var count = (from c in context.certificates where c.date >= firstDayOfMonth && c.date <= lastDayOfMonth && c.gauge.model_of_gauges.type.name == "Manometr" select c).Count();
 
-                NumberOfCertificate = DateTime.Now.ToString("yyyy'-'MM") + "-" + (count+1) + "-M-DASL";
+                NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM") + "/" + (count+1) + "/M/DASL";
             }
             else if (SelectedGauge.model_of_gauges.type.name == "Luksomierz")
             {
                 var count = (from c in context.certificates where c.date >= firstDayOfMonth && c.date <= lastDayOfMonth && c.gauge.model_of_gauges.type.name == "Luksomierz" select c).Count();
-                NumberOfCertificate = DateTime.Now.ToString("yyyy'-'MM") + "-" + (count+1) + "-L-DASL";
+                NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM") + "/" + (count+1) + "/L/DASL";
             }
             else
             {
                 var count = (from c in context.certificates where c.date >= firstDayOfMonth && c.date <= lastDayOfMonth && c.gauge.model_of_gauges.type.name != "Luksomierz" && c.gauge.model_of_gauges.type.name != "Manometr" && c.gauge.model_of_gauges.type.name != "Elektryczny" select c).Count();
 
-                NumberOfCertificate = DateTime.Now.ToString("yyyy'-'MM") + "-" + (count+1) + "-DASL";
+                NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM") + "/" + (count+1) + "/DASL";
             }
 
             Recommendations = "Jeśli harmonogram Zleceniodawcy nie przewiduje inaczej, to następne wzorcowanie zaleca się przeprowadzić przed upływem ostatniego dnia analogicznego miesiąca następnego roku (w stosunku do daty wystawienia) lub w przypadku uszkodzenia";
