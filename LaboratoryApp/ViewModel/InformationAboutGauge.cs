@@ -592,8 +592,8 @@ namespace LaboratoryApp.ViewModel
             column = table.AddColumn();
             column.Format.Alignment = ParagraphAlignment.Left;
 
-            table.Columns[0].Width = 100;
-            table.Columns[1].Width = 450;
+            table.Columns[0].Width = 120;
+            table.Columns[1].Width = 430;
 
             //column = table.AddColumn();
             //column.Format.Alignment = ParagraphAlignment.Right;
@@ -641,17 +641,25 @@ namespace LaboratoryApp.ViewModel
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].AddParagraph("Odniesienie do wzorca państwowego: ");
 
-            int numberOfLines = 5;
+            int numberOfLines = 0;
             foreach (calibrator calibrator in raport.CollectionOfCalibrators)
             {
 
                 if (calibrator.IsChecked)
                 {
                     raport.NationalPattern += calibrator.name + "\n";
+                    numberOfLines++;
                 }
                 
             }
-            //numberOfLines = numberOfLines - raport.CollectionOfCalibrators.Count();
+            if (numberOfLines < 6)
+            {
+                
+                for(; numberOfLines < 6; numberOfLines++)
+                {
+                    raport.NationalPattern += "\n";
+                }
+            }
             row.Cells[1].AddParagraph(raport.NationalPattern.ToString());
 
             try
@@ -689,9 +697,17 @@ namespace LaboratoryApp.ViewModel
             foreach(function fun in raport.CollectionOfCheckedFunction)
             {
                 if(fun.IsChecked)
-                {
-                    raport.CheckedFunction += fun.name + ";";
+                {  
+                    raport.CheckedFunction += fun.Name + ";";
                 }
+                LaboratoryEntities context = MainWindowViewModel.Context;
+                
+                //var CertificatesOfSelectedGauge = (from c in context.certificates where c.gauge_id == SelectedGauge.gaugeId select c).ToList();
+
+                //foreach (var certificate in CertificatesOfSelectedGauge)
+                //{
+                //    CollectionOfCertificate.Add(certificate);
+                //}
             }
 
             row.Cells[1].AddParagraph(raport.CheckedFunction);
@@ -763,7 +779,7 @@ namespace LaboratoryApp.ViewModel
                         Model = MessageWindowGauge.SelectedModel;
                         Description = ModelOfGauge.usage.description;
 
-                        MainWindowViewModel.selectedNode.NameOfItem = MessageWindowGauge.SelectedModel;
+                        MainWindowViewModel.selectedNode.NameOfItem = MessageWindowGauge.SelectedModel +"["+ MessageWindowGauge.AboutGauge.serial_number+"]";
 
                         SelectedGauge.model_of_gauges = ModelOfGauge;
                         SelectedGauge.model_of_gauges.type = ModelOfGauge.type;

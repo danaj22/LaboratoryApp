@@ -26,6 +26,7 @@ namespace LaboratoryApp.Models
         public DbSet<office> offices { get; set; }
         public DbSet<type> types { get; set; }
         public DbSet<usage> usages { get; set; }
+        public DbSet<calibrators_functions> calibrators_functions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -39,6 +40,7 @@ namespace LaboratoryApp.Models
             modelBuilder.Configurations.Add(new officeMap());
             modelBuilder.Configurations.Add(new typeMap());
             modelBuilder.Configurations.Add(new usageMap());
+            modelBuilder.Configurations.Add(new calibrators_functionsMap());
             modelBuilder.Ignore<ViewModel.MenuItem>();
             modelBuilder.Entity<ViewModel.MenuItem>().Ignore(x=> x.Id);
             modelBuilder.Entity<ViewModel.MenuItem>().Ignore(x => x.IsExpanded);

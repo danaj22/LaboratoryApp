@@ -191,6 +191,8 @@
 
         <vm:ModalDialogManager DataContext="{Binding MessageWindowFunction}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
 			DialogWidth="470" DialogResizeMode="CanResize"/>
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowCalibrator}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
+			DialogWidth="470" DialogResizeMode="CanResize"/>
 
         
         <ListBox Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="8" VerticalAlignment="Top"  ItemsSource="{Binding CollectionOfCalibrators}" Width="396" Height="78" >

@@ -105,6 +105,7 @@
     </ApplicationDefinition>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\calibrator.cs" />
+    <Compile Include="Models\calibrators_functions.cs" />
     <Compile Include="Models\calibrators_model_of_gauges.cs" />
     <Compile Include="Models\certificate.cs" />
     <Compile Include="Models\client.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Models\gauge.cs" />
     <Compile Include="Models\LaboratoryEntities.cs" />
     <Compile Include="Models\Mapping\calibratorMap.cs" />
+    <Compile Include="Models\Mapping\calibrators_functionsMap.cs" />
     <Compile Include="Models\Mapping\calibrators_model_of_gaugesMap.cs" />
     <Compile Include="Models\Mapping\certificateMap.cs" />
     <Compile Include="Models\Mapping\clientMap.cs" />
@@ -132,6 +134,7 @@
     <Compile Include="ViewModel\ContentViewControl.cs" />
     <Compile Include="ViewModel\DialogCloser.cs" />
     <Compile Include="ViewModel\DialogWindowBase.cs" />
+    <Compile Include="ViewModel\FunctionViewModel.cs" />
     <Compile Include="ViewModel\IItems.cs" />
     <Compile Include="ViewModel\InformationAboutClient.cs" />
     <Compile Include="ViewModel\InformationAboutModelOfGauge.cs" />
@@ -151,6 +154,7 @@
     <Compile Include="ViewModel\NewWindowRaport.cs" />
     <Compile Include="ViewModel\NewWindowType.cs" />
     <Compile Include="ViewModel\NewWindowUsage.cs" />
+    <Compile Include="ViewModel\NewWindowUser.cs" />
     <Compile Include="ViewModel\NotifyAppender.cs" />
     <Compile Include="ViewModel\OfficesViewModel.cs" />
     <Compile Include="ViewModel\OfficeViewModel.cs" />
@@ -189,6 +193,9 @@
     </Compile>
     <Compile Include="View\DialogWindowUsage.xaml.cs">
       <DependentUpon>DialogWindowUsage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowUser.xaml.cs">
+      <DependentUpon>DialogWindowUser.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\InformationAboutClientView.xaml.cs">
       <DependentUpon>InformationAboutClientView.xaml</DependentUpon>
@@ -250,6 +257,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DialogWindowUsage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

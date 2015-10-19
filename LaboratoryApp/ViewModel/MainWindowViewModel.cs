@@ -21,6 +21,18 @@ namespace LaboratoryApp.ViewModel
 
 
         public static LaboratoryEntities Context = new LaboratoryEntities();
+        private ObservableCollection<string> listOfUsers = new ObservableCollection<string>();
+
+        public ObservableCollection<string> ListOfUsers
+        {
+            get { return listOfUsers; }
+            set
+            {
+                listOfUsers = value;
+                OnPropertyChanged("ListOfUsers");
+            }
+        }
+
         public static string nameAndSurname;
 
         public string NameAndSurname
@@ -138,6 +150,7 @@ namespace LaboratoryApp.ViewModel
 
         public static StreamWriter FileLog;
         static public string path = @"C:\ProgramData\DASLSystems\LaboratoryApp\LaboratoryAppLog.txt";
+        static public string usersApplication = @"C:\ProgramData\DASLSystems\LaboratoryApp\users.txt";
 
         public MainWindowViewModel()
         {
@@ -146,11 +159,12 @@ namespace LaboratoryApp.ViewModel
             Title = "Laboratorium";
             AddNewClientCommand = new SimpleRelayCommand(AddClient);
             AddNewGaugeCommand = new SimpleRelayCommand(AddGauge);
+            AddNewMeasureCommand = new SimpleRelayCommand(AddNewMeasure);
             CurrentViewModel = null;
             userInput = new UserInput();
             LoadView();
             System.IO.Directory.CreateDirectory(@"C:\ProgramData\DASLSystems\LaboratoryApp");
-            
+
             if (!File.Exists(path))
             {
                 File.Create(path);
@@ -164,6 +178,23 @@ namespace LaboratoryApp.ViewModel
                     
                 }
             }
+            if (!File.Exists(usersApplication))
+            {
+                File.Create(usersApplication);
+            }
+            try
+            {
+                string[] s = File.ReadAllLines(usersApplication);
+                foreach (string str in s)
+                {
+                    ListOfUsers.Add(str);
+                }
+            }
+            catch(Exception e)
+            {
+                File.AppendAllText(path, e.ToString());
+            }
+
         }
 
         private bool isCheckedName;
@@ -203,6 +234,33 @@ namespace LaboratoryApp.ViewModel
         {
             get { return new SimpleRelayCommand(Search); }
         }
+        private ICommand addNewMeasureCommand;
+
+        public ICommand AddNewMeasureCommand
+        {
+            get { return addNewMeasureCommand; }
+            set 
+            { 
+                addNewMeasureCommand = value;
+                OnPropertyChanged("AddNewMeasureCommand");
+            }
+        }
+        private void AddNewMeasure()
+        {
+            MessageWindowUser = new NewWindowUser();
+            MessageWindowUser.IsOpen = true;
+
+            if (MessageWindowUser.ToConfirm)
+            {
+                File.AppendAllText(usersApplication, "\n");
+                File.AppendAllText(usersApplication, MessageWindowUser.NameOfUser);
+
+                ListOfUsers.Add(MessageWindowUser.NameOfUser);
+
+            }
+        }
+
+        
         private void Search()
         {
             try
@@ -257,7 +315,7 @@ namespace LaboratoryApp.ViewModel
                     {
                         foreach (client cli in RootElement.Children)
                         {
-                            if (cli.name == SearchItem)
+                            if (cli.name.ToUpper() == SearchItem.ToUpper())
                             {
 
                                 cli.IsSelected = true;
@@ -504,6 +562,17 @@ namespace LaboratoryApp.ViewModel
             {
                 messageWindowModelOfGauge = value;
                 base.OnPropertyChanged("MessageWindowModelOfGauge");
+            }
+        }
+        private NewWindowUser messageWindowUser;
+
+        public NewWindowUser MessageWindowUser
+        {
+            get { return messageWindowUser; }
+            set
+            {
+                messageWindowUser = value;
+                base.OnPropertyChanged("MessageWindowUser");
             }
         }
 

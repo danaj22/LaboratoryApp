@@ -39,24 +39,16 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <!-- To a treeView -->
-        <!--<HierarchicalDataTemplate DataType="{x:Type local:client}"  ItemsSource="{Binding Children}">
-            <Grid>
-                <TextBlock Text="{Binding name}" />
-            </Grid>
-        </HierarchicalDataTemplate>
+        <Style x:Key="ComboBoxError" TargetType="ComboBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip"
+                        Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                        Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-        <HierarchicalDataTemplate DataType="{x:Type local:office}"  ItemsSource="{Binding gauges}">
-            <Grid>
-                <TextBlock Text="{Binding name}" />
-            </Grid>
-        </HierarchicalDataTemplate>
-
-        <HierarchicalDataTemplate DataType="{x:Type local:gauge}"  ItemsSource="{Binding}">
-            <Grid>
-                <TextBlock Text="{Binding model_of_gauges.model}" />
-            </Grid>
-        </HierarchicalDataTemplate>-->
 
 
         <DataTemplate DataType="{x:Type vm:InformationAboutClient}">
@@ -112,20 +104,6 @@
             </TextBox.Text>
         </TextBox>
         <Label Content="Imię i Nazwisko:" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Height="26" Margin="0,2"/>
-        <TextBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"
-                 Validation.ErrorTemplate="{StaticResource errorTemplate}"
-         Style="{StaticResource textBoxError}" Height="22" Margin="2,4" >
-
-            <TextBox.Text>
-                <Binding Path="NameAndSurname" UpdateSourceTrigger="PropertyChanged" >
-                    <Binding.ValidationRules>
-                        <vm:NameValidation ValidatesOnTargetUpdated="True"
-                                     ValidationStep="RawProposedValue"
-                                     ErrorMessage="Wpisz imię i nazwisko [max. 100 znaków]." />
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox.Text>
-        </TextBox>
 
 
         <TreeView Background="Bisque" Name="tvwAllClients" Grid.Row="5" Grid.RowSpan="2" ItemsSource="{Binding RootElement.Children,UpdateSourceTrigger=PropertyChanged}" 
@@ -215,8 +193,13 @@
         <vm:ModalDialogManager DataContext="{Binding MessageWindowClient}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="400" 
 			DialogWidth="390" DialogResizeMode="CanResize" />
 
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowModelOfGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
-			DialogWidth="470" DialogResizeMode="CanResize"/>
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowModelOfGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="330" 
+			DialogWidth="530" DialogResizeMode="CanResize"/>
+
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowUser}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}" DialogHeight="200" 
+                               DialogWidth="470" DialogResizeMode="CanResize"/>
+
+        <Button Content="Dodaj pomiarowca" Command="{Binding AddNewMeasureCommand}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right"  VerticalAlignment="center" Height="22" Margin="0,2,249,3" Width="142" />
 
         <TextBox Text="{Binding SearchItem}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Background="AliceBlue" Height="22" Margin="2,4" />
         <Button Content="Dodaj klienta" Command="{Binding AddNewClientCommand}" Grid.Column="3" HorizontalAlignment="Right"  VerticalAlignment="center" Width="142" Height="22" Margin="0,2,0,1" />
@@ -225,6 +208,19 @@
         <RadioButton Content="NIP" IsChecked ="{Binding IsCheckedNip}" HorizontalAlignment="Left" Margin="0,1,0,0" Grid.Row="4" VerticalAlignment="Top" Height="25" Width="48" Grid.Column="1"/>
         <RadioButton Content="Nazwa klienta" IsChecked="{Binding IsCheckedName}" Grid.Column="1" HorizontalAlignment="Left" Margin="60,1,0,0" Grid.Row="4" VerticalAlignment="Top" Height="29" Width="101" Grid.ColumnSpan="2"/>
 
+        <ComboBox ItemsSource="{Binding ListOfUsers}" Grid.Column="1" 
+                  Validation.ErrorTemplate="{StaticResource errorTemplate}"
+                  Style="{StaticResource ComboBoxError}" Margin="2,0" Grid.Row="2">
+            <ComboBox.SelectedItem>
+                <Binding Path="NameAndSurname" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <vm:SelectedItemValidation ValidatesOnTargetUpdated="True"
+                                     ValidationStep="RawProposedValue"
+                                     ErrorMessage="Wybierz pomiarowca."/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </ComboBox.SelectedItem>
+        </ComboBox>
 
         <!--<Button Content="Edytuj klienta" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Right"  VerticalAlignment="center"/>
         <Button Content="Usuń klienta" Grid.Column="3" Grid.Row="2" HorizontalAlignment="Right"  VerticalAlignment="center"/>-->

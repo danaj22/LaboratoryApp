@@ -219,7 +219,7 @@ namespace LaboratoryApp.ViewModel
 
 
                         MainWindowViewModel.selectedNode.Children.Add(GaugeToAddToList);
-                        MainWindowViewModel.selectedNode.Children.Last().NameOfItem = MessageWindowGauge.SelectedModel;
+                        MainWindowViewModel.selectedNode.Children.Last().NameOfItem = MessageWindowGauge.SelectedModel+" ["+ MessageWindowGauge.AboutGauge.serial_number + "]";
                         MainWindowViewModel.selectedNode.Children.Last().Parent = SelectedOffice;
 
                         MessageBox.Show("Miernik został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);

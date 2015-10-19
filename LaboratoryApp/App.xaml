@@ -49,6 +49,9 @@
             <DataTemplate DataType="{x:Type vm:NewWindowFunction}">
                 <v:DialogWindowFunction />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowUser}">
+                <v:DialogWindowUser />
+            </DataTemplate>
 
         </ResourceDictionary>
 
