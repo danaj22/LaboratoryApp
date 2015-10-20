@@ -312,9 +312,26 @@ namespace LaboratoryApp.ViewModel
             var ListOfFunctions = (from f in context.functions select f).ToList();
             foreach(function fun in ListOfFunctions)
             {
-                CollectionOfCheckedFunction.Add(fun);
+                fun.IsChecked = false;
             }
+            var gggg = (from cm in context.calibrators_model_of_gauges where cm.model_of_gaug_id == AboutGauge.model_of_gauge_id select cm.model_of_gaug_id).ToList();
+            foreach(var item in ListOfFunctions)
+            {
+                if(gggg.Contains(item.functionId))
+                {
+                    item.IsChecked = true;
+                }
+                CollectionOfCheckedFunction.Add(item);
+            }
+            
+
+            
             var ListOfCalibrators = (from c in context.calibrators select c).ToList();
+            
+            foreach(var item in ListOfCalibrators)
+            {
+                item.IsChecked = false;
+            }
 
             var rrrr = (from cm in context.calibrators_model_of_gauges where cm.model_of_gaug_id == AboutGauge.model_of_gauge_id select cm.calibrator_id).ToList();
 
@@ -326,8 +343,6 @@ namespace LaboratoryApp.ViewModel
                 }
 
                 CollectionOfCalibrators.Add(item);
-
-
             }
 
 

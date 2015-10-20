@@ -698,7 +698,7 @@ namespace LaboratoryApp.ViewModel
             {
                 if(fun.IsChecked)
                 {  
-                    raport.CheckedFunction += fun.Name + ";";
+                    raport.CheckedFunction += fun.name + ";";
                 }
                 LaboratoryEntities context = MainWindowViewModel.Context;
                 

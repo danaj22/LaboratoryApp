@@ -50,53 +50,12 @@ namespace LaboratoryApp
             var conn = new SqlConnection(connectionString);
             //var command = new SqlCommand(query, conn);
 
-            try
-            {
-                conn.Open();
-                try
-                {
-                    //command.ExecuteNonQuery();
 
-                    string script = System.IO.File.ReadAllText(@"Model1.edmx.sql");
-
-                    // split script on GO command
-                    System.Collections.Generic.IEnumerable<string> commandStrings = System.Text.RegularExpressions.Regex.Split(script, @"^\s*GO\s*$",
-                                             System.Text.RegularExpressions.RegexOptions.Multiline | System.Text.RegularExpressions.RegexOptions.IgnoreCase);
-
-                    //thisConnection.Open();
-                    foreach (string commandString in commandStrings)
-                    {
-                        if (commandString.Trim() != "")
-                        {
-                            using (var command2 = new SqlCommand(commandString, conn))
-                            {
-                       //         command2.ExecuteNonQuery();
-                            }
-                        }
-                    }
-                }
-
-                catch (Exception e)
-                {
-                    //database doesn't exist
-                    MessageBox.Show(e.ToString());
-                }
-
-                conn.Close();
-
-                //MessageBox.Show("Database is created successfully");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            finally
-            {
                 if ((conn.State == ConnectionState.Open))
                 {
                     conn.Close();
                 }
-            }
+            
 
             InitializeComponent();
         }

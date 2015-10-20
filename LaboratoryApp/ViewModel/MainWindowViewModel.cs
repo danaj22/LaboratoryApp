@@ -126,6 +126,7 @@ namespace LaboratoryApp.ViewModel
                 {
                     gauge selectedGauge = SelectedNode as gauge;
                     CurrentViewModel = new InformationAboutGauge(SelectedNode);
+
                 }
                 OnPropertyChanged("SelectedNode");
             }
@@ -270,14 +271,14 @@ namespace LaboratoryApp.ViewModel
                 {
                     if (IsCheckedSerial)
                     {
-                        gauge tmp = (from g in Context.gauges where g.serial_number == SearchItem select g).FirstOrDefault();
+                        var tmp = (from g in Context.gauges where g.serial_number == SearchItem select g).FirstOrDefault();
 
                         foreach (client cli in RootElement.Children)
                         {
                             if (tmp.client.name == cli.name)
                             {
                                 cli.IsExpanded = true;
-                                foreach (gauge g in cli.gauges)
+                                foreach (gauge g in tmp.client.gauges)
                                 {
                                     if (g.serial_number == SearchItem)
                                     {
@@ -285,11 +286,15 @@ namespace LaboratoryApp.ViewModel
                                         {
                                             g.office.IsExpanded = true;
                                         }
+                                        int i = cli.Children.IndexOf((MenuItem)g);
                                         g.IsSelected = true;
+                                        g.IsExpanded = true;
                                     }
                                 }
                             }
+                             
                         }
+                       
                         //}
                         //tmp.IsExpanded = true;
                         //tmp.IsSelected = true;
@@ -331,7 +336,9 @@ namespace LaboratoryApp.ViewModel
                     }
                 }
                 else
-                { MessageBox.Show("Nie znaleziono wyników."); }
+                { 
+                    MessageBox.Show("Nie znaleziono wyników."); 
+                }
 
                 //var tmp = (from searchedGauge in Context.model_of_gauges
                 //           where SearchItem == searchedGauge.gaugeId
@@ -387,15 +394,20 @@ namespace LaboratoryApp.ViewModel
                     model_of_gauges newGauge = new model_of_gauges();
                     newGauge.manufacturer_name = MessageWindowModelOfGauge.AboutModelOfGauge.ManufacturerName;
                     newGauge.model = MessageWindowModelOfGauge.AboutModelOfGauge.Model;
+                    
 
                     try
                     {
-
                         {
                             {
+                                newGauge.type = (from t in Context.types where t.name == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedType select t).FirstOrDefault();
+                                newGauge.usage = (from u in Context.usages where u.description == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedUsage select u).FirstOrDefault();
                                 newGauge.type_id = (from t in Context.types where t.name == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedType select t.typeId).FirstOrDefault();
                                 newGauge.usage_id = (from u in Context.usages where u.description == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedUsage select u.usageId).FirstOrDefault();
 
+                                var listOfCheckedItems = MessageWindowModelOfGauge.CollectionOfCalibrators.ToList();
+                                //newGauge.calibrators_model_of_gauges = (Models.calibrators_model_of_gauges)listOfCheckedItems;
+                                
                                 Context.model_of_gauges.Add(newGauge);
                                 Context.SaveChanges();
                             }
@@ -421,7 +433,7 @@ namespace LaboratoryApp.ViewModel
                                     calibrators_model_of_gauges calib_gauge_model = new calibrators_model_of_gauges();
                                     calib_gauge_model.calibrator = zmienna;
                                     calib_gauge_model.calibrator_id = zmienna.calibratorId;
-                                    //MessageBox.Show(LastModelId.ToString());
+
                                     model_of_gauges model = (from m in Context.model_of_gauges orderby m.model_of_gaugeId descending select m).First();
 
                                     calib_gauge_model.model_of_gauges = model;

@@ -10,7 +10,6 @@ namespace LaboratoryApp.Models
         public virtual ICollection<calibrator> calibrators { get; set; }
         
         private bool isChecked;
-
         public bool IsChecked
         {
             get { return isChecked; }

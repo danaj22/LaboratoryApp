@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LaboratoryApp.ViewModel
 {
-    public class FunctionViewModel:ObservableObject
+    public class FunctionViewModel : ObservableObject
     {
         private bool isChecked;
 

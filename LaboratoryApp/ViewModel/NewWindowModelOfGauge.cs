@@ -13,7 +13,6 @@ namespace LaboratoryApp.ViewModel
     public class NewWindowModelOfGauge : ObservableObject
     {
         private InformationAboutModelOfGauge aboutModelOfGauge;
-
         public InformationAboutModelOfGauge AboutModelOfGauge
         {
             get { return aboutModelOfGauge; }
@@ -25,7 +24,6 @@ namespace LaboratoryApp.ViewModel
         }
 
         private NewWindowType messageWindowType;
-
         public NewWindowType MessageWindowType
         {
             get { return messageWindowType; }
@@ -35,6 +33,7 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("MessageWindowType");
             }
         }
+        
         private NewWindowUsage messageWindowUsage;
         public NewWindowUsage MessageWindowUsage
         {
@@ -47,7 +46,6 @@ namespace LaboratoryApp.ViewModel
         }
 
         private NewWindowCalibrator messageWindowCalibrator;
-
         public NewWindowCalibrator MessageWindowCalibrator
         {
             get { return messageWindowCalibrator; }
@@ -57,7 +55,18 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("MessageWindowCalibrator");
             }
         }
-
+        
+        private ObservableCollection<calibrator> collectionOfCalibrators = new ObservableCollection<calibrator>();
+        public ObservableCollection<calibrator> CollectionOfCalibrators
+        {
+            get { return collectionOfCalibrators; }
+            set
+            {
+                collectionOfCalibrators = value;
+                OnPropertyChanged("collectionOfCalibrators");
+            }
+        }
+        
         public void AddCalibrator()
         {
             MessageWindowCalibrator = new NewWindowCalibrator();
@@ -72,25 +81,15 @@ namespace LaboratoryApp.ViewModel
                         calibrator CalibratorToAdd = new calibrator();
                         CalibratorToAdd.name = MessageWindowCalibrator.NameOfCalibrator;
 
-                        context.calibrators.Add(CalibratorToAdd);
-                        context.SaveChanges();
+                        //context.calibrators.Add(CalibratorToAdd);
 
                         CollectionOfCalibrators.Add(CalibratorToAdd);
+                        context.SaveChanges();
+
                     }
                 }
             }
             MessageWindowCalibrator.ToConfirm = false;
-        }
-        private ObservableCollection<calibrator> collectionOfCalibrators = new ObservableCollection<calibrator>();
-
-        public ObservableCollection<calibrator> CollectionOfCalibrators
-        {
-            get { return collectionOfCalibrators; }
-            set
-            {
-                collectionOfCalibrators = value;
-                OnPropertyChanged("collectionOfCalibrators");
-            }
         }
 
         private ICommand addCalibratorCommand;
@@ -104,6 +103,69 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
+        private ICommand addFunctionCommand;
+        public ICommand AddFunctionCommand
+        {
+            get { return addFunctionCommand; }
+            set
+            {
+                addFunctionCommand = value;
+                base.OnPropertyChanged("AddFunctionCommand");
+            }
+        }
+
+        private NewWindowFunction messageWindowFunction;
+        public NewWindowFunction MessageWindowFunction
+        {
+            get { return messageWindowFunction; }
+            set
+            {
+                messageWindowFunction = value;
+                OnPropertyChanged("MessageWindowFunction");
+            }
+        }
+
+        private ObservableCollection<function> collectionOfCheckedFunction;
+        public ObservableCollection<function> CollectionOfCheckedFunction
+        {
+            get { return collectionOfCheckedFunction; }
+            set
+            {
+                collectionOfCheckedFunction = value;
+                OnPropertyChanged("CollectionOfCheckedFunction");
+            }
+        }
+        private string checkedFunction;
+        public string CheckedFunction
+        {
+            get { return checkedFunction; }
+            set
+            {
+                checkedFunction = value;
+                OnPropertyChanged("CheckedFunction");
+            }
+        }
+        public void AddFunction()
+        {
+            MessageWindowFunction = new NewWindowFunction();
+            MessageWindowFunction.IsOpen = true;
+
+            if (MessageWindowFunction.ToConfirm)
+            {
+                using (LaboratoryEntities context = new LaboratoryEntities())
+                {
+                    function FunctionToAdd = new function();
+                    FunctionToAdd.name = MessageWindowFunction.NameOfFunction;
+
+                    context.functions.Add(FunctionToAdd);
+                    context.SaveChanges();
+
+                    CollectionOfCheckedFunction.Add(FunctionToAdd);
+                }
+            }
+            MessageWindowFunction.ToConfirm = false;
+        }
+
 
         public NewWindowModelOfGauge()
         {
@@ -112,7 +174,9 @@ namespace LaboratoryApp.ViewModel
             AddUsageCommand = new SimpleRelayCommand(AddUsage);
             AddTypeCommand = new SimpleRelayCommand(AddType);
             AddCalibratorCommand = new SimpleRelayCommand(AddCalibrator);
-            
+            AddFunctionCommand = new SimpleRelayCommand(AddFunction);
+
+            CollectionOfCheckedFunction = new ObservableCollection<function>();
             LaboratoryEntities context = MainWindowViewModel.Context;
             try
             {
@@ -126,6 +190,19 @@ namespace LaboratoryApp.ViewModel
                         CollectionOfCalibrators.Add(item);
                     }
                 }
+
+                List<Models.function> ListOfFunctions = context.functions.ToList();
+
+                if (ListOfFunctions.Count >0)
+                {
+                    foreach(Models.function item in ListOfFunctions)
+                    {
+                        item.IsChecked = false;
+                        CollectionOfCheckedFunction.Add(item);
+                    }
+                }
+                context.SaveChanges();
+                
             }
             catch(Exception e)
             {
@@ -136,17 +213,9 @@ namespace LaboratoryApp.ViewModel
 
         public NewWindowModelOfGauge(Window window) //: base (window)
         {
-            //LaboratoryEntities Context = new LaboratoryEntities();
-            //MWindow = window;
-            //MWindow.infoGauge = AboutModelOfGauge = new InformationAboutModelOfGauge();
-
-            //foreach(var tmp in Context.usages)
-            //{
-
-            //    AboutModelOfGauge.CollectionOfUsage.Add(tmp);
-            //}
-            //AboutModelOfGauge = new InformationAboutModelOfGauge();
         }
+
+
         private ICommand okCommand;
         public ICommand OKCommand
         {

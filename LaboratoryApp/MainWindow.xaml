@@ -193,7 +193,7 @@
         <vm:ModalDialogManager DataContext="{Binding MessageWindowClient}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="400" 
 			DialogWidth="390" DialogResizeMode="CanResize" />
 
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowModelOfGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="330" 
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowModelOfGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="530" 
 			DialogWidth="530" DialogResizeMode="CanResize"/>
 
         <vm:ModalDialogManager DataContext="{Binding MessageWindowUser}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}" DialogHeight="200" 
