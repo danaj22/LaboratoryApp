@@ -167,6 +167,30 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("SelectedCompatibility");
             }
         }
+
+        private List<string> stamp;
+
+        public List<string> Stamp
+        {
+            get { return stamp; }
+            set
+            {
+                stamp = value;
+                OnPropertyChanged("Stamp");
+            }
+        }
+        private string printStamp;
+
+        public string PrintStamp
+        {
+            get { return printStamp; }
+            set
+            {
+                printStamp = value;
+                OnPropertyChanged("PrintStamp");
+            }
+        }
+
         private string checkedFunction;
 
 
@@ -359,6 +383,11 @@ namespace LaboratoryApp.ViewModel
             Compatibility.Add("Zgodny");
             Compatibility.Add("Niezgodny");
             SelectedCompatibility = Compatibility.First();
+
+            Stamp = new List<string>();
+            Stamp.Add("Nie");
+            Stamp.Add("Tak");
+            PrintStamp = Stamp.First();
 
             DateSurvey = DateTime.Now.ToString("dd'/'MM'/'yyyy");
 

@@ -11,6 +11,7 @@ using System.Windows;
 using System.Data.Entity;
 using System.IO;
 using LaboratoryApp.Models;
+using System.Windows.Forms;
 //using System.Windows;
 //using System.Windows.Input;
 //todelet 2 lib^^
@@ -148,10 +149,22 @@ namespace LaboratoryApp.ViewModel
         {
             data = new LoadData(rootElement);
         }
+        private string certPath;
+
+        public string CertPath
+        {
+            get { return certPath; }
+            set {
+                certPath = value;
+                OnPropertyChanged("CertPath");
+            }
+        }
 
         public static StreamWriter FileLog;
         static public string path = @"C:\ProgramData\DASLSystems\LaboratoryApp\LaboratoryAppLog.txt";
         static public string usersApplication = @"C:\ProgramData\DASLSystems\LaboratoryApp\users.txt";
+        static public string certificatesPath = @"C:\ProgramData\DASLSystems\LaboratoryApp\cert.txt";
+
 
         public MainWindowViewModel()
         {
@@ -161,6 +174,7 @@ namespace LaboratoryApp.ViewModel
             AddNewClientCommand = new SimpleRelayCommand(AddClient);
             AddNewGaugeCommand = new SimpleRelayCommand(AddGauge);
             AddNewMeasureCommand = new SimpleRelayCommand(AddNewMeasure);
+            ChangePathCommand = new SimpleRelayCommand(ChangePath);
             CurrentViewModel = null;
             userInput = new UserInput();
             LoadView();
@@ -172,7 +186,6 @@ namespace LaboratoryApp.ViewModel
             }
             else
             {
-
                 // Create a file to write to. 
                 using (FileLog = File.CreateText(path))
                 {
@@ -183,18 +196,43 @@ namespace LaboratoryApp.ViewModel
             {
                 File.Create(usersApplication);
             }
+            if (!File.Exists(certificatesPath))
+            {
+                File.Create(certificatesPath);
+            }
+
+            string line;
+
             try
             {
                 string[] s = File.ReadAllLines(usersApplication);
+                
                 foreach (string str in s)
                 {
-                    ListOfUsers.Add(str);
+                    line = str;
+                    if(str.Contains("PATH"))
+                    {
+                        int index = str.IndexOf("PATH");
+                        line = str.Substring(0, index);
+                    }
+                    ListOfUsers.Add(line);
                 }
             }
             catch(Exception e)
             {
                 File.AppendAllText(path, e.ToString());
             }
+
+            try
+            {
+                string[] s = File.ReadAllLines(certificatesPath);
+                CertPath = s[0];
+            }
+            catch(Exception e)
+            {
+                File.AppendAllText(path, e.ToString());
+            }
+
 
         }
 
@@ -253,8 +291,15 @@ namespace LaboratoryApp.ViewModel
 
             if (MessageWindowUser.ToConfirm)
             {
-                File.AppendAllText(usersApplication, "\n");
+                
                 File.AppendAllText(usersApplication, MessageWindowUser.NameOfUser);
+                
+                if (!string.IsNullOrEmpty(MessageWindowUser.PathOfStamp))
+                {
+                    File.AppendAllText(usersApplication, "PATH=");
+                    File.AppendAllText(usersApplication, MessageWindowUser.PathOfStamp);
+                }
+                File.AppendAllText(usersApplication, "\n");
 
                 ListOfUsers.Add(MessageWindowUser.NameOfUser);
 
@@ -264,9 +309,9 @@ namespace LaboratoryApp.ViewModel
         
         private void Search()
         {
+            gauge gg = new gauge();
             try
             {
-
                 if (SearchItem != null && SearchItem != "")
                 {
                     if (IsCheckedSerial)
@@ -286,18 +331,36 @@ namespace LaboratoryApp.ViewModel
                                         {
                                             g.office.IsExpanded = true;
                                         }
-                                        int i = cli.Children.IndexOf((MenuItem)g);
+
+
                                         g.IsSelected = true;
                                         g.IsExpanded = true;
                                     }
                                 }
+                                foreach(var gaugeInClient in cli.Children)
+                                {
+                                    if(tmp.office == null)
+                                    {
+                                        if (gaugeInClient.NameOfItem == tmp.model_of_gauges.model + " [" + tmp.serial_number + "]")
+                                        {
+                                            gaugeInClient.IsSelected = true;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        foreach(var gaugeInOffice in gaugeInClient.Children)
+                                        {
+                                            if (gaugeInOffice.NameOfItem == tmp.model_of_gauges.model + " [" + tmp.serial_number + "]")
+                                            {
+                                                gaugeInOffice.IsSelected = true;
+                                            }
+                                        }
+                                    }
+                                    
+                                }
                             }
-                             
                         }
                        
-                        //}
-                        //tmp.IsExpanded = true;
-                        //tmp.IsSelected = true;
                         SelectedNode = tmp;
 
                     }
@@ -337,7 +400,7 @@ namespace LaboratoryApp.ViewModel
                 }
                 else
                 { 
-                    MessageBox.Show("Nie znaleziono wyników."); 
+                    System.Windows.MessageBox.Show("Nie znaleziono wyników."); 
                 }
 
                 //var tmp = (from searchedGauge in Context.model_of_gauges
@@ -348,7 +411,6 @@ namespace LaboratoryApp.ViewModel
             }
             catch (Exception e)
             {
-                MessageBox.Show("Nie znaleziono wyników.");
                 File.AppendAllText(path, e.ToString());
             }
 
@@ -358,6 +420,28 @@ namespace LaboratoryApp.ViewModel
             return true;
         }
 
+        private ICommand changePathCommand;
+        public ICommand ChangePathCommand
+        {
+            get { return changePathCommand; }
+            set
+            {
+                changePathCommand = value;
+                OnPropertyChanged("ChangePathCommand");
+            }
+        }
+        private void ChangePath()
+        {
+            FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog();
+
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                File.WriteAllText(certificatesPath, String.Empty);
+                File.AppendAllText(certificatesPath,folderBrowserDialog1.SelectedPath);
+
+                CertPath = folderBrowserDialog1.SelectedPath;
+            }
+        }
         /// <summary>
         /// command to show modal window where we can add new ModelOfGaugeItem
         /// </summary>
@@ -415,7 +499,7 @@ namespace LaboratoryApp.ViewModel
                     }
                     catch (Exception e)
                     {
-                        MessageBox.Show("Nie udało się dodać modelu miernika.");
+                        System.Windows.MessageBox.Show("Nie udało się dodać modelu miernika.");
                         File.AppendAllText(path, e.ToString());
                     }
                     try
@@ -447,7 +531,7 @@ namespace LaboratoryApp.ViewModel
                                 }
                                 catch (Exception e)
                                 {
-                                    MessageBox.Show("Nie udało się dodać kalibratora do modelu miernika.");
+                                    System.Windows.MessageBox.Show("Nie udało się dodać kalibratora do modelu miernika.");
                                     File.AppendAllText(path,e.ToString());
                                 }
                             }
@@ -457,7 +541,6 @@ namespace LaboratoryApp.ViewModel
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Błąd");
                         FileLog.WriteLine(ex.ToString());
                     }
                 }
@@ -537,14 +620,12 @@ namespace LaboratoryApp.ViewModel
                     {
                         {
                             Context.clients.Add(newClient);
-                            MessageBox.Show("Dodanie użytkownika.");
                             Context.SaveChanges();
                         }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Nie udało się dodać klienta do bazy.");
-                        MessageBox.Show(ex.ToString());
+                        System.Windows.MessageBox.Show("Nie udało się dodać klienta do bazy.");
                         File.AppendAllText(@"",ex.ToString());
                     }
 
@@ -554,7 +635,7 @@ namespace LaboratoryApp.ViewModel
                     RootElement.Children.Add(newClient);
                     RootElement.Children.Last().NameOfItem = newClient.name;
 
-                    MessageBox.Show("dodanie użytkownika do bazy");
+                    System.Windows.MessageBox.Show("dodanie użytkownika do bazy");
 
                 }
 

@@ -159,7 +159,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_DB954A75285D4826AEA5986606603454"
+        "MsmKey" = "8:_D06FDC512AF841229F2DE3EF997C7F17"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -746,10 +746,10 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DB954A75285D4826AEA5986606603454"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D06FDC512AF841229F2DE3EF997C7F17"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\..\\Desktop\\header2.png"
-            "TargetName" = "8:header2.png"
+            "SourcePath" = "8:..\\..\\..\\..\\..\\Desktop\\header4.png"
+            "TargetName" = "8:header4.png"
             "Tag" = "8:"
             "Folder" = "8:_C32766BBA51F484188E34F5FA47470B8"
             "Condition" = "8:"
@@ -843,7 +843,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:LaboratoryApp"
         "ProductCode" = "8:{1E1E1D3B-EB69-45A6-A8D1-3785B6AC5F1B}"
-        "PackageCode" = "8:{DFD88EFC-4557-4047-8DFF-458BD992D9A9}"
+        "PackageCode" = "8:{D859C7D6-8E10-4C5F-AF31-CC43BD21CCCA}"
         "UpgradeCode" = "8:{E33BA151-078E-4EB3-AB00-94F07E25137C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

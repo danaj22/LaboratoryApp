@@ -42,7 +42,7 @@ namespace LaboratoryApp
         {
 
             // your connection string
-            string connectionString = @"Data Source=DASL_SERWER;integrated security=True;multipleactiveresultsets=True";
+            string connectionString = @"Data Source=LABORATORIUM-PC\SQLEXPRESS;integrated security=True;multipleactiveresultsets=True";
 
             // your query:
             //var query = GetDbCreationQuery();

@@ -41,7 +41,7 @@
         <vm:ModalDialogManager DataContext="{Binding MessageWindowGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
 			DialogWidth="320" DialogResizeMode="CanResize" />
 
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowRaport}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="850" 
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowRaport}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="890" 
 			DialogWidth="750" DialogResizeMode="CanResize" />
 
         <Button Content="Usuń miernik" Command="{Binding DeleteGaugeCommand}"  Grid.Row="5" VerticalAlignment="Center" Grid.Column="3" HorizontalAlignment="Center" Height="22" Width="88" Margin="12,3,0,3"  />

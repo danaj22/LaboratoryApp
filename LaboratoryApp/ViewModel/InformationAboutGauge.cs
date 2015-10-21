@@ -349,7 +349,6 @@ namespace LaboratoryApp.ViewModel
                 }
                 catch (Exception e)
                 { 
-                    MessageBox.Show(e.ToString());
                     File.AppendAllText(MainWindowViewModel.path, e.ToString());
                 }
 
@@ -370,31 +369,27 @@ namespace LaboratoryApp.ViewModel
 
                 // Save the document...
 
-                string path = @"C:\Certyfikaty";
+                string path = @"C:\ProgramData\DASLSystems\LaboratoryApp\cert.txt";
 
                 try
                 {
-                    // Determine whether the directory exists. 
-                    if (!Directory.Exists(path))
+                    string[] s = File.ReadAllLines(path);
+
+                    raport.NumberOfCertificate = raport.NumberOfCertificate.Replace('/', '-');
+                    string filename = s[0] + "\\" + raport.NumberOfCertificate + ".pdf";
+                    //filename.Replace('\\','-');
+
+                    if (!string.IsNullOrEmpty(raport.Author) && !string.IsNullOrEmpty(raport.Temperature))
                     {
-                        // Try to create the directory.
-                        DirectoryInfo di = Directory.CreateDirectory(path);
+                        renderer.PdfDocument.Save(filename);
+                        // ...and start a viewer.
+                        Process.Start(filename);
                     }
-
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
-                    MessageBox.Show(e.ToString());
-                }
-                raport.NumberOfCertificate = raport.NumberOfCertificate.Replace('/','-');
-                string filename = path + "\\" + raport.NumberOfCertificate + ".pdf";
-                //filename.Replace('\\','-');
-
-                if (!string.IsNullOrEmpty(raport.Author) && !string.IsNullOrEmpty(raport.Temperature))
-                {
-                    renderer.PdfDocument.Save(filename);
-                    // ...and start a viewer.
-                    Process.Start(filename);
+                    MessageBox.Show("Nie wybrano folderu zapisu.");
+                    File.AppendAllText(MainWindowViewModel.path, e.ToString());
                 }
 
             }
@@ -460,7 +455,7 @@ namespace LaboratoryApp.ViewModel
             style.ParagraphFormat.Alignment = ParagraphAlignment.Center;
             style.ParagraphFormat.AddTabStop("1.5cm", TabAlignment.Center);
             style.ParagraphFormat.SpaceAfter = 2;
-            style.ParagraphFormat.SpaceBefore = 2;
+            style.ParagraphFormat.SpaceBefore = 0;
 
             style = document.Styles[StyleNames.Footer];
             style.Font.Size = 10;
@@ -519,7 +514,7 @@ namespace LaboratoryApp.ViewModel
             //header.AddParagraph("Laboratorium Przyrządów Pomiarowych\nŚWIADECTWO WZORCOWANIA");
 
             // Header image
-            Image image = header.AddImage(@"header2.png");
+            Image image = header.AddImage(@"header4.png");
 
             image.Height = "2.1cm";
             image.Width = "19.6cm";
@@ -594,9 +589,6 @@ namespace LaboratoryApp.ViewModel
 
             table.Columns[0].Width = 120;
             table.Columns[1].Width = 430;
-
-            //column = table.AddColumn();
-            //column.Format.Alignment = ParagraphAlignment.Right;
 
             table.Rows.Height = 20;
 
@@ -701,13 +693,7 @@ namespace LaboratoryApp.ViewModel
                     raport.CheckedFunction += fun.name + ";";
                 }
                 LaboratoryEntities context = MainWindowViewModel.Context;
-                
-                //var CertificatesOfSelectedGauge = (from c in context.certificates where c.gauge_id == SelectedGauge.gaugeId select c).ToList();
 
-                //foreach (var certificate in CertificatesOfSelectedGauge)
-                //{
-                //    CollectionOfCertificate.Add(certificate);
-                //}
             }
 
             row.Cells[1].AddParagraph(raport.CheckedFunction);
@@ -732,7 +718,51 @@ namespace LaboratoryApp.ViewModel
                 row = table.AddRow();
                 row.Cells[0].Format.Font.Bold = true;
                 row.Cells[0].AddParagraph("Pomiary zatwierdził: ");
+
                 row.Cells[1].AddParagraph(raport.Author);
+
+                string line = "";
+                if (raport.PrintStamp == "Tak")
+                {
+                    try
+                    {
+                        foreach (string str in File.ReadAllLines(MainWindowViewModel.usersApplication))
+                        {
+                            line = str;
+                            if (str.Contains(raport.Author) && str.Contains("PATH"))
+                            {
+                                int index = str.IndexOf("PATH");
+                                //+5 because we need only direct path without text : "PATH="
+                                line = str.Substring(index +5);
+                            }
+                        }
+
+                    }
+                    catch (Exception e)
+                    {
+                        File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                    }
+                    
+                    //it could be problem when we change localization of stamp
+                    try
+                    {
+                        Image img = row.Cells[1].AddImage(line);
+                        img.Height = "1.5cm";
+                        img.Width = "1.5cm";
+                        //img.LockAspectRatio = true;
+                        //img.RelativeVertical = RelativeVertical.Line;
+                        //img.RelativeHorizontal = RelativeHorizontal.Margin;
+                        //img.Top = ShapePosition.Top;
+                        //img.Left = ShapePosition.Left;
+                        //img.WrapFormat.Style = WrapStyle.Through;
+                    }
+                    catch (Exception e)
+                    {
+                        File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                    }
+
+                }
+
             }
             catch
             {

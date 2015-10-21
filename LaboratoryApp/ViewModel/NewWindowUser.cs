@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,8 @@ namespace LaboratoryApp.ViewModel
         {
             OKCommand = new SimpleRelayCommand(Confirm);
             CancelCommand = new SimpleRelayCommand(Close);
+            SelectPathCommand = new SimpleRelayCommand(SelectPath);
+            PathIsSelected = "Nie wybrano pieczątki.";
         }
         private ICommand okCommand;
 
@@ -34,6 +37,18 @@ namespace LaboratoryApp.ViewModel
             {
                 cancelCommand = value;
                 OnPropertyChanged("CancelCommand");
+            }
+        }
+
+        private ICommand selectPathCommand;
+
+        public ICommand SelectPathCommand
+        {
+            get { return selectPathCommand; }
+            set
+            {
+                selectPathCommand = value;
+                OnPropertyChanged("SelectPathCommand");
             }
         }
 
@@ -82,6 +97,55 @@ namespace LaboratoryApp.ViewModel
             {
                 nameOfUser = value;
                 OnPropertyChanged("NameOfUser");
+            }
+        }
+        private string pathOfStamp;
+
+        public string PathOfStamp
+        {
+            get { return pathOfStamp; }
+            set 
+            {
+                pathOfStamp = value;
+                OnPropertyChanged("PathOfStamp");
+            }
+        }
+        private string pathIsSelected;
+
+        public string PathIsSelected
+        {
+            get { return pathIsSelected; }
+            set 
+            {
+                pathIsSelected = value;
+                OnPropertyChanged("PathIsSelected");
+            }
+        }
+       
+        private void SelectPath()
+        {
+            // Create an instance of the open file dialog box.
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+
+            // Set filter options and filter index.
+            openFileDialog1.Filter = "All Files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 1;
+
+            openFileDialog1.Multiselect = false;
+
+            // Call the ShowDialog method to show the dialog box.
+            bool? userClickedOK = openFileDialog1.ShowDialog();
+
+            // Process input if the user clicked OK.
+            if (userClickedOK == true)
+            {
+                if (!string.IsNullOrEmpty(openFileDialog1.FileName))
+                {
+                    PathOfStamp = openFileDialog1.FileName;
+                    PathIsSelected = "Wybrano pieczątkę.";
+                }
+                
+                
             }
         }
     }

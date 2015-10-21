@@ -203,15 +203,6 @@ namespace LaboratoryApp.ViewModel
                         context.gauges.Add(gaugeToAddToDatabase);
                         context.SaveChanges();
 
-                        ////////////////////////////////////////////////
-                        //////////////////////////////////////////
-                        //////////////////////////////////////
-                        //MainWindowViewModel.LoadView();
-
-                        //var r = MainWindowViewModel.rootElement.Items.IndexOf(i);
-                        //var q = MainWindowViewModel.rootElement.Items[r].Items.IndexOf(of);
-
-                        //MainWindowViewModel.rootElement.Items[r].Items[q].Items.Add(gaugeToAddToDatabase);
 
                         gauge GaugeToAddToList = gaugeToAddToDatabase;
                         gaugeToAddToDatabase.client = SelectedOffice.client;
