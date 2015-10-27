@@ -153,6 +153,8 @@
     <Compile Include="ViewModel\NewWindowOffice.cs" />
     <Compile Include="ViewModel\NewWindowGauge.cs" />
     <Compile Include="ViewModel\NewWindowRaport.cs" />
+    <Compile Include="ViewModel\NewWindowTable.cs" />
+    <Compile Include="ViewModel\NewWindowTable1.cs" />
     <Compile Include="ViewModel\NewWindowType.cs" />
     <Compile Include="ViewModel\NewWindowUsage.cs" />
     <Compile Include="ViewModel\NewWindowUser.cs" />
@@ -189,6 +191,48 @@
     <Compile Include="View\DialogWindowGauge.xaml.cs">
       <DependentUpon>DialogWindowGauge.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\DialogWindowTable.xaml.cs">
+      <DependentUpon>DialogWindowTable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowTable10.xaml.cs">
+      <DependentUpon>DialogWindowTable10.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowTable11.xaml.cs">
+      <DependentUpon>DialogWindowTable11.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowTable12.xaml.cs">
+      <DependentUpon>DialogWindowTable12.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowTable13.xaml.cs">
+      <DependentUpon>DialogWindowTable13.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowTable2.xaml.cs">
+      <DependentUpon>DialogWindowTable2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowTable3.xaml.cs">
+      <DependentUpon>DialogWindowTable3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowTable4.xaml.cs">
+      <DependentUpon>DialogWindowTable4.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowTable4a.xaml.cs">
+      <DependentUpon>DialogWindowTable4a.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowTable5.xaml.cs">
+      <DependentUpon>DialogWindowTable5.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowTable6.xaml.cs">
+      <DependentUpon>DialogWindowTable6.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowTable7.xaml.cs">
+      <DependentUpon>DialogWindowTable7.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowTable8.xaml.cs">
+      <DependentUpon>DialogWindowTable8.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowTable9.xaml.cs">
+      <DependentUpon>DialogWindowTable9.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DialogWindowType.xaml.cs">
       <DependentUpon>DialogWindowType.xaml</DependentUpon>
     </Compile>
@@ -212,6 +256,9 @@
     </Compile>
     <Compile Include="View\ServerConnectWindow.xaml.cs">
       <DependentUpon>ServerConnectWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowTable1.xaml.cs">
+      <DependentUpon>DialogWindowTable1.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -253,6 +300,62 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\DialogWindowTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowTable10.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowTable11.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowTable12.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowTable13.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowTable2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowTable3.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowTable4.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowTable4a.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowTable5.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowTable6.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowTable7.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowTable8.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowTable9.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DialogWindowType.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -282,6 +385,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ServerConnectWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowTable1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -357,8 +357,8 @@ namespace LaboratoryApp.ViewModel
                 NewWindowRaport raport;
                 // Create a MigraDoc document
                 raport = MessageWindowRaport;
-                Document document = InformationAboutGauge.CreateDocument(raport);
-
+                Document document = InformationAboutGauge.CreateDocument(raport);        
+        
                 //string ddl = MigraDoc.DocumentObjectModel.IO.DdlWriter.WriteToString(document);
                 MigraDoc.DocumentObjectModel.IO.DdlWriter.WriteToFile(document, "MigraDoc.mdddl");
 

@@ -55,6 +55,17 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("MessageWindowCalibrator");
             }
         }
+
+        private NewWindowTable messageWindowTable;
+        public NewWindowTable MessageWindowTable
+        {
+            get { return messageWindowTable; }
+            set 
+            {
+                messageWindowTable = value;
+                OnPropertyChanged("MessageWindowTable");
+            }
+        }
         
         private ObservableCollection<calibrator> collectionOfCalibrators = new ObservableCollection<calibrator>();
         public ObservableCollection<calibrator> CollectionOfCalibrators
@@ -175,6 +186,7 @@ namespace LaboratoryApp.ViewModel
             AddTypeCommand = new SimpleRelayCommand(AddType);
             AddCalibratorCommand = new SimpleRelayCommand(AddCalibrator);
             AddFunctionCommand = new SimpleRelayCommand(AddFunction);
+            AddTableCommand = new SimpleRelayCommand(AddTable);
 
             CollectionOfCheckedFunction = new ObservableCollection<function>();
             LaboratoryEntities context = MainWindowViewModel.Context;
@@ -249,6 +261,9 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
+        //private ObservableCollection<NewWindowTable> table = new ObservableCollection<NewWindowTable>();
+
+
         private ICommand addTypeCommand;
         public ICommand AddTypeCommand
         {
@@ -260,6 +275,16 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
+        private ICommand addTableCommand;
+        public ICommand AddTableCommand
+        {
+            get { return addTableCommand; }
+            set
+            {
+                addTableCommand = value;
+                base.OnPropertyChanged("AddTableCommand");
+            }
+        }
 
         private bool isOpen;
 
@@ -347,6 +372,32 @@ namespace LaboratoryApp.ViewModel
             MessageWindowUsage.ToConfirm = false;
 
 
+        }
+        public void AddTable()
+        {
+            MessageWindowTable = new NewWindowTable();
+            MessageWindowTable.IsOpen = true;
+
+            if (MessageWindowTable.ToConfirm)
+            {
+                if (!string.IsNullOrEmpty(MessageWindowTable.Title))
+                {
+                    using (LaboratoryEntities context = new LaboratoryEntities())
+                    {
+                        //type TypeToAdd = new type();
+                        //TypeToAdd.name = MessageWindowType.NameOfType;
+
+                        //context.types.Add(TypeToAdd);
+                        //context.SaveChanges();
+                        //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Nie wpisano tytułu.");
+                }
+            }
+            MessageWindowTable.ToConfirm = false;
         }
 
     }

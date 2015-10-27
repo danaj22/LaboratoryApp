@@ -1,0 +1,115 @@
+﻿<UserControl x:Class="LaboratoryApp.View.DialogWindowTable"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
+             xmlns:local="clr-namespace:LaboratoryApp"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+                        <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable1}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="820" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable2}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="820" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable3}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="820" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable4}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="820" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable5}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="820" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable6}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="820" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable7}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="820" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable8}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="820" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable9}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="820" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable10}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="820" DialogResizeMode="CanResize" />
+
+
+
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable1Command}" Grid.Row="0" Width="349">
+            <TextBlock Text="pomiar napięcia przemiennego" TextWrapping="Wrap"/>
+        </Button>
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable2Command}" Grid.Row="1" Width="349">
+            <TextBlock Text="pomiar częstotliwości napięcia przemiennego" TextWrapping="Wrap" />
+        </Button>
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable3Command}" Grid.Row="2" Width="349">
+            <TextBlock Text="pomiar rezystancji R" TextWrapping="Wrap" />
+        </Button>
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Width="349">
+            <TextBlock Text="pomiar rezystancji izolacji" TextWrapping="Wrap" />
+        </Button>
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Width="348" Height="26" Margin="26,0">
+            <TextBlock Text="pomiar wartości napięcia pobierczego i wydatku prądowego przetwornicy" TextWrapping="Wrap" />
+        </Button>
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="5" Width="349">
+            <TextBlock Text="pomiar zadawania różnicowego prądu uszkodzeniowego wyłączanego przez wyłącznik RCD" TextWrapping="Wrap" />
+        </Button>
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="6" Width="349">
+            <TextBlock Text="pomiar rezystancji uziemienia" TextWrapping="Wrap" />
+        </Button>
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="7" Width="349">
+            <TextBlock Text="pomiar dokładności napięcia zakłucającego Un przemiennego" TextWrapping="Wrap" />
+        </Button>
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="8" Width="349">
+            <TextBlock Text="pomiar prądu zwarciowego w ppętli zwarcionwej sieci o napięciu znamionowym 230V" TextWrapping="Wrap" />
+        </Button>
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="9" Width="349">
+            <TextBlock Text="pomiar napięcia dotykowego w odniesieniu do prądu różnicowego i oporności uziemienia" TextWrapping="Wrap" />
+        </Button>
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="10" Width="349">
+            <TextBlock Text="pomiar impendancji oraz reaktancji i rezystancji pętli zwarciowej mierzonej prądem ok. 15miliamper, bez wyzwalania wyłączników prądu uszkodzeniowego typu RCD" TextWrapping="Wrap" />
+        </Button>
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="11" Width="349">
+            <TextBlock Text="pomiar impendancji oraz reaktancji i rezystancji pętli zwarciowej mierzonej dużym prądem" TextWrapping="Wrap" />
+        </Button>
+        <Button  HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="12" Width="349">
+            <TextBlock Text="pomiar czasu działania wyłącznika różnicowoprądowego RCD" TextWrapping="Wrap" />
+        </Button>
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="13" Width="349">
+            <TextBlock Text="pomiar rezystancji połączeń ochronnych i wyrównawczych prądem 200 mA" TextWrapping="Wrap" />
+        </Button>
+        <!--<Button Content="pomiar prądu zwarciowego w ppętli zwarcionwej sieci o napięciu znamionowym 230V" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="14" Width="349"/>
+        <Button Content="pomiar napięcia dotykowego w odniesieniu do prądu różnicowego i oporności uziemienia" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="15" Width="349"/>
+        <Button Content="pomiar impendancji oraz reaktancji i rezystancji pętli zwarciowej mierzonej prądem ok. 15miliamper, bez wyzwalania wyłączników prądu uszkodzeniowego typu RCD" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="16" Width="349"/>
+        <Button Content="pomiar impendancji oraz reaktancji i rezystancji pętli zwarciowej mierzonej dużym prądem" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="17" Width="349"/>
+        <Button Content="pomiar czasu działania wyłącznika różnicowoprądowego RCD" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="18" Width="349"/>-->
+    </Grid>
+</UserControl>
