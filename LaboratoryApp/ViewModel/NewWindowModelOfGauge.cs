@@ -136,6 +136,18 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
+        private ObservableCollection<string> collectionOfTable = new ObservableCollection<string>();
+
+        public ObservableCollection<string> CollectionOfTable
+        {
+            get { return collectionOfTable; }
+            set 
+            {
+                collectionOfTable = value;
+                OnPropertyChanged("CollectionOfTable");
+            }
+        }
+
         private ObservableCollection<function> collectionOfCheckedFunction;
         public ObservableCollection<function> CollectionOfCheckedFunction
         {
@@ -380,9 +392,10 @@ namespace LaboratoryApp.ViewModel
 
             if (MessageWindowTable.ToConfirm)
             {
-                if (!string.IsNullOrEmpty(MessageWindowTable.Title))
+                CollectionOfTable.Add(MessageWindowTable.MessageWindowTable1.NameOfFile);
+                //if (!string.IsNullOrEmpty(MessageWindowTable.Title))
                 {
-                    using (LaboratoryEntities context = new LaboratoryEntities())
+                   // using (LaboratoryEntities context = new LaboratoryEntities())
                     {
                         //type TypeToAdd = new type();
                         //TypeToAdd.name = MessageWindowType.NameOfType;
@@ -392,9 +405,9 @@ namespace LaboratoryApp.ViewModel
                         //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
                     }
                 }
-                else
+                //else
                 {
-                    MessageBox.Show("Nie wpisano tytułu.");
+                //    MessageBox.Show("Nie wpisano tytułu.");
                 }
             }
             MessageWindowTable.ToConfirm = false;

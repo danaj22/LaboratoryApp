@@ -155,6 +155,7 @@
     <Compile Include="ViewModel\NewWindowRaport.cs" />
     <Compile Include="ViewModel\NewWindowTable.cs" />
     <Compile Include="ViewModel\NewWindowTable1.cs" />
+    <Compile Include="ViewModel\NewWindowTable1Generate.cs" />
     <Compile Include="ViewModel\NewWindowType.cs" />
     <Compile Include="ViewModel\NewWindowUsage.cs" />
     <Compile Include="ViewModel\NewWindowUser.cs" />
@@ -205,6 +206,12 @@
     </Compile>
     <Compile Include="View\DialogWindowTable13.xaml.cs">
       <DependentUpon>DialogWindowTable13.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowTable14.xaml.cs">
+      <DependentUpon>DialogWindowTable14.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowTable1Generate.xaml.cs">
+      <DependentUpon>DialogWindowTable1Generate.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DialogWindowTable2.xaml.cs">
       <DependentUpon>DialogWindowTable2.xaml</DependentUpon>
@@ -317,6 +324,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DialogWindowTable13.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowTable14.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowTable1Generate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

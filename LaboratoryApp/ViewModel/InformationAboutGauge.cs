@@ -111,6 +111,17 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
+        private NewWindowTable1Generate messageWindowTable1;
+
+        public NewWindowTable1Generate MessageWindowTable1
+        {
+            get { return messageWindowTable1; }
+            set 
+            { 
+                messageWindowTable1 = value;
+                OnPropertyChanged("MessageWindowTable1");
+            }
+        }
 
         private string manufacturer;
         public string Manufacturer
@@ -280,10 +291,65 @@ namespace LaboratoryApp.ViewModel
         public ICommand EditGaugeCommand
         { get { return new SimpleRelayCommand(EditGaugeExecute); } }
 
+        public ICommand GenerateTablesCommand
+        { get { return new SimpleRelayCommand(GenerateTables); } }
+
         #region create raport pdf
         public ICommand GenerateRaportCommand
         { get { return new SimpleRelayCommand(GenerateRaportExecute); } }
 
+        string line, ValueOfCell;
+        double cons, percnt, impNum, idealVal;
+
+        private void GenerateTables()
+        {
+            MessageWindowTable1 = new NewWindowTable1Generate();
+
+            {
+                string[] s = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\a.txt");
+
+                foreach (string str in s)
+                {
+                    line = str;
+
+                    //read IdealValue
+                    int index = str.IndexOf("\t");
+                    ValueOfCell = str.Substring(0, index);
+                    idealVal = Convert.ToDouble(ValueOfCell);
+
+                    //read Percent
+                    line = str.Substring(index + 1);
+                    index = line.IndexOf("\t");
+                    ValueOfCell = line.Substring(0, index);
+                    percnt = Convert.ToDouble(ValueOfCell);
+
+                    //read ImportantNumber
+                    line = line.Substring(index + 1);
+                    index = line.IndexOf("\t");
+                    ValueOfCell = line.Substring(0, index);
+                    impNum = Convert.ToDouble(ValueOfCell);
+
+                    //read Constant
+                    line = line.Substring(index + 1);
+                    ValueOfCell = line;
+                    cons = Convert.ToDouble(ValueOfCell);
+
+                    Measure1 m = new Measure1();
+                    m.ImportantNumber = impNum;
+                    m.Constant = cons;
+                    m.Percent = percnt;
+                    m.IdealValue = idealVal;
+                    MessageWindowTable1.Tab.Add(m);
+                }
+            }
+
+            MessageWindowTable1.IsOpen = true;
+            if(MessageWindowTable1.ToConfirm)
+            {
+
+            }
+            MessageWindowTable1.ToConfirm = false;
+        }
         private void GenerateRaportExecute()
         {
             MessageWindowRaport = new NewWindowRaport(SelectedGauge);

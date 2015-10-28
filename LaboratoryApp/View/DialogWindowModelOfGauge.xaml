@@ -55,7 +55,6 @@
             <RowDefinition  Height="Auto"/>
             <RowDefinition  Height="Auto"/>
             <RowDefinition  Height="Auto"/>
-            <RowDefinition  Height="Auto"/>
             <RowDefinition  Height="Auto" MinHeight="73"/>
             <RowDefinition  Height="Auto" MinHeight="127"/>
             <RowDefinition  Height="Auto"/>
@@ -147,7 +146,7 @@
 			DialogWidth="370" DialogResizeMode="CanResize" />
 
 
-        <Button Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" Grid.Row="8" VerticalAlignment="Center" Width="75" Grid.Column="1" Height="22" Margin="0,5,0,19">
+        <Button Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" Grid.Row="7" VerticalAlignment="Center" Width="75" Grid.Column="1" Height="22" Margin="0,5,0,19">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="IsEnabled" Value="false" />
@@ -169,23 +168,23 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="8" VerticalAlignment="Center" Width="75" Height="26" Margin="0,3,0,17"/>
+        <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="7" VerticalAlignment="Center" Width="75" Height="26" Margin="0,3,0,17"/>
         <Button Content="Dodaj zastosowanie" Command="{Binding AddUsageCommand}" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Width="131" Height="25"/>
         <Button Content="Dodaj typ" Command="{Binding AddTypeCommand}" Grid.Column="2" HorizontalAlignment="Center"  Grid.Row="3" VerticalAlignment="Center" Width="131" Height="25"/>
-        <Button Content="Dodaj Kalibrator" Command="{Binding AddCalibratorCommand}" Grid.Column="2" HorizontalAlignment="Center"  Grid.Row="7" VerticalAlignment="Center" Width="132" Height="26"/>
-        <Button Content="Dodaj funkcje" Command="{Binding AddFunctionCommand}" Grid.Column="2" HorizontalAlignment="Center"  Grid.Row="6" VerticalAlignment="Center"  Width="132" Height="26"/>
+        <Button Content="Dodaj Kalibrator" Command="{Binding AddCalibratorCommand}" Grid.Column="2" HorizontalAlignment="Center"  Grid.Row="6" VerticalAlignment="Center" Width="132" Height="26"/>
+        <Button Content="Dodaj funkcje" Command="{Binding AddFunctionCommand}" Grid.Column="2" HorizontalAlignment="Center"  Grid.Row="5" VerticalAlignment="Center"  Width="132" Height="26"/>
         <Button Content="Dodaj tabelę" Command="{Binding AddTableCommand}" Grid.Column="2" HorizontalAlignment="Center"  Grid.Row="4" VerticalAlignment="Center" Width="132" Height="26"/>
 
-        <ListBox Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="7" VerticalAlignment="Top"  ItemsSource="{Binding CollectionOfCalibrators}" Width="211" Height="107" Margin="0,10,0,0" >
+        <ListBox Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="6" VerticalAlignment="Top"  ItemsSource="{Binding CollectionOfCalibrators}" Width="211" Height="107" Margin="0,10,0,0" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding name}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Label Content="Kalibratory: " HorizontalAlignment="Left" Grid.Row="7" VerticalAlignment="Center"  Margin="15,52,0,49" Height="26" Width="73"  />
-        <Label Content="Sprawdzone funkcje: " HorizontalAlignment="Left" Grid.Row="6" VerticalAlignment="Center"  Margin="10,21,0,26" Height="26" Width="122"  />
-        <ListBox Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="6" VerticalAlignment="Top"  ItemsSource="{Binding CollectionOfCheckedFunction}" Width="211" Height="78" Grid.RowSpan="2" >
+        <Label Content="Kalibratory: " HorizontalAlignment="Left" Grid.Row="6" VerticalAlignment="Center"  Margin="15,52,0,49" Height="26" Width="73"  />
+        <Label Content="Sprawdzone funkcje: " HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Center"  Margin="10,21,0,26" Height="26" Width="122"  />
+        <ListBox Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="5" VerticalAlignment="Top"  ItemsSource="{Binding CollectionOfCheckedFunction}" Width="211" Height="68" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="0,10,0,0" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding name}"/>
@@ -193,10 +192,10 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <Label Content="Tabele: " HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center"  Margin="10,21,0,26" Height="26" Width="122"  />
-        <ListBox Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="4" VerticalAlignment="Top"  ItemsSource="{Binding CollectionOfTable}" Width="211" Height="78" Grid.RowSpan="2" >
+        <ListBox Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="4" VerticalAlignment="Top"  ItemsSource="{Binding CollectionOfTable}" Width="211" Height="69" Grid.ColumnSpan="2" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding name}"/>
+                    <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
