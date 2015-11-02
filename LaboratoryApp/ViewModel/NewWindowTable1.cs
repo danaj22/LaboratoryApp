@@ -9,10 +9,8 @@ using System.Windows.Input;
 
 namespace LaboratoryApp.ViewModel
 {
-    public class NewWindowTable1 : ObservableObject
+    public class NewWindowTable1 : ObservableObject,IEnumerableTable
     {
-        string line, ValueOfCell;
-        double cons, percnt, impNum, idealVal;
 
         public NewWindowTable1()
         {
@@ -99,14 +97,14 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
-        public static string table1Path;
-        public string Table1Path
+        public static string tablePath;
+        public string TablePath
         {
-            get { return table1Path; }
+            get { return tablePath; }
             set
             {
-                table1Path = value;
-                OnPropertyChanged("Table1Path");
+                tablePath = value;
+                OnPropertyChanged("TablePath");
             }
         }
 

@@ -68,12 +68,18 @@
             <DataTemplate DataType="{x:Type vm:NewWindowTable1Generate}">
                 <v:DialogWindowTable1Generate/>
             </DataTemplate>
-            <!--<DataTemplate DataType="{x:Type vm:NewWindowTable2}">
+            <DataTemplate DataType="{x:Type vm:NewWindowTable2}">
                 <v:DialogWindowTable2 />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:NewWindowTable3}">
                 <v:DialogWindowTable3 />
-            </DataTemplate>-->
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable4}">
+                <v:DialogWindowTable4 />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable4a}">
+                <v:DialogWindowTable4a />
+            </DataTemplate>
 
         </ResourceDictionary>
 

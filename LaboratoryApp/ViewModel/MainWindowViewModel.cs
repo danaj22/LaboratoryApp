@@ -475,6 +475,30 @@ namespace LaboratoryApp.ViewModel
                     && !String.IsNullOrEmpty(MessageWindowModelOfGauge.AboutModelOfGauge.SelectedType)
                     )
                 {
+                    System.IO.Directory.CreateDirectory(@"C:\ProgramData\DASLSystems\LaboratoryApp\models");
+
+                    if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\"+ MessageWindowModelOfGauge.AboutModelOfGauge.Model + ".txt"))
+                    {
+                        foreach(CalibrationTable str in MessageWindowModelOfGauge.ListOfNamesOfTables)
+                        {
+                            if (str.IsChecked)
+                            {
+                                File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + MessageWindowModelOfGauge.AboutModelOfGauge.Model + ".txt", str.Name);
+                                File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + MessageWindowModelOfGauge.AboutModelOfGauge.Model + ".txt", "\n");
+                            }
+                        }
+                    }
+
+                    if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\"+ MessageWindowModelOfGauge.AboutModelOfGauge.Model+ "$.txt"))
+                    {
+                        foreach(IEnumerableTable str in MessageWindowModelOfGauge.MessageWindowTable.ListOfWindows)
+                        {
+                                File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + MessageWindowModelOfGauge.AboutModelOfGauge.Model + "$.txt", str.ToString()+"$"+ str.NameOfFile);
+                                File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + MessageWindowModelOfGauge.AboutModelOfGauge.Model + "$.txt", "\n");
+                        }
+                    }
+                    
+
                     model_of_gauges newGauge = new model_of_gauges();
                     newGauge.manufacturer_name = MessageWindowModelOfGauge.AboutModelOfGauge.ManufacturerName;
                     newGauge.model = MessageWindowModelOfGauge.AboutModelOfGauge.Model;
@@ -657,8 +681,8 @@ namespace LaboratoryApp.ViewModel
                 base.OnPropertyChanged("MessageWindowModelOfGauge");
             }
         }
+       
         private NewWindowUser messageWindowUser;
-
         public NewWindowUser MessageWindowUser
         {
             get { return messageWindowUser; }
@@ -682,7 +706,6 @@ namespace LaboratoryApp.ViewModel
         }
 
         private NewWindowClient messageWindowClient;
-
         public NewWindowClient MessageWindowClient
         {
             get { return messageWindowClient; }

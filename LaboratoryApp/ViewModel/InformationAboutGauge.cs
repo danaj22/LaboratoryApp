@@ -303,53 +303,116 @@ namespace LaboratoryApp.ViewModel
 
         private void GenerateTables()
         {
-            MessageWindowTable1 = new NewWindowTable1Generate();
 
+            //MessageWindowTable1 = new NewWindowTable1Generate();
+
+            string[] tables = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + Model + "$.txt");
+            foreach(string table in tables)
             {
-                string[] s = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\a.txt");
-
-                foreach (string str in s)
+                if(table.Contains("Table1"))
                 {
-                    line = str;
+                    MessageWindowTable1 = new NewWindowTable1Generate();
 
-                    //read IdealValue
-                    int index = str.IndexOf("\t");
-                    ValueOfCell = str.Substring(0, index);
-                    idealVal = Convert.ToDouble(ValueOfCell);
+                    string[] nameOfData = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + Model + ".txt");
 
-                    //read Percent
-                    line = str.Substring(index + 1);
-                    index = line.IndexOf("\t");
-                    ValueOfCell = line.Substring(0, index);
-                    percnt = Convert.ToDouble(ValueOfCell);
+                    foreach (string nameOfTable in nameOfData)
+                    {
+                        string [] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + nameOfTable + ".txt");
+                        foreach (string str in dataToTable)
+                        {
+                            line = str;
 
-                    //read ImportantNumber
-                    line = line.Substring(index + 1);
-                    index = line.IndexOf("\t");
-                    ValueOfCell = line.Substring(0, index);
-                    impNum = Convert.ToDouble(ValueOfCell);
+                            //read IdealValue
+                            int index = str.IndexOf("\t");
+                            ValueOfCell = str.Substring(0, index);
+                            idealVal = Convert.ToDouble(ValueOfCell);
 
-                    //read Constant
-                    line = line.Substring(index + 1);
-                    ValueOfCell = line;
-                    cons = Convert.ToDouble(ValueOfCell);
+                            //read Percent
+                            line = str.Substring(index + 1);
+                            index = line.IndexOf("\t");
+                            ValueOfCell = line.Substring(0, index);
+                            percnt = Convert.ToDouble(ValueOfCell);
 
-                    Measure1 m = new Measure1();
-                    m.ImportantNumber = impNum;
-                    m.Constant = cons;
-                    m.Percent = percnt;
-                    m.IdealValue = idealVal;
-                    MessageWindowTable1.Tab.Add(m);
+                            //read ImportantNumber
+                            line = line.Substring(index + 1);
+                            index = line.IndexOf("\t");
+                            ValueOfCell = line.Substring(0, index);
+                            impNum = Convert.ToDouble(ValueOfCell);
+
+                            //read Constant
+                            line = line.Substring(index + 1);
+                            ValueOfCell = line;
+                            cons = Convert.ToDouble(ValueOfCell);
+
+                            Measure1 m = new Measure1();
+                            m.ImportantNumber = impNum;
+                            m.Constant = cons;
+                            m.Percent = percnt;
+                            m.IdealValue = idealVal;
+                            MessageWindowTable1.Tab.Add(m);
+                        }
+                    }
+                    
+                    MessageWindowTable1.IsOpen = true;
+                    if (MessageWindowTable1.ToConfirm)
+                    {
+
+                    }
+                    MessageWindowTable1.ToConfirm = false;
                 }
-            }
 
-            MessageWindowTable1.IsOpen = true;
-            if(MessageWindowTable1.ToConfirm)
-            {
+                if (table.Contains("Table2"))
+                {
+                   // MessageWindowTable2 = new NewWindowTable2Generate();
 
-            }
-            MessageWindowTable1.ToConfirm = false;
+                    string[] s = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + Model + ".txt");
+
+                    foreach (string str in s)
+                    {
+                        //line = str;
+
+                        ////read IdealValue
+                        //int index = str.IndexOf("\t");
+                        //ValueOfCell = str.Substring(0, index);
+                        //idealVal = Convert.ToDouble(ValueOfCell);
+
+                        ////read Percent
+                        //line = str.Substring(index + 1);
+                        //index = line.IndexOf("\t");
+                        //ValueOfCell = line.Substring(0, index);
+                        //percnt = Convert.ToDouble(ValueOfCell);
+
+                        ////read ImportantNumber
+                        //line = line.Substring(index + 1);
+                        //index = line.IndexOf("\t");
+                        //ValueOfCell = line.Substring(0, index);
+                        //impNum = Convert.ToDouble(ValueOfCell);
+
+                        ////read Constant
+                        //line = line.Substring(index + 1);
+                        //ValueOfCell = line;
+                        //cons = Convert.ToDouble(ValueOfCell);
+
+                        //Measure1 m = new Measure1();
+                        //m.ImportantNumber = impNum;
+                        //m.Constant = cons;
+                        //m.Percent = percnt;
+                        //m.IdealValue = idealVal;
+                       // MessageWindowTable2.Tab.Add(m);
+                    }
+
+                   // MessageWindowTable2.IsOpen = true;
+                   // if (MessageWindowTable2.ToConfirm)
+                    {
+
+                    }
+                   // MessageWindowTable2.ToConfirm = false;
+                }
+           }
+
+                
         }
+
         private void GenerateRaportExecute()
         {
             MessageWindowRaport = new NewWindowRaport(SelectedGauge);

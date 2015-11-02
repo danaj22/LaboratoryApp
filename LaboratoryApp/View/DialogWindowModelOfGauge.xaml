@@ -192,10 +192,10 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <Label Content="Tabele: " HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center"  Margin="10,21,0,26" Height="26" Width="122"  />
-        <ListBox Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="4" VerticalAlignment="Top"  ItemsSource="{Binding CollectionOfTable}" Width="211" Height="69" Grid.ColumnSpan="2" >
+        <ListBox Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="4" VerticalAlignment="Top"  ItemsSource="{Binding ListOfNamesOfTables}" Width="211" Height="69" Grid.ColumnSpan="2" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding}"/>
+                    <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding Name}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
