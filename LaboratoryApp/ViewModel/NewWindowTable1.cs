@@ -171,6 +171,18 @@ namespace LaboratoryApp.ViewModel
 
             }
         }
+        private string prefix;
+
+        public string Prefix
+        {
+            get { return prefix; }
+            set
+            {
+                prefix = value;
+                OnPropertyChanged("Prefix");
+            }
+        } 
+
         private double measureValue;
 
         public double MeasureValue
@@ -264,6 +276,7 @@ namespace LaboratoryApp.ViewModel
             Percent = NewWindowTable1.percent;
             ImportantNumber = NewWindowTable1.importantNumber;
             Constant = NewWindowTable1.constant;
+
         }
 
     }

@@ -238,9 +238,15 @@ namespace LaboratoryApp.ViewModel
                     foreach (string str in s)
                     {
                         CalibrationTable newTable = new CalibrationTable();
-                        newTable.Name = str;
+
+                        int indexStart = str.IndexOf("\t");
+                        //int indexEnd = str.IndexOf("|");
+                        newTable.Name = str.Substring(indexStart + 1);
+                        newTable.TypeOfWindow = str.Substring(0, indexStart);
                         ListOfNamesOfTables.Add(newTable);
                     }
+                    ListOfNamesOfTables = new ObservableCollection<CalibrationTable>(ListOfNamesOfTables.OrderBy(i => i.Name));
+
                 }
 
                 if (ListOfCalibrators.Count > 0)
@@ -407,6 +413,7 @@ namespace LaboratoryApp.ViewModel
 
 
         }
+        //
         public void AddTable()
         {
             MessageWindowTable = new NewWindowTable();
@@ -419,11 +426,14 @@ namespace LaboratoryApp.ViewModel
                 if (MessageWindowTable.MessageWindowTable1 != null && !string.IsNullOrEmpty(MessageWindowTable.MessageWindowTable1.NameOfFile))
                 {
                     newTable = new CalibrationTable();
-                    newTable.Name = MessageWindowTable.MessageWindowTable1.NameOfFile;
+                    newTable.Name = "["+ AboutModelOfGauge.Model + "]"+ MessageWindowTable.MessageWindowTable1.NameOfFile;
+                    newTable.TypeOfWindow = MessageWindowTable.MessageWindowTable1.ToString();
                     ListOfNamesOfTables.Add(newTable);
-                    MessageWindowTable.ListOfWindows.Add(MessageWindowTable.MessageWindowTable1);
+                    ListOfNamesOfTables = new ObservableCollection<CalibrationTable>(ListOfNamesOfTables.OrderBy(i => i.Name));
+                    //ListOfWindows <IEnumerableTable>
+                    //MessageWindowTable.ListOfWindows.Add(MessageWindowTable.MessageWindowTable1);
 
-                    File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", newTable.Name);
+                    File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", newTable.TypeOfWindow + "\t" + newTable.Name);
                     File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", "\n");
                 }
 
@@ -431,10 +441,11 @@ namespace LaboratoryApp.ViewModel
                 {
                     newTable = new CalibrationTable();
                     newTable.Name = MessageWindowTable.MessageWindowTable2.NameOfFile;
+                    newTable.TypeOfWindow = MessageWindowTable.MessageWindowTable2.ToString();
                     ListOfNamesOfTables.Add(newTable);
-                    MessageWindowTable.ListOfWindows.Add(MessageWindowTable.MessageWindowTable2);
-
-                    File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", newTable.Name);
+                    //MessageWindowTable.ListOfWindows.Add(MessageWindowTable.MessageWindowTable2);
+                    ListOfNamesOfTables = new ObservableCollection<CalibrationTable>(ListOfNamesOfTables.OrderBy(i => i.Name));
+                    File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", newTable.TypeOfWindow + "\t" + newTable.Name);
                     File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", "\n");
                 }
 
@@ -442,30 +453,33 @@ namespace LaboratoryApp.ViewModel
                 {
                     newTable = new CalibrationTable();
                     newTable.Name = MessageWindowTable.MessageWindowTable3.NameOfFile;
+                    newTable.TypeOfWindow = MessageWindowTable.MessageWindowTable3.ToString();
                     ListOfNamesOfTables.Add(newTable);
-                    MessageWindowTable.ListOfWindows.Add(MessageWindowTable.MessageWindowTable3);
-
-                    File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", newTable.Name);
+                    //MessageWindowTable.ListOfWindows.Add(MessageWindowTable.MessageWindowTable3);
+                    ListOfNamesOfTables = new ObservableCollection<CalibrationTable>(ListOfNamesOfTables.OrderBy(i => i.Name));
+                    File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", newTable.TypeOfWindow + "\t" + newTable.Name);
                     File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", "\n");
                 }
                 if (MessageWindowTable.MessageWindowTable4 != null && !string.IsNullOrEmpty(MessageWindowTable.MessageWindowTable4.NameOfFile))
                 {
                     newTable = new CalibrationTable();
                     newTable.Name = MessageWindowTable.MessageWindowTable4.NameOfFile;
+                    newTable.TypeOfWindow = MessageWindowTable.MessageWindowTable4.ToString();
                     ListOfNamesOfTables.Add(newTable);
-                    MessageWindowTable.ListOfWindows.Add(MessageWindowTable.MessageWindowTable4);
-
-                    File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", newTable.Name);
+                    //MessageWindowTable.ListOfWindows.Add(MessageWindowTable.MessageWindowTable4);
+                    ListOfNamesOfTables = new ObservableCollection<CalibrationTable>(ListOfNamesOfTables.OrderBy(i => i.Name));
+                    File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", newTable.TypeOfWindow  + "\t" + newTable.Name);
                     File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", "\n");
                 }
                 if (MessageWindowTable.MessageWindowTable4a != null && !string.IsNullOrEmpty(MessageWindowTable.MessageWindowTable4a.NameOfFile))
                 {
                     newTable = new CalibrationTable();
                     newTable.Name = MessageWindowTable.MessageWindowTable4a.NameOfFile;
+                    newTable.TypeOfWindow = MessageWindowTable.MessageWindowTable4a.ToString();
                     ListOfNamesOfTables.Add(newTable);
-                    MessageWindowTable.ListOfWindows.Add(MessageWindowTable.MessageWindowTable4a);
-
-                    File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", newTable.Name);
+                    //MessageWindowTable.ListOfWindows.Add(MessageWindowTable.MessageWindowTable4a);
+                    ListOfNamesOfTables = new ObservableCollection<CalibrationTable>(ListOfNamesOfTables.OrderBy(i => i.Name));
+                    File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", newTable.TypeOfWindow + "\t" + newTable.Name);
                     File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", "\n");
                 }
                 //if (!string.IsNullOrEmpty(MessageWindowTable.Title))

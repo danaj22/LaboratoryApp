@@ -6,7 +6,7 @@
              xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
              xmlns:local="clr-namespace:LaboratoryApp"
              
-             mc:Ignorable="d" Height="538" Width="515">
+             mc:Ignorable="d">
     <UserControl.Resources>
         <ControlTemplate x:Key="errorTemplate">
             <DockPanel LastChildFill="true">
@@ -41,34 +41,43 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <Grid>
+    <Grid >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="210"/>
+            <ColumnDefinition Width="Auto" MinWidth="32"/>
+            <ColumnDefinition Width="Auto" MinWidth="250"/>
+            <ColumnDefinition Width="29"/>
+            <ColumnDefinition  MinWidth="150"/>
             <ColumnDefinition Width="*"/>
 
 
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="5"/>
             <RowDefinition  Height="Auto"/>
+            <RowDefinition Height="5"/>
             <RowDefinition  Height="Auto"/>
+            <RowDefinition Height="5"/>
             <RowDefinition  Height="Auto"/>
-            <RowDefinition  Height="Auto"/>
-            <RowDefinition  Height="Auto" MinHeight="73"/>
-            <RowDefinition  Height="Auto" MinHeight="127"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition  Height="Auto" MaxHeight="150"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition  Height="Auto" MaxHeight="150"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition  Height="Auto" MaxHeight="150"/>
             <RowDefinition  Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Label Content="Producent: " Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="26" Margin="0,0,0,23" Width="70"/>
-        <Label Content="Model: " HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" Height="26" Margin="0,20,0,1" Width="50"/>
-        <Label Content="Zastosowanie: " HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Height="26" Margin="0,3,0,19" Width="88"/>
-        <Label Content="Typ: " HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" Height="26" Margin="0,19,0,3" Width="35"  />
+        <Label Content="Producent: " Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Height="26" Margin="0,0,0,30" Width="70"/>
+        <Label Content="Model: " HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" Height="26" Margin="0,24,0,2" Width="50"/>
+        <Label Content="Zastosowanie: " HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Center" Height="26" Margin="0,2,0,3" Width="88" />
+        <Label Content="Typ: " HorizontalAlignment="Left" Grid.Row="7" VerticalAlignment="Center" Height="26"  Width="35" Margin="0,3,0,2"  />
 
-        <TextBox Name="TxtBoxManufacturer" HorizontalAlignment="Center" VerticalAlignment="Center"
-                 Grid.Row="0" Grid.Column="1" Width="210" Height="24" Grid.ColumnSpan="1"
+        <TextBox Name="TxtBoxManufacturer" 
+                 Grid.Row="1" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="1"
                  Validation.ErrorTemplate="{StaticResource errorTemplate}"
-                 Style="{StaticResource textBoxError}" Margin="1,2,0,23">
+                 Style="{StaticResource textBoxError}">
             <TextBox.Text>
                 <Binding Path="AboutModelOfGauge.ManufacturerName" UpdateSourceTrigger="PropertyChanged" >
                     <Binding.ValidationRules>
@@ -79,10 +88,10 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBox Name="TxtBoxModel" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                 Grid.Row="1" Grid.Column="1" Width="210" Height="24" Grid.ColumnSpan="1" 
+        <TextBox Name="TxtBoxModel"  
+                 Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1" 
                  Validation.ErrorTemplate="{StaticResource errorTemplate}"
-                 Style="{StaticResource textBoxError}" Margin="1,20,0,3">
+                 Style="{StaticResource textBoxError}" >
             <TextBox.Text>
                 <Binding Path="AboutModelOfGauge.Model" UpdateSourceTrigger="PropertyChanged" >
                     <Binding.ValidationRules>
@@ -103,7 +112,7 @@
             </ListBox.ItemTemplate>
         </ListBox>-->
         <ComboBox Name="ComboBoxUsage" ItemsSource="{Binding AboutModelOfGauge.CollectionOfUsage}"  
-                  Grid.Row="2" Grid.Column="1"  Grid.RowSpan="1" Grid.ColumnSpan="1" 
+                  Grid.Row="5" Grid.Column="1"  Grid.RowSpan="1" Grid.ColumnSpan="1" 
                   Validation.ErrorTemplate="{StaticResource errorTemplate}"
                   Style="{StaticResource ComboBoxError}">
             <ComboBox.SelectedItem>
@@ -118,10 +127,10 @@
         </ComboBox>
 
         <ComboBox Name="ComboBoxType" ItemsSource="{Binding AboutModelOfGauge.CollectionOfType}"
-                  VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Grid.RowSpan="1" 
+                  Grid.Row="7" Grid.Column="1" Grid.RowSpan="1" 
                   Grid.ColumnSpan="1"  
                   Validation.ErrorTemplate="{StaticResource errorTemplate}"
-                  Style="{StaticResource ComboBoxError}" Height="22">
+                  Style="{StaticResource ComboBoxError}">
             <ComboBox.SelectedItem>
                 <Binding Path="AboutModelOfGauge.SelectedType" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -134,19 +143,19 @@
         </ComboBox>
 
         <vm:ModalDialogManager DataContext="{Binding MessageWindowType}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="200" 
-			DialogWidth="340" DialogResizeMode="CanResize" />
+			DialogWidth="340" DialogResizeMode="CanResize" Grid.Row="1" />
 
         <vm:ModalDialogManager DataContext="{Binding MessageWindowUsage}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}" DialogHeight="300" 
-			DialogWidth="600" DialogResizeMode="CanResize"/>
+			DialogWidth="600" DialogResizeMode="CanResize" Grid.Row="1"/>
         <vm:ModalDialogManager DataContext="{Binding MessageWindowCalibrator}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="200" 
-			DialogWidth="370" DialogResizeMode="CanResize" />
+			DialogWidth="370" DialogResizeMode="CanResize" Grid.Row="1" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowFunction}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="200" 
-			DialogWidth="370" DialogResizeMode="CanResize" />
+			DialogWidth="370" DialogResizeMode="CanResize" Grid.Row="1" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
-			DialogWidth="370" DialogResizeMode="CanResize" />
+			DialogWidth="370" DialogResizeMode="CanResize" Grid.Row="1" />
 
 
-        <Button Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" Grid.Row="7" VerticalAlignment="Center" Width="75" Grid.Column="1" Height="22" Margin="0,5,0,19">
+        <Button Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" Grid.Row="14" VerticalAlignment="Center" Width="75" Grid.Column="1" Height="22" Margin="0,8,0,19">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="IsEnabled" Value="false" />
@@ -168,31 +177,31 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="7" VerticalAlignment="Center" Width="75" Height="26" Margin="0,3,0,17"/>
-        <Button Content="Dodaj zastosowanie" Command="{Binding AddUsageCommand}" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Width="131" Height="25"/>
-        <Button Content="Dodaj typ" Command="{Binding AddTypeCommand}" Grid.Column="2" HorizontalAlignment="Center"  Grid.Row="3" VerticalAlignment="Center" Width="131" Height="25"/>
-        <Button Content="Dodaj Kalibrator" Command="{Binding AddCalibratorCommand}" Grid.Column="2" HorizontalAlignment="Center"  Grid.Row="6" VerticalAlignment="Center" Width="132" Height="26"/>
-        <Button Content="Dodaj funkcje" Command="{Binding AddFunctionCommand}" Grid.Column="2" HorizontalAlignment="Center"  Grid.Row="5" VerticalAlignment="Center"  Width="132" Height="26"/>
-        <Button Content="Dodaj tabelę" Command="{Binding AddTableCommand}" Grid.Column="2" HorizontalAlignment="Center"  Grid.Row="4" VerticalAlignment="Center" Width="132" Height="26"/>
+        <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="14" VerticalAlignment="Center" Width="75" Height="26" Margin="0,6,0,17"/>
+        <Button Content="Dodaj zastosowanie" Command="{Binding AddUsageCommand}" Grid.Column="3" Grid.Row="5"/>
+        <Button Content="Dodaj typ" Command="{Binding AddTypeCommand}" Grid.Column="3" Grid.Row="7" />
+        <Button Content="Dodaj Kalibrator" Command="{Binding AddCalibratorCommand}" Grid.Column="3" Grid.Row="13" />
+        <Button Content="Dodaj funkcje" Command="{Binding AddFunctionCommand}" Grid.Column="3"  Grid.Row="11" />
+        <Button Content="Dodaj tabelę" Command="{Binding AddTableCommand}" Grid.Column="3" Grid.Row="9"  />
 
-        <ListBox Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="6" VerticalAlignment="Top"  ItemsSource="{Binding CollectionOfCalibrators}" Width="211" Height="107" Margin="0,10,0,0" >
+        <ListBox Grid.Column="1" Grid.Row="13" ItemsSource="{Binding CollectionOfCalibrators}" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding name}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Label Content="Kalibratory: " HorizontalAlignment="Left" Grid.Row="6" VerticalAlignment="Center"  Margin="15,52,0,49" Height="26" Width="73"  />
-        <Label Content="Sprawdzone funkcje: " HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Center"  Margin="10,21,0,26" Height="26" Width="122"  />
-        <ListBox Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="5" VerticalAlignment="Top"  ItemsSource="{Binding CollectionOfCheckedFunction}" Width="211" Height="68" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="0,10,0,0" >
+        <Label Content="Kalibratory: " HorizontalAlignment="Left" Grid.Row="13" VerticalAlignment="Center"  Margin="15,52,0,52" Height="26" Width="73"  />
+        <Label Content="Sprawdzone funkcje: " HorizontalAlignment="Left" Grid.Row="11" VerticalAlignment="Center"  Margin="10,24,0,26" Height="26" Width="122"  />
+        <ListBox Grid.Column="1" Grid.Row="11" ItemsSource="{Binding CollectionOfCheckedFunction}" Grid.RowSpan="1" Grid.ColumnSpan="1" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding name}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Label Content="Tabele: " HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center"  Margin="10,21,0,26" Height="26" Width="122"  />
-        <ListBox Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="4" VerticalAlignment="Top"  ItemsSource="{Binding ListOfNamesOfTables}" Width="211" Height="69" Grid.ColumnSpan="2" >
+        <Label Content="Tabele: " HorizontalAlignment="Left" Grid.Row="9" VerticalAlignment="Center"  Margin="10,22,0,29" Height="26" Width="122"  />
+        <ListBox Grid.Column="1"  Grid.Row="9" Grid.RowSpan="1"  ItemsSource="{Binding ListOfNamesOfTables}" Grid.ColumnSpan="1" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding Name}"/>

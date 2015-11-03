@@ -29,6 +29,17 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("IsChecked");
             }
         }
+
+        private string typeOfWindow;
+        public string TypeOfWindow
+        {
+            get { return typeOfWindow; }
+            set 
+            {
+                typeOfWindow = value;
+                OnPropertyChanged("TypeOfWindow");
+            }
+        }
         
     }
 }

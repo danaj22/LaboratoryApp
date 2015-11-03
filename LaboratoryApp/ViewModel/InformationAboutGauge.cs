@@ -123,6 +123,18 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
+        private NewWindowTable2Generate messageWindowTable2;
+
+        public NewWindowTable2Generate MessageWindowTable2
+        {
+            get { return messageWindowTable2; }
+            set
+            {
+                messageWindowTable2 = value;
+                OnPropertyChanged("MessageWindowTable2");
+            }
+        }
+
         private string manufacturer;
         public string Manufacturer
         {
@@ -303,65 +315,128 @@ namespace LaboratoryApp.ViewModel
 
         private void GenerateTables()
         {
-
+            string q = "";
             //MessageWindowTable1 = new NewWindowTable1Generate();
 
-            string[] tables = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + Model + "$.txt");
-            foreach(string table in tables)
+            //string[] tables = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + Model + "$.txt");
+            //foreach(string table in tables)
             {
-                if(table.Contains("Table1"))
+                //
                 {
-                    MessageWindowTable1 = new NewWindowTable1Generate();
-
                     string[] nameOfData = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + Model + ".txt");
+                    
 
                     foreach (string nameOfTable in nameOfData)
                     {
-                        string [] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + nameOfTable + ".txt");
-                        foreach (string str in dataToTable)
+                        if (nameOfTable.Contains("Table1"))
                         {
-                            line = str;
+                            MessageWindowTable1 = new NewWindowTable1Generate();
 
-                            //read IdealValue
-                            int index = str.IndexOf("\t");
-                            ValueOfCell = str.Substring(0, index);
-                            idealVal = Convert.ToDouble(ValueOfCell);
+                            int indexStart = nameOfTable.IndexOf("]");
+                            //int indexStart = nameOfTable.IndexOf("\t");
 
-                            //read Percent
-                            line = str.Substring(index + 1);
-                            index = line.IndexOf("\t");
-                            ValueOfCell = line.Substring(0, index);
-                            percnt = Convert.ToDouble(ValueOfCell);
+                            q = nameOfTable.Substring(indexStart+1);
 
-                            //read ImportantNumber
-                            line = line.Substring(index + 1);
-                            index = line.IndexOf("\t");
-                            ValueOfCell = line.Substring(0, index);
-                            impNum = Convert.ToDouble(ValueOfCell);
 
-                            //read Constant
-                            line = line.Substring(index + 1);
-                            ValueOfCell = line;
-                            cons = Convert.ToDouble(ValueOfCell);
 
-                            Measure1 m = new Measure1();
-                            m.ImportantNumber = impNum;
-                            m.Constant = cons;
-                            m.Percent = percnt;
-                            m.IdealValue = idealVal;
-                            MessageWindowTable1.Tab.Add(m);
+                            string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".txt");
+                            foreach (string str in dataToTable)
+                            {
+                                line = str;
+
+                                //read IdealValue
+                                int index = str.IndexOf("\t");
+                                ValueOfCell = str.Substring(0, index);
+                                idealVal = Convert.ToDouble(ValueOfCell);
+
+                                //read Percent
+                                line = str.Substring(index + 1);
+                                index = line.IndexOf("\t");
+                                ValueOfCell = line.Substring(0, index);
+                                percnt = Convert.ToDouble(ValueOfCell);
+
+                                //read ImportantNumber
+                                line = line.Substring(index + 1);
+                                index = line.IndexOf("\t");
+                                ValueOfCell = line.Substring(0, index);
+                                impNum = Convert.ToDouble(ValueOfCell);
+
+                                //read Constant
+                                line = line.Substring(index + 1);
+                                ValueOfCell = line;
+                                cons = Convert.ToDouble(ValueOfCell);
+
+                                Measure1 m = new Measure1();
+                                m.ImportantNumber = impNum;
+                                m.Constant = cons;
+                                m.Percent = percnt;
+                                m.IdealValue = idealVal;
+                                MessageWindowTable1.Tab.Add(m);
+                            }
+                            MessageWindowTable1.IsOpen = true;
+                            if (MessageWindowTable1.ToConfirm)
+                            {
+
+                            }
+                            MessageWindowTable1.ToConfirm = false;
+                        }
+
+                        if (nameOfTable.Contains("Table2"))
+                        {
+                            MessageWindowTable2 = new NewWindowTable2Generate();
+
+                            int indexTableData = nameOfTable.IndexOf("\t");
+                            q = nameOfTable.Substring(indexTableData + 1);
+
+
+
+                            string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".txt");
+                            foreach (string str in dataToTable)
+                            {
+                                line = str;
+
+                                //read IdealValue
+                                int index = str.IndexOf("\t");
+                                ValueOfCell = str.Substring(0, index);
+                                idealVal = Convert.ToDouble(ValueOfCell);
+
+                                //read Percent
+                                line = str.Substring(index + 1);
+                                index = line.IndexOf("\t");
+                                ValueOfCell = line.Substring(0, index);
+                                percnt = Convert.ToDouble(ValueOfCell);
+
+                                //read ImportantNumber
+                                line = line.Substring(index + 1);
+                                index = line.IndexOf("\t");
+                                ValueOfCell = line.Substring(0, index);
+                                impNum = Convert.ToDouble(ValueOfCell);
+
+                                //read Constant
+                                line = line.Substring(index + 1);
+                                ValueOfCell = line;
+                                cons = Convert.ToDouble(ValueOfCell);
+
+                                Measure1 m = new Measure1();
+                                m.ImportantNumber = impNum;
+                                m.Constant = cons;
+                                m.Percent = percnt;
+                                m.IdealValue = idealVal;
+                                MessageWindowTable2.Tab.Add(m);
+                            }
+                            MessageWindowTable2.IsOpen = true;
+                            if (MessageWindowTable2.ToConfirm)
+                            {
+
+                            }
+                            MessageWindowTable2.ToConfirm = false;
                         }
                     }
                     
-                    MessageWindowTable1.IsOpen = true;
-                    if (MessageWindowTable1.ToConfirm)
-                    {
-
-                    }
-                    MessageWindowTable1.ToConfirm = false;
+                    
                 }
 
-                if (table.Contains("Table2"))
+                //if (table.Contains("Table2"))
                 {
                    // MessageWindowTable2 = new NewWindowTable2Generate();
 
@@ -824,26 +899,32 @@ namespace LaboratoryApp.ViewModel
                 LaboratoryEntities context = MainWindowViewModel.Context;
 
             }
-
-            row.Cells[1].AddParagraph(raport.CheckedFunction);
-            row = table.AddRow();
-            row.Cells[0].Format.Font.Bold = true;
-            row.Cells[0].AddParagraph("Niepewność pomiaru: ");
-            row.Cells[1].AddParagraph(raport.Uncertainty);
-            row = table.AddRow();
-            row.Cells[0].Format.Font.Bold = true;
-            row.Cells[0].AddParagraph("Nr świadectwa: ");
-            row.Cells[1].AddParagraph(raport.NumberOfCertificate);
-            row = table.AddRow();
-            row.Cells[0].Format.Font.Bold = true;
-            row.Cells[0].AddParagraph("Data badania: ");
-            row.Cells[1].AddParagraph(raport.DateSurvey);
-            row = table.AddRow();
-            row.Cells[0].Format.Font.Bold = true;
-            row.Cells[0].AddParagraph("Zalecenia dotyczące kolejnego wzorcowania: ");
-            row.Cells[1].AddParagraph(raport.Recommendations);
             try
             {
+                row.Cells[1].AddParagraph(raport.CheckedFunction);
+                row = table.AddRow();
+                row.Cells[0].Format.Font.Bold = true;
+                row.Cells[0].AddParagraph("Niepewność pomiaru: ");
+                row.Cells[1].AddParagraph(raport.Uncertainty);
+                row = table.AddRow();
+                row.Cells[0].Format.Font.Bold = true;
+                row.Cells[0].AddParagraph("Nr świadectwa: ");
+                row.Cells[1].AddParagraph(raport.NumberOfCertificate);
+                row = table.AddRow();
+                row.Cells[0].Format.Font.Bold = true;
+                row.Cells[0].AddParagraph("Data badania: ");
+                row.Cells[1].AddParagraph(raport.DateSurvey);
+                row = table.AddRow();
+                row.Cells[0].Format.Font.Bold = true;
+                row.Cells[0].AddParagraph("Zalecenia dotyczące kolejnego wzorcowania: ");
+                row.Cells[1].AddParagraph(raport.Recommendations);
+            }
+            catch
+            {
+                MessageBox.Show("Brak danych miernika");
+            }
+            try
+            { 
                 row = table.AddRow();
                 row.Cells[0].Format.Font.Bold = true;
                 row.Cells[0].AddParagraph("Pomiary zatwierdził: ");

@@ -483,20 +483,20 @@ namespace LaboratoryApp.ViewModel
                         {
                             if (str.IsChecked)
                             {
-                                File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + MessageWindowModelOfGauge.AboutModelOfGauge.Model + ".txt", str.Name);
+                                File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + MessageWindowModelOfGauge.AboutModelOfGauge.Model + ".txt",str.TypeOfWindow + "\t" + str.Name);
                                 File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + MessageWindowModelOfGauge.AboutModelOfGauge.Model + ".txt", "\n");
                             }
                         }
                     }
 
-                    if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\"+ MessageWindowModelOfGauge.AboutModelOfGauge.Model+ "$.txt"))
-                    {
-                        foreach(IEnumerableTable str in MessageWindowModelOfGauge.MessageWindowTable.ListOfWindows)
-                        {
-                                File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + MessageWindowModelOfGauge.AboutModelOfGauge.Model + "$.txt", str.ToString()+"$"+ str.NameOfFile);
-                                File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + MessageWindowModelOfGauge.AboutModelOfGauge.Model + "$.txt", "\n");
-                        }
-                    }
+                    //if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + MessageWindowModelOfGauge.AboutModelOfGauge.Model + "$.txt"))
+                    //{
+                    //    //foreach(IEnumerableTable str in MessageWindowModelOfGauge.MessageWindowTable.ListOfWindows)
+                    //    {
+                    //            File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + MessageWindowModelOfGauge.AboutModelOfGauge.Model + "$.txt", str.ToString()+"$"+ str/*.NameOfFile*/);
+                    //            File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + MessageWindowModelOfGauge.AboutModelOfGauge.Model + "$.txt", "\n");
+                    //    }
+                    //}
                     
 
                     model_of_gauges newGauge = new model_of_gauges();

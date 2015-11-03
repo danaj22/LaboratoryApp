@@ -8,15 +8,13 @@ using System.Windows.Input;
 
 namespace LaboratoryApp.ViewModel
 {
-    public class NewWindowTable1Generate:ObservableObject
+    public class NewWindowTable2Generate :ObservableObject
     {
-
-        public NewWindowTable1Generate()
+        public NewWindowTable2Generate()
         {
             OKCommand = new SimpleRelayCommand(Confirm);
             CancelCommand = new SimpleRelayCommand(Close);
             GenerateRandomValuesCommand = new SimpleRelayCommand(GenerateRandomValues);
-
         }
 
         private string nameOfFile;
@@ -28,24 +26,6 @@ namespace LaboratoryApp.ViewModel
                 nameOfFile = value;
                 OnPropertyChanged("NameOfFile");
             }
-        }
-        private double minValue;
-
-        public double MinValue
-        {
-            get { return minValue; }
-            set 
-            {
-                minValue = value;
-                OnPropertyChanged("MinValue");
-            }
-        }
-        private double maxValue;
-
-        public double MaxValue
-        {
-            get { return maxValue; }
-            set { maxValue = value; OnPropertyChanged("MaxValue"); }
         }
 
         private ICommand okCommand;
@@ -69,13 +49,6 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("CancelCommand");
             }
         }
-        private ICommand generateRandomValuesCommand;
-
-        public ICommand GenerateRandomValuesCommand
-        {
-            get { return generateRandomValuesCommand; }
-            set { generateRandomValuesCommand = value; OnPropertyChanged("GenerateRandomValuesCommand"); }
-        }
 
         private bool isOpen;
         public bool IsOpen
@@ -97,6 +70,31 @@ namespace LaboratoryApp.ViewModel
                 toConfirm = value;
                 base.OnPropertyChanged("ToConfirm");
             }
+        }
+        private ICommand generateRandomValuesCommand;
+
+        public ICommand GenerateRandomValuesCommand
+        {
+            get { return generateRandomValuesCommand; }
+            set { generateRandomValuesCommand = value; OnPropertyChanged("GenerateRandomValuesCommand"); }
+        }
+        private double minValue;
+
+        public double MinValue
+        {
+            get { return minValue; }
+            set
+            {
+                minValue = value;
+                OnPropertyChanged("MinValue");
+            }
+        }
+        private double maxValue;
+
+        public double MaxValue
+        {
+            get { return maxValue; }
+            set { maxValue = value; OnPropertyChanged("MaxValue"); }
         }
 
         public void Confirm()
@@ -168,12 +166,12 @@ namespace LaboratoryApp.ViewModel
             }
         }
         private bool highLevel;
-
         public bool HighLevel
         {
             get { return highLevel; }
             set { highLevel = value; OnPropertyChanged("HighLevel"); }
         }
+
         private bool lowLevel;
 
         public bool LowLevel
@@ -194,24 +192,26 @@ namespace LaboratoryApp.ViewModel
 
             double MinimalValue, MaximalValue;
 
-            foreach(var element in Tab)
+            foreach (var element in Tab)
             {
+
+
                 if (element.MeasureValue == 0)
                 {
                     if (HighLevel == true)
                     {
-                        
-                        MinimalValue = element.IdealValue + element.IdealValue *0.01*MinValue;
+
+                        MinimalValue = element.IdealValue + element.IdealValue * 0.01 * MinValue;
                         MaximalValue = element.IdealValue + element.IdealValue * 0.01 * MaxValue;
                         element.MeasureValue = rnd.NextDouble() * (MaximalValue - MinimalValue) + MinimalValue;
                     }
-                    if(LowLevel == true)
+                    if (LowLevel == true)
                     {
                         MinimalValue = element.IdealValue - element.IdealValue * 0.01 * MinValue;
                         MaximalValue = element.IdealValue - element.IdealValue * 0.01 * MaxValue;
                         element.MeasureValue = rnd.NextDouble() * (MinimalValue - MaximalValue) + MaximalValue;
                     }
-                    if(CenterLevel == true)
+                    if (CenterLevel == true)
                     {
                         MinimalValue = element.IdealValue - element.IdealValue * 0.01 * MinValue;
                         MaximalValue = element.IdealValue + element.IdealValue * 0.01 * MaxValue;
@@ -221,7 +221,6 @@ namespace LaboratoryApp.ViewModel
                 }
             }
         }
-
 
         private ObservableCollection<Measure1> tab = new ObservableCollection<Measure1>();
         public ObservableCollection<Measure1> Tab
@@ -234,5 +233,4 @@ namespace LaboratoryApp.ViewModel
             }
         }
     }
-    }
-
+}

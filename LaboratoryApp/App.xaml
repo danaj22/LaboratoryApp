@@ -71,6 +71,9 @@
             <DataTemplate DataType="{x:Type vm:NewWindowTable2}">
                 <v:DialogWindowTable2 />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable2Generate}">
+                <v:DialogWindowTable2Generate/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vm:NewWindowTable3}">
                 <v:DialogWindowTable3 />
             </DataTemplate>

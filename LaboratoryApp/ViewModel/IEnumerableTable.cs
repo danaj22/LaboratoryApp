@@ -8,7 +8,7 @@ namespace LaboratoryApp.ViewModel
 {
     public interface IEnumerableTable
     {
-        public string NameOfFile;
+        //public string NameOfFile;
         
     }
 }
