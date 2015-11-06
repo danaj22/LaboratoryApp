@@ -8,14 +8,16 @@
     <Grid>
         <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" Height="348" Width="787">
             <DataGrid.Columns>
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="88" Header="Rzeczywista nastawiona wartość rezystancji na dekadzie kontrolnej [Ω]" Binding="{Binding IdealValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Odczytana wartość rezystancji na mierniku sprawdzanym przy napięciu 50V [Ω]" Binding="{Binding MeasureValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Odczytana wartość rezystancji na mierniku sprawdzanym przy napięciu 250V [Ω]" Binding="{Binding Difference}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Różnica wartości kontrolnej i sprawdzanej przy napięciu 100V [Ω]" Binding="{Binding DownMeasureError}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Różnica wartości kontrolnej i sprawdzanej przy napięciu 250V [Ω]" Binding="{Binding UpMeasureError}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B przy napięciu 50V [Ω]" Binding="{Binding ErrorInValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B przy napięciu 100V [Ω]" Binding="{Binding ErrorInPercent}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B przy napięciu 250V [Ω]" Binding="{Binding HighLevelVoltage}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="88" Header="Rzeczywista nastawiona wartość rezystancji na dekadzie kontrolnej [Ω]" Binding="{Binding }" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Odczytana wartość rezystancji na mierniku sprawdzanym przy napięciu 50V [Ω]" Binding="{Binding }" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Odczytana wartość rezystancji na mierniku sprawdzanym przy napięciu 100V [Ω]" Binding="{Binding}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Odczytana wartość rezystancji na mierniku sprawdzanym przy napięciu 250V [Ω]" Binding="{Binding }" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Różnica wartości kontrolnej i sprawdzanej przy napięciu 50V [Ω]" Binding="{Binding }" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Różnica wartości kontrolnej i sprawdzanej przy napięciu 100V [Ω]" Binding="{Binding }" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Różnica wartości kontrolnej i sprawdzanej przy napięciu 250V [Ω]" Binding="{Binding }" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B przy napięciu 50V [Ω]" Binding="{Binding }" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B przy napięciu 100V [Ω]" Binding="{Binding }" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B przy napięciu 250V [Ω]" Binding="{Binding }" />
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="%" HorizontalAlignment="Left" Margin="148,10,0,0" VerticalAlignment="Top"/>

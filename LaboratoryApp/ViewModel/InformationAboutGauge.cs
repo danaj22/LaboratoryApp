@@ -376,7 +376,43 @@ namespace LaboratoryApp.ViewModel
                             MessageWindowTable1.IsOpen = true;
                             if (MessageWindowTable1.ToConfirm)
                             {
+                                //NewWindowRaport raport;
+                                // Create a MigraDoc document
+                                //raport = MessageWindowRaport;
+                                Document document = InformationAboutGauge.CreateTable(MessageWindowTable1);
 
+                                //string ddl = MigraDoc.DocumentObjectModel.IO.DdlWriter.WriteToString(document);
+                                MigraDoc.DocumentObjectModel.IO.DdlWriter.WriteToFile(document, "MigraDoc.mdddl");
+
+                                PdfDocumentRenderer renderer = new PdfDocumentRenderer(true, PdfSharp.Pdf.PdfFontEmbedding.Always);
+                                renderer.Document = document;
+
+                                renderer.RenderDocument();
+
+                                // Save the document...
+
+                                //string path = @"C:\ProgramData\DASLSystems\LaboratoryApp\cert.txt";
+
+                                try
+                                {
+                                    //string[] s = File.ReadAllLines(path);
+
+                                    //raport.NumberOfCertificate = raport.NumberOfCertificate.Replace('/', '-');
+                                    string filename = @"C:\ProgramData\DASLSystems\LaboratoryApp\tables\abcd.pdf";
+                                    //filename.Replace('\\','-');
+
+                                    //if (!string.IsNullOrEmpty(raport.Author) && !string.IsNullOrEmpty(raport.Temperature))
+                                    {
+                                        renderer.PdfDocument.Save(filename);
+                                        // ...and start a viewer.
+                                        Process.Start(filename);
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show("Nie wybrano folderu zapisu.");
+                                    File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                                }
                             }
                             MessageWindowTable1.ToConfirm = false;
                         }
@@ -600,6 +636,23 @@ namespace LaboratoryApp.ViewModel
 
         }
 
+        public static Document CreateTable(NewWindowTable1Generate raport)
+        {
+            Document document = new Document();
+            document.Info.Title = "Załącznik do świadectwa wzorcowania";
+            document.Info.Subject = "Załącznik do świadectwa wzorcowania";
+            document.Info.Author = "DASL Systems";
+            
+            //zmieniona wielkość czcionki
+            InformationAboutGauge.DefineStylesInAttachment(document);
+
+            //takie samo - rozmiar strony itp...
+            DefineContentSection(document);
+
+            InformationAboutGauge.DefineTablesInAttachment(document, raport);
+
+            return document;
+        }
         public static Document CreateDocument(NewWindowRaport raport)
         {
             // Create a new MigraDoc document
@@ -616,6 +669,67 @@ namespace LaboratoryApp.ViewModel
             InformationAboutGauge.DefineTables(document, raport);
 
             return document;
+        }
+
+        public static void DefineStylesInAttachment(Document document)
+        {
+            // Get the predefined style Normal.
+            MigraDoc.DocumentObjectModel.Style style = document.Styles["Normal"];
+            // Because all styles are derived from Normal, the next line changes the 
+            // font of the whole document. Or, more exactly, it changes the font of
+            // all styles and paragraphs that do not redefine the font.
+            style.Font.Name = "Times New Roman";
+            style.Font.Size = 7;
+            // Heading1 to Heading9 are predefined styles with an outline level. An outline level
+            // other than OutlineLevel.BodyText automatically creates the outline (or bookmarks) 
+            // in PDF.
+
+            style = document.Styles["Heading1"];
+            style.Font.Name = "Tahoma";
+            style.Font.Size = 14;
+            style.Font.Bold = true;
+            style.Font.Color = Colors.Black;
+            style.ParagraphFormat.PageBreakBefore = true;
+            style.ParagraphFormat.SpaceAfter = 10;
+            style.ParagraphFormat.SpaceBefore = 2;
+            style.ParagraphFormat.Alignment = ParagraphAlignment.Center;
+
+            style = document.Styles["Heading2"];
+            style.Font.Size = 12;
+            style.Font.Bold = true;
+            style.ParagraphFormat.PageBreakBefore = false;
+            style.ParagraphFormat.SpaceBefore = 2;
+            style.ParagraphFormat.SpaceAfter = 0;
+
+            style = document.Styles["Heading3"];
+            style.Font.Size = 10;
+            style.Font.Bold = true;
+            style.Font.Italic = true;
+            style.ParagraphFormat.SpaceBefore = 2;
+            style.ParagraphFormat.SpaceAfter = 2;
+
+            style = document.Styles[StyleNames.Header];
+            style.ParagraphFormat.Alignment = ParagraphAlignment.Center;
+            style.ParagraphFormat.AddTabStop("1.5cm", TabAlignment.Center);
+            style.ParagraphFormat.SpaceAfter = 2;
+            style.ParagraphFormat.SpaceBefore = 0;
+
+            style = document.Styles[StyleNames.Footer];
+            style.Font.Size = 10;
+            style.Font.Color = Colors.Black;
+            style.ParagraphFormat.AddTabStop("6cm", TabAlignment.Center);
+
+            // Create a new style called TextBox based on style Normal
+            style = document.Styles.AddStyle("TextBox", "Normal");
+            style.ParagraphFormat.Alignment = ParagraphAlignment.Justify;
+            style.ParagraphFormat.Borders.Width = 1.5;
+            style.ParagraphFormat.Borders.Distance = "3pt";
+            style.ParagraphFormat.Shading.Color = Colors.SkyBlue;
+
+            // Create a new style called TOC based on style Normal
+            style = document.Styles.AddStyle("TOC", "Normal");
+            style.ParagraphFormat.AddTabStop("16cm", TabAlignment.Right, TabLeader.Dots);
+            style.ParagraphFormat.Font.Color = Colors.Black;
         }
 
         public static void DefineStyles(Document document)
@@ -766,11 +880,251 @@ namespace LaboratoryApp.ViewModel
 
         public static void DefineTables(Document document, NewWindowRaport raport)
         {
-            // Paragraph paragraph = document.LastSection.AddParagraph("Laboratorium Przyrządów Pomiarowych\n", "Heading1");
-            //paragraph.AddText("ŚWIADECTWO WZORCOWANIA");// = document.LastSection.AddParagraph("ŚWIADECTWO WZORCOWANIA", "Heading1");
-            //paragraph.AddBookmark("Tables");
-
             DemonstrateAlignment(document, raport);
+        }
+        public static void DefineTablesInAttachment(Document document, NewWindowTable1Generate raport)
+        {
+            DemonstrateAlignmentInAttachment(document, raport);
+        }
+        public static void DemonstrateAlignmentInAttachment(Document document, NewWindowTable1Generate raport)
+        {
+            //document.LastSection.AddParagraph("Cell Alignment", "Heading2");
+
+            document.LastSection.AddParagraph("Nazwa tabeli", "Heading2"); 
+
+            Table table = document.LastSection.AddTable();
+            table.Borders.Visible = true;
+            //table.Format.Shading.Color = Colors.LavenderBlush;
+            //table.Shading.Color = Colors.LightBlue;
+            table.TopPadding = 5;
+            table.BottomPadding = 5;
+
+            Column column;
+            Row row;          
+
+            foreach(var element in raport.ColumnNames)
+            {
+                column = table.AddColumn();
+                column.Format.Alignment = ParagraphAlignment.Center;
+                table.Columns.Width = 50;
+            }
+
+
+            row = table.AddRow();
+            for (int i = 0; i < raport.ColumnNames.Count(); i++)
+            {
+                row.Cells[i].AddParagraph(raport.ColumnNames[i]);
+                row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Center;
+            }
+
+            
+                
+            for (int i = 0; i < raport.Tab.Count(); i++)
+            {
+                row = table.AddRow();
+
+                row.Cells[0].AddParagraph(raport.Tab[i].MeasureValue.ToString());
+                row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                row.Cells[1].AddParagraph(raport.Tab[i].IdealValue.ToString());
+                row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                row.Cells[2].AddParagraph(raport.Tab[i].Difference.ToString());
+                row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                row.Cells[3].AddParagraph(raport.Tab[i].DownMeasureError.ToString());
+                row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                row.Cells[4].AddParagraph(raport.Tab[i].UpMeasureError.ToString());
+                row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+
+            }
+            
+
+
+            table.Rows.Height = 15;
+
+
+
+            //Row row = table.AddRow();
+            //row.Cells[0].Format.Font.Bold = true;
+            //row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+            //row.Cells[0].AddParagraph("aaaaa");
+            //row.Cells[1].AddParagraph("bbbb");
+
+            //if (raport.AboutGauge.office != null)
+            //{
+            //    row = table.AddRow();
+            //    row.Cells[0].Format.Font.Bold = true;
+            //    row.Cells[0].AddParagraph("Oddział: ");
+            //    row.Cells[1].AddParagraph(raport.AboutGauge.office.name.ToString());
+            //}
+            //row = table.AddRow();
+            //row.Cells[0].Format.Font.Bold = true;
+            //row.Cells[0].AddParagraph("Producent przyrządu: ");
+            //row.Cells[1].AddParagraph(raport.AboutGauge.model_of_gauges.manufacturer_name.ToString());
+            //row = table.AddRow();
+            //row.Cells[0].Format.Font.Bold = true;
+            //row.Cells[0].AddParagraph("Model:");
+            //row.Cells[1].AddParagraph(raport.AboutGauge.model_of_gauges.model.ToString());
+            //row = table.AddRow();
+            //row.Cells[0].Format.Font.Bold = true;
+            //row.Cells[0].AddParagraph("Nr fabryczny: ");
+            //row.Cells[1].AddParagraph(raport.AboutGauge.serial_number.ToString());
+            //row = table.AddRow();
+            //row.Cells[0].Format.Font.Bold = true;
+            //row.Cells[0].AddParagraph("Zastosowanie urządzenia: ");
+            //row.Cells[1].AddParagraph(raport.AboutGauge.model_of_gauges.usage.description);
+            //row = table.AddRow();
+            //row.Cells[0].Format.Font.Bold = true;
+            //row.Cells[0].AddParagraph("Metoda wzorcowania: ");
+            //row.Cells[1].AddParagraph(raport.TheCalibrationMethod.ToString());
+
+
+            //row = table.AddRow();
+            //row.Cells[0].Format.Font.Bold = true;
+            //row.Cells[0].AddParagraph("Odniesienie do wzorca państwowego: ");
+
+            //int numberOfLines = 0;
+            //foreach (calibrator calibrator in raport.CollectionOfCalibrators)
+            //{
+
+            //    if (calibrator.IsChecked)
+            //    {
+            //        raport.NationalPattern += calibrator.name + "\n";
+            //        numberOfLines++;
+            //    }
+
+            //}
+            //if (numberOfLines < 6)
+            //{
+
+            //    for (; numberOfLines < 6; numberOfLines++)
+            //    {
+            //        raport.NationalPattern += "\n";
+            //    }
+            //}
+            //row.Cells[1].AddParagraph(raport.NationalPattern.ToString());
+
+            //try
+            //{
+            //    row = table.AddRow();
+            //    row.Cells[0].Format.Font.Bold = true;
+            //    row.Cells[0].AddParagraph("Temperatura otoczenia: ");
+            //    row.Cells[1].AddParagraph("(" + raport.Temperature.ToString() + "± 2) °C");
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("Podaj temperaturę.");
+            //}
+
+            //row = table.AddRow();
+            //row.Cells[0].Format.Font.Bold = true;
+            //row.Cells[0].AddParagraph("Wilgotność powietrza: ");
+            //row.Cells[1].AddParagraph(raport.Humidity);
+            //row = table.AddRow();
+            //row.Cells[0].Format.Font.Bold = true;
+            //row.Cells[0].AddParagraph("Stwierdzenie zgodności: ");
+            //if (raport.SelectedCompatibility == "Zgodny")
+            //{
+            //    row.Cells[1].AddParagraph("Na podstawie przeprowadzonych badań oraz ich wyników stwierdzono, że przyrząd spełnia deklarowane parametry użytkowe i funkcjinalne");
+            //}
+            //else
+            //{
+            //    row.Cells[1].AddParagraph("Na podstawie przeprowadzonych badań oraz ich wyników stwierdzono, że przyrząd nie spełnia deklarowanych parametrów użytkowych i funkcjinalnych");
+            //}
+
+            //row = table.AddRow();
+            //row.Cells[0].Format.Font.Bold = true;
+            //row.Cells[0].AddParagraph("Sprawdzone funkcje: ");
+
+            //foreach (function fun in raport.CollectionOfCheckedFunction)
+            //{
+            //    if (fun.IsChecked)
+            //    {
+            //        raport.CheckedFunction += fun.name + ";";
+            //    }
+            //    LaboratoryEntities context = MainWindowViewModel.Context;
+
+            //}
+            //try
+            //{
+            //    row.Cells[1].AddParagraph(raport.CheckedFunction);
+            //    row = table.AddRow();
+            //    row.Cells[0].Format.Font.Bold = true;
+            //    row.Cells[0].AddParagraph("Niepewność pomiaru: ");
+            //    row.Cells[1].AddParagraph(raport.Uncertainty);
+            //    row = table.AddRow();
+            //    row.Cells[0].Format.Font.Bold = true;
+            //    row.Cells[0].AddParagraph("Nr świadectwa: ");
+            //    row.Cells[1].AddParagraph(raport.NumberOfCertificate);
+            //    row = table.AddRow();
+            //    row.Cells[0].Format.Font.Bold = true;
+            //    row.Cells[0].AddParagraph("Data badania: ");
+            //    row.Cells[1].AddParagraph(raport.DateSurvey);
+            //    row = table.AddRow();
+            //    row.Cells[0].Format.Font.Bold = true;
+            //    row.Cells[0].AddParagraph("Zalecenia dotyczące kolejnego wzorcowania: ");
+            //    row.Cells[1].AddParagraph(raport.Recommendations);
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("Brak danych miernika");
+            //}
+            //try
+            //{
+            //    row = table.AddRow();
+            //    row.Cells[0].Format.Font.Bold = true;
+            //    row.Cells[0].AddParagraph("Pomiary zatwierdził: ");
+
+            //    row.Cells[1].AddParagraph(raport.Author);
+
+            //    string line = "";
+            //    if (raport.PrintStamp == "Tak")
+            //    {
+            //        try
+            //        {
+            //            foreach (string str in File.ReadAllLines(MainWindowViewModel.usersApplication))
+            //            {
+            //                line = str;
+            //                if (str.Contains(raport.Author) && str.Contains("PATH"))
+            //                {
+            //                    int index = str.IndexOf("PATH");
+            //                    //+5 because we need only direct path without text : "PATH="
+            //                    line = str.Substring(index + 5);
+            //                }
+            //            }
+
+            //        }
+            //        catch (Exception e)
+            //        {
+            //            File.AppendAllText(MainWindowViewModel.path, e.ToString());
+            //        }
+
+            //        //it could be problem when we change localization of stamp
+            //        try
+            //        {
+            //            Image img = row.Cells[1].AddImage(line);
+            //            img.Height = "1.5cm";
+            //            img.Width = "1.5cm";
+            //            //img.LockAspectRatio = true;
+            //            //img.RelativeVertical = RelativeVertical.Line;
+            //            //img.RelativeHorizontal = RelativeHorizontal.Margin;
+            //            //img.Top = ShapePosition.Top;
+            //            //img.Left = ShapePosition.Left;
+            //            //img.WrapFormat.Style = WrapStyle.Through;
+            //        }
+            //        catch (Exception e)
+            //        {
+            //            File.AppendAllText(MainWindowViewModel.path, e.ToString());
+            //        }
+
+            //    }
+
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("Podaj swoje dane do świadectwa.");
+            //}
+
+
+
         }
 
         //this one!!!! is a my table

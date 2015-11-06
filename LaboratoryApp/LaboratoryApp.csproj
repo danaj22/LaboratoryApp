@@ -161,8 +161,14 @@
     <Compile Include="ViewModel\NewWindowTable2.cs" />
     <Compile Include="ViewModel\NewWindowTable2Generate.cs" />
     <Compile Include="ViewModel\NewWindowTable3.cs" />
+    <Compile Include="ViewModel\NewWindowTable3Generate.cs" />
     <Compile Include="ViewModel\NewWindowTable4.cs" />
     <Compile Include="ViewModel\NewWindowTable4a.cs" />
+    <Compile Include="ViewModel\NewWindowTable4aGenerate.cs" />
+    <Compile Include="ViewModel\NewWindowTable4Generate.cs" />
+    <Compile Include="ViewModel\NewWindowTable5Generate.cs" />
+    <Compile Include="ViewModel\NewWindowTable6Generate.cs" />
+    <Compile Include="ViewModel\NewWindowTableGenerate.cs" />
     <Compile Include="ViewModel\NewWindowType.cs" />
     <Compile Include="ViewModel\NewWindowUsage.cs" />
     <Compile Include="ViewModel\NewWindowUser.cs" />
