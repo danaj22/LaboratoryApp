@@ -77,11 +77,56 @@
             <DataTemplate DataType="{x:Type vm:NewWindowTable3}">
                 <v:DialogWindowTable3 />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable3Generate}">
+                <v:DialogWindowTable3Generate/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vm:NewWindowTable4}">
                 <v:DialogWindowTable4 />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vm:NewWindowTable4a}">
+            <!--<DataTemplate DataType="{x:Type vm:NewWindowTable4a}">
                 <v:DialogWindowTable4a />
+            </DataTemplate>-->
+            <DataTemplate DataType="{x:Type vm:NewWindowTable5}">
+                <v:DialogWindowTable5 />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable6}">
+                <v:DialogWindowTable6 />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable7}">
+                <v:DialogWindowTable7 />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable8}">
+                <v:DialogWindowTable8 />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable9}">
+                <v:DialogWindowTable9 />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable10}">
+                <v:DialogWindowTable10 />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable11}">
+                <v:DialogWindowTable11 />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable12}">
+                <v:DialogWindowTable12 />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable13}">
+                <v:DialogWindowTable13 />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable14}">
+                <v:DialogWindowTable14 />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable15}">
+                <v:DialogWindowTable15 />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable16}">
+                <v:DialogWindowTable16 />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable17}">
+                <v:DialogWindowTable17 />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable18}">
+                <v:DialogWindowTable18 />
             </DataTemplate>
 
         </ResourceDictionary>

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewModel="clr-namespace:LaboratoryApp.ViewModel" x:Class="LaboratoryApp.View.DialogWindowTable4" 
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="800">
+             d:DesignHeight="400" Width="923">
     <UserControl.Resources>
         <ControlTemplate x:Key="errorTemplate">
             <DockPanel LastChildFill="true">
@@ -25,19 +25,18 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <Grid Margin="0,0,-221,0" HorizontalAlignment="Left" Width="1021">
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" Height="348" Width="1001">
+    <Grid>
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" Height="348" Width="903">
             <DataGrid.Columns>
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="88" Header="Rzeczywista nastawiona wartość rezystancji na dekadzie kontrolnej [Ω]" Binding="{Binding IdealValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Odczytana wartość rezystancji na mierniku sprawdzanym przy napięciu 500V [Ω]" Binding="{Binding MeasureValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Odczytana wartość rezystancji na mierniku sprawdzanym przy napięciu 1000V [Ω]" Binding="{Binding MeasureValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Odczytana wartość rezystancji na mierniku sprawdzanym przy napięciu 2500V [Ω]" Binding="{Binding Difference}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Różnica wartości kontrolnej i sprawdzanej przy napięciu 500V [Ω]" Binding="{Binding DownMeasureError}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Różnica wartości kontrolnej i sprawdzanej przy napięciu 1000V [Ω]" Binding="{Binding DownMeasureError}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Różnica wartości kontrolnej i sprawdzanej przy napięciu 2500V [Ω]" Binding="{Binding UpMeasureError}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B przy napięciu 500V [Ω]" Binding="{Binding ErrorInValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B przy napięciu 1000V [Ω]" Binding="{Binding ErrorInPercent}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B przy napięciu 2500V [Ω]" Binding="{Binding HighLevelVoltage}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="88" Header="Napięcie pomiarowe rezystancji izolacji [V]" Binding="{Binding ValueOfIsolation}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Odczytana wartość rezystancji na mierniku sprawdzanym [Ω]" Binding="{Binding MeasureValue}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="30" Header="Przedrostek" Binding="{Binding Prefix}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Rzeczywista nastawiona wartość rezystancji na dekadzie kontrolnej [Ω]" Binding="{Binding IdealValue}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Różnica wartości kontrolnej i sprawdzanej [Ω]" Binding="{Binding Difference}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna dolna wartość limitu błędu mierzonej rezystancji [Ω]" Binding="{Binding DownMeasureError}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna górna wartość limitu błędu mierzonej rezystancji [Ω]" Binding="{Binding UpMeasureError}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B ±2S(x) [Ω]" Binding="{Binding ErrorInValue}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B pomiaru rezystancji ±2S(x)" Binding="{Binding ErrorInPercent}" />
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="%" HorizontalAlignment="Left" Margin="10,9,0,0" VerticalAlignment="Top"/>
@@ -46,22 +45,8 @@
         <TextBox HorizontalAlignment="Left" Height="23" Margin="123,9,0,0" TextWrapping="Wrap" Text="{Binding Constant}" VerticalAlignment="Top" Width="46"/>
         <Label Content="Liczb znaczących" HorizontalAlignment="Left" Margin="174,9,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="278,9,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumber}" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="830,107,0,0" VerticalAlignment="Top" Width="75"/>
-
-        <Label Width="79" VerticalAlignment="Top" Margin="427,12,0,0" HorizontalAlignment="Left" Content="Nazwa tabeli"/>
-
-        <TextBox x:Name="TxtBoxFunction" HorizontalAlignment="Left" Height="23" Margin="511,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="340"
-			Validation.ErrorTemplate="{StaticResource errorTemplate}" AcceptsReturn="True"
-			HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"  
-			Style="{StaticResource textBoxError}" >
-            <Binding Path="NameOfFile" UpdateSourceTrigger="PropertyChanged" >
-                <Binding.ValidationRules>
-                    <ViewModel:FunctionValidation ValidatesOnTargetUpdated="True"
-						ValidationStep="RawProposedValue"/>
-                </Binding.ValidationRules>
-            </Binding>
-        </TextBox>
-        <Button Content="Ok" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="830,80,0,0" VerticalAlignment="Top" Width="75">
+        <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="830,109,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="830,63,18,0">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="IsEnabled" Value="false" />
@@ -76,6 +61,18 @@
                 </Style>
             </Button.Style>
         </Button>
+        <Label Content="Nazwa tabeli" HorizontalAlignment="Left" Margin="421,14,0,0" VerticalAlignment="Top" Width="79"/>
+        <TextBox x:Name="TxtBoxFunction" HorizontalAlignment="Left" Height="23" Margin="505,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="340"
+        	Validation.ErrorTemplate="{StaticResource errorTemplate}" AcceptsReturn="True"
+        	HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"  
+        	Style="{StaticResource textBoxError}" >
+            <Binding Path="NameOfFile" UpdateSourceTrigger="PropertyChanged" >
+                <Binding.ValidationRules>
+                    <ViewModel:FunctionValidation ValidatesOnTargetUpdated="True"
+        				ValidationStep="RawProposedValue"/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
 
     </Grid>
 </UserControl>

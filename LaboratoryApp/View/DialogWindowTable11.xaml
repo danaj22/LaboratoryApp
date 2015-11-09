@@ -1,35 +1,83 @@
-﻿<UserControl x:Class="LaboratoryApp.View.DialogWindowTable11"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="900">
+             xmlns:ViewModel="clr-namespace:LaboratoryApp.ViewModel" x:Class="LaboratoryApp.View.DialogWindowTable11" 
+             mc:Ignorable="d" Height="388" Width="1074">
+    <UserControl.Resources>
+        <ControlTemplate x:Key="errorTemplate">
+            <DockPanel LastChildFill="true">
+                <Border Width="20" ToolTip="{Binding AdornedElement.(Validation.Errors)[0].ErrorContent, ElementName=adoner}" Margin="3,0,0,0" Height="20" DockPanel.Dock="right" CornerRadius="5" Background="OrangeRed">
+                    <TextBlock VerticalAlignment="center" Text="!" HorizontalAlignment="center" FontWeight="Bold" Foreground="white"/>
+                </Border>
+                <AdornedElementPlaceholder x:Name="adoner" VerticalAlignment="Center">
+                    <Border BorderBrush="OrangeRed" BorderThickness="1"/>
+                </AdornedElementPlaceholder>
+            </DockPanel>
+        </ControlTemplate>
+        <Style x:Key="textBoxError" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip" Value="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={x:Static RelativeSource.Self}}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Grid>
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" Height="348" Width="937">
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="-7,38,0,0" VerticalAlignment="Top" Height="345" Width="1071">
             <DataGrid.Columns>
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="88" Header="Impedancja pętli zwarcia na mierniku sprawdzanym [Ω]" Binding="{Binding IdealValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Rezystancja pętli zwarcia na mierniku sprawdzanym [Ω]" Binding="{Binding MeasureValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Reaktancja pętli zwarcia na mierniku sprawdzanym [Ω]" Binding="{Binding Difference}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Impendancja pętli zwarcia na mierniku kontrolnym [Ω]" Binding="{Binding DownMeasureError}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Rezystancja pętli zwarcia na mierniku kontrolnym [Ω]" Binding="{Binding UpMeasureError}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Reaktancja pętli zwarcia na mierniku kontrolnym [Ω]" Binding="{Binding ErrorInValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Bezwzględny błąd pomiaru impedancji [Ω]" Binding="{Binding ErrorInValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Bezwzględny błąd pomiaru rezystancji [Ω]" Binding="{Binding DownMeasureError}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Bezwzględny błąd pomiaru reaktancji [Ω]" Binding="{Binding UpMeasureError}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalny błąd pomiaru impedancji, rezystancji i reaktancji [Ω]" Binding="{Binding ErrorInValue}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="88" Header="Impedancja pętli zwarcia na mierniku sprawdzanym [Ω]" Binding="{Binding ImpendationMeasure}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="30" Header="Przedrostek" Binding="{Binding Prefix}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Rezystancja pętli zwarcia na mierniku sprawdzanym [Ω]" Binding="{Binding ResistationMeasure}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Reaktancja pętli zwarcia na mierniku sprawdzanym [Ω]" Binding="{Binding ReactationMeasure}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Impendancja pętli zwarcia na mierniku kontrolnym [Ω]" Binding="{Binding ImpendationIdeal}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Rezystancja pętli zwarcia na mierniku kontrolnym [Ω]" Binding="{Binding ResisationIdeal}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Reaktancja pętli zwarcia na mierniku kontrolnym [Ω]" Binding="{Binding ReactationIdeal}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Bezwzględny błąd pomiaru impedancji [Ω]" Binding="{Binding NonrelativeErrorImpendation}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Bezwzględny błąd pomiaru rezystancji [Ω]" Binding="{Binding NonrelativeErrorResistation}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Bezwzględny błąd pomiaru reaktancji [Ω]" Binding="{Binding NonrelativeErrorReactation}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalny błąd pomiaru impedancji, rezystancji i reaktancji [Ω]" Binding="{Binding MaxError}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszrzona pomiaru impedancji pętli [Ω]" Binding="{Binding ErrorInValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszrzona pomiaru impedancji pętli" Binding="{Binding ErrorInValue}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszrzona pomiaru impedancji pętli" Binding="{Binding ErrorInPercent}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Label Content="%" HorizontalAlignment="Left" Margin="148,10,0,0" VerticalAlignment="Top"/>
-        <Label Content="Stała = " HorizontalAlignment="Left" Margin="189,12,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="28,10,0,0" TextWrapping="Wrap" Text="{Binding Percent}" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="240,10,0,0" TextWrapping="Wrap" Text="{Binding Constant}" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Liczb znaczących" HorizontalAlignment="Left" Margin="360,12,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="464,10,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumber}" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Ok" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="599,10,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="679,10,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label Content="%" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Stała = " HorizontalAlignment="Left" Margin="77,12,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="35,10,0,0" TextWrapping="Wrap" Text="{Binding Percent}" VerticalAlignment="Top" Width="37"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="128,9,0,0" TextWrapping="Wrap" Text="{Binding Constant}" VerticalAlignment="Top" Width="51"/>
+        <Label Content="Liczb znaczących" HorizontalAlignment="Left" Margin="184,9,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="288,8,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumber}" VerticalAlignment="Top" Width="73"/>
+        <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="989,119,0,0" VerticalAlignment="Top" Width="75"/>
+
+        <Button Width="75" VerticalAlignment="Top" Margin="0,49,10,0" HorizontalAlignment="Right" Command="{Binding OKCommand}" Content="OK">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="IsEnabled" Value="false"/>
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding (Validation.HasError), ElementName=TxtBoxFunction}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="IsEnabled" Value="true"/>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Label Width="79" VerticalAlignment="Top" Margin="558,5,0,0" HorizontalAlignment="Left" Content="Nazwa tabeli"/>
+
+        <TextBox x:Name="TxtBoxFunction" HorizontalAlignment="Left" Height="23" Margin="642,8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="340"
+			Validation.ErrorTemplate="{StaticResource errorTemplate}" AcceptsReturn="True"
+			HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"  
+			Style="{StaticResource textBoxError}" >
+            <Binding Path="NameOfFile" UpdateSourceTrigger="PropertyChanged" >
+                <Binding.ValidationRules>
+                    <ViewModel:FunctionValidation ValidatesOnTargetUpdated="True"
+						ValidationStep="RawProposedValue"/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
 
     </Grid>
 </UserControl>

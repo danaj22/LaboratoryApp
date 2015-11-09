@@ -36,9 +36,6 @@
             <RowDefinition  Height="Auto"/>
             <RowDefinition  Height="Auto"/>
             <RowDefinition  Height="Auto"/>
-            <RowDefinition  Height="Auto"/>
-            <RowDefinition  Height="Auto"/>
-            <RowDefinition  Height="Auto"/>
         </Grid.RowDefinitions>
 
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable1}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
@@ -48,8 +45,6 @@
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable3}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
 			DialogWidth="820" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable4}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
-			DialogWidth="920" DialogResizeMode="CanResize" />
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable4a}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
 			DialogWidth="920" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable5}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
 			DialogWidth="820" DialogResizeMode="CanResize" />
@@ -61,8 +56,24 @@
 			DialogWidth="820" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable9}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
 			DialogWidth="820" DialogResizeMode="CanResize" />
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable10}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable10}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="430" 
+			DialogWidth="1030" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable11}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
 			DialogWidth="820" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable12}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="820" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable13}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="820" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable14}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="820" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable15}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="1020" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable16}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="1020" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable17}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="1020" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable18}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="1020" DialogResizeMode="CanResize" />
 
 
 
@@ -76,45 +87,48 @@
             <TextBlock Text="pomiar rezystancji R" TextWrapping="Wrap" />
         </Button>
         <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable4Command}" Grid.Row="3" Width="349">
-            <TextBlock Text="pomiar rezystancji izolacji (500V - 2500V)" TextWrapping="Wrap" />
+            <TextBlock Text="pomiar rezystancji izolacji" TextWrapping="Wrap" />
         </Button>
-        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable4aCommand}" Grid.Row="4" Width="349">
-            <TextBlock Text="pomiar rezystancji izolacji (50V -250V)" TextWrapping="Wrap" />
-        </Button>
-        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable5Command}" Grid.Row="5" Width="348">
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable5Command}" Grid.Row="4" Width="348">
             <TextBlock Text="pomiar wartości napięcia pobierczego i wydatku prądowego przetwornicy" TextWrapping="Wrap" TextAlignment="Center" />
         </Button>
-        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable6Command}" Grid.Row="6" Width="349">
-            <TextBlock Text="pomiar zadawania różnicowego prądu uszkodzeniowego wyłączanego przez wyłącznik RCD" TextWrapping="Wrap" TextAlignment="Center" />
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable6Command}" Grid.Row="5" Width="349">
+            <TextBlock Text="pomiar czasu zadziałania wyłącznika różnicowoprądowego RCD" TextWrapping="Wrap" TextAlignment="Center" />
         </Button>
-        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable7Command}" Grid.Row="7" Width="349">
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable7Command}" Grid.Row="6" Width="349">
             <TextBlock Text="pomiar rezystancji uziemienia" TextWrapping="Wrap" />
         </Button>
-        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable8Command}" Grid.Row="8" Width="349">
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable8Command}" Grid.Row="7" Width="349">
             <TextBlock Text="pomiar dokładności napięcia zakłucającego Un przemiennego" TextWrapping="Wrap" />
         </Button>
-        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable9Command}" Grid.Row="9" Width="349">
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable9Command}" Grid.Row="8" Width="349">
             <TextBlock Text="pomiar prądu zwarciowego w ppętli zwarcionwej sieci o napięciu znamionowym 230V" TextWrapping="Wrap" TextAlignment="Center" />
         </Button>
-        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable10Command}" Grid.Row="10" Width="349">
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable10Command}" Grid.Row="9" Width="349">
             <TextBlock Text="pomiar napięcia dotykowego w odniesieniu do prądu różnicowego i oporności uziemienia" TextWrapping="Wrap" TextAlignment="Center"  />
         </Button>
-        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable11Command}" Grid.Row="11" Width="349">
-            <TextBlock Text="pomiar impendancji oraz reaktancji i rezystancji pętli zwarciowej mierzonej prądem ok. 15miliamper, bez wyzwalania wyłączników prądu uszkodzeniowego typu RCD" TextWrapping="Wrap" TextAlignment="Center" />
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable11Command}" Grid.Row="10" Width="349">
+            <TextBlock Text="pomiar impendancji oraz reaktancji i rezystancji pętli zwarciowej" TextWrapping="Wrap" TextAlignment="Center" />
         </Button>
-        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable12Command}" Grid.Row="12" Width="349">
-            <TextBlock Text="pomiar impendancji oraz reaktancji i rezystancji pętli zwarciowej mierzonej dużym prądem" TextWrapping="Wrap" TextAlignment="Center" />
-        </Button>
-        <Button  HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable13Command}" Grid.Row="13" Width="349">
-            <TextBlock Text="pomiar czasu działania wyłącznika różnicowoprądowego RCD" TextWrapping="Wrap" />
-        </Button>
-        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable14Command}" Grid.Row="14" Width="349">
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable14Command}" Grid.Row="11" Width="349">
             <TextBlock Text="pomiar rezystancji połączeń ochronnych i wyrównawczych prądem 200 mA" TextWrapping="Wrap" TextAlignment="Center" />
         </Button>
-        <Button Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Center" Grid.Row="15" VerticalAlignment="Center" Width="74" Height="26" Margin="163,9,163,20">
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable15Command}" Grid.Row="12" Width="349">
+            <TextBlock Text="pomiar rezystywności gruntu przy odległości sond 1m" TextWrapping="Wrap" TextAlignment="Center" />
+        </Button>
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable16Command}" Grid.Row="13" Width="349">
+            <TextBlock Text="pomiar rezystywności gruntu przy odległości sond 10m" TextWrapping="Wrap" TextAlignment="Center" />
+        </Button>
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable17Command}" Grid.Row="14" Width="349">
+            <TextBlock Text="pomiar prądu" TextWrapping="Wrap" TextAlignment="Center" />
+        </Button>
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable18Command}" Grid.Row="15" Width="349">
+            <TextBlock Text="pomiar równoważnego prądu upływu" TextWrapping="Wrap" TextAlignment="Center" />
+        </Button>
+        <Button Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" Grid.Row="16" VerticalAlignment="Center" Width="74" Height="26" >
 
         </Button>
-        <Button Content="Cancel" Command="{Binding CancelCommand}" HorizontalAlignment="Center"  Grid.Row="15" VerticalAlignment="Center" Width="76" Height="26" Margin="242,4,82,16"/>
+        <Button Content="Cancel" Command="{Binding CancelCommand}" HorizontalAlignment="Right"  Grid.Row="16" VerticalAlignment="Center" Width="76" Height="26" />
 
         <!--<Button Content="pomiar prądu zwarciowego w ppętli zwarcionwej sieci o napięciu znamionowym 230V" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="14" Width="349"/>
         <Button Content="pomiar napięcia dotykowego w odniesieniu do prądu różnicowego i oporności uziemienia" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="15" Width="349"/>

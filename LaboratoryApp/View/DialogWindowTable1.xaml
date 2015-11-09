@@ -8,8 +8,7 @@
              BorderBrush="{DynamicResource AccentColorBrush}"
             BorderThickness="1"
             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-             mc:Ignorable="d" 
-             d:DesignHeight="400" Width="859">
+             mc:Ignorable="d" Width="859" Height="438">
     <UserControl.Resources>
         <ControlTemplate x:Key="errorTemplate">
             <DockPanel LastChildFill="true">
@@ -35,11 +34,11 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <Grid Margin="0,0,-10,0">
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" Height="348" Width="849">
+    <Grid Height="398" VerticalAlignment="Bottom" >
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="10,39,-2,0" VerticalAlignment="Top" Height="351" Width="849">
             <DataGrid.Columns>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Wartość napięcia przemiennego na mierniku sprawdzanym [V]" Binding="{Binding MeasureValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="Auto" Header="Przedrostek" Binding="{Binding Prefix}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="30" Header="Przedrostek" Binding="{Binding Prefix}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Wartość napięcia przemiennego na mierniku kontrolnym [V]" Binding="{Binding IdealValue}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Różnica napięcia przemiennego na mierniku sprawdzanym i kontrolnym [V]" Binding="{Binding Difference}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Dopuszczalna dolna wartość limitu błędu mierzonego napięcia [V]" Binding="{Binding DownMeasureError}" />
@@ -86,7 +85,13 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        
+        <Label Content="%" HorizontalAlignment="Left" Margin="10,-34,0,0" VerticalAlignment="Top"/>
+        <Label Content="Stała " HorizontalAlignment="Left" Margin="78,-34,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="35,-34,0,0" TextWrapping="Wrap" Text="{Binding PercentIdeal}" VerticalAlignment="Top" Width="38"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="126,-34,0,0" TextWrapping="Wrap" Text="{Binding ConstantIdeal}" VerticalAlignment="Top" Width="46"/>
+        <Label Content="Liczb znaczących " HorizontalAlignment="Left" Margin="177,-34,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="284,-34,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumberIdeal}" VerticalAlignment="Top" Width="84"/>
+
     </Grid>
 </UserControl>
 

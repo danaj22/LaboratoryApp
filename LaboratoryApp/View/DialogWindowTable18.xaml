@@ -1,14 +1,14 @@
-﻿<UserControl
+﻿<UserControl x:Class="LaboratoryApp.View.DialogWindowTable18"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:ViewModel="clr-namespace:LaboratoryApp.ViewModel" x:Class="LaboratoryApp.View.DialogWindowTable2" 
+             mc:Ignorable="d" 
+                xmlns:ViewModel="clr-namespace:LaboratoryApp.ViewModel" 
             BorderBrush="{DynamicResource AccentColorBrush}"
             BorderThickness="1"
             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-             mc:Ignorable="d" d:DesignWidth="850" Height="378">
-
+             d:DesignHeight="381" d:DesignWidth="1019">
     <UserControl.Resources>
         <ControlTemplate x:Key="errorTemplate">
             <DockPanel LastChildFill="true">
@@ -45,16 +45,20 @@
             <ColumnDefinition MinWidth="100"/>
             <ColumnDefinition MinWidth="100"/>
         </Grid.ColumnDefinitions>
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Center" Grid.Row="1" Grid.ColumnSpan="5" VerticalAlignment="Center" Height="320" Width="790" Margin="5,5,5,23">
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Grid.Row="1" Grid.ColumnSpan="5" VerticalAlignment="Center" Height="320" Width="993" Margin="10,11,0,23">
             <DataGrid.Columns>
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Wartość częstotliwości napięcia przemiennego na mierniku sprawdzanym [Hz]" Binding="{Binding MeasureValue}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Wartość rezystancji nastawionej na dekadzie kontrolnej [Ω]" Binding="{Binding Multiples}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="30" Header="Przedrostek" Binding="{Binding Prefix}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Nastawiona wartość częstotliwości napięcia przemiennego o wartości 230V [Hz]" Binding="{Binding IdealValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Różnica częstotliwości na mierniku sprawdzanym i kontrolnym [Hz]" Binding="{Binding Difference}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Dopuszczalna dolna wartość limitu błędu mierzonej częstotliwości [Hz]" Binding="{Binding DownMeasureError}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Dopuszczalna górna wartość limitu błędu mierzonej częstotliwości [Hz]" Binding="{Binding UpMeasureError}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Niepewność całkowita rozszerzona typu (B+A) pomiaru częstotliwości ±2S(x)[Hz]" Binding="{Binding ErrorInValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Niepewność całkowita rozszerzona typu (B+A) pomiaru pomiaru częstotliwości ±2S(x)" Binding="{Binding ErrorInPercent}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Wartość napięcia odniesienia [V]" Binding="{Binding ReferenceVoltage}" />
+              
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Hipotetyczna wartość prądu równoważnego [A]" Binding="{Binding IdealValue}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="30" Header="Przedrostek" Binding="{Binding Prefix2}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Wartość prądu równoważnego na mierniku sprawdzanym [A]" Binding="{Binding MeasureValue}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Różnica wartości prądu na mierniku sprawdzanym i kontrolnym [A]" Binding="{Binding Difference}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Dopuszczalna dolna wartość limitu błędu mierzonego prądu [A]" Binding="{Binding DownMeasureError}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Dopuszczalna górna wartość limitu błędu mierzonego prądu [A]" Binding="{Binding UpMeasureError}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Niepewność całkowita rozszerzona typu (B+A) pomiaru prądu ±2S(x) [A]" Binding="{Binding ErrorInValue}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Niepewność całkowita rozszerzona typu (B+A) pomiaru prądu ±2S(x)" Binding="{Binding ErrorInPercent}" />
             </DataGrid.Columns>
 
         </DataGrid>
@@ -64,7 +68,7 @@
         <TextBox HorizontalAlignment="Left" Height="23" Grid.Row="0" Margin="118,6,0,0" TextWrapping="Wrap" Text="{Binding Constant}" VerticalAlignment="Top" Width="32"/>
         <Label Content="Liczb znaczących" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="155,6,0,0" Grid.ColumnSpan="2"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="94,6,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumber}" VerticalAlignment="Top" Grid.Row="0" Width="120" Grid.ColumnSpan="2" Grid.Column="1"/>
-        <Button Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Grid.Column="4" Grid.Row="1" Margin="0,10,33,0">
+        <Button Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Grid.Column="4" Grid.Row="1" Margin="114,33,0,0">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="IsEnabled" Value="false" />
@@ -80,7 +84,7 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Button Content="Cancel" Grid.Row="1" Grid.Column="4" Command="{Binding CancelCommand}" HorizontalAlignment="Right"  VerticalAlignment="Top" Width="75" Margin="0,98,33,0"/>
+        <Button Content="Cancel" Grid.Row="1" Grid.Column="4" Command="{Binding CancelCommand}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="75" Margin="114,91,0,0"/>
 
         <Label Width="79" VerticalAlignment="Top" Margin="53,6,0,0" Grid.Row="0" HorizontalAlignment="Left" Content="Nazwa tabeli" Grid.Column="2"/>
 
@@ -98,5 +102,3 @@
 
     </Grid>
 </UserControl>
-
-

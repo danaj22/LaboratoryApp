@@ -34,6 +34,13 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
+        private ObservableCollection<NewWindowTableGenerate> tablesToGenerate = new ObservableCollection<NewWindowTableGenerate>();
+
+        public ObservableCollection<NewWindowTableGenerate> TablesToGenerate
+        {
+            get { return tablesToGenerate; }
+            set { tablesToGenerate = value; OnPropertyChanged("TablesToGenerate"); }
+        }
         private string serialNumber;
         public string SerialNumber
         {
@@ -133,6 +140,13 @@ namespace LaboratoryApp.ViewModel
                 messageWindowTable2 = value;
                 OnPropertyChanged("MessageWindowTable2");
             }
+        }
+        private NewWindowTable3Generate messageWindowTable3;
+
+        public NewWindowTable3Generate MessageWindowTable3
+        {
+            get { return messageWindowTable3; }
+            set { messageWindowTable3 = value; OnPropertyChanged("MessageWindowTable3"); }
         }
 
         private string manufacturer;
@@ -313,18 +327,16 @@ namespace LaboratoryApp.ViewModel
         string line, ValueOfCell;
         double cons, percnt, impNum, idealVal;
 
+
         private void GenerateTables()
         {
             string q = "";
-            //MessageWindowTable1 = new NewWindowTable1Generate();
 
-            //string[] tables = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + Model + "$.txt");
-            //foreach(string table in tables)
             {
-                //
+
                 {
                     string[] nameOfData = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + Model + ".txt");
-                    
+
 
                     foreach (string nameOfTable in nameOfData)
                     {
@@ -335,9 +347,7 @@ namespace LaboratoryApp.ViewModel
                             int indexStart = nameOfTable.IndexOf("]");
                             //int indexStart = nameOfTable.IndexOf("\t");
 
-                            q = nameOfTable.Substring(indexStart+1);
-
-
+                            q = nameOfTable.Substring(indexStart + 1);
 
                             string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".txt");
                             foreach (string str in dataToTable)
@@ -371,52 +381,17 @@ namespace LaboratoryApp.ViewModel
                                 m.Constant = cons;
                                 m.Percent = percnt;
                                 m.IdealValue = idealVal;
+                                MessageWindowTable1.NameOfFile = q;
                                 MessageWindowTable1.Tab.Add(m);
                             }
                             MessageWindowTable1.IsOpen = true;
                             if (MessageWindowTable1.ToConfirm)
                             {
-                                //NewWindowRaport raport;
-                                // Create a MigraDoc document
-                                //raport = MessageWindowRaport;
-                                Document document = InformationAboutGauge.CreateTable(MessageWindowTable1);
-
-                                //string ddl = MigraDoc.DocumentObjectModel.IO.DdlWriter.WriteToString(document);
-                                MigraDoc.DocumentObjectModel.IO.DdlWriter.WriteToFile(document, "MigraDoc.mdddl");
-
-                                PdfDocumentRenderer renderer = new PdfDocumentRenderer(true, PdfSharp.Pdf.PdfFontEmbedding.Always);
-                                renderer.Document = document;
-
-                                renderer.RenderDocument();
-
-                                // Save the document...
-
-                                //string path = @"C:\ProgramData\DASLSystems\LaboratoryApp\cert.txt";
-
-                                try
-                                {
-                                    //string[] s = File.ReadAllLines(path);
-
-                                    //raport.NumberOfCertificate = raport.NumberOfCertificate.Replace('/', '-');
-                                    string filename = @"C:\ProgramData\DASLSystems\LaboratoryApp\tables\abcd.pdf";
-                                    //filename.Replace('\\','-');
-
-                                    //if (!string.IsNullOrEmpty(raport.Author) && !string.IsNullOrEmpty(raport.Temperature))
-                                    {
-                                        renderer.PdfDocument.Save(filename);
-                                        // ...and start a viewer.
-                                        Process.Start(filename);
-                                    }
-                                }
-                                catch (Exception e)
-                                {
-                                    MessageBox.Show("Nie wybrano folderu zapisu.");
-                                    File.AppendAllText(MainWindowViewModel.path, e.ToString());
-                                }
+                               
                             }
                             MessageWindowTable1.ToConfirm = false;
+                            TablesToGenerate.Add(MessageWindowTable1);
                         }
-
                         if (nameOfTable.Contains("Table2"))
                         {
                             MessageWindowTable2 = new NewWindowTable2Generate();
@@ -458,6 +433,7 @@ namespace LaboratoryApp.ViewModel
                                 m.Constant = cons;
                                 m.Percent = percnt;
                                 m.IdealValue = idealVal;
+                                MessageWindowTable2.NameOfFile = q;
                                 MessageWindowTable2.Tab.Add(m);
                             }
                             MessageWindowTable2.IsOpen = true;
@@ -466,62 +442,101 @@ namespace LaboratoryApp.ViewModel
 
                             }
                             MessageWindowTable2.ToConfirm = false;
+                            TablesToGenerate.Add(MessageWindowTable2);
                         }
+
+                        if (nameOfTable.Contains("Table3"))
+                        {
+                            MessageWindowTable3 = new NewWindowTable3Generate();
+                            int indexTableData = nameOfTable.IndexOf("\t");
+                            q = nameOfTable.Substring(indexTableData + 1);
+
+                            string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".txt");
+                            foreach (string str in dataToTable)
+                            {
+                                line = str;
+
+                                //read IdealValue
+                                int index = str.IndexOf("\t");
+                                ValueOfCell = str.Substring(0, index);
+                                idealVal = Convert.ToDouble(ValueOfCell);
+
+                                //read Percent
+                                line = str.Substring(index + 1);
+                                index = line.IndexOf("\t");
+                                ValueOfCell = line.Substring(0, index);
+                                percnt = Convert.ToDouble(ValueOfCell);
+
+                                //read ImportantNumber
+                                line = line.Substring(index + 1);
+                                index = line.IndexOf("\t");
+                                ValueOfCell = line.Substring(0, index);
+                                impNum = Convert.ToDouble(ValueOfCell);
+
+                                //read Constant
+                                line = line.Substring(index + 1);
+                                ValueOfCell = line;
+                                cons = Convert.ToDouble(ValueOfCell);
+
+                                Measure1 m = new Measure1();
+                                m.ImportantNumber = impNum;
+                                m.Constant = cons;
+                                m.Percent = percnt;
+                                m.IdealValue = idealVal;
+                                MessageWindowTable3.NameOfFile = q;
+                                MessageWindowTable3.Tab.Add(m);
+                            }
+                            MessageWindowTable3.IsOpen = true;
+                            if (MessageWindowTable3.ToConfirm)
+                            {
+                                TablesToGenerate.Add(MessageWindowTable3);
+
+
+                            }
+                            MessageWindowTable3.ToConfirm = false;
+                            TablesToGenerate.Add(MessageWindowTable3);
+                        }
+
+
+                        Document document = InformationAboutGauge.CreateTable(TablesToGenerate);
+
+                        MigraDoc.DocumentObjectModel.IO.DdlWriter.WriteToFile(document, "MigraDoc.mdddl");
+
+                        PdfDocumentRenderer renderer = new PdfDocumentRenderer(true, PdfSharp.Pdf.PdfFontEmbedding.Always);
+                        renderer.Document = document;
+
+                        renderer.RenderDocument();
+
+                        // Save the document...
+
+                        try
+                        {
+                            //string[] s = File.ReadAllLines(path);
+
+                            //raport.NumberOfCertificate = raport.NumberOfCertificate.Replace('/', '-');
+                            string filename = @"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".pdf";
+                            //filename.Replace('\\','-');
+
+                            //if (!string.IsNullOrEmpty(raport.Author) && !string.IsNullOrEmpty(raport.Temperature))
+                            {
+                                renderer.PdfDocument.Save(filename);
+                                // ...and start a viewer.
+                                Process.Start(filename);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            MessageBox.Show("Nie wybrano folderu zapisu.");
+                            File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                        }
+
+
                     }
-                    
-                    
+
+
                 }
 
-                //if (table.Contains("Table2"))
-                {
-                   // MessageWindowTable2 = new NewWindowTable2Generate();
-
-                    string[] s = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + Model + ".txt");
-
-                    foreach (string str in s)
-                    {
-                        //line = str;
-
-                        ////read IdealValue
-                        //int index = str.IndexOf("\t");
-                        //ValueOfCell = str.Substring(0, index);
-                        //idealVal = Convert.ToDouble(ValueOfCell);
-
-                        ////read Percent
-                        //line = str.Substring(index + 1);
-                        //index = line.IndexOf("\t");
-                        //ValueOfCell = line.Substring(0, index);
-                        //percnt = Convert.ToDouble(ValueOfCell);
-
-                        ////read ImportantNumber
-                        //line = line.Substring(index + 1);
-                        //index = line.IndexOf("\t");
-                        //ValueOfCell = line.Substring(0, index);
-                        //impNum = Convert.ToDouble(ValueOfCell);
-
-                        ////read Constant
-                        //line = line.Substring(index + 1);
-                        //ValueOfCell = line;
-                        //cons = Convert.ToDouble(ValueOfCell);
-
-                        //Measure1 m = new Measure1();
-                        //m.ImportantNumber = impNum;
-                        //m.Constant = cons;
-                        //m.Percent = percnt;
-                        //m.IdealValue = idealVal;
-                       // MessageWindowTable2.Tab.Add(m);
-                    }
-
-                   // MessageWindowTable2.IsOpen = true;
-                   // if (MessageWindowTable2.ToConfirm)
-                    {
-
-                    }
-                   // MessageWindowTable2.ToConfirm = false;
-                }
-           }
-
-                
+            }
         }
 
         private void GenerateRaportExecute()
@@ -636,7 +651,7 @@ namespace LaboratoryApp.ViewModel
 
         }
 
-        public static Document CreateTable(NewWindowTable1Generate raport)
+        public static Document CreateTable( ObservableCollection <NewWindowTableGenerate> raport)
         {
             Document document = new Document();
             document.Info.Title = "Załącznik do świadectwa wzorcowania";
@@ -653,6 +668,7 @@ namespace LaboratoryApp.ViewModel
 
             return document;
         }
+        
         public static Document CreateDocument(NewWindowRaport raport)
         {
             // Create a new MigraDoc document
@@ -695,11 +711,12 @@ namespace LaboratoryApp.ViewModel
             style.ParagraphFormat.Alignment = ParagraphAlignment.Center;
 
             style = document.Styles["Heading2"];
-            style.Font.Size = 12;
-            style.Font.Bold = true;
+            style.Font.Size = 10;
+            style.Font.Bold = false;
             style.ParagraphFormat.PageBreakBefore = false;
             style.ParagraphFormat.SpaceBefore = 2;
             style.ParagraphFormat.SpaceAfter = 0;
+            style.ParagraphFormat.Alignment = ParagraphAlignment.Left;
 
             style = document.Styles["Heading3"];
             style.Font.Size = 10;
@@ -882,255 +899,72 @@ namespace LaboratoryApp.ViewModel
         {
             DemonstrateAlignment(document, raport);
         }
-        public static void DefineTablesInAttachment(Document document, NewWindowTable1Generate raport)
+        public static void DefineTablesInAttachment(Document document, ObservableCollection <NewWindowTableGenerate> raport)
         {
             DemonstrateAlignmentInAttachment(document, raport);
         }
-        public static void DemonstrateAlignmentInAttachment(Document document, NewWindowTable1Generate raport)
+        public static void DemonstrateAlignmentInAttachment(Document document, ObservableCollection<NewWindowTableGenerate> raports)
         {
             //document.LastSection.AddParagraph("Cell Alignment", "Heading2");
-
-            document.LastSection.AddParagraph("Nazwa tabeli", "Heading2"); 
-
-            Table table = document.LastSection.AddTable();
-            table.Borders.Visible = true;
-            //table.Format.Shading.Color = Colors.LavenderBlush;
-            //table.Shading.Color = Colors.LightBlue;
-            table.TopPadding = 5;
-            table.BottomPadding = 5;
-
-            Column column;
-            Row row;          
-
-            foreach(var element in raport.ColumnNames)
+            foreach (var raport in raports)
             {
-                column = table.AddColumn();
-                column.Format.Alignment = ParagraphAlignment.Center;
-                table.Columns.Width = 50;
-            }
-
-
-            row = table.AddRow();
-            for (int i = 0; i < raport.ColumnNames.Count(); i++)
-            {
-                row.Cells[i].AddParagraph(raport.ColumnNames[i]);
-                row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Center;
-            }
-
-            
+                document.LastSection.AddParagraph(raport.NameOfFile, "Heading2");
                 
-            for (int i = 0; i < raport.Tab.Count(); i++)
-            {
+                Table table = document.LastSection.AddTable();
+                table.Borders.Visible = true;
+                //table.Format.Shading.Color = Colors.LavenderBlush;
+                //table.Shading.Color = Colors.LightBlue;
+                table.TopPadding = 5;
+                table.BottomPadding = 5;
+
+                Column column;
+                Row row;
+
+                foreach (var element in raport.ColumnNames)
+                {
+                    column = table.AddColumn();
+                    column.Format.Alignment = ParagraphAlignment.Center;
+                    table.Columns.Width = 50;
+                }
+
+
                 row = table.AddRow();
+                for (int i = 0; i < raport.ColumnNames.Count(); i++)
+                {
+                    row.Cells[i].AddParagraph(raport.ColumnNames[i]);
+                    row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Center;
+                }
 
-                row.Cells[0].AddParagraph(raport.Tab[i].MeasureValue.ToString());
-                row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                row.Cells[1].AddParagraph(raport.Tab[i].IdealValue.ToString());
-                row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                row.Cells[2].AddParagraph(raport.Tab[i].Difference.ToString());
-                row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                row.Cells[3].AddParagraph(raport.Tab[i].DownMeasureError.ToString());
-                row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                row.Cells[4].AddParagraph(raport.Tab[i].UpMeasureError.ToString());
-                row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
 
+
+                for (int i = 0; i < raport.Tab.Count(); i++)
+                {
+                    row = table.AddRow();
+
+                    row.Cells[0].AddParagraph(raport.Tab[i].MeasureValue.ToString());
+                    row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                    row.Cells[1].AddParagraph(raport.Tab[i].IdealValue.ToString());
+                    row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                    row.Cells[2].AddParagraph(raport.Tab[i].Difference.ToString());
+                    row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                    row.Cells[3].AddParagraph(raport.Tab[i].DownMeasureError.ToString());
+                    row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                    row.Cells[4].AddParagraph(raport.Tab[i].UpMeasureError.ToString());
+                    row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                    row.Cells[5].AddParagraph(raport.Tab[i].ErrorInValue.ToString());
+                    row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                    row.Cells[6].AddParagraph(raport.Tab[i].ErrorInPercent.ToString() + " %");
+                    row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+
+                }
+
+                table.Rows.Height = 15;
             }
-            
-
-
-            table.Rows.Height = 15;
-
-
-
-            //Row row = table.AddRow();
-            //row.Cells[0].Format.Font.Bold = true;
-            //row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-            //row.Cells[0].AddParagraph("aaaaa");
-            //row.Cells[1].AddParagraph("bbbb");
-
-            //if (raport.AboutGauge.office != null)
-            //{
-            //    row = table.AddRow();
-            //    row.Cells[0].Format.Font.Bold = true;
-            //    row.Cells[0].AddParagraph("Oddział: ");
-            //    row.Cells[1].AddParagraph(raport.AboutGauge.office.name.ToString());
-            //}
-            //row = table.AddRow();
-            //row.Cells[0].Format.Font.Bold = true;
-            //row.Cells[0].AddParagraph("Producent przyrządu: ");
-            //row.Cells[1].AddParagraph(raport.AboutGauge.model_of_gauges.manufacturer_name.ToString());
-            //row = table.AddRow();
-            //row.Cells[0].Format.Font.Bold = true;
-            //row.Cells[0].AddParagraph("Model:");
-            //row.Cells[1].AddParagraph(raport.AboutGauge.model_of_gauges.model.ToString());
-            //row = table.AddRow();
-            //row.Cells[0].Format.Font.Bold = true;
-            //row.Cells[0].AddParagraph("Nr fabryczny: ");
-            //row.Cells[1].AddParagraph(raport.AboutGauge.serial_number.ToString());
-            //row = table.AddRow();
-            //row.Cells[0].Format.Font.Bold = true;
-            //row.Cells[0].AddParagraph("Zastosowanie urządzenia: ");
-            //row.Cells[1].AddParagraph(raport.AboutGauge.model_of_gauges.usage.description);
-            //row = table.AddRow();
-            //row.Cells[0].Format.Font.Bold = true;
-            //row.Cells[0].AddParagraph("Metoda wzorcowania: ");
-            //row.Cells[1].AddParagraph(raport.TheCalibrationMethod.ToString());
-
-
-            //row = table.AddRow();
-            //row.Cells[0].Format.Font.Bold = true;
-            //row.Cells[0].AddParagraph("Odniesienie do wzorca państwowego: ");
-
-            //int numberOfLines = 0;
-            //foreach (calibrator calibrator in raport.CollectionOfCalibrators)
-            //{
-
-            //    if (calibrator.IsChecked)
-            //    {
-            //        raport.NationalPattern += calibrator.name + "\n";
-            //        numberOfLines++;
-            //    }
-
-            //}
-            //if (numberOfLines < 6)
-            //{
-
-            //    for (; numberOfLines < 6; numberOfLines++)
-            //    {
-            //        raport.NationalPattern += "\n";
-            //    }
-            //}
-            //row.Cells[1].AddParagraph(raport.NationalPattern.ToString());
-
-            //try
-            //{
-            //    row = table.AddRow();
-            //    row.Cells[0].Format.Font.Bold = true;
-            //    row.Cells[0].AddParagraph("Temperatura otoczenia: ");
-            //    row.Cells[1].AddParagraph("(" + raport.Temperature.ToString() + "± 2) °C");
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("Podaj temperaturę.");
-            //}
-
-            //row = table.AddRow();
-            //row.Cells[0].Format.Font.Bold = true;
-            //row.Cells[0].AddParagraph("Wilgotność powietrza: ");
-            //row.Cells[1].AddParagraph(raport.Humidity);
-            //row = table.AddRow();
-            //row.Cells[0].Format.Font.Bold = true;
-            //row.Cells[0].AddParagraph("Stwierdzenie zgodności: ");
-            //if (raport.SelectedCompatibility == "Zgodny")
-            //{
-            //    row.Cells[1].AddParagraph("Na podstawie przeprowadzonych badań oraz ich wyników stwierdzono, że przyrząd spełnia deklarowane parametry użytkowe i funkcjinalne");
-            //}
-            //else
-            //{
-            //    row.Cells[1].AddParagraph("Na podstawie przeprowadzonych badań oraz ich wyników stwierdzono, że przyrząd nie spełnia deklarowanych parametrów użytkowych i funkcjinalnych");
-            //}
-
-            //row = table.AddRow();
-            //row.Cells[0].Format.Font.Bold = true;
-            //row.Cells[0].AddParagraph("Sprawdzone funkcje: ");
-
-            //foreach (function fun in raport.CollectionOfCheckedFunction)
-            //{
-            //    if (fun.IsChecked)
-            //    {
-            //        raport.CheckedFunction += fun.name + ";";
-            //    }
-            //    LaboratoryEntities context = MainWindowViewModel.Context;
-
-            //}
-            //try
-            //{
-            //    row.Cells[1].AddParagraph(raport.CheckedFunction);
-            //    row = table.AddRow();
-            //    row.Cells[0].Format.Font.Bold = true;
-            //    row.Cells[0].AddParagraph("Niepewność pomiaru: ");
-            //    row.Cells[1].AddParagraph(raport.Uncertainty);
-            //    row = table.AddRow();
-            //    row.Cells[0].Format.Font.Bold = true;
-            //    row.Cells[0].AddParagraph("Nr świadectwa: ");
-            //    row.Cells[1].AddParagraph(raport.NumberOfCertificate);
-            //    row = table.AddRow();
-            //    row.Cells[0].Format.Font.Bold = true;
-            //    row.Cells[0].AddParagraph("Data badania: ");
-            //    row.Cells[1].AddParagraph(raport.DateSurvey);
-            //    row = table.AddRow();
-            //    row.Cells[0].Format.Font.Bold = true;
-            //    row.Cells[0].AddParagraph("Zalecenia dotyczące kolejnego wzorcowania: ");
-            //    row.Cells[1].AddParagraph(raport.Recommendations);
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("Brak danych miernika");
-            //}
-            //try
-            //{
-            //    row = table.AddRow();
-            //    row.Cells[0].Format.Font.Bold = true;
-            //    row.Cells[0].AddParagraph("Pomiary zatwierdził: ");
-
-            //    row.Cells[1].AddParagraph(raport.Author);
-
-            //    string line = "";
-            //    if (raport.PrintStamp == "Tak")
-            //    {
-            //        try
-            //        {
-            //            foreach (string str in File.ReadAllLines(MainWindowViewModel.usersApplication))
-            //            {
-            //                line = str;
-            //                if (str.Contains(raport.Author) && str.Contains("PATH"))
-            //                {
-            //                    int index = str.IndexOf("PATH");
-            //                    //+5 because we need only direct path without text : "PATH="
-            //                    line = str.Substring(index + 5);
-            //                }
-            //            }
-
-            //        }
-            //        catch (Exception e)
-            //        {
-            //            File.AppendAllText(MainWindowViewModel.path, e.ToString());
-            //        }
-
-            //        //it could be problem when we change localization of stamp
-            //        try
-            //        {
-            //            Image img = row.Cells[1].AddImage(line);
-            //            img.Height = "1.5cm";
-            //            img.Width = "1.5cm";
-            //            //img.LockAspectRatio = true;
-            //            //img.RelativeVertical = RelativeVertical.Line;
-            //            //img.RelativeHorizontal = RelativeHorizontal.Margin;
-            //            //img.Top = ShapePosition.Top;
-            //            //img.Left = ShapePosition.Left;
-            //            //img.WrapFormat.Style = WrapStyle.Through;
-            //        }
-            //        catch (Exception e)
-            //        {
-            //            File.AppendAllText(MainWindowViewModel.path, e.ToString());
-            //        }
-
-            //    }
-
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("Podaj swoje dane do świadectwa.");
-            //}
-
-
-
         }
 
         //this one!!!! is a my table
         public static void DemonstrateAlignment(Document document, NewWindowRaport raport)
         {
-            //document.LastSection.AddParagraph("Cell Alignment", "Heading2");
 
             Table table = document.LastSection.AddTable();
             table.Borders.Visible = false;
@@ -1416,77 +1250,6 @@ namespace LaboratoryApp.ViewModel
             {
 
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            // MessageWindowGauge = new NewWindowGauge();//{ AboutGauge = new gauge() { model_of_gauges = new model_of_gauges() } };
-            // MessageWindowGauge.AboutGauge = (gauge)SelectedGauge;
-
-
-            // //fill data in edit window 
-            // //MessageWindowGauge.AboutGauge.serial_number = SerialNumber;
-            //// MessageWindowGauge.AboutGauge.model_of_gauges = ModelOfGaugeItem;
-            // //MessageWindowGauge.Manufacturer = ModelOfGaugeItem.manufacturer_name;
-            // //MessageWindowGauge.SelectedModel = ModelOfGaugeItem.model;
-
-
-            // MessageWindowGauge.IsOpen = true;
-
-            // if(MessageWindowGauge.ToConfirm)
-            // {
-            //     using (LaboratoryEntities Context = new LaboratoryEntities())
-            //     {
-            //         var gaugeToEdit = (from g in Context.gauges where g.gaugeId == SelectedGauge.gaugeId select g).FirstOrDefault();
-
-            //         if(!String.IsNullOrEmpty(MessageWindowGauge.AboutGauge.model_of_gauges.model.ToString())
-            //            && !String.IsNullOrEmpty(MessageWindowGauge.AboutGauge.model_of_gauges.manufacturer_name.ToString())
-            //            && !String.IsNullOrEmpty(MessageWindowGauge.AboutGauge.serial_number.ToString()))
-
-            //         {
-            //             var ModelOfGaugeToAdd = (from m in Context.model_of_gauges where m.model == MessageWindowGauge.SelectedModel select m).FirstOrDefault();
-            //             gaugeToEdit.model_of_gauges = ModelOfGaugeToAdd;
-
-            //             gaugeToEdit.serial_number = MessageWindowGauge.AboutGauge.serial_number;
-            //             //gaugeToEdit.model_of_gauges.manufacturer_name = ModelOfGaugeToAdd.manufacturer_name;
-            //             //gaugeToEdit.model_of_gauges.model = ModelOfGaugeToAdd.model;
-
-
-
-            //             Context.SaveChanges();
-
-            //             //set new data in main window view
-            //             SerialNumber = MessageWindowGauge.AboutGauge.serial_number;
-            //             ModelOfGaugeItem.manufacturer_name = MessageWindowGauge.Manufacturer;
-            //             ModelOfGaugeItem.model = MessageWindowGauge.SelectedModel;
-            //             //ModelOfGaugeItem.usage.description = gaugeToEdit.model_of_gauges.usage.description;
-
-            //             MainWindowViewModel.selectedNode.NameOfItem = MessageWindowGauge.AboutGauge.model_of_gauges.model;
-            //             MainWindowViewModel.selectedNode = SelectedGauge;
-            //         }
-            //     }
-            //     MessageWindowGauge.ToConfirm = false;
-
-            // }
 
 
         }

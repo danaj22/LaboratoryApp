@@ -15,8 +15,8 @@ namespace LaboratoryApp.ViewModel
         public List<IEnumerableTable> ListOfWindows
         {
             get { return listOfWindows; }
-            set 
-            { 
+            set
+            {
                 listOfWindows = value;
                 OnPropertyChanged("ListOfWindows");
             }
@@ -77,116 +77,157 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
-        //private NewWindowTable5 messageWindowTable5;
-        //public NewWindowTable5 MessageWindowTable5
-        //{
-        //    get { return messageWindowTable5; }
-        //    set
-        //    {
-        //        messageWindowTable5 = value;
-        //        OnPropertyChanged("MessageWindowTable5");
-        //    }
-        //}
+        private NewWindowTable5 messageWindowTable5;
+        public NewWindowTable5 MessageWindowTable5
+        {
+            get { return messageWindowTable5; }
+            set
+            {
+                messageWindowTable5 = value;
+                OnPropertyChanged("MessageWindowTable5");
+            }
+        }
 
-        //private NewWindowTable6 messageWindowTable6;
-        //public NewWindowTable6 MessageWindowTable6
-        //{
-        //    get { return messageWindowTable6; }
-        //    set
-        //    {
-        //        messageWindowTable6 = value;
-        //        OnPropertyChanged("MessageWindowTable6");
-        //    }
-        //}
+        private NewWindowTable6 messageWindowTable6;
+        public NewWindowTable6 MessageWindowTable6
+        {
+            get { return messageWindowTable6; }
+            set
+            {
+                messageWindowTable6 = value;
+                OnPropertyChanged("MessageWindowTable6");
+            }
+        }
 
 
-        //private NewWindowTable7 messageWindowTable7;
-        //public NewWindowTable7 MessageWindowTable7
-        //{
-        //    get { return messageWindowTable7; }
-        //    set
-        //    {
-        //        messageWindowTable7 = value;
-        //        OnPropertyChanged("MessageWindowTable7");
-        //    }
-        //}
+        private NewWindowTable7 messageWindowTable7;
+        public NewWindowTable7 MessageWindowTable7
+        {
+            get { return messageWindowTable7; }
+            set
+            {
+                messageWindowTable7 = value;
+                OnPropertyChanged("MessageWindowTable7");
+            }
+        }
 
-        //private NewWindowTable8 messageWindowTable8;
-        //public NewWindowTable8 MessageWindowTable8
-        //{
-        //    get { return messageWindowTable8; }
-        //    set
-        //    {
-        //        messageWindowTable8 = value;
-        //        OnPropertyChanged("MessageWindowTable8");
-        //    }
-        //}
+        private NewWindowTable8 messageWindowTable8;
+        public NewWindowTable8 MessageWindowTable8
+        {
+            get { return messageWindowTable8; }
+            set
+            {
+                messageWindowTable8 = value;
+                OnPropertyChanged("MessageWindowTable8");
+            }
+        }
 
-        //private NewWindowTable9 messageWindowTable9;
-        //public NewWindowTable9 MessageWindowTable9
-        //{
-        //    get { return messageWindowTable9; }
-        //    set
-        //    {
-        //        messageWindowTable9 = value;
-        //        OnPropertyChanged("MessageWindowTable9");
-        //    }
-        //}
+        private NewWindowTable9 messageWindowTable9;
+        public NewWindowTable9 MessageWindowTable9
+        {
+            get { return messageWindowTable9; }
+            set
+            {
+                messageWindowTable9 = value;
+                OnPropertyChanged("MessageWindowTable9");
+            }
+        }
 
-        //private NewWindowTable10 messageWindowTable10;
-        //public NewWindowTable10 MessageWindowTable10
-        //{
-        //    get { return messageWindowTable10; }
-        //    set
-        //    {
-        //        messageWindowTable10 = value;
-        //        OnPropertyChanged("MessageWindowTable10");
-        //    }
-        //}
+        private NewWindowTable10 messageWindowTable10;
+        public NewWindowTable10 MessageWindowTable10
+        {
+            get { return messageWindowTable10; }
+            set
+            {
+                messageWindowTable10 = value;
+                OnPropertyChanged("MessageWindowTable10");
+            }
+        }
 
-        //private NewWindowTable11 messageWindowTable11;
-        //public NewWindowTable11 MessageWindowTable11
-        //{
-        //    get { return messageWindowTable11; }
-        //    set
-        //    {
-        //        messageWindowTable11 = value;
-        //        OnPropertyChanged("MessageWindowTable11");
-        //    }
-        //}
+        private NewWindowTable11 messageWindowTable11;
+        public NewWindowTable11 MessageWindowTable11
+        {
+            get { return messageWindowTable11; }
+            set
+            {
+                messageWindowTable11 = value;
+                OnPropertyChanged("MessageWindowTable11");
+            }
+        }
 
-        //private NewWindowTable12 messageWindowTable12;
-        //public NewWindowTable12 MessageWindowTable12
-        //{
-        //    get { return messageWindowTable12; }
-        //    set
-        //    {
-        //        messageWindowTable12 = value;
-        //        OnPropertyChanged("MessageWindowTable12");
-        //    }
-        //}
+        private NewWindowTable12 messageWindowTable12;
+        public NewWindowTable12 MessageWindowTable12
+        {
+            get { return messageWindowTable12; }
+            set
+            {
+                messageWindowTable12 = value;
+                OnPropertyChanged("MessageWindowTable12");
+            }
+        }
 
-        //private NewWindowTable13 messageWindowTable13;
-        //public NewWindowTable13 MessageWindowTable13
-        //{
-        //    get { return messageWindowTable13; }
-        //    set
-        //    {
-        //        messageWindowTable13 = value;
-        //        OnPropertyChanged("MessageWindowTable13");
-        //    }
-        //}
+        private NewWindowTable13 messageWindowTable13;
+        public NewWindowTable13 MessageWindowTable13
+        {
+            get { return messageWindowTable13; }
+            set
+            {
+                messageWindowTable13 = value;
+                OnPropertyChanged("MessageWindowTable13");
+            }
+        }
 
-        //private NewWindowTable14 messageWindowTable14;
-        //public NewWindowTable14 MessageWindowTable14
-        //{
-        //    get { return messageWindowTable14; }
-        //    set
-        //    {
-        //        messageWindowTable14 = value;
-        //        OnPropertyChanged("MessageWindowTable14");
-        //    }
-        //}
+        private NewWindowTable14 messageWindowTable14;
+        public NewWindowTable14 MessageWindowTable14
+        {
+            get { return messageWindowTable14; }
+            set
+            {
+                messageWindowTable14 = value;
+                OnPropertyChanged("MessageWindowTable14");
+            }
+        }
+
+        private NewWindowTable15 messageWindowTable15;
+        public NewWindowTable15 MessageWindowTable15
+        {
+            get { return messageWindowTable15; }
+            set
+            {
+                messageWindowTable15 = value;
+                OnPropertyChanged("MessageWindowTable15");
+            }
+        }
+        private NewWindowTable16 messageWindowTable16;
+        public NewWindowTable16 MessageWindowTable16
+        {
+            get { return messageWindowTable16; }
+            set
+            {
+                messageWindowTable16 = value;
+                OnPropertyChanged("MessageWindowTable16");
+            }
+        }
+        private NewWindowTable17 messageWindowTable17;
+        public NewWindowTable17 MessageWindowTable17
+        {
+            get { return messageWindowTable17; }
+            set
+            {
+                messageWindowTable17 = value;
+                OnPropertyChanged("MessageWindowTable17");
+            }
+        }
+        private NewWindowTable18 messageWindowTable18;
+        public NewWindowTable18 MessageWindowTable18
+        {
+            get { return messageWindowTable18; }
+            set
+            {
+                messageWindowTable18 = value;
+                OnPropertyChanged("MessageWindowTable18");
+            }
+        }
 
         private string tablesPath = @"C:\ProgramData\DASLSystems\LaboratoryApp\tables";
         public NewWindowTable()
@@ -198,6 +239,20 @@ namespace LaboratoryApp.ViewModel
             AddTable3Command = new SimpleRelayCommand(AddTable3);
             AddTable4Command = new SimpleRelayCommand(AddTable4);
             AddTable4aCommand = new SimpleRelayCommand(AddTable4a);
+            AddTable5Command = new SimpleRelayCommand(AddTable5);
+            AddTable6Command = new SimpleRelayCommand(AddTable6);
+            AddTable7Command = new SimpleRelayCommand(AddTable7);
+            AddTable8Command = new SimpleRelayCommand(AddTable8);
+            AddTable9Command = new SimpleRelayCommand(AddTable9);
+            AddTable10Command = new SimpleRelayCommand(AddTable10);
+            AddTable11Command = new SimpleRelayCommand(AddTable11);
+            AddTable12Command = new SimpleRelayCommand(AddTable12);
+            AddTable13Command = new SimpleRelayCommand(AddTable13);
+            AddTable14Command = new SimpleRelayCommand(AddTable14);
+            AddTable15Command = new SimpleRelayCommand(AddTable15);
+            AddTable16Command = new SimpleRelayCommand(AddTable16);
+            AddTable17Command = new SimpleRelayCommand(AddTable17);
+            AddTable18Command = new SimpleRelayCommand(AddTable18);
 
             System.IO.Directory.CreateDirectory(tablesPath);
         }
@@ -255,7 +310,147 @@ namespace LaboratoryApp.ViewModel
                 base.OnPropertyChanged("AddTable4aCommand");
             }
         }
+        private ICommand addTable5Command;
 
+        public ICommand AddTable5Command
+        {
+            get { return addTable5Command; }
+            set { addTable5Command = value; OnPropertyChanged("AddTable5Command"); }
+        }
+        private ICommand addTable6Command;
+        public ICommand AddTable6Command
+        {
+            get { return addTable6Command; }
+            set { addTable6Command = value; OnPropertyChanged("AddTable6Command"); }
+        }
+
+        private ICommand addTable7Command;
+        public ICommand AddTable7Command
+        {
+            get { return addTable7Command; }
+            set
+            {
+                addTable7Command = value;
+                base.OnPropertyChanged("AddTable7Command");
+            }
+        }
+
+        private ICommand addTable8Command;
+        public ICommand AddTable8Command
+        {
+            get { return addTable8Command; }
+            set
+            {
+                addTable8Command = value;
+                base.OnPropertyChanged("AddTable8Command");
+            }
+        }
+
+        private ICommand addTable9Command;
+        public ICommand AddTable9Command
+        {
+            get { return addTable9Command; }
+            set
+            {
+                addTable9Command = value;
+                base.OnPropertyChanged("AddTable9Command");
+            }
+        }
+
+        private ICommand addTable10Command;
+        public ICommand AddTable10Command
+        {
+            get { return addTable10Command; }
+            set
+            {
+                addTable10Command = value;
+                base.OnPropertyChanged("AddTable10Command");
+            }
+        }
+
+        private ICommand addTable11Command;
+        public ICommand AddTable11Command
+        {
+            get { return addTable11Command; }
+            set
+            {
+                addTable11Command = value;
+                base.OnPropertyChanged("AddTable11Command");
+            }
+        }
+
+        private ICommand addTable12Command;
+        public ICommand AddTable12Command
+        {
+            get { return addTable12Command; }
+            set
+            {
+                addTable12Command = value;
+                base.OnPropertyChanged("AddTable12Command");
+            }
+        }
+
+        private ICommand addTable13Command;
+        public ICommand AddTable13Command
+        {
+            get { return addTable13Command; }
+            set
+            {
+                addTable13Command = value;
+                base.OnPropertyChanged("AddTable13Command");
+            }
+        }
+        private ICommand addTable14Command;
+        public ICommand AddTable14Command
+        {
+            get { return addTable14Command; }
+            set
+            {
+                addTable14Command = value;
+                base.OnPropertyChanged("AddTable14Command");
+            }
+        }
+
+        private ICommand addTable15Command;
+        public ICommand AddTable15Command
+        {
+            get { return addTable15Command; }
+            set
+            {
+                addTable15Command = value;
+                base.OnPropertyChanged("AddTable15Command");
+            }
+        }
+        private ICommand addTable16Command;
+        public ICommand AddTable16Command
+        {
+            get { return addTable16Command; }
+            set
+            {
+                addTable16Command = value;
+                base.OnPropertyChanged("AddTable16Command");
+            }
+        }
+        private ICommand addTable17Command;
+        public ICommand AddTable17Command
+        {
+            get { return addTable17Command; }
+            set
+            {
+                addTable17Command = value;
+                base.OnPropertyChanged("AddTable17Command");
+            }
+        }
+        private ICommand addTable18Command;
+        public ICommand AddTable18Command
+        {
+            get { return addTable18Command; }
+            set
+            {
+                addTable18Command = value;
+                base.OnPropertyChanged("AddTable18Command");
+            }
+        }
 
         private ICommand okCommand;
         public ICommand OKCommand
@@ -576,6 +771,692 @@ namespace LaboratoryApp.ViewModel
                 }
                 //catch { }
                 MessageWindowTable4a.ToConfirm = false;
+            }
+        }
+
+        public void AddTable5()
+        {
+            MessageWindowTable5 = new NewWindowTable5();
+            MessageWindowTable5.IsOpen = true;
+
+            if (MessageWindowTable5.ToConfirm)
+            {
+                //try
+                {
+                    //if (!string.IsNullOrEmpty(MessageWindowTable5.Title))
+                    if (!File.Exists(tablesPath + "\\" + MessageWindowTable5.NameOfFile + ".txt"))
+                    {
+                        //File.Create(tablesPath + "\\" + MessageWindowTable5.NameOfFile + ".txt");
+
+                        CollectionOfTable.Add(MessageWindowTable5.NameOfFile);
+
+                        foreach (var row in MessageWindowTable5.Tab)
+                        {
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + ".txt", row.IdealValue.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + ".txt", row.Percent.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + ".txt", row.ImportantNumber.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + ".txt", row.Constant.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + ".txt", "\n");
+                        }
+
+                        //using (LaboratoryEntities context = new LaboratoryEntities())
+                        //{
+                        //    //type TypeToAdd = new type();
+                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
+
+                        //    //context.types.Add(TypeToAdd);
+                        //    //context.SaveChanges();
+                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
+                        //}
+
+                        //else
+                        {
+                            //MessageBox.Show("Nie wpisano tytułu.");
+                        }
+                    }
+                }
+                //catch { }
+                MessageWindowTable5.ToConfirm = false;
+            }
+        }
+
+        public void AddTable6()
+        {
+            MessageWindowTable6 = new NewWindowTable6();
+            MessageWindowTable6.IsOpen = true;
+
+            if (MessageWindowTable6.ToConfirm)
+            {
+                //try
+                {
+                    //if (!string.IsNullOrEmpty(MessageWindowTable6.Title))
+                    if (!File.Exists(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt"))
+                    {
+                        //File.Create(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt");
+
+                        CollectionOfTable.Add(MessageWindowTable6.NameOfFile);
+
+                        foreach (var row in MessageWindowTable6.Tab)
+                        {
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", row.IdealValue.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", row.Percent.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", row.ImportantNumber.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", row.Constant.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", "\n");
+                        }
+
+                        //using (LaboratoryEntities context = new LaboratoryEntities())
+                        //{
+                        //    //type TypeToAdd = new type();
+                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
+
+                        //    //context.types.Add(TypeToAdd);
+                        //    //context.SaveChanges();
+                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
+                        //}
+
+                        //else
+                        {
+                            //MessageBox.Show("Nie wpisano tytułu.");
+                        }
+                    }
+                }
+                //catch { }
+                MessageWindowTable6.ToConfirm = false;
+            }
+        }
+
+        public void AddTable7()
+        {
+            MessageWindowTable7 = new NewWindowTable7();
+            MessageWindowTable7.IsOpen = true;
+
+            if (MessageWindowTable7.ToConfirm)
+            {
+                //try
+                {
+                    //if (!string.IsNullOrEmpty(MessageWindowTable7.Title))
+                    if (!File.Exists(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt"))
+                    {
+                        //File.Create(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt");
+
+                        CollectionOfTable.Add(MessageWindowTable7.NameOfFile);
+
+                        foreach (var row in MessageWindowTable7.Tab)
+                        {
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", row.IdealValue.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", row.Percent.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", row.ImportantNumber.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", row.Constant.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", "\n");
+                        }
+
+                        //using (LaboratoryEntities context = new LaboratoryEntities())
+                        //{
+                        //    //type TypeToAdd = new type();
+                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
+
+                        //    //context.types.Add(TypeToAdd);
+                        //    //context.SaveChanges();
+                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
+                        //}
+
+                        //else
+                        {
+                            //MessageBox.Show("Nie wpisano tytułu.");
+                        }
+                    }
+                }
+                //catch { }
+                MessageWindowTable7.ToConfirm = false;
+            }
+        }
+
+        public void AddTable8()
+        {
+            MessageWindowTable8 = new NewWindowTable8();
+            MessageWindowTable8.IsOpen = true;
+
+            if (MessageWindowTable8.ToConfirm)
+            {
+                //try
+                {
+                    //if (!string.IsNullOrEmpty(MessageWindowTable8.Title))
+                    if (!File.Exists(tablesPath + "\\" + MessageWindowTable8.NameOfFile + ".txt"))
+                    {
+                        //File.Create(tablesPath + "\\" + MessageWindowTable8.NameOfFile + ".txt");
+
+                        CollectionOfTable.Add(MessageWindowTable8.NameOfFile);
+
+                        foreach (var row in MessageWindowTable8.Tab)
+                        {
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + ".txt", row.IdealValue.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + ".txt", row.Percent.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + ".txt", row.ImportantNumber.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + ".txt", row.Constant.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + ".txt", "\n");
+                        }
+
+                        //using (LaboratoryEntities context = new LaboratoryEntities())
+                        //{
+                        //    //type TypeToAdd = new type();
+                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
+
+                        //    //context.types.Add(TypeToAdd);
+                        //    //context.SaveChanges();
+                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
+                        //}
+
+                        //else
+                        {
+                            //MessageBox.Show("Nie wpisano tytułu.");
+                        }
+                    }
+                }
+                //catch { }
+                MessageWindowTable8.ToConfirm = false;
+            }
+        }
+
+        public void AddTable9()
+        {
+            MessageWindowTable9 = new NewWindowTable9();
+            MessageWindowTable9.IsOpen = true;
+
+            if (MessageWindowTable9.ToConfirm)
+            {
+                //try
+                {
+                    //if (!string.IsNullOrEmpty(MessageWindowTable9.Title))
+                    if (!File.Exists(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt"))
+                    {
+                        //File.Create(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt");
+
+                        CollectionOfTable.Add(MessageWindowTable9.NameOfFile);
+
+                        foreach (var row in MessageWindowTable9.Tab)
+                        {
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", row.IdealValue.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", row.Percent.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", row.ImportantNumber.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", row.Constant.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", "\n");
+                        }
+
+                        //using (LaboratoryEntities context = new LaboratoryEntities())
+                        //{
+                        //    //type TypeToAdd = new type();
+                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
+
+                        //    //context.types.Add(TypeToAdd);
+                        //    //context.SaveChanges();
+                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
+                        //}
+
+                        //else
+                        {
+                            //MessageBox.Show("Nie wpisano tytułu.");
+                        }
+                    }
+                }
+                //catch { }
+                MessageWindowTable9.ToConfirm = false;
+            }
+        }
+
+        public void AddTable10()
+        {
+            MessageWindowTable10 = new NewWindowTable10();
+            MessageWindowTable10.IsOpen = true;
+
+            if (MessageWindowTable10.ToConfirm)
+            {
+                //try
+                {
+                    //if (!string.IsNullOrEmpty(MessageWindowTable10.Title))
+                    if (!File.Exists(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt"))
+                    {
+                        //File.Create(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt");
+
+                        CollectionOfTable.Add(MessageWindowTable10.NameOfFile);
+
+                        foreach (var row in MessageWindowTable10.Tab)
+                        {
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", row.IdealValue.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", row.Percent.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", row.ImportantNumber.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", row.Constant.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", "\n");
+                        }
+
+                        //using (LaboratoryEntities context = new LaboratoryEntities())
+                        //{
+                        //    //type TypeToAdd = new type();
+                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
+
+                        //    //context.types.Add(TypeToAdd);
+                        //    //context.SaveChanges();
+                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
+                        //}
+
+                        //else
+                        {
+                            //MessageBox.Show("Nie wpisano tytułu.");
+                        }
+                    }
+                }
+                //catch { }
+                MessageWindowTable10.ToConfirm = false;
+            }
+        }
+
+        public void AddTable11()
+        {
+            MessageWindowTable11 = new NewWindowTable11();
+            MessageWindowTable11.IsOpen = true;
+
+            if (MessageWindowTable11.ToConfirm)
+            {
+                //try
+                {
+                    //if (!string.IsNullOrEmpty(MessageWindowTable11.Title))
+                    if (!File.Exists(tablesPath + "\\" + MessageWindowTable11.NameOfFile + ".txt"))
+                    {
+                        //File.Create(tablesPath + "\\" + MessageWindowTable11.NameOfFile + ".txt");
+
+                        CollectionOfTable.Add(MessageWindowTable11.NameOfFile);
+
+                        foreach (var row in MessageWindowTable11.Tab)
+                        {
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + ".txt", row.IdealValue.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + ".txt", row.Percent.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + ".txt", row.ImportantNumber.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + ".txt", row.Constant.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + ".txt", "\n");
+                        }
+
+                        //using (LaboratoryEntities context = new LaboratoryEntities())
+                        //{
+                        //    //type TypeToAdd = new type();
+                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
+
+                        //    //context.types.Add(TypeToAdd);
+                        //    //context.SaveChanges();
+                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
+                        //}
+
+                        //else
+                        {
+                            //MessageBox.Show("Nie wpisano tytułu.");
+                        }
+                    }
+                }
+                //catch { }
+                MessageWindowTable11.ToConfirm = false;
+            }
+        }
+
+        public void AddTable12()
+        {
+            MessageWindowTable12 = new NewWindowTable12();
+            MessageWindowTable12.IsOpen = true;
+
+            if (MessageWindowTable12.ToConfirm)
+            {
+                //try
+                {
+                    //if (!string.IsNullOrEmpty(MessageWindowTable12.Title))
+                    if (!File.Exists(tablesPath + "\\" + MessageWindowTable12.NameOfFile + ".txt"))
+                    {
+                        //File.Create(tablesPath + "\\" + MessageWindowTable12.NameOfFile + ".txt");
+
+                        CollectionOfTable.Add(MessageWindowTable12.NameOfFile);
+
+                        foreach (var row in MessageWindowTable12.Tab)
+                        {
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + ".txt", row.IdealValue.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + ".txt", row.Percent.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + ".txt", row.ImportantNumber.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + ".txt", row.Constant.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + ".txt", "\n");
+                        }
+
+                        //using (LaboratoryEntities context = new LaboratoryEntities())
+                        //{
+                        //    //type TypeToAdd = new type();
+                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
+
+                        //    //context.types.Add(TypeToAdd);
+                        //    //context.SaveChanges();
+                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
+                        //}
+
+                        //else
+                        {
+                            //MessageBox.Show("Nie wpisano tytułu.");
+                        }
+                    }
+                }
+                //catch { }
+                MessageWindowTable12.ToConfirm = false;
+            }
+        }
+
+        public void AddTable13()
+        {
+            MessageWindowTable13 = new NewWindowTable13();
+            MessageWindowTable13.IsOpen = true;
+
+            if (MessageWindowTable13.ToConfirm)
+            {
+                //try
+                {
+                    //if (!string.IsNullOrEmpty(MessageWindowTable13.Title))
+                    if (!File.Exists(tablesPath + "\\" + MessageWindowTable13.NameOfFile + ".txt"))
+                    {
+                        //File.Create(tablesPath + "\\" + MessageWindowTable13.NameOfFile + ".txt");
+
+                        CollectionOfTable.Add(MessageWindowTable13.NameOfFile);
+
+                        foreach (var row in MessageWindowTable13.Tab)
+                        {
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + ".txt", row.IdealValue.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + ".txt", row.Percent.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + ".txt", row.ImportantNumber.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + ".txt", row.Constant.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + ".txt", "\n");
+                        }
+
+                        //using (LaboratoryEntities context = new LaboratoryEntities())
+                        //{
+                        //    //type TypeToAdd = new type();
+                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
+
+                        //    //context.types.Add(TypeToAdd);
+                        //    //context.SaveChanges();
+                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
+                        //}
+
+                        //else
+                        {
+                            //MessageBox.Show("Nie wpisano tytułu.");
+                        }
+                    }
+                }
+                //catch { }
+                MessageWindowTable13.ToConfirm = false;
+            }
+        }
+
+        public void AddTable14()
+        {
+            MessageWindowTable14 = new NewWindowTable14();
+            MessageWindowTable14.IsOpen = true;
+
+            if (MessageWindowTable14.ToConfirm)
+            {
+                //try
+                {
+                    //if (!string.IsNullOrEmpty(MessageWindowTable14.Title))
+                    if (!File.Exists(tablesPath + "\\" + MessageWindowTable14.NameOfFile + ".txt"))
+                    {
+                        //File.Create(tablesPath + "\\" + MessageWindowTable14.NameOfFile + ".txt");
+
+                        CollectionOfTable.Add(MessageWindowTable14.NameOfFile);
+
+                        foreach (var row in MessageWindowTable14.Tab)
+                        {
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + ".txt", row.IdealValue.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + ".txt", row.Percent.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + ".txt", row.ImportantNumber.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + ".txt", row.Constant.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + ".txt", "\n");
+                        }
+
+                        //using (LaboratoryEntities context = new LaboratoryEntities())
+                        //{
+                        //    //type TypeToAdd = new type();
+                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
+
+                        //    //context.types.Add(TypeToAdd);
+                        //    //context.SaveChanges();
+                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
+                        //}
+
+                        //else
+                        {
+                            //MessageBox.Show("Nie wpisano tytułu.");
+                        }
+                    }
+                }
+                //catch { }
+                MessageWindowTable14.ToConfirm = false;
+            }
+        }
+
+        public void AddTable15()
+        {
+            MessageWindowTable15 = new NewWindowTable15();
+            MessageWindowTable15.IsOpen = true;
+
+            if (MessageWindowTable15.ToConfirm)
+            {
+                //try
+                {
+                    //if (!string.IsNullOrEmpty(MessageWindowTable15.Title))
+                    if (!File.Exists(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt"))
+                    {
+                        //File.Create(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt");
+
+                        CollectionOfTable.Add(MessageWindowTable15.NameOfFile);
+
+                        foreach (var row in MessageWindowTable15.Tab)
+                        {
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", row.IdealValue.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", row.Percent.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", row.ImportantNumber.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", row.Constant.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", "\n");
+                        }
+
+                        //using (LaboratoryEntities context = new LaboratoryEntities())
+                        //{
+                        //    //type TypeToAdd = new type();
+                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
+
+                        //    //context.types.Add(TypeToAdd);
+                        //    //context.SaveChanges();
+                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
+                        //}
+
+                        //else
+                        {
+                            //MessageBox.Show("Nie wpisano tytułu.");
+                        }
+                    }
+                }
+                //catch { }
+                MessageWindowTable15.ToConfirm = false;
+            }
+        }
+
+        public void AddTable16()
+        {
+            MessageWindowTable16 = new NewWindowTable16();
+            MessageWindowTable16.IsOpen = true;
+
+            if (MessageWindowTable16.ToConfirm)
+            {
+                //try
+                {
+                    //if (!string.IsNullOrEmpty(MessageWindowTable16.Title))
+                    if (!File.Exists(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt"))
+                    {
+                        //File.Create(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt");
+
+                        CollectionOfTable.Add(MessageWindowTable16.NameOfFile);
+
+                        foreach (var row in MessageWindowTable16.Tab)
+                        {
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", row.IdealValue.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", row.Percent.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", row.ImportantNumber.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", row.Constant.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", "\n");
+                        }
+
+                        //using (LaboratoryEntities context = new LaboratoryEntities())
+                        //{
+                        //    //type TypeToAdd = new type();
+                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
+
+                        //    //context.types.Add(TypeToAdd);
+                        //    //context.SaveChanges();
+                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
+                        //}
+
+                        //else
+                        {
+                            //MessageBox.Show("Nie wpisano tytułu.");
+                        }
+                    }
+                }
+                //catch { }
+                MessageWindowTable16.ToConfirm = false;
+            }
+        }
+
+        public void AddTable17()
+        {
+            MessageWindowTable17 = new NewWindowTable17();
+            MessageWindowTable17.IsOpen = true;
+
+            if (MessageWindowTable17.ToConfirm)
+            {
+                //try
+                {
+                    //if (!string.IsNullOrEmpty(MessageWindowTable17.Title))
+                    if (!File.Exists(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt"))
+                    {
+                        //File.Create(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt");
+
+                        CollectionOfTable.Add(MessageWindowTable17.NameOfFile);
+
+                        foreach (var row in MessageWindowTable17.Tab)
+                        {
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", row.IdealValue.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", row.Percent.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", row.ImportantNumber.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", row.Constant.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", "\n");
+                        }
+
+                        //using (LaboratoryEntities context = new LaboratoryEntities())
+                        //{
+                        //    //type TypeToAdd = new type();
+                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
+
+                        //    //context.types.Add(TypeToAdd);
+                        //    //context.SaveChanges();
+                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
+                        //}
+
+                        //else
+                        {
+                            //MessageBox.Show("Nie wpisano tytułu.");
+                        }
+                    }
+                }
+                //catch { }
+                MessageWindowTable17.ToConfirm = false;
+            }
+        }
+
+        public void AddTable18()
+        {
+            MessageWindowTable18 = new NewWindowTable18();
+            MessageWindowTable18.IsOpen = true;
+
+            if (MessageWindowTable18.ToConfirm)
+            {
+                //try
+                {
+                    //if (!string.IsNullOrEmpty(MessageWindowTable18.Title))
+                    if (!File.Exists(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt"))
+                    {
+                        //File.Create(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt");
+
+                        CollectionOfTable.Add(MessageWindowTable18.NameOfFile);
+
+                        foreach (var row in MessageWindowTable18.Tab)
+                        {
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", row.IdealValue.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", row.Percent.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", row.ImportantNumber.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", row.Constant.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", "\n");
+                        }
+
+                        //using (LaboratoryEntities context = new LaboratoryEntities())
+                        //{
+                        //    //type TypeToAdd = new type();
+                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
+
+                        //    //context.types.Add(TypeToAdd);
+                        //    //context.SaveChanges();
+                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
+                        //}
+
+                        //else
+                        {
+                            //MessageBox.Show("Nie wpisano tytułu.");
+                        }
+                    }
+                }
+                //catch { }
+                MessageWindowTable18.ToConfirm = false;
             }
         }
     }
