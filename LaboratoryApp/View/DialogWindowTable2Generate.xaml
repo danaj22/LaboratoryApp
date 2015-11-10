@@ -3,13 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="920">
+             mc:Ignorable="d" Width="966" Height="360">
     <Grid>
         <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" Height="348" Width="787">
             <DataGrid.Columns>
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Nastawiona wartość częstotliwości napięcia przemiennego o wartości 230V [Hz]" Binding="{Binding IdealValue}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Wartość częstotliwości napięcia przemiennego na mierniku sprawdzanym [Hz]" Binding="{Binding MeasureValue}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="30" Header="Przedrostek" Binding="{Binding Prefix}" />
+
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Nastawiona wartość częstotliwości napięcia przemiennego o wartości 230V [Hz]" Binding="{Binding IdealValue}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Różnica częstotliwości na mierniku sprawdzanym i kontrolnym [Hz]" Binding="{Binding Difference}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Dopuszczalna dolna wartość limitu błędu mierzonej częstotliwości [Hz]" Binding="{Binding DownMeasureError}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Dopuszczalna górna wartość limitu błędu mierzonej częstotliwości [Hz]" Binding="{Binding UpMeasureError}" />
@@ -17,17 +18,17 @@
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Niepewność całkowita rozszerzona typu (B+A) pomiaru pomiaru częstotliwości ±2S(x)" Binding="{Binding ErrorInPercent}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Ok" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="718,10,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Ok" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="745,11,0,0" VerticalAlignment="Top" Width="75"/>
 
-        <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="718,92,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Generuj" Command="{Binding GenerateRandomValuesCommand}" HorizontalAlignment="Left" Margin="718,52,0,0" VerticalAlignment="Top" Width="75"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="802,43,0,0" TextWrapping="Wrap" Text="{Binding MinValue}" VerticalAlignment="Top" Width="108"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="802,91,0,0" TextWrapping="Wrap" Text="{Binding MaxValue}" VerticalAlignment="Top" Width="108"/>
-        <Label Content="dolna wartość:" HorizontalAlignment="Left" Margin="811,17,0,0" VerticalAlignment="Top"/>
-        <Label Content="górna wartość:" HorizontalAlignment="Left" Margin="811,67,0,0" VerticalAlignment="Top"/>
-        <RadioButton Content="+ +" IsChecked="{Binding HighLevel}" HorizontalAlignment="Left" Margin="802,145,0,0" VerticalAlignment="Top"/>
-        <RadioButton Content="- -" IsChecked="{Binding LowLevel}" HorizontalAlignment="Left" Margin="802,168,0,0" VerticalAlignment="Top"/>
-        <RadioButton Content="+ -" IsChecked="{Binding CenterLevel}" HorizontalAlignment="Left" Margin="802,191,0,0" VerticalAlignment="Top"/>
+        <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="745,93,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Generuj" Command="{Binding GenerateRandomValuesCommand}" HorizontalAlignment="Left" Margin="745,53,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="829,44,0,0" TextWrapping="Wrap" Text="{Binding MinValue}" VerticalAlignment="Top" Width="108"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="829,92,0,0" TextWrapping="Wrap" Text="{Binding MaxValue}" VerticalAlignment="Top" Width="108"/>
+        <Label Content="dolna wartość:" HorizontalAlignment="Left" Margin="838,18,0,0" VerticalAlignment="Top"/>
+        <Label Content="górna wartość:" HorizontalAlignment="Left" Margin="838,68,0,0" VerticalAlignment="Top"/>
+        <RadioButton Content="+ +" IsChecked="{Binding HighLevel}" HorizontalAlignment="Left" Margin="829,146,0,0" VerticalAlignment="Top"/>
+        <RadioButton Content="- -" IsChecked="{Binding LowLevel}" HorizontalAlignment="Left" Margin="829,169,0,0" VerticalAlignment="Top"/>
+        <RadioButton Content="+ -" IsChecked="{Binding CenterLevel}" HorizontalAlignment="Left" Margin="829,192,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>

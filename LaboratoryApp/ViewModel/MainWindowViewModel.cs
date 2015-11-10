@@ -20,7 +20,55 @@ namespace LaboratoryApp.ViewModel
     public class MainWindowViewModel : ObservableObject
     {
 
+        #region fields
+        private bool isCheckedName;
+        public bool IsCheckedName
+        {
+            get { return isCheckedName; }
+            set
+            {
+                isCheckedName = value;
+                OnPropertyChanged("IsCheckedName");
+            }
+        }
 
+        private bool isCheckedNip;
+        public bool IsCheckedNip
+        {
+            get { return isCheckedNip; }
+            set
+            {
+                isCheckedNip = value;
+                OnPropertyChanged("IsCheckedNip");
+            }
+        }
+        private bool isCheckedSerial = true;
+        public bool IsCheckedSerial
+        {
+            get { return isCheckedSerial; }
+            set
+            {
+                isCheckedSerial = value;
+                OnPropertyChanged("IsCheckedSerial");
+            }
+        }
+        public string SearchItem { get; set; }
+        public ICommand LoadContent { get; set; }
+        public ICommand SearchCommand
+        {
+            get { return new SimpleRelayCommand(Search); }
+        }
+        private ICommand addNewMeasureCommand;
+
+        public ICommand AddNewMeasureCommand
+        {
+            get { return addNewMeasureCommand; }
+            set
+            {
+                addNewMeasureCommand = value;
+                OnPropertyChanged("AddNewMeasureCommand");
+            }
+        }
         public static LaboratoryEntities Context = new LaboratoryEntities();
         private ObservableCollection<string> listOfUsers = new ObservableCollection<string>();
 
@@ -144,6 +192,7 @@ namespace LaboratoryApp.ViewModel
                 this.OnPropertyChanged("CurrentViewModel");
             }
         }
+        #endregion
 
         static public void LoadView()
         {
@@ -165,6 +214,7 @@ namespace LaboratoryApp.ViewModel
         static public string usersApplication = @"C:\ProgramData\DASLSystems\LaboratoryApp\users.txt";
         static public string certificatesPath = @"C:\ProgramData\DASLSystems\LaboratoryApp\cert.txt";
 
+        #region constructor
 
         public MainWindowViewModel()
         {
@@ -235,55 +285,10 @@ namespace LaboratoryApp.ViewModel
 
 
         }
+        #endregion
 
-        private bool isCheckedName;
-        public bool IsCheckedName
-        {
-            get { return isCheckedName; }
-            set
-            {
-                isCheckedName = value;
-                OnPropertyChanged("IsCheckedName");
-            }
-        }
 
-        private bool isCheckedNip;
-        public bool IsCheckedNip
-        {
-            get { return isCheckedNip; }
-            set
-            {
-                isCheckedNip = value;
-                OnPropertyChanged("IsCheckedNip");
-            }
-        }
-        private bool isCheckedSerial = true;
-        public bool IsCheckedSerial
-        {
-            get { return isCheckedSerial; }
-            set
-            {
-                isCheckedSerial = value;
-                OnPropertyChanged("IsCheckedSerial");
-            }
-        }
-        public string SearchItem { get; set; }
-        public ICommand LoadContent { get; set; }
-        public ICommand SearchCommand
-        {
-            get { return new SimpleRelayCommand(Search); }
-        }
-        private ICommand addNewMeasureCommand;
-
-        public ICommand AddNewMeasureCommand
-        {
-            get { return addNewMeasureCommand; }
-            set 
-            { 
-                addNewMeasureCommand = value;
-                OnPropertyChanged("AddNewMeasureCommand");
-            }
-        }
+        
         private void AddNewMeasure()
         {
             MessageWindowUser = new NewWindowUser();

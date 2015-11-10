@@ -13,6 +13,7 @@ namespace LaboratoryApp.ViewModel
             OKCommand = new SimpleRelayCommand(Confirm);
             CancelCommand = new SimpleRelayCommand(Close);
 
+
         }
     }
 }

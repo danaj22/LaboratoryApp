@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="LaboratoryApp.View.DialogWindowTable7Generate"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ViewModel="clr-namespace:LaboratoryApp.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" Width="994">
+    <UserControl.Resources>
+        <ControlTemplate x:Key="errorTemplate">
+            <DockPanel LastChildFill="true">
+                <Border Width="20" ToolTip="{Binding AdornedElement.(Validation.Errors)[0].ErrorContent, ElementName=adoner}" Margin="3,0,0,0" Height="20" DockPanel.Dock="right" CornerRadius="5" Background="OrangeRed">
+                    <TextBlock VerticalAlignment="center" Text="!" HorizontalAlignment="center" FontWeight="Bold" Foreground="white"/>
+                </Border>
+                <AdornedElementPlaceholder x:Name="adoner" VerticalAlignment="Center">
+                    <Border BorderBrush="OrangeRed" BorderThickness="1"/>
+                </AdornedElementPlaceholder>
+            </DockPanel>
+        </ControlTemplate>
+        <Style x:Key="textBoxError" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip" Value="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={x:Static RelativeSource.Self}}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" Margin="10,10,10,0" VerticalAlignment="Top" Height="380">
+            <DataGrid.Columns>
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Wartość rezystancji mierzonej na mierniku sprawdzanym dla napięcia 50V [Ω]" Binding="{Binding MeasureValue}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="30" Header="Przedrostek" Binding="{Binding Prefix}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="88" Header="Wartość rezystancji nastawionej na dekadzie kontrolnej [Ω]" Binding="{Binding IdealValue}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Różnica wartości rezystancji na mierniku sprawdzanym i dekadzie kontrolnej przy 50V [Ω]" Binding="{Binding Difference}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Wartość rezystancji na mierniku sprawdzanym dla napięcia 25V [Ω]" Binding="{Binding MeasureValue25V}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Różnica wartości rezystancji na mierniku sprawdzanym i dekadzie kontrolnej przy 25V [Ω]" Binding="{Binding Difference25V}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna wartość błędu bezwzględnego mierzonej rezystancji dla napięcia 50V [Ω]" Binding="{Binding RelativeError}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna wartość błędu bezwzględnego mierzonej rezystancji dla napięcia 25V [Ω]" Binding="{Binding RelativeError25V}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B pomiaru rezystancji ±2S(x) [Ω]" Binding="{Binding ErrorInValue}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B pomiaru rezystancji ±2S(x)" Binding="{Binding ErrorInPercent}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Ok" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="775,27,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="775,102,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Generuj" Command="{Binding GenerateRandomValuesCommand}" HorizontalAlignment="Left" Margin="775,62,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="859,53,0,0" TextWrapping="Wrap" Text="{Binding MinValue}" VerticalAlignment="Top" Width="108"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="859,101,0,0" TextWrapping="Wrap" Text="{Binding MaxValue}" VerticalAlignment="Top" Width="108"/>
+        <Label Content="dolna wartość:" HorizontalAlignment="Left" Margin="868,27,0,0" VerticalAlignment="Top"/>
+        <Label Content="górna wartość:" HorizontalAlignment="Left" Margin="868,77,0,0" VerticalAlignment="Top"/>
+        <RadioButton Content="+ +" IsChecked="{Binding HighLevel}" HorizontalAlignment="Left" Margin="859,155,0,0" VerticalAlignment="Top"/>
+        <RadioButton Content="- -" IsChecked="{Binding LowLevel}" HorizontalAlignment="Left" Margin="859,178,0,0" VerticalAlignment="Top"/>
+        <RadioButton Content="+ -" IsChecked="{Binding CenterLevel}" HorizontalAlignment="Left" Margin="859,201,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</UserControl>

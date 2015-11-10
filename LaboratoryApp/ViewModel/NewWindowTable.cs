@@ -547,6 +547,13 @@ namespace LaboratoryApp.ViewModel
 
                         foreach (var row in MessageWindowTable1.Tab)
                         {
+
+                            if (!string.IsNullOrEmpty(row.Prefix))
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + ".txt", row.Prefix.ToString());
+                            }
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + ".txt", "\t");
+
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + ".txt", row.IdealValue.ToString());
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + ".txt", "\t");
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + ".txt", row.Percent.ToString());
@@ -557,21 +564,21 @@ namespace LaboratoryApp.ViewModel
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + ".txt", "\n");
                         }
 
-                        //using (LaboratoryEntities context = new LaboratoryEntities())
-                        //{
-                        //    //type TypeToAdd = new type();
-                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
-
-                        //    //context.types.Add(TypeToAdd);
-                        //    //context.SaveChanges();
-                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
-                        //}
-
-                        //else
-                        {
-                            //MessageBox.Show("Nie wpisano tytułu.");
-                        }
                     }
+                    if (!File.Exists(tablesPath + "\\" + MessageWindowTable1.NameOfFile + "$.txt"))
+                    {
+                        foreach (var row in MessageWindowTable1.Tab)
+                        {
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + "$.txt", row.PercentIdeal.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + "$.txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + "$.txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + "$.txt", "\n");
+                        }
+
+                    }
+
                 }
                 //catch { }
                 MessageWindowTable1.ToConfirm = false;
@@ -596,6 +603,11 @@ namespace LaboratoryApp.ViewModel
 
                         foreach (var row in MessageWindowTable2.Tab)
                         {
+                            if (!string.IsNullOrEmpty(row.Prefix))
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + ".txt", row.Prefix.ToString());
+                            }
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + ".txt", "\t");
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + ".txt", row.IdealValue.ToString());
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + ".txt", "\t");
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + ".txt", row.Percent.ToString());
@@ -606,19 +618,18 @@ namespace LaboratoryApp.ViewModel
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + ".txt", "\n");
                         }
 
-                        //using (LaboratoryEntities context = new LaboratoryEntities())
-                        //{
-                        //    //type TypeToAdd = new type();
-                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
-
-                        //    //context.types.Add(TypeToAdd);
-                        //    //context.SaveChanges();
-                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
-                        //}
-
-                        //else
+                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable2.NameOfFile + "$.txt"))
                         {
-                            //MessageBox.Show("Nie wpisano tytułu.");
+                            foreach (var row in MessageWindowTable2.Tab)
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + "$.txt", row.PercentIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + "$.txt", "\n");
+                            }
+
                         }
                     }
                 }
@@ -645,6 +656,11 @@ namespace LaboratoryApp.ViewModel
 
                         foreach (var row in MessageWindowTable3.Tab)
                         {
+                            if(!string.IsNullOrEmpty(row.Prefix))
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + ".txt", row.Prefix.ToString());
+                            }
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + ".txt", "\t");
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + ".txt", row.IdealValue.ToString());
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + ".txt", "\t");
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + ".txt", row.Percent.ToString());
@@ -654,20 +670,18 @@ namespace LaboratoryApp.ViewModel
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + ".txt", row.Constant.ToString());
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + ".txt", "\n");
                         }
-
-                        //using (LaboratoryEntities context = new LaboratoryEntities())
-                        //{
-                        //    //type TypeToAdd = new type();
-                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
-
-                        //    //context.types.Add(TypeToAdd);
-                        //    //context.SaveChanges();
-                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
-                        //}
-
-                        //else
+                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable3.NameOfFile + "$.txt"))
                         {
-                            //MessageBox.Show("Nie wpisano tytułu.");
+                            foreach (var row in MessageWindowTable3.Tab)
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + "$.txt", row.PercentIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + "$.txt", "\n");
+                            }
+
                         }
                     }
                 }
@@ -693,7 +707,18 @@ namespace LaboratoryApp.ViewModel
                         CollectionOfTable.Add(MessageWindowTable4.NameOfFile);
 
                         foreach (var row in MessageWindowTable4.Tab)
+                        
                         {
+                            if (!string.IsNullOrEmpty(row.Prefix))
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt", row.Prefix.ToString());
+                            }
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt", "\t");
+                            //different in this window
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt", row.ValueOfIsolation.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt", "\t");
+                           
+                            //the same...
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt", row.IdealValue.ToString());
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt", "\t");
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt", row.Percent.ToString());
@@ -703,20 +728,18 @@ namespace LaboratoryApp.ViewModel
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt", row.Constant.ToString());
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt", "\n");
                         }
-
-                        //using (LaboratoryEntities context = new LaboratoryEntities())
-                        //{
-                        //    //type TypeToAdd = new type();
-                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
-
-                        //    //context.types.Add(TypeToAdd);
-                        //    //context.SaveChanges();
-                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
-                        //}
-
-                        //else
+                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable4.NameOfFile + "$.txt"))
                         {
-                            //MessageBox.Show("Nie wpisano tytułu.");
+                            foreach (var row in MessageWindowTable4.Tab)
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + "$.txt", row.PercentIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + "$.txt", "\n");
+                            }
+
                         }
                     }
                 }
@@ -753,19 +776,18 @@ namespace LaboratoryApp.ViewModel
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + ".txt", "\n");
                         }
 
-                        //using (LaboratoryEntities context = new LaboratoryEntities())
-                        //{
-                        //    //type TypeToAdd = new type();
-                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
-
-                        //    //context.types.Add(TypeToAdd);
-                        //    //context.SaveChanges();
-                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
-                        //}
-
-                        //else
+                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + "$.txt"))
                         {
-                            //MessageBox.Show("Nie wpisano tytułu.");
+                            foreach (var row in MessageWindowTable4a.Tab)
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + "$.txt", row.PercentIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + "$.txt", "\n");
+                            }
+
                         }
                     }
                 }
@@ -801,20 +823,18 @@ namespace LaboratoryApp.ViewModel
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + ".txt", row.Constant.ToString());
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + ".txt", "\n");
                         }
-
-                        //using (LaboratoryEntities context = new LaboratoryEntities())
-                        //{
-                        //    //type TypeToAdd = new type();
-                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
-
-                        //    //context.types.Add(TypeToAdd);
-                        //    //context.SaveChanges();
-                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
-                        //}
-
-                        //else
+                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable5.NameOfFile + "$.txt"))
                         {
-                            //MessageBox.Show("Nie wpisano tytułu.");
+                            foreach (var row in MessageWindowTable5.Tab)
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + "$.txt", row.PercentIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + "$.txt", "\n");
+                            }
+
                         }
                     }
                 }
@@ -841,6 +861,10 @@ namespace LaboratoryApp.ViewModel
 
                         foreach (var row in MessageWindowTable6.Tab)
                         {
+                            //diffrent line...
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", row.Multiples.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", "\t");
+
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", row.IdealValue.ToString());
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", "\t");
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", row.Percent.ToString());
@@ -851,19 +875,18 @@ namespace LaboratoryApp.ViewModel
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", "\n");
                         }
 
-                        //using (LaboratoryEntities context = new LaboratoryEntities())
-                        //{
-                        //    //type TypeToAdd = new type();
-                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
-
-                        //    //context.types.Add(TypeToAdd);
-                        //    //context.SaveChanges();
-                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
-                        //}
-
-                        //else
+                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable6.NameOfFile + "$.txt"))
                         {
-                            //MessageBox.Show("Nie wpisano tytułu.");
+                            foreach (var row in MessageWindowTable6.Tab)
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + "$.txt", row.PercentIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + "$.txt", "\n");
+                            }
+
                         }
                     }
                 }
@@ -890,6 +913,11 @@ namespace LaboratoryApp.ViewModel
 
                         foreach (var row in MessageWindowTable7.Tab)
                         {
+                            if (!string.IsNullOrEmpty(row.Prefix))
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", row.Prefix.ToString());
+                            }
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", "\t");
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", row.IdealValue.ToString());
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", "\t");
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", row.Percent.ToString());
@@ -900,19 +928,18 @@ namespace LaboratoryApp.ViewModel
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", "\n");
                         }
 
-                        //using (LaboratoryEntities context = new LaboratoryEntities())
-                        //{
-                        //    //type TypeToAdd = new type();
-                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
-
-                        //    //context.types.Add(TypeToAdd);
-                        //    //context.SaveChanges();
-                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
-                        //}
-
-                        //else
+                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable7.NameOfFile + "$.txt"))
                         {
-                            //MessageBox.Show("Nie wpisano tytułu.");
+                            foreach (var row in MessageWindowTable7.Tab)
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + "$.txt", row.PercentIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + "$.txt", "\n");
+                            }
+
                         }
                     }
                 }
@@ -949,19 +976,18 @@ namespace LaboratoryApp.ViewModel
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + ".txt", "\n");
                         }
 
-                        //using (LaboratoryEntities context = new LaboratoryEntities())
-                        //{
-                        //    //type TypeToAdd = new type();
-                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
-
-                        //    //context.types.Add(TypeToAdd);
-                        //    //context.SaveChanges();
-                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
-                        //}
-
-                        //else
+                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable8.NameOfFile + "$.txt"))
                         {
-                            //MessageBox.Show("Nie wpisano tytułu.");
+                            foreach (var row in MessageWindowTable8.Tab)
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + "$.txt", row.PercentIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + "$.txt", "\n");
+                            }
+
                         }
                     }
                 }
@@ -988,6 +1014,10 @@ namespace LaboratoryApp.ViewModel
 
                         foreach (var row in MessageWindowTable9.Tab)
                         {
+                            //diffrent line...
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", row.Multiples.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", "\t");
+
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", row.IdealValue.ToString());
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", "\t");
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", row.Percent.ToString());
@@ -998,19 +1028,18 @@ namespace LaboratoryApp.ViewModel
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", "\n");
                         }
 
-                        //using (LaboratoryEntities context = new LaboratoryEntities())
-                        //{
-                        //    //type TypeToAdd = new type();
-                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
-
-                        //    //context.types.Add(TypeToAdd);
-                        //    //context.SaveChanges();
-                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
-                        //}
-
-                        //else
+                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable9.NameOfFile + "$.txt"))
                         {
-                            //MessageBox.Show("Nie wpisano tytułu.");
+                            foreach (var row in MessageWindowTable9.Tab)
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + "$.txt", row.PercentIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + "$.txt", "\n");
+                            }
+
                         }
                     }
                 }
@@ -1037,6 +1066,19 @@ namespace LaboratoryApp.ViewModel
 
                         foreach (var row in MessageWindowTable10.Tab)
                         {
+                            if (!string.IsNullOrEmpty(row.Prefix))
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", row.Prefix.ToString());
+                            }
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", "\t");
+                            //diffrent lines...
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", row.Multiples.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", row.SymulatedResistance.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", row.ResistanceMeasure.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", "\t");
+
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", row.IdealValue.ToString());
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", "\t");
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", row.Percent.ToString());
@@ -1046,20 +1088,18 @@ namespace LaboratoryApp.ViewModel
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", row.Constant.ToString());
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", "\n");
                         }
-
-                        //using (LaboratoryEntities context = new LaboratoryEntities())
-                        //{
-                        //    //type TypeToAdd = new type();
-                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
-
-                        //    //context.types.Add(TypeToAdd);
-                        //    //context.SaveChanges();
-                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
-                        //}
-
-                        //else
+                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable10.NameOfFile + "$.txt"))
                         {
-                            //MessageBox.Show("Nie wpisano tytułu.");
+                            foreach (var row in MessageWindowTable10.Tab)
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + "$.txt", row.PercentIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + "$.txt", "\n");
+                            }
+
                         }
                     }
                 }
@@ -1095,20 +1135,18 @@ namespace LaboratoryApp.ViewModel
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + ".txt", row.Constant.ToString());
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + ".txt", "\n");
                         }
-
-                        //using (LaboratoryEntities context = new LaboratoryEntities())
-                        //{
-                        //    //type TypeToAdd = new type();
-                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
-
-                        //    //context.types.Add(TypeToAdd);
-                        //    //context.SaveChanges();
-                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
-                        //}
-
-                        //else
+                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable11.NameOfFile + "$.txt"))
                         {
-                            //MessageBox.Show("Nie wpisano tytułu.");
+                            foreach (var row in MessageWindowTable11.Tab)
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + "$.txt", row.PercentIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + "$.txt", "\n");
+                            }
+
                         }
                     }
                 }
@@ -1144,20 +1182,18 @@ namespace LaboratoryApp.ViewModel
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + ".txt", row.Constant.ToString());
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + ".txt", "\n");
                         }
-
-                        //using (LaboratoryEntities context = new LaboratoryEntities())
-                        //{
-                        //    //type TypeToAdd = new type();
-                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
-
-                        //    //context.types.Add(TypeToAdd);
-                        //    //context.SaveChanges();
-                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
-                        //}
-
-                        //else
+                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable12.NameOfFile + "$.txt"))
                         {
-                            //MessageBox.Show("Nie wpisano tytułu.");
+                            foreach (var row in MessageWindowTable12.Tab)
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + "$.txt", row.PercentIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + "$.txt", "\n");
+                            }
+
                         }
                     }
                 }
@@ -1194,19 +1230,18 @@ namespace LaboratoryApp.ViewModel
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + ".txt", "\n");
                         }
 
-                        //using (LaboratoryEntities context = new LaboratoryEntities())
-                        //{
-                        //    //type TypeToAdd = new type();
-                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
-
-                        //    //context.types.Add(TypeToAdd);
-                        //    //context.SaveChanges();
-                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
-                        //}
-
-                        //else
+                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable13.NameOfFile + "$.txt"))
                         {
-                            //MessageBox.Show("Nie wpisano tytułu.");
+                            foreach (var row in MessageWindowTable13.Tab)
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + "$.txt", row.PercentIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + "$.txt", "\n");
+                            }
+
                         }
                     }
                 }
@@ -1243,19 +1278,18 @@ namespace LaboratoryApp.ViewModel
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + ".txt", "\n");
                         }
 
-                        //using (LaboratoryEntities context = new LaboratoryEntities())
-                        //{
-                        //    //type TypeToAdd = new type();
-                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
-
-                        //    //context.types.Add(TypeToAdd);
-                        //    //context.SaveChanges();
-                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
-                        //}
-
-                        //else
+                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable14.NameOfFile + "$.txt"))
                         {
-                            //MessageBox.Show("Nie wpisano tytułu.");
+                            foreach (var row in MessageWindowTable14.Tab)
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + "$.txt", row.PercentIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + "$.txt", "\n");
+                            }
+
                         }
                     }
                 }
@@ -1282,6 +1316,14 @@ namespace LaboratoryApp.ViewModel
 
                         foreach (var row in MessageWindowTable15.Tab)
                         {
+                            if (!string.IsNullOrEmpty(row.Prefix))
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", row.Prefix.ToString());
+                            }
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", "\t");
+
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", row.Multiples.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", "\t");
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", row.IdealValue.ToString());
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", "\t");
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", row.Percent.ToString());
@@ -1292,19 +1334,18 @@ namespace LaboratoryApp.ViewModel
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", "\n");
                         }
 
-                        //using (LaboratoryEntities context = new LaboratoryEntities())
-                        //{
-                        //    //type TypeToAdd = new type();
-                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
-
-                        //    //context.types.Add(TypeToAdd);
-                        //    //context.SaveChanges();
-                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
-                        //}
-
-                        //else
+                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable15.NameOfFile + "$.txt"))
                         {
-                            //MessageBox.Show("Nie wpisano tytułu.");
+                            foreach (var row in MessageWindowTable15.Tab)
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + "$.txt", row.PercentIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + "$.txt", "\n");
+                            }
+
                         }
                     }
                 }
@@ -1331,6 +1372,13 @@ namespace LaboratoryApp.ViewModel
 
                         foreach (var row in MessageWindowTable16.Tab)
                         {
+                            if (!string.IsNullOrEmpty(row.Prefix))
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", row.Prefix.ToString());
+                            }
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", row.Multiples.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", "\t");
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", row.IdealValue.ToString());
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", "\t");
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", row.Percent.ToString());
@@ -1340,20 +1388,18 @@ namespace LaboratoryApp.ViewModel
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", row.Constant.ToString());
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", "\n");
                         }
-
-                        //using (LaboratoryEntities context = new LaboratoryEntities())
-                        //{
-                        //    //type TypeToAdd = new type();
-                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
-
-                        //    //context.types.Add(TypeToAdd);
-                        //    //context.SaveChanges();
-                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
-                        //}
-
-                        //else
+                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable16.NameOfFile + "$.txt"))
                         {
-                            //MessageBox.Show("Nie wpisano tytułu.");
+                            foreach (var row in MessageWindowTable16.Tab)
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + "$.txt", row.PercentIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + "$.txt", "\n");
+                            }
+
                         }
                     }
                 }
@@ -1380,6 +1426,12 @@ namespace LaboratoryApp.ViewModel
 
                         foreach (var row in MessageWindowTable17.Tab)
                         {
+                            if (!string.IsNullOrEmpty(row.Prefix))
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", row.Prefix.ToString());
+                            }
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", "\t");
+
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", row.IdealValue.ToString());
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", "\t");
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", row.Percent.ToString());
@@ -1390,19 +1442,18 @@ namespace LaboratoryApp.ViewModel
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", "\n");
                         }
 
-                        //using (LaboratoryEntities context = new LaboratoryEntities())
-                        //{
-                        //    //type TypeToAdd = new type();
-                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
-
-                        //    //context.types.Add(TypeToAdd);
-                        //    //context.SaveChanges();
-                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
-                        //}
-
-                        //else
+                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable17.NameOfFile + "$.txt"))
                         {
-                            //MessageBox.Show("Nie wpisano tytułu.");
+                            foreach (var row in MessageWindowTable17.Tab)
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + "$.txt", row.PercentIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + "$.txt", "\n");
+                            }
+
                         }
                     }
                 }
@@ -1429,6 +1480,22 @@ namespace LaboratoryApp.ViewModel
 
                         foreach (var row in MessageWindowTable18.Tab)
                         {
+                            if (!string.IsNullOrEmpty(row.Prefix))
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", row.Prefix.ToString());
+                            }
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", "\t");
+
+                            if (!string.IsNullOrEmpty(row.Prefix2))
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", row.Prefix2.ToString());
+                            }
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", "\t");
+
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", row.Multiples.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", row.ReferenceVoltage.ToString());
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", "\t");
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", row.IdealValue.ToString());
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", "\t");
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", row.Percent.ToString());
@@ -1438,20 +1505,18 @@ namespace LaboratoryApp.ViewModel
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", row.Constant.ToString());
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", "\n");
                         }
-
-                        //using (LaboratoryEntities context = new LaboratoryEntities())
-                        //{
-                        //    //type TypeToAdd = new type();
-                        //    //TypeToAdd.name = MessageWindowType.NameOfType;
-
-                        //    //context.types.Add(TypeToAdd);
-                        //    //context.SaveChanges();
-                        //    //AboutModelOfGauge.CollectionOfType.Add(TypeToAdd.name);
-                        //}
-
-                        //else
+                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable18.NameOfFile + "$.txt"))
                         {
-                            //MessageBox.Show("Nie wpisano tytułu.");
+                            foreach (var row in MessageWindowTable18.Tab)
+                            {
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + "$.txt", row.PercentIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + "$.txt", "\t");
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + "$.txt", "\n");
+                            }
+
                         }
                     }
                 }

@@ -4,8 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewModel="clr-namespace:LaboratoryApp.ViewModel" x:Class="LaboratoryApp.View.DialogWindowTable9" 
-             mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="850">
+             mc:Ignorable="d" d:DesignWidth="850" Height="447.059">
     <UserControl.Resources>
         <ControlTemplate x:Key="errorTemplate">
             <DockPanel LastChildFill="true">
@@ -26,7 +25,7 @@
         </Style>
     </UserControl.Resources>
     <Grid >
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" Height="348" Width="837">
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="6,88,0,0" VerticalAlignment="Top" Height="348" Width="837">
             <DataGrid.Columns>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Impedancja dekady kontrolnej włączonej w przewód N pętli zwarciowej [Ω]" Binding="{Binding Multiples}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Wartość wskazana prądu zwarciowego [A]" Binding="{Binding MeasureValue}" />
@@ -35,20 +34,20 @@
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Różnica prądu na mierniku sprawdzanym i kontrolnym [A]" Binding="{Binding Difference}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna dolna wartość limitu błędu prądu mierzonego [A]" Binding="{Binding DownMeasureError}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna górna wartość limitu błędu prądu mierzonego [A]" Binding="{Binding UpMeasureError}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Niepewność całkowita rozszerzona typu (B+A) pomiaru częstotliwości ±2S(x)[Hz]" Binding="{Binding ErrorInValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Niepewność całkowita rozszerzona typu (B) pomiaru pomiaru częstotliwości ±2S(x)" Binding="{Binding ErrorInPercent}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Niepewność całkowita rozszerzona typu (B+A) pomiaru prądu ±2S(x)[A]" Binding="{Binding ErrorInValue}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Niepewność całkowita rozszerzona typu (B) pomiaru pomiaru prądu ±2S(x)" Binding="{Binding ErrorInPercent}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Label Content="%" HorizontalAlignment="Left" Margin="10,9,0,0" VerticalAlignment="Top"/>
-        <Label Content="Stała = " HorizontalAlignment="Left" Margin="83,9,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="35,10,0,0" TextWrapping="Wrap" Text="{Binding Percent}" VerticalAlignment="Top" Width="43"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="134,9,0,0" TextWrapping="Wrap" Text="{Binding Constant}" VerticalAlignment="Top" Width="60"/>
-        <Label Content="Liczb znaczących" HorizontalAlignment="Left" Margin="199,9,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="303,9,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumber}" VerticalAlignment="Top" Width="58"/>
-        <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="756,143,0,0" VerticalAlignment="Top" Width="75"/>
-        <Label Width="79" VerticalAlignment="Top" Margin="373,11,0,0" HorizontalAlignment="Left" Content="Nazwa tabeli"/>
+        <Label Content="%" HorizontalAlignment="Left" Margin="6,55,0,0" VerticalAlignment="Top"/>
+        <Label Content="Stała " HorizontalAlignment="Left" Margin="79,55,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="31,56,0,0" TextWrapping="Wrap" Text="{Binding Percent}" VerticalAlignment="Top" Width="43"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="130,55,0,0" TextWrapping="Wrap" Text="{Binding Constant}" VerticalAlignment="Top" Width="60"/>
+        <Label Content="Liczb znaczących" HorizontalAlignment="Left" Margin="195,55,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="299,55,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumber}" VerticalAlignment="Top" Width="58"/>
+        <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="752,189,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label Width="79" VerticalAlignment="Top" Margin="369,57,0,0" HorizontalAlignment="Left" Content="Nazwa tabeli"/>
 
-        <TextBox x:Name="TxtBoxFunction" HorizontalAlignment="Left" Height="23" Margin="457,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="340"
+        <TextBox x:Name="TxtBoxFunction" HorizontalAlignment="Left" Height="23" Margin="453,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="340"
 			Validation.ErrorTemplate="{StaticResource errorTemplate}" AcceptsReturn="True"
 			HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"  
 			Style="{StaticResource textBoxError}" >
@@ -59,7 +58,7 @@
                 </Binding.ValidationRules>
             </Binding>
         </TextBox>
-        <Button Width="75" VerticalAlignment="Top" Margin="756,55,0,0" HorizontalAlignment="Left" Command="{Binding OKCommand}" Content="OK">
+        <Button Width="75" VerticalAlignment="Top" Margin="752,101,0,0" HorizontalAlignment="Left" Command="{Binding OKCommand}" Content="OK">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="IsEnabled" Value="false"/>
@@ -74,6 +73,12 @@
                 </Style>
             </Button.Style>
         </Button>
+        <Label Content="%" HorizontalAlignment="Left" Margin="17,10,0,0" VerticalAlignment="Top" Width="21"/>
+        <Label Content="Stała " HorizontalAlignment="Left" Margin="87,10,0,0" VerticalAlignment="Top" Width="40"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="42,10,0,0" TextWrapping="Wrap" Text="{Binding PercentIdeal}" VerticalAlignment="Top" Width="39"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="136,10,0,0" TextWrapping="Wrap" Text="{Binding ConstantIdeal}" VerticalAlignment="Top" Width="48"/>
+        <Label Content="Liczb znaczących " HorizontalAlignment="Left" Margin="188,10,0,0" VerticalAlignment="Top" Width="104"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="299,10,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumberIdeal}" VerticalAlignment="Top" Width="86"/>
 
     </Grid>
 </UserControl>

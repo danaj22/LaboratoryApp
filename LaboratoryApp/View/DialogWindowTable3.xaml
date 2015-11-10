@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewModel="clr-namespace:LaboratoryApp.ViewModel" x:Class="LaboratoryApp.View.DialogWindowTable3" 
-             mc:Ignorable="d" Height="396" Width="845">
+             mc:Ignorable="d" Height="448.412" Width="845">
     <UserControl.Resources>
         <ControlTemplate x:Key="errorTemplate">
             <DockPanel LastChildFill="true">
@@ -25,7 +25,7 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" Height="344" Width="825">
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="10,77,0,0" VerticalAlignment="Top" Height="344" Width="825">
             <DataGrid.Columns>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Wartość rezystancji mierzonej na mierniku sprawdzanym [Ω]" Binding="{Binding MeasureValue}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="30" Header="Przedrostek" Binding="{Binding Prefix}" />
@@ -37,15 +37,15 @@
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B pomiaru pomiaru rezystancji ±2S(x)" Binding="{Binding ErrorInPercent}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Label Content="%" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top"/>
-        <Label Content="Stała = " HorizontalAlignment="Left" Margin="93,9,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="51,10,0,0" TextWrapping="Wrap" Text="{Binding Percent}" VerticalAlignment="Top" Width="37"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="144,10,0,0" TextWrapping="Wrap" Text="{Binding Constant}" VerticalAlignment="Top" Width="45"/>
-        <Label Content="Liczb znaczących" HorizontalAlignment="Left" Margin="194,9,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="298,11,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumber}" VerticalAlignment="Top" Width="61"/>
-        <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="760,139,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label Content="%" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top"/>
+        <Label Content="Stała = " HorizontalAlignment="Left" Margin="93,44,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="51,45,0,0" TextWrapping="Wrap" Text="{Binding Percent}" VerticalAlignment="Top" Width="37"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="144,45,0,0" TextWrapping="Wrap" Text="{Binding Constant}" VerticalAlignment="Top" Width="45"/>
+        <Label Content="Liczb znaczących" HorizontalAlignment="Left" Margin="194,44,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="298,46,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumber}" VerticalAlignment="Top" Width="61"/>
+        <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="760,174,0,0" VerticalAlignment="Top" Width="75"/>
 
-        <Button Width="75" VerticalAlignment="Top" Margin="0,43,10,0" HorizontalAlignment="Right" Command="{Binding OKCommand}" Content="OK">
+        <Button Width="75" VerticalAlignment="Top" Margin="0,78,10,0" HorizontalAlignment="Right" Command="{Binding OKCommand}" Content="OK">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="IsEnabled" Value="false"/>
@@ -60,9 +60,9 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Label Width="79" VerticalAlignment="Top" Margin="373,11,0,0" HorizontalAlignment="Left" Content="Nazwa tabeli"/>
+        <Label Width="79" VerticalAlignment="Top" Margin="373,46,0,0" HorizontalAlignment="Left" Content="Nazwa tabeli"/>
 
-        <TextBox x:Name="TxtBoxFunction" HorizontalAlignment="Left" Height="23" Margin="457,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="340"
+        <TextBox x:Name="TxtBoxFunction" HorizontalAlignment="Left" Height="23" Margin="457,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="340"
 			Validation.ErrorTemplate="{StaticResource errorTemplate}" AcceptsReturn="True"
 			HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"  
 			Style="{StaticResource textBoxError}" >
@@ -73,6 +73,12 @@
                 </Binding.ValidationRules>
             </Binding>
         </TextBox>
+        <Label Content="%" HorizontalAlignment="Left" Margin="16,10,0,0" VerticalAlignment="Top" Width="21"/>
+        <Label Content="Stała " HorizontalAlignment="Left" Margin="86,10,0,0" VerticalAlignment="Top" Width="40"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="41,10,0,0" TextWrapping="Wrap" Text="{Binding PercentIdeal}" VerticalAlignment="Top" Width="39"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="135,10,0,0" TextWrapping="Wrap" Text="{Binding ConstantIdeal}" VerticalAlignment="Top" Width="48"/>
+        <Label Content="Liczb znaczących " HorizontalAlignment="Left" Margin="187,10,0,0" VerticalAlignment="Top" Width="104"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="298,10,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumberIdeal}" VerticalAlignment="Top" Width="86"/>
 
     </Grid>
 </UserControl>

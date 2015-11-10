@@ -15,14 +15,14 @@ namespace LaboratoryApp.ViewModel
             OKCommand = new SimpleRelayCommand(Confirm);
             CancelCommand = new SimpleRelayCommand(Close);
             GenerateRandomValuesCommand = new SimpleRelayCommand(GenerateRandomValues);
-            
-            ColumnNames.Add("Zakres prądu uszkodzeniowego na mierniku sprawdzanym");
-            ColumnNames.Add("Wartość prądu uszkodzeniowego na mierniku sprawdzanym [mA]");
-            ColumnNames.Add("Zmierzona wartość prądu uszkodzeniowego [mA]");
-            ColumnNames.Add("Dopuszczalna dolna wartość limitu błędu mierzonego prądu [mA]");
-            ColumnNames.Add("Dopuszczalna górna wartość limitu błędu mierzonego prądu [mA]");
-            ColumnNames.Add("Niepewność całkowita rozszerzona typu B pomiaru prądu ±2S(x) [mA]");
-            ColumnNames.Add("Niepewność całkowita rozszerzona typu B pomiaru prądu ±2S(x)");
+
+            ColumnNames.Add("Nominalny prąd wyłącznika RCD [mA] (krotność 1x)");
+            ColumnNames.Add("Zmierzony czas zadziałania wyłącznika RCD na mierniku sprawdzanym [ms]");
+            ColumnNames.Add("Nastawiony czas zadziałania wyłącznika RCD na symulatorze RCD [ms]");
+            ColumnNames.Add("Dopuszczalna dolna wartość limitu błędu mierzonego czasu [ms]");
+            ColumnNames.Add("Dopuszczalna górna wartość limitu błędu mierzonego czasu [ms]");
+            ColumnNames.Add("Niepewność całkowita rozszerzona typu B zadawania czasu zadziałania ±2S(x) [ms]");
+            ColumnNames.Add("Niepewność całkowita rozszerzona typu B zadawania czasu zadziałania ±2S(x)");
         } 
     }
 }
