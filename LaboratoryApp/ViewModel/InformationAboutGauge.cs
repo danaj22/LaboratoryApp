@@ -6,7 +6,9 @@ using MigraDoc.Rendering;
 using PdfSharp;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
+using PdfSharp.Pdf.IO;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity.Validation;
@@ -495,9 +497,9 @@ namespace LaboratoryApp.ViewModel
                             if (MessageWindowTable1.ToConfirm)
                             {
 
+                                TablesToGenerate.Add(MessageWindowTable1);
                             }
                             MessageWindowTable1.ToConfirm = false;
-                            TablesToGenerate.Add(MessageWindowTable1);
                         }
                         if (nameOfTable.Substring(33, 7) == "Table2\t")
                         {
@@ -593,9 +595,9 @@ namespace LaboratoryApp.ViewModel
                             if (MessageWindowTable2.ToConfirm)
                             {
 
+                                TablesToGenerate.Add(MessageWindowTable2);
                             }
                             MessageWindowTable2.ToConfirm = false;
-                            TablesToGenerate.Add(MessageWindowTable2);
                         }
 
                         if (nameOfTable.Substring(33, 7) == "Table3\t")
@@ -690,9 +692,9 @@ namespace LaboratoryApp.ViewModel
                             if (MessageWindowTable3.ToConfirm)
                             {
 
+                                TablesToGenerate.Add(MessageWindowTable3);
                             }
                             MessageWindowTable3.ToConfirm = false;
-                            TablesToGenerate.Add(MessageWindowTable3);
                         }
 
                         if (nameOfTable.Substring(33, 7) == "Table4\t")
@@ -792,9 +794,9 @@ namespace LaboratoryApp.ViewModel
                             if (MessageWindowTable4.ToConfirm)
                             {
 
+                                TablesToGenerate.Add(MessageWindowTable4);
                             }
                             MessageWindowTable4.ToConfirm = false;
-                            TablesToGenerate.Add(MessageWindowTable4);
                         }
 
                         if (nameOfTable.Substring(33, 7) == "Table6\t")
@@ -888,9 +890,9 @@ namespace LaboratoryApp.ViewModel
                             if (MessageWindowTable6.ToConfirm)
                             {
 
+                                TablesToGenerate.Add(MessageWindowTable6);
                             }
                             MessageWindowTable6.ToConfirm = false;
-                            TablesToGenerate.Add(MessageWindowTable6);
                         }
 
                         if (nameOfTable.Substring(33, 7) == "Table7\t")
@@ -982,10 +984,10 @@ namespace LaboratoryApp.ViewModel
                             MessageWindowTable7.IsOpen = true;
                             if (MessageWindowTable7.ToConfirm)
                             {
-
+                                TablesToGenerate.Add(MessageWindowTable7);
                             }
                             MessageWindowTable7.ToConfirm = false;
-                            TablesToGenerate.Add(MessageWindowTable7);
+                            
                         }
 
                         if (nameOfTable.Substring(33, 7) == "Table9\t")
@@ -1078,10 +1080,10 @@ namespace LaboratoryApp.ViewModel
                             MessageWindowTable9.IsOpen = true;
                             if (MessageWindowTable9.ToConfirm)
                             {
-
+                                TablesToGenerate.Add(MessageWindowTable9);
                             }
                             MessageWindowTable9.ToConfirm = false;
-                            TablesToGenerate.Add(MessageWindowTable9);
+                            
                         }
                         if (nameOfTable.Substring(33, 7) == "Table10")
                         {
@@ -1195,10 +1197,10 @@ namespace LaboratoryApp.ViewModel
                             MessageWindowTable10.IsOpen = true;
                             if (MessageWindowTable10.ToConfirm)
                             {
-
+                                TablesToGenerate.Add(MessageWindowTable10);
                             }
                             MessageWindowTable10.ToConfirm = false;
-                            TablesToGenerate.Add(MessageWindowTable10);
+                            
                         }
                         if (nameOfTable.Substring(33, 7) == "Table15")
                         {
@@ -1298,10 +1300,10 @@ namespace LaboratoryApp.ViewModel
                             MessageWindowTable15.IsOpen = true;
                             if (MessageWindowTable15.ToConfirm)
                             {
-
+                                TablesToGenerate.Add(MessageWindowTable15);
                             }
                             MessageWindowTable15.ToConfirm = false;
-                            TablesToGenerate.Add(MessageWindowTable15);
+                            
                         }
 
                         if (nameOfTable.Substring(33, 7) == "Table16")
@@ -1402,10 +1404,10 @@ namespace LaboratoryApp.ViewModel
                             MessageWindowTable16.IsOpen = true;
                             if (MessageWindowTable16.ToConfirm)
                             {
-
+                                TablesToGenerate.Add(MessageWindowTable16);
                             }
                             MessageWindowTable16.ToConfirm = false;
-                            TablesToGenerate.Add(MessageWindowTable16);
+
                         }
 
                         if (nameOfTable.Substring(33, 7) == "Table17") 
@@ -1499,10 +1501,10 @@ namespace LaboratoryApp.ViewModel
                             MessageWindowTable17.IsOpen = true;
                             if (MessageWindowTable17.ToConfirm)
                             {
-
+                                TablesToGenerate.Add(MessageWindowTable17);
                             }
                             MessageWindowTable17.ToConfirm = false;
-                            TablesToGenerate.Add(MessageWindowTable17);
+
                         }
 
                         if (nameOfTable.Substring(33, 7) == "Table18")
@@ -1615,10 +1617,10 @@ namespace LaboratoryApp.ViewModel
                             MessageWindowTable18.IsOpen = true;
                             if (MessageWindowTable18.ToConfirm)
                             {
-
+                                TablesToGenerate.Add(MessageWindowTable18);
                             }
                             MessageWindowTable18.ToConfirm = false;
-                            TablesToGenerate.Add(MessageWindowTable18);
+
                         }
                         
                        
@@ -1628,6 +1630,8 @@ namespace LaboratoryApp.ViewModel
                     //bo jak wciśnie się cancel to by próbował się drukować
                     if (TablesToGenerate.Any())
                     {
+                        string path = @"C:\ProgramData\DASLSystems\LaboratoryApp\cert.txt";
+
                         Document document = InformationAboutGauge.CreateTable(TablesToGenerate);
 
                         MigraDoc.DocumentObjectModel.IO.DdlWriter.WriteToFile(document, "MigraDoc.mdddl");
@@ -1641,17 +1645,15 @@ namespace LaboratoryApp.ViewModel
 
                         try
                         {
-                            //string[] s = File.ReadAllLines(path);
+                            string[] s = File.ReadAllLines(path);
 
-                            //raport.NumberOfCertificate = raport.NumberOfCertificate.Replace('/', '-');
-                            string filename = @"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".pdf";
-                            //filename.Replace('\\','-');
+                            
+                            string filename = s[0] + "\\tab.pdf";
 
-                            //if (!string.IsNullOrEmpty(raport.Author) && !string.IsNullOrEmpty(raport.Temperature))
                             {
                                 renderer.PdfDocument.Save(filename);
                                 // ...and start a viewer.
-                                Process.Start(filename);
+                                //Process.Start(filename);
                             }
                         }
                         catch (Exception e)
@@ -1757,15 +1759,14 @@ namespace LaboratoryApp.ViewModel
                 {
                     string[] s = File.ReadAllLines(path);
 
-                    raport.NumberOfCertificate = raport.NumberOfCertificate.Replace('/', '-');
-                    string filename = s[0] + "\\" + raport.NumberOfCertificate + ".pdf";
+                    string filename = s[0] + "\\cer.pdf";
                     //filename.Replace('\\','-');
 
                     if (!string.IsNullOrEmpty(raport.Author) && !string.IsNullOrEmpty(raport.Temperature))
                     {
                         renderer.PdfDocument.Save(filename);
                         // ...and start a viewer.
-                        Process.Start(filename);
+                        //Process.Start(filename);
                     }
                 }
                 catch(Exception e)
@@ -1774,8 +1775,79 @@ namespace LaboratoryApp.ViewModel
                     File.AppendAllText(MainWindowViewModel.path, e.ToString());
                 }
 
+
+
+                /// <summary>
+                /// Imports all pages from a list of documents.
+                /// </summary>
+
+                  // Get file names
+                  string[] files = GetFiles();
+ 
+                  // Open the output document
+                  PdfDocument outputDocument = new PdfDocument();
+ 
+                  // Iterate files
+                  foreach (string file in files)
+                  {
+                    // Open the document to import pages from it.
+                    PdfDocument inputDocument = PdfReader.Open(file, PdfDocumentOpenMode.Import);
+ 
+                    // Iterate pages
+                    int count = inputDocument.PageCount;
+                    for (int idx = 0; idx < count; idx++)
+                    {
+                      // Get the page from the external document...
+                      PdfPage page = inputDocument.Pages[idx];
+                      // ...and add it to the output document.
+                      outputDocument.AddPage(page);
+                    }
+                  }
+
+                  try
+                  {
+
+                      string[] s = File.ReadAllLines(path);
+
+                      raport.NumberOfCertificate = raport.NumberOfCertificate.Replace('/', '-');
+                      string filename3 = s[0] + "\\" + raport.NumberOfCertificate + ".pdf";
+
+                      // Save the document...
+                      //const string filename3 = "ConcatenatedDocument1_tempfile.pdf";
+                      outputDocument.Save(filename3);
+                      // ...and start a viewer.
+                      Process.Start(filename3);
+                  }
+                catch(Exception e)
+                  {
+                      File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                  }
+                
+
             }
 
+        }
+
+
+        static string[] GetFiles()
+        {
+            string path = @"C:\ProgramData\DASLSystems\LaboratoryApp\cert.txt";
+
+            string[] s = File.ReadAllLines(path);
+
+            DirectoryInfo dirInfo = new DirectoryInfo(s[0]);
+            FileInfo[] fileInfos = new FileInfo[2];
+            fileInfos[1] = new FileInfo(s[0]+"\\tab.pdf");
+            fileInfos[0] = new FileInfo(s[0] + "\\cer.pdf");
+
+            ArrayList list = new ArrayList();
+            foreach (FileInfo info in fileInfos)
+            {
+                // HACK: Just skip the protected samples file...
+                if (info.Name.IndexOf("protected") == -1)
+                    list.Add(info.FullName);
+            }
+            return (string[])list.ToArray(typeof(string));
         }
 
         public static Document CreateTable( ObservableCollection <NewWindowTableGenerate> raport)
@@ -1789,7 +1861,7 @@ namespace LaboratoryApp.ViewModel
             InformationAboutGauge.DefineStylesInAttachment(document);
 
             //takie samo - rozmiar strony itp...
-            DefineContentSection(document);
+            DefineContentSectionInAttachment(document);
 
             InformationAboutGauge.DefineTablesInAttachment(document, raport);
 
@@ -1959,22 +2031,6 @@ namespace LaboratoryApp.ViewModel
 
             Paragraph paragraph1 = section.Headers.FirstPage.AddParagraph();
 
-            //header.AddImage("C:\\Users\\daniel\\Desktop\\dasllogo.png");
-            //header.AddParagraph("Laboratorium Przyrządów Pomiarowych\nŚWIADECTWO WZORCOWANIA");
-            //Table t = new Table();
-            //header.AddTable();
-
-            //paragraph1.AddText("\nCreated on ");
-            //paragraph1.AddFormattedText(CreateDate, TextFormat.Bold);
-            //paragraph1.AddFormattedText("\n" + Properties.Length, TextFormat.Bold);
-            //paragraph1.AddText(" Records");
-            // paragraph1.AddFormattedText("\n" + TurnoverPercent, TextFormat.Bold);
-            ////paragraph1.AddText(" Turnover Rate");
-            //paragraph1.Format.Font.Size = 10;
-            //paragraph1.Format.Alignment = ParagraphAlignment.Right;
-            //header.Section.AddParagraph("Laboratorium Przyrządów Pomiarowych\nŚWIADECTWO WZORCOWANIA");
-            //header.AddParagraph("Laboratorium Przyrządów Pomiarowych\nŚWIADECTWO WZORCOWANIA");
-
             // Header image
             Image image = header.AddImage(@"header4.png");
 
@@ -2022,6 +2078,91 @@ namespace LaboratoryApp.ViewModel
             section.Footers.EvenPage.Add(paragraph.Clone());
         }
 
+        static void DefineContentSectionInAttachment(Document document)
+        {
+            Section section = document.AddSection();
+            section.PageSetup.OddAndEvenPagesHeaderFooter = true;
+            section.PageSetup.PageFormat = PageFormat.A4;
+
+            section.PageSetup.PageWidth = PageSizeConverter.ToSize(PageSize.A4).Width;
+            section.PageSetup.PageHeight = PageSizeConverter.ToSize(PageSize.A4).Height;
+            section.PageSetup.TopMargin = 100;
+            section.PageSetup.BottomMargin = 60;
+            section.PageSetup.LeftMargin = 20;
+            section.PageSetup.RightMargin = 10;
+
+            section.PageSetup.StartingNumber = 1;
+
+            HeaderFooter header = section.Headers.Primary;
+
+
+            Table table = section.Headers.Primary.AddTable();
+            
+            /////////////////////////////////////////////
+            /////////////////////////////////////////////
+            /////////////////////////////////////////////
+
+            Column column = table.AddColumn();
+            column.Width = "10cm";
+            column.Format.Alignment = ParagraphAlignment.Left;
+
+            column = table.AddColumn();
+            column.Width = "10cm";
+            column.Format.Alignment = ParagraphAlignment.Right;
+
+            table.Rows.Height = "1.7cm";
+            Row row = table.AddRow();
+            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+
+
+            // Header image
+            Image image = row.Cells[0].AddImage(@"header5.png");
+
+            image.Height = "1.5cm";
+            image.Width = "13cm";
+            image.Top = ShapePosition.Top;
+            image.Left = ShapePosition.Left;
+            image.WrapFormat.Style = WrapStyle.Through;
+
+            Paragraph paragraph = row.Cells[1].AddParagraph();
+
+            paragraph.Format.Alignment = ParagraphAlignment.Right;
+
+            paragraph.AddText("Strona ");
+            paragraph.AddPageField();
+            paragraph.AddText(" z ");
+            paragraph.AddNumPagesField();
+
+            //for clone content of header in first page to the others pages
+            section.Headers.EvenPage.Add(table.Clone());
+
+
+            paragraph = new Paragraph();
+
+            paragraph.AddTab();
+            Image img = paragraph.AddImage(@"linia.jpg");
+            img.Height = "0.1cm";
+            img.Width = "19.6cm";
+            img.LockAspectRatio = true;
+            img.RelativeVertical = RelativeVertical.Line;
+            img.RelativeHorizontal = RelativeHorizontal.Margin;
+            img.Top = ShapePosition.Top;
+            img.Left = ShapePosition.Left;
+            img.WrapFormat.Style = WrapStyle.Through;
+
+            paragraph.Format.Alignment = ParagraphAlignment.Center;
+            paragraph.AddText("DASL Systems ul.Wadowicka 8A, 30-415 Kraków, tel./fax : +48 12 29 42 001, lab@dasl.pl, www.dasl.pl");
+
+
+            //paragraph.AddPageField();
+            // Add paragraph to footer for odd pages.
+            section.Footers.Primary.Add(paragraph);
+            // Add clone of paragraph to footer for odd pages. Cloning is necessary because an object must
+            // not belong to more than one other object. If you forget cloning an exception is thrown.
+            section.Footers.EvenPage.Add(paragraph.Clone());
+        }
+
+
         public static void DefineTables(Document document, NewWindowRaport raport)
         {
             DemonstrateAlignment(document, raport);
@@ -2035,7 +2176,7 @@ namespace LaboratoryApp.ViewModel
             //document.LastSection.AddParagraph("Cell Alignment", "Heading2");
             foreach (var raport in raports)
             {
-                document.LastSection.AddParagraph(raport.NameOfFile, "Heading2");
+                document.LastSection.AddParagraph(raport.NameOfFile+"\n"+ raport.Title, "Heading2");
                 
                 Table table = document.LastSection.AddTable();
                 table.Borders.Visible = true;
@@ -2051,7 +2192,7 @@ namespace LaboratoryApp.ViewModel
                 {
                     column = table.AddColumn();
                     column.Format.Alignment = ParagraphAlignment.Center;
-                    table.Columns.Width = 50;
+                    table.Columns.Width = 56;
                 }
 
 
@@ -2062,179 +2203,183 @@ namespace LaboratoryApp.ViewModel
                     row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Center;
                 }
 
-
-
-                for (int i = 0; i < raport.Tab.Count(); i++)
+                for (int i = 0; i < 20; i++)
                 {
                     row = table.AddRow();
-
-                    if (raport is NewWindowTable4Generate)
-                    {
-                        row.Cells[0].AddParagraph(raport.Tab[i].ValueOfIsolation.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[1].AddParagraph(raport.Tab[i].MeasureValue.ToString() + raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[2].AddParagraph(raport.Tab[i].IdealValue.ToString() + raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[3].AddParagraph(raport.Tab[i].Difference.ToString() + raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[4].AddParagraph(raport.Tab[i].DownMeasureError.ToString() + raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[5].AddParagraph(raport.Tab[i].UpMeasureError.ToString() + raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[6].AddParagraph(raport.Tab[i].ErrorInValue.ToString() + raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[7].AddParagraph(raport.Tab[i].ErrorInPercent.ToString() + " %");
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                    
-                    }
-                    if (raport is NewWindowTable9Generate)
-                    {
-                        row.Cells[0].AddParagraph(raport.Tab[i].Multiples.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[1].AddParagraph(raport.Tab[i].MeasureValue.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[2].AddParagraph(raport.Tab[i].IdealValue.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[3].AddParagraph(raport.Tab[i].Difference.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[4].AddParagraph(raport.Tab[i].DownMeasureError.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[5].AddParagraph(raport.Tab[i].UpMeasureError.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[6].AddParagraph(raport.Tab[i].ErrorInValue.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[7].AddParagraph(raport.Tab[i].ErrorInPercent.ToString() + " %");
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                    }
-                    if(raport is NewWindowTable6Generate)
-                    {
-                        row.Cells[0].AddParagraph(raport.Tab[i].Multiples.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[1].AddParagraph(raport.Tab[i].MeasureValue.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[2].AddParagraph(raport.Tab[i].IdealValue.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[3].AddParagraph(raport.Tab[i].DownMeasureError.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[4].AddParagraph(raport.Tab[i].UpMeasureError.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[5].AddParagraph(raport.Tab[i].ErrorInValue.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[6].AddParagraph(raport.Tab[i].ErrorInPercent.ToString() + " %");
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                    }
-                    if(raport is NewWindowTable7Generate)
-                    {
-                        row.Cells[0].AddParagraph(raport.Tab[i].MeasureValue.ToString() + raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[1].AddParagraph(raport.Tab[i].IdealValue.ToString() + raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[2].AddParagraph(raport.Tab[i].Difference.ToString() + raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[3].AddParagraph(raport.Tab[i].MeasureValue25V.ToString() + raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-
-                        row.Cells[4].AddParagraph(raport.Tab[i].Difference25V.ToString() + raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[5].AddParagraph(raport.Tab[i].RelativeError.ToString() + raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[6].AddParagraph(raport.Tab[i].RelativeError25V.ToString()+ raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[7].AddParagraph(raport.Tab[i].ErrorInValue.ToString() + raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[8].AddParagraph(raport.Tab[i].ErrorInPercent.ToString() + " %");
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                    }
-
-                    if (raport is NewWindowTable1Generate || raport is NewWindowTable2Generate || raport is NewWindowTable3Generate || raport is NewWindowTable17Generate)
-                    {
-                        row.Cells[0].AddParagraph(raport.Tab[i].MeasureValue.ToString() + raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[1].AddParagraph(raport.Tab[i].IdealValue.ToString() + raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[2].AddParagraph(raport.Tab[i].Difference.ToString() + raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[3].AddParagraph(raport.Tab[i].DownMeasureError.ToString() + raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[4].AddParagraph(raport.Tab[i].UpMeasureError.ToString() + raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top; 
-                        row.Cells[5].AddParagraph(raport.Tab[i].ErrorInValue.ToString() + raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[6].AddParagraph(raport.Tab[i].ErrorInPercent.ToString() + " %");
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                    }
-                    if(raport is NewWindowTable10Generate)
-                    {
-                        row.Cells[0].AddParagraph(raport.Tab[i].Multiples.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[1].AddParagraph(raport.Tab[i].SymulatedResistance.ToString() + raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[2].AddParagraph(raport.Tab[i].MeasureValue.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[3].AddParagraph(raport.Tab[i].ResistanceMeasure.ToString() + raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-
-                        row.Cells[4].AddParagraph(raport.Tab[i].IdealValue.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[5].AddParagraph(raport.Tab[i].DownMeasureError.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[6].AddParagraph(raport.Tab[i].UpMeasureError.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[7].AddParagraph(raport.Tab[i].ErrorInValue.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[8].AddParagraph(raport.Tab[i].ErrorInPercent.ToString() + " %");
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                    }
-
-                    if (raport is NewWindowTable15Generate)
-                    {
-                        row.Cells[0].AddParagraph(raport.Tab[i].Multiples.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[1].AddParagraph(raport.Tab[i].ResistanceOfGround.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[2].AddParagraph(raport.Tab[i].MeasureValue.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[3].AddParagraph(raport.Tab[i].DifferenceResistance.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[4].AddParagraph(raport.Tab[i].MeasureValue25V.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[5].AddParagraph(raport.Tab[i].DifferenceResistancev2.ToString());
-
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[6].AddParagraph(raport.Tab[i].RelativeError.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[6].AddParagraph(raport.Tab[i].RelativeError25V.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[7].AddParagraph(raport.Tab[i].ErrorInValue.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[8].AddParagraph(raport.Tab[i].ErrorInPercent.ToString() + " %");
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                    }
-
-                    if(raport is NewWindowTable18Generate)
-                    {
-                        row.Cells[0].AddParagraph(raport.Tab[i].Multiples.ToString() + raport.Tab[i].Prefix);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[1].AddParagraph(raport.Tab[i].ReferenceVoltage.ToString());
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[2].AddParagraph(raport.Tab[i].MeasureValue.ToString() +raport.Tab[i].Prefix2);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[3].AddParagraph(raport.Tab[i].IdealValue.ToString() + raport.Tab[i].Prefix2);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[4].AddParagraph(raport.Tab[i].Difference.ToString() + raport.Tab[i].Prefix2);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[5].AddParagraph(raport.Tab[i].DownMeasureError.ToString() + raport.Tab[i].Prefix2);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[6].AddParagraph(raport.Tab[i].UpMeasureError.ToString() + raport.Tab[i].Prefix2);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[7].AddParagraph(raport.Tab[i].ErrorInValue.ToString() + raport.Tab[i].Prefix2);
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                        row.Cells[8].AddParagraph(raport.Tab[i].ErrorInPercent.ToString() + " %");
-                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                    }
-
                 }
+                #region for pętla zapis 
+                for (int i = 0; i < raport.Tab.Count(); i++)
+                    {
+                        row = table.AddRow();
+
+                        if (raport is NewWindowTable4Generate)
+                        {
+                            row.Cells[0].AddParagraph(raport.Tab[i].ValueOfIsolation.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[1].AddParagraph(raport.Tab[i].MeasureValue.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[2].AddParagraph(raport.Tab[i].IdealValue.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[3].AddParagraph(raport.Tab[i].Difference.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[4].AddParagraph(raport.Tab[i].DownMeasureError.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[5].AddParagraph(raport.Tab[i].UpMeasureError.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[6].AddParagraph(raport.Tab[i].ErrorInValue.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[7].AddParagraph(raport.Tab[i].ErrorInPercent.ToString() + " %");
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+
+                        }
+                        if (raport is NewWindowTable9Generate)
+                        {
+                            row.Cells[0].AddParagraph(raport.Tab[i].Multiples.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[1].AddParagraph(raport.Tab[i].MeasureValue.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[2].AddParagraph(raport.Tab[i].IdealValue.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[3].AddParagraph(raport.Tab[i].Difference.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[4].AddParagraph(raport.Tab[i].DownMeasureError.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[5].AddParagraph(raport.Tab[i].UpMeasureError.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[6].AddParagraph(raport.Tab[i].ErrorInValue.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[7].AddParagraph(raport.Tab[i].ErrorInPercent.ToString() + " %");
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        }
+                        if (raport is NewWindowTable6Generate)
+                        {
+                            row.Cells[0].AddParagraph(raport.Tab[i].Multiples.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[1].AddParagraph(raport.Tab[i].MeasureValue.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[2].AddParagraph(raport.Tab[i].IdealValue.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[3].AddParagraph(raport.Tab[i].DownMeasureError.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[4].AddParagraph(raport.Tab[i].UpMeasureError.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[5].AddParagraph(raport.Tab[i].ErrorInValue.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[6].AddParagraph(raport.Tab[i].ErrorInPercent.ToString() + " %");
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        }
+                        if (raport is NewWindowTable7Generate)
+                        {
+                            row.Cells[0].AddParagraph(raport.Tab[i].MeasureValue.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[1].AddParagraph(raport.Tab[i].IdealValue.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[2].AddParagraph(raport.Tab[i].Difference.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[3].AddParagraph(raport.Tab[i].MeasureValue25V.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+
+                            row.Cells[4].AddParagraph(raport.Tab[i].Difference25V.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[5].AddParagraph(raport.Tab[i].RelativeError.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[6].AddParagraph(raport.Tab[i].RelativeError25V.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[7].AddParagraph(raport.Tab[i].ErrorInValue.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[8].AddParagraph(raport.Tab[i].ErrorInPercent.ToString() + " %");
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        }
+
+                        if (raport is NewWindowTable1Generate || raport is NewWindowTable2Generate || raport is NewWindowTable3Generate || raport is NewWindowTable17Generate)
+                        {
+                            row.Cells[0].AddParagraph(raport.Tab[i].MeasureValue.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[1].AddParagraph(raport.Tab[i].IdealValue.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[2].AddParagraph(raport.Tab[i].Difference.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[3].AddParagraph(raport.Tab[i].DownMeasureError.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[4].AddParagraph(raport.Tab[i].UpMeasureError.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[5].AddParagraph(raport.Tab[i].ErrorInValue.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[6].AddParagraph(raport.Tab[i].ErrorInPercent.ToString() + " %");
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        }
+                        if (raport is NewWindowTable10Generate)
+                        {
+                            row.Cells[0].AddParagraph(raport.Tab[i].Multiples.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[1].AddParagraph(raport.Tab[i].SymulatedResistance.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[2].AddParagraph(raport.Tab[i].MeasureValue.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[3].AddParagraph(raport.Tab[i].ResistanceMeasure.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+
+                            row.Cells[4].AddParagraph(raport.Tab[i].IdealValue.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[5].AddParagraph(raport.Tab[i].DownMeasureError.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[6].AddParagraph(raport.Tab[i].UpMeasureError.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[7].AddParagraph(raport.Tab[i].ErrorInValue.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[8].AddParagraph(raport.Tab[i].ErrorInPercent.ToString() + " %");
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        }
+
+                        if (raport is NewWindowTable15Generate)
+                        {
+                            row.Cells[0].AddParagraph(raport.Tab[i].Multiples.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[1].AddParagraph(raport.Tab[i].ResistanceOfGround.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[2].AddParagraph(raport.Tab[i].MeasureValue.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[3].AddParagraph(raport.Tab[i].DifferenceResistance.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[4].AddParagraph(raport.Tab[i].MeasureValue25V.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[5].AddParagraph(raport.Tab[i].DifferenceResistancev2.ToString());
+
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[6].AddParagraph(raport.Tab[i].RelativeError.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[6].AddParagraph(raport.Tab[i].RelativeError25V.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[7].AddParagraph(raport.Tab[i].ErrorInValue.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[8].AddParagraph(raport.Tab[i].ErrorInPercent.ToString() + " %");
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        }
+
+                        if (raport is NewWindowTable18Generate)
+                        {
+                            row.Cells[0].AddParagraph(raport.Tab[i].Multiples.ToString() + raport.Tab[i].Prefix);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[1].AddParagraph(raport.Tab[i].ReferenceVoltage.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[2].AddParagraph(raport.Tab[i].MeasureValue.ToString() + raport.Tab[i].Prefix2);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[3].AddParagraph(raport.Tab[i].IdealValue.ToString() + raport.Tab[i].Prefix2);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[4].AddParagraph(raport.Tab[i].Difference.ToString() + raport.Tab[i].Prefix2);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[5].AddParagraph(raport.Tab[i].DownMeasureError.ToString() + raport.Tab[i].Prefix2);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[6].AddParagraph(raport.Tab[i].UpMeasureError.ToString() + raport.Tab[i].Prefix2);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[7].AddParagraph(raport.Tab[i].ErrorInValue.ToString() + raport.Tab[i].Prefix2);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[8].AddParagraph(raport.Tab[i].ErrorInPercent.ToString() + " %");
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        }
+
+                    }
+                #endregion
 
                 table.Rows.Height = 15;
             }

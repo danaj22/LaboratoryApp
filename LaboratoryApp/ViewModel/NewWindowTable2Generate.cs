@@ -10,6 +10,7 @@ namespace LaboratoryApp.ViewModel
 {
     public class NewWindowTable2Generate : NewWindowTableGenerate
     {
+        
         public NewWindowTable2Generate()
         {
             OKCommand = new SimpleRelayCommand(Confirm);
@@ -22,6 +23,8 @@ namespace LaboratoryApp.ViewModel
             ColumnNames.Add("Dopuszczalna górna wartość limitu błędu mierzonej częstotliwości [Hz]");
             ColumnNames.Add("Niepewność całkowita rozszerzona typu (B+A) pomiaru częstotliwości ±2S(x)[Hz]");
             ColumnNames.Add("Niepewność całkowita rozszerzona typu (B+A) pomiaru pomiaru częstotliwości ±2S(x)");
+
+            Title = "Sprawdzenie normy zgodnie z wymogami instrukcji IZ/004/DASL";
         }
         
     }

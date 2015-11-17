@@ -10,7 +10,7 @@ namespace LaboratoryApp.ViewModel
 {
     public class NewWindowTable1Generate: NewWindowTableGenerate
     {
-
+        
         public NewWindowTable1Generate()
         {
             OKCommand = new SimpleRelayCommand(Confirm);
@@ -24,7 +24,10 @@ namespace LaboratoryApp.ViewModel
             ColumnNames.Add("Dopuszczalna górna wartość limitu błędu mierzonego napięcia [V]");
             ColumnNames.Add("Niepewność całkowita rozszerzona typu B pomiaru napięcia przemiennego ±2S(x)[V]");
             ColumnNames.Add("Niepewność całkowita rozszerzona typu B pomiaru napięcia przemiennego ±2S(x)");
+
+            Title = "Sprawdzenie normy zgodnie z wymogami instrukcji IZ/004/DASL";
         }
+
 
         
     }

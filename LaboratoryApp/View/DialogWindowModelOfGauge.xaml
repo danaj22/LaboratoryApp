@@ -6,7 +6,7 @@
              xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
              xmlns:local="clr-namespace:LaboratoryApp"
              
-             mc:Ignorable="d">
+             mc:Ignorable="d" >
     <UserControl.Resources>
         <ControlTemplate x:Key="errorTemplate">
             <DockPanel LastChildFill="true">
@@ -41,13 +41,13 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <Grid >
+    <Grid  >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" MinWidth="32"/>
             <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="29"/>
-            <ColumnDefinition  MinWidth="150"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition  MaxWidth="150"/>
+            
 
 
         </Grid.ColumnDefinitions>
@@ -68,6 +68,7 @@
             <RowDefinition  Height="100"/>
             <RowDefinition  Height="Auto"/>
         </Grid.RowDefinitions>
+
 
         <Label Content="Producent: " Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Height="26" Margin="0,0,0,30" Width="70"/>
         <Label Content="Model: " HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" Height="26" Margin="0,24,0,2" Width="50"/>
@@ -208,8 +209,6 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
-
-
+            
     </Grid>
 </UserControl>

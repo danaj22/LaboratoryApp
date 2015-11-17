@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:ViewModel="clr-namespace:LaboratoryApp.ViewModel" x:Class="LaboratoryApp.View.DialogWindowTable10" 
-             mc:Ignorable="d" d:DesignWidth="1000" Height="439">
+             xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
+            x:Class="LaboratoryApp.View.DialogWindowTable10" 
+             mc:Ignorable="d" Height="439" Width="899">
     <UserControl.Resources>
         <ControlTemplate x:Key="errorTemplate">
             <DockPanel LastChildFill="true">
@@ -23,31 +24,49 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <vm:MyConverter x:Key="MyConverter"/>
     </UserControl.Resources>
-    <Grid Margin="0,0,140,0">
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="9,80,0,0" VerticalAlignment="Top" Height="348" Width="840">
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="125"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" Grid.ColumnSpan="10" Grid.RowSpan="6" CanUserAddRows="True" HorizontalAlignment="Left" Margin="9,80,0,0" VerticalAlignment="Top" Height="348">
             <DataGrid.Columns>
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="88" Header="Sinusoidalny prąd dotykowy zaczynający się od dodatniej połówki [mA]" Binding="{Binding Multiples}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Oporność symulująca oporność uziemienia [Ω]" Binding="{Binding SymulatedResistance}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="30" Header="Przedrostek" Binding="{Binding Prefix}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Mierzona wartość napięcia dotykowego na mierniku sprawdzanym [V]" Binding="{Binding MeasureValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Mierzona wartość napięcia dotykowego na mierniku kontrolnym [V]" Binding="{Binding IdealValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Oporność uziemienia na mierniku sprawdzanym [Ω]" Binding="{Binding ResistanceMeasure}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna dolna wartość limitu błędu mierzonego napięcia [V]" Binding="{Binding DownMeasureError}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna górna wartość limitu błędu mierzonego napięcia [V]" Binding="{Binding UpMeasureError}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu (B) pomiaru napięcia ±2S(x) [V]" Binding="{Binding ErrorInValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu (B) pomiaru napięcia ±2S(x)" Binding="{Binding ErrorInPercent}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="88" Header="Sinusoidalny prąd dotykowy zaczynający się od dodatniej połówki [mA]" Binding="{Binding Path=Multiples , Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Oporność symulująca oporność uziemienia [Ω]" Binding="{Binding Path=SymulatedResistance, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="30" Header="Przedrostek" Binding="{Binding Path=Prefix, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Mierzona wartość napięcia dotykowego na mierniku sprawdzanym [V]" Binding="{Binding Path=MeasureValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Mierzona wartość napięcia dotykowego na mierniku kontrolnym [V]" Binding="{Binding Path=IdealValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Oporność uziemienia na mierniku sprawdzanym [Ω]" Binding="{Binding Path=ResistanceMeasure, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna dolna wartość limitu błędu mierzonego napięcia [V]" Binding="{Binding Path=DownMeasureError, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna górna wartość limitu błędu mierzonego napięcia [V]" Binding="{Binding Path=UpMeasureError, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu (B) pomiaru napięcia ±2S(x) [V]" Binding="{Binding Path=ErrorInValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu (B) pomiaru napięcia ±2S(x)" Binding="{Binding Path=ErrorInPercent, Converter={StaticResource MyConverter}}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Label Content="%" HorizontalAlignment="Left" Margin="9,50,0,0" VerticalAlignment="Top"/>
-        <Label Content="Stała = " HorizontalAlignment="Left" Margin="76,49,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="34,49,0,0" TextWrapping="Wrap" Text="{Binding Percent}" VerticalAlignment="Top" Width="37"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="127,50,0,0" TextWrapping="Wrap" Text="{Binding Constant}" VerticalAlignment="Top" Width="39"/>
-        <Label Content="Liczb znaczących" HorizontalAlignment="Left" Margin="171,50,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="275,48,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumber}" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="774,150,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label Content="%" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
+        <Label Content="Stała " HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2"/>
+        <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Grid.Row="1" Grid.Column="1" Text="{Binding Path=Percent, Converter={StaticResource MyConverter}}" VerticalAlignment="Center" Width="37"/>
+        <TextBox HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Grid.Row="1" Grid.Column="3" Text="{Binding Path=Constant, Converter={StaticResource MyConverter}}" VerticalAlignment="Center" Width="39"/>
+        <Label Content="Liczb znaczących" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBox HorizontalAlignment="Center" Height="23" Grid.Row="1" Grid.Column="5" TextWrapping="Wrap" Text="{Binding Path=ImportantNumber, Converter={StaticResource MyConverter}}" VerticalAlignment="Center" Width="120"/>
+        <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Center" Grid.Column="9" Grid.Row="2" VerticalAlignment="Top" Width="76" Margin="36,76,38,0"/>
 
-        <Button Width="75" VerticalAlignment="Top" Margin="0,82,11,0" HorizontalAlignment="Right" Command="{Binding OKCommand}" Content="OK">
+        <Button Width="75" VerticalAlignment="Top"  HorizontalAlignment="Center" Command="{Binding OKCommand}" Content="OK" Grid.Column="9" Grid.Row="2" >
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="IsEnabled" Value="false"/>
@@ -64,23 +83,23 @@
         </Button>
         <Label Width="79" VerticalAlignment="Top" Margin="454,48,0,0" HorizontalAlignment="Left" Content="Nazwa tabeli"/>
 
-        <TextBox x:Name="TxtBoxFunction" HorizontalAlignment="Left" Height="23" Margin="538,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="291"
+        <TextBox x:Name="TxtBoxFunction" HorizontalAlignment="Left" Height="23" Grid.Column="7" Grid.ColumnSpan="3" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="291"
 			Validation.ErrorTemplate="{StaticResource errorTemplate}" AcceptsReturn="True"
 			HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"  
 			Style="{StaticResource textBoxError}" >
             <Binding Path="NameOfFile" UpdateSourceTrigger="PropertyChanged" >
                 <Binding.ValidationRules>
-                    <ViewModel:FunctionValidation ValidatesOnTargetUpdated="True"
+                    <vm:FunctionValidation ValidatesOnTargetUpdated="True"
 						ValidationStep="RawProposedValue"/>
                 </Binding.ValidationRules>
             </Binding>
         </TextBox>
-        <Label Content="%" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top" Width="21"/>
-        <Label Content="Stała " HorizontalAlignment="Left" Margin="80,6,0,0" VerticalAlignment="Top" Width="40"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="35,6,0,0" TextWrapping="Wrap" Text="{Binding PercentIdeal}" VerticalAlignment="Top" Width="39"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="129,6,0,0" TextWrapping="Wrap" Text="{Binding ConstantIdeal}" VerticalAlignment="Top" Width="48"/>
-        <Label Content="Liczb znaczących " HorizontalAlignment="Left" Margin="181,6,0,0" VerticalAlignment="Top" Width="104"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="292,6,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumberIdeal}" VerticalAlignment="Top" Width="86"/>
+        <Label Content="%" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Width="21"/>
+        <Label Content="Stała " HorizontalAlignment="Left" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Width="40"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="{Binding Path=PercentIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Center" Width="39"/>
+        <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Grid.Row="0" Grid.Column="3" Text="{Binding Path=ConstantIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Center" Width="48"/>
+        <Label Content="Liczb znaczących " HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0" Grid.Column="4" Width="104"/>
+        <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Path=ImportantNumberIdeal, Converter={StaticResource MyConverter}}" Grid.Row="0" Grid.Column="5" VerticalAlignment="Center" Width="86"/>
 
     </Grid>
 </UserControl>

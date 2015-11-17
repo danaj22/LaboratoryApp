@@ -9,6 +9,7 @@
             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              mc:Ignorable="d" Height="406" Width="1127">
     <UserControl.Resources>
+        <ViewModel:MyConverter x:Key="MyConverter"/>
         <ControlTemplate x:Key="errorTemplate">
             <DockPanel LastChildFill="true">
                 <Border Width="20" ToolTip="{Binding AdornedElement.(Validation.Errors)[0].ErrorContent, ElementName=adoner}" Margin="3,0,0,0" Height="20" DockPanel.Dock="right" CornerRadius="5" Background="OrangeRed">
@@ -46,27 +47,27 @@
         </Grid.ColumnDefinitions>
         <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Grid.Row="1" Grid.ColumnSpan="5" VerticalAlignment="Center" Height="320" Width="1094" Margin="12,40,0,-4" Grid.RowSpan="3">
             <DataGrid.Columns>
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Wartość rezystancji nastawionej na dekadzie kontrolnej [Ω]" Binding="{Binding Multiples}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Hipotetyczna rezystywność gruntu [Ω*m]" Binding="{Binding ResistanceOfGround}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="30" Header="Przedrostek" Binding="{Binding Prefix}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Zmierzona wartość rezystywności gruntu na mierniku sprawdzanym przy 50V [Ω*m]" Binding="{Binding MeasureValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Różnica wartości rezystywności na mierniku sprawdzanym i hipotetycznej przy 50V [Ω*m]" Binding="{Binding DifferenceResistance}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Zmierzona wartość rezystywności gruntu na mierniku sprawdzanym przy 25V [Ω*m]" Binding="{Binding MeasureValue25V}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Różnica wartości rezystywności na mierniku sprawdzanym i hipotetycznej przy 25V [Ω*m]" Binding="{Binding DifferenceResistancev2}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Dopuszczalna wartość błedu bezwzględnego mierzonej rezystywności dla napięcia 50V [Ω*m]" Binding="{Binding RelativeError}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Dopuszczalna wartość błedu bezwzględnego mierzonej rezystywności dla napięcia 25V [Ω*m]" Binding="{Binding RelativeError25V}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Wartość rezystancji nastawionej na dekadzie kontrolnej [Ω]" Binding="{Binding Path=Multiples, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Hipotetyczna rezystywność gruntu [Ω*m]" Binding="{Binding Path=ResistanceOfGround, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="30" Header="Przedrostek" Binding="{Binding Path=Prefix, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Zmierzona wartość rezystywności gruntu na mierniku sprawdzanym przy 50V [Ω*m]" Binding="{Binding Path=MeasureValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Różnica wartości rezystywności na mierniku sprawdzanym i hipotetycznej przy 50V [Ω*m]" Binding="{Binding Path=DifferenceResistance, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Zmierzona wartość rezystywności gruntu na mierniku sprawdzanym przy 25V [Ω*m]" Binding="{Binding Path=MeasureValue25V, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Różnica wartości rezystywności na mierniku sprawdzanym i hipotetycznej przy 25V [Ω*m]" Binding="{Binding Path=DifferenceResistancev2, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Dopuszczalna wartość błedu bezwzględnego mierzonej rezystywności dla napięcia 50V [Ω*m]" Binding="{Binding Path=RelativeError, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Dopuszczalna wartość błedu bezwzględnego mierzonej rezystywności dla napięcia 25V [Ω*m]" Binding="{Binding Path=RelativeError25V, Converter={StaticResource MyConverter}}" />
 
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Niepewność całkowita rozszerzona typu B pomiaru rezystywności ±2S(x) [Ω*m]" Binding="{Binding ErrorInValuev2}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Niepewność całkowita rozszerzona typu B pomiaru rezystancji ±2S(x)" Binding="{Binding ErrorInPercentv2}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Niepewność całkowita rozszerzona typu B pomiaru rezystywności ±2S(x) [Ω*m]" Binding="{Binding Path=ErrorInValuev2, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Niepewność całkowita rozszerzona typu B pomiaru rezystancji ±2S(x)" Binding="{Binding Path=ErrorInPercentv2, Converter={StaticResource MyConverter}}" />
             </DataGrid.Columns>
 
         </DataGrid>
         <Label Content="%" HorizontalAlignment="Left" Grid.Row="1" Margin="12,14,0,0" VerticalAlignment="Top"/>
         <Label Content="Stała=" HorizontalAlignment="Left" Grid.Row="1" Margin="76,14,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" Text="{Binding Percent}" VerticalAlignment="Top" Width="34" Margin="0,14,89,0" Grid.Row="1"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Grid.Row="1" Margin="120,14,0,0" TextWrapping="Wrap" Text="{Binding Constant}" VerticalAlignment="Top" Width="32"/>
+        <TextBox HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" Text="{Binding Path=Percent, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="34" Margin="0,14,89,0" Grid.Row="1"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Grid.Row="1" Margin="120,14,0,0" TextWrapping="Wrap" Text="{Binding Path=Constant, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="32"/>
         <Label Content="Liczb znaczących" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="157,14,0,0" Grid.ColumnSpan="2" Grid.Row="1"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="96,14,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumber}" VerticalAlignment="Top" Grid.Row="1" Width="120" Grid.Column="1"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="96,14,0,0" TextWrapping="Wrap" Text="{Binding Path=ImportantNumber, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Grid.Row="1" Width="120" Grid.Column="1"/>
         <Button Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Grid.Column="4" Grid.Row="1" Margin="0,54,8,0">
             <Button.Style>
                 <Style TargetType="Button">
@@ -100,10 +101,10 @@
         </TextBox>
         <Label Content="%" HorizontalAlignment="Left" Margin="13,10,0,0" VerticalAlignment="Top" Width="21"/>
         <Label Content="Stała " HorizontalAlignment="Left" Margin="83,10,0,0" VerticalAlignment="Top" Width="40"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="38,10,0,0" TextWrapping="Wrap" Text="{Binding PercentIdeal}" VerticalAlignment="Top" Width="39"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="132,10,0,0" TextWrapping="Wrap" Text="{Binding ConstantIdeal}" VerticalAlignment="Top" Width="48"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="38,10,0,0" TextWrapping="Wrap" Text="{Binding Path=PercentIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="39"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="132,10,0,0" TextWrapping="Wrap" Text="{Binding Path=ConstantIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="48"/>
         <Label Content="Liczb znaczących " HorizontalAlignment="Left" Margin="184,10,0,0" VerticalAlignment="Top" Width="104" Grid.ColumnSpan="2"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="86,10,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumberIdeal}" VerticalAlignment="Top" Width="86" Grid.Column="1"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="86,10,0,0" TextWrapping="Wrap" Text="{Binding Path=ImportantNumberIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="86" Grid.Column="1"/>
 
     </Grid>
 </UserControl>

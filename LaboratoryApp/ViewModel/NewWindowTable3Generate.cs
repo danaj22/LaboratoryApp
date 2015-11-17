@@ -10,6 +10,7 @@ namespace LaboratoryApp.ViewModel
 {
     public class NewWindowTable3Generate : NewWindowTableGenerate
     {
+        
          public NewWindowTable3Generate()
         {
             OKCommand = new SimpleRelayCommand(Confirm);
@@ -22,6 +23,8 @@ namespace LaboratoryApp.ViewModel
             ColumnNames.Add("Dopuszczalna górna wartość limitu błędu mierzonej rezystancji [Ω]");
             ColumnNames.Add("Niepewność całkowita rozszerzona typu B pomiaru rezystancji ±2S(x)[Ω]");
             ColumnNames.Add("Niepewność całkowita rozszerzona typu B pomiaru pomiaru rezystancji ±2S(x)");
+
+            Title = "Sprawdzenie normy zgodnie z wymogami instrukcji IZ/005/DASL";
         }
         
     }

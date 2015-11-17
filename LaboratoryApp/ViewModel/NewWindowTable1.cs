@@ -23,6 +23,66 @@ namespace LaboratoryApp.ViewModel
 
     public class Measure1 : ObservableObject
     {
+        private double differenceResist10m;
+        public double DifferenceResist10m
+        {
+            get { return differenceResist10m; }
+            set 
+            {
+                differenceResist10m = value;
+                OnPropertyChanged("DifferenceResist10m");
+            }
+        }
+
+        private double differenceResist10mv2;
+        public double DifferenceResist10mv2
+        {
+            get { return differenceResist10mv2; }
+            set 
+            {
+                differenceResist10mv2 = value;
+                OnPropertyChanged("DifferenceResist10mv2");
+            }
+        }
+
+        private double measureValueTab16;
+        public double MeasureValueTab16
+        {
+            get { return measureValueTab16; }
+            set 
+            {
+                measureValueTab16 = value;
+                OnPropertyChanged("MeasureValueTab16");
+                ResistanceOfGroundv2 = this.Multiples * 10 * 2 * Math.PI;
+                //dla sondy 10 m
+                DifferenceResist10m = this.MeasureValueTab16 - this.ResistanceOfGroundv2;
+                DifferenceResist10mv2 = this.MeasureValue25VTab16 - this.ResistanceOfGroundv2;
+
+                this.ErrorInValuev3 = this.ResistanceOfGroundv2 * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
+                this.ErrorInPercentv3 = ErrorInValuev3 / ResistanceOfGroundv2;
+            }
+        }
+
+        private double measureValue25VTab16;
+        public double MeasureValue25VTab16
+        {
+            get { return measureValue25VTab16; }
+            set
+            {
+                measureValue25VTab16 = value;
+                OnPropertyChanged("MeasureValue25VTab16");
+
+                ResistanceOfGroundv2 = this.Multiples * 10 * 2 * Math.PI;
+                //dla sondy 10 m
+                DifferenceResist10m = this.MeasureValueTab16 - this.ResistanceOfGroundv2;
+                DifferenceResist10mv2 = this.MeasureValue25VTab16 - this.ResistanceOfGroundv2;
+
+                this.ErrorInValuev3 = this.ResistanceOfGroundv2 * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
+                this.ErrorInPercentv3 = ErrorInValuev3 / ResistanceOfGroundv2;
+            }
+        }
+
+
         private double idealValue;
 
         public double IdealValue
@@ -36,18 +96,12 @@ namespace LaboratoryApp.ViewModel
                 Difference25V = this.MeasureValue25V - this.IdealValue;
                 RelativeError = this.MeasureValue * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
                 RelativeError25V = this.MeasureValue25V * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+                
                 ResistanceOfGround = this.Multiples * 1 * 2 * Math.PI;
-                ResistanceOfGroundv2 = this.Multiples * 10 * 2 * Math.PI;
-                DifferenceResistance = this.MeasureValue - this.ResistanceOfGround;
-                DifferenceResistancev2 = this.MeasureValue25V - this.ResistanceOfGround;
+
                 this.DownMeasureError = this.MeasureValue - this.MeasureValue * this.Percent*0.01 - this.ImportantNumber - this.Constant;
                 this.UpMeasureError = this.MeasureValue + this.MeasureValue * this.Percent*0.01 + this.ImportantNumber + this.Constant;
 
-                //for table 15 and 16
-                this.ErrorInValuev2 = this.ResistanceOfGround * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
-                this.ErrorInPercentv2 = ErrorInValuev2 / ResistanceOfGround;
-                this.ErrorInValuev3 = this.ResistanceOfGroundv2 * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
-                this.ErrorInPercentv3 = ErrorInValuev3 / ResistanceOfGroundv2;
 
                 this.ErrorInValue = this.IdealValue * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
                 this.ErrorInPercent = ErrorInValue / IdealValue;
@@ -86,23 +140,29 @@ namespace LaboratoryApp.ViewModel
             {
 
                 measureValue = value;
+                
                 OnPropertyChanged("MeasureValue");
+
                 Difference = this.MeasureValue - this.IdealValue;
                 Difference25V = this.MeasureValue25V - this.IdealValue;
                 RelativeError = this.MeasureValue * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
                 RelativeError25V = this.MeasureValue25V * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+                
                 ResistanceOfGround = this.Multiples * 1 * 2 * Math.PI;
-                ResistanceOfGroundv2 = this.Multiples * 10 * 2 * Math.PI;
+
+                //dla sondy 1m
                 DifferenceResistance = this.MeasureValue - this.ResistanceOfGround;
                 DifferenceResistancev2 = this.MeasureValue25V - this.ResistanceOfGround;
+
+
+
                 this.DownMeasureError = this.MeasureValue - this.MeasureValue * this.Percent * 0.01 - this.ImportantNumber - this.Constant;
                 this.UpMeasureError = this.MeasureValue + this.MeasureValue * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
 
                 //for table 15 and 16
                 this.ErrorInValuev2 = this.ResistanceOfGround * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
                 this.ErrorInPercentv2 = ErrorInValuev2 / ResistanceOfGround;
-                this.ErrorInValuev3 = this.ResistanceOfGroundv2 * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
-                this.ErrorInPercentv3 = ErrorInValuev3 / ResistanceOfGroundv2;
+
 
                 this.ErrorInValue = this.IdealValue * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
                 this.ErrorInPercent = ErrorInValue / IdealValue;
@@ -123,19 +183,19 @@ namespace LaboratoryApp.ViewModel
                 RelativeError = this.MeasureValue * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
                 RelativeError25V = MeasureValue25V * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
                 ResistanceOfGround = Multiples * 1 * 2 * Math.PI; //table 15
-                ResistanceOfGroundv2 = Multiples * 10 * 2 * Math.PI; //table 16
-                DifferenceResistance = this.MeasureValue -this.ResistanceOfGround;
-                DifferenceResistancev2 = MeasureValue25V - this.ResistanceOfGround;
+
+                //dla sondy 1m
+                DifferenceResistance = this.MeasureValue - this.ResistanceOfGround;
+                DifferenceResistancev2 = this.MeasureValue25V - this.ResistanceOfGround;
+
+                
                 this.DownMeasureError = this.MeasureValue25V - this.MeasureValue25V * this.Percent * 0.01 - this.ImportantNumber - this.Constant;
                 this.UpMeasureError = this.MeasureValue25V + this.MeasureValue25V * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
 
                 //for table 15 
                 this.ErrorInValuev2 = this.ResistanceOfGround * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
                 this.ErrorInPercentv2 = ErrorInValuev2 / ResistanceOfGround;
-                //for table 16
-                this.ErrorInValuev3 = this.ResistanceOfGroundv2 * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
-                this.ErrorInPercentv3 = ErrorInValuev3 / ResistanceOfGroundv2;
-
+                
                 this.ErrorInValue = this.IdealValue * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
                 this.ErrorInPercent = ErrorInValue / IdealValue;
             }
@@ -176,7 +236,11 @@ namespace LaboratoryApp.ViewModel
         public double DifferenceResistance
         {
             get { return differenceResistance; }
-            set { differenceResistance = value; OnPropertyChanged("DifferenceResistance"); }
+            set 
+            {
+                differenceResistance = value;
+                OnPropertyChanged("DifferenceResistance");
+            }
         }
         private double differenceResistancev2;
 

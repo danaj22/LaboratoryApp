@@ -22,6 +22,7 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
+        #region tables
         private NewWindowTable1 messageWindowTable1;
         public NewWindowTable1 MessageWindowTable1
         {
@@ -228,6 +229,7 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("MessageWindowTable18");
             }
         }
+        #endregion
 
         private string tablesPath = @"C:\ProgramData\DASLSystems\LaboratoryApp\tables";
         public NewWindowTable()
@@ -256,6 +258,7 @@ namespace LaboratoryApp.ViewModel
 
             System.IO.Directory.CreateDirectory(tablesPath);
         }
+        #region commands
         private ICommand addTable1Command;
         public ICommand AddTable1Command
         {
@@ -473,6 +476,7 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("CancelCommand");
             }
         }
+        #endregion
 
         private bool isOpen;
         public bool IsOpen
@@ -1374,9 +1378,9 @@ namespace LaboratoryApp.ViewModel
                         {
                             if (!string.IsNullOrEmpty(row.Prefix))
                             {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", row.Prefix.ToString());
+                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", row.Prefix.ToString());
                             }
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", "\t");
+                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", "\t");
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", row.Multiples.ToString());
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", "\t");
                             File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", row.IdealValue.ToString());

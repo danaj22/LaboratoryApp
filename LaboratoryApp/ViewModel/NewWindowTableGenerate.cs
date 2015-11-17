@@ -190,32 +190,83 @@ namespace LaboratoryApp.ViewModel
         {
             Random rnd = new Random();
 
-            double MinimalValue, MaximalValue;
+            double MinimalValue, MaximalValue,MaximalValuev2,MinimalValuev2,MinimalValueTab16,MaximalValueTab16;
 
             foreach (var element in Tab)
             {
 
 
-                if (element.MeasureValue == 0)
+                if (element.MeasureValue == 0 )
                 {
                     if (HighLevel == true)
                     {
+                        if(element.IdealValue == 0)
+                        {
+                            MinimalValuev2 = element.ResistanceOfGround + element.ResistanceOfGround * 0.01 * MinValue;
+                            MaximalValuev2 = element.ResistanceOfGround + element.ResistanceOfGround * 0.01 * MaxValue;
 
-                        MinimalValue = element.IdealValue + element.IdealValue * 0.01 * MinValue;
-                        MaximalValue = element.IdealValue + element.IdealValue * 0.01 * MaxValue;
-                        element.MeasureValue = rnd.NextDouble() * (MaximalValue - MinimalValue) + MinimalValue;
+                            element.MeasureValue = rnd.NextDouble() * (MaximalValuev2 - MinimalValuev2) + MinimalValuev2;
+                            element.MeasureValue25V = rnd.NextDouble() * (MaximalValuev2 - MinimalValuev2) + MinimalValuev2;
+
+                            MinimalValueTab16 = element.ResistanceOfGroundv2 + element.ResistanceOfGroundv2 * 0.01 * MinValue;
+                            MaximalValueTab16 = element.ResistanceOfGroundv2 + element.ResistanceOfGroundv2 * 0.01 * MaxValue;
+
+                            element.MeasureValueTab16 = rnd.NextDouble() * (MaximalValueTab16 - MinimalValueTab16) + MinimalValueTab16;
+                            element.MeasureValue25VTab16 = rnd.NextDouble() * (MaximalValueTab16 - MinimalValueTab16) + MinimalValueTab16;
+                        }
+                        else
+                        {
+                            MinimalValue = element.IdealValue + element.IdealValue * 0.01 * MinValue;
+                            MaximalValue = element.IdealValue + element.IdealValue * 0.01 * MaxValue;
+
+                            element.MeasureValue = rnd.NextDouble() * (MaximalValue - MinimalValue) + MinimalValue;
+                        }
                     }
                     if (LowLevel == true)
                     {
-                        MinimalValue = element.IdealValue - element.IdealValue * 0.01 * MinValue;
-                        MaximalValue = element.IdealValue - element.IdealValue * 0.01 * MaxValue;
-                        element.MeasureValue = rnd.NextDouble() * (MinimalValue - MaximalValue) + MaximalValue;
+                        if(element.IdealValue == 0)
+                        {
+                            MinimalValuev2 = element.ResistanceOfGround - element.ResistanceOfGround * 0.01 * MinValue;
+                            MaximalValuev2 = element.ResistanceOfGround - element.ResistanceOfGround * 0.01 * MaxValue;
+
+                            element.MeasureValue = rnd.NextDouble() * ( MinimalValuev2- MaximalValuev2 ) + MaximalValuev2;
+                            element.MeasureValue25V = rnd.NextDouble() * (MinimalValuev2 - MaximalValuev2) + MaximalValuev2;
+
+                            MinimalValueTab16 = element.ResistanceOfGroundv2 - element.ResistanceOfGroundv2 * 0.01 * MinValue;
+                            MaximalValueTab16 = element.ResistanceOfGroundv2 - element.ResistanceOfGroundv2 * 0.01 * MaxValue;
+
+                            element.MeasureValueTab16 = rnd.NextDouble() * (MinimalValueTab16 - MaximalValueTab16) + MaximalValueTab16;
+                            element.MeasureValue25VTab16 = rnd.NextDouble() * (MinimalValueTab16 - MaximalValueTab16) + MaximalValueTab16;
+                        }
+                        else
+                        {
+                            MinimalValue = element.IdealValue - element.IdealValue * 0.01 * MinValue;
+                            MaximalValue = element.IdealValue - element.IdealValue * 0.01 * MaxValue;
+                            element.MeasureValue = rnd.NextDouble() * (MinimalValue - MaximalValue) + MaximalValue;
+                        }
                     }
                     if (CenterLevel == true)
                     {
-                        MinimalValue = element.IdealValue - element.IdealValue * 0.01 * MinValue;
-                        MaximalValue = element.IdealValue + element.IdealValue * 0.01 * MaxValue;
-                        element.MeasureValue = rnd.NextDouble() * (MaximalValue - MinimalValue) + MinimalValue;
+                        if(element.IdealValue == 0)
+                        {
+                            MinimalValuev2 = element.ResistanceOfGround - element.ResistanceOfGround * 0.01 * MinValue;
+                            MaximalValuev2 = element.ResistanceOfGround + element.ResistanceOfGround * 0.01 * MaxValue;
+
+                            element.MeasureValue = rnd.NextDouble() * (MaximalValuev2 - MinimalValuev2) + MinimalValuev2;
+                            element.MeasureValue25V = rnd.NextDouble() * (MaximalValuev2 - MinimalValuev2) + MinimalValuev2;
+
+                            MinimalValueTab16 = element.ResistanceOfGroundv2 - element.ResistanceOfGroundv2 * 0.01 * MinValue;
+                            MaximalValueTab16 = element.ResistanceOfGroundv2 + element.ResistanceOfGroundv2 * 0.01 * MaxValue;
+
+                            element.MeasureValueTab16 = rnd.NextDouble() * (MaximalValueTab16 - MinimalValueTab16) + MinimalValueTab16;
+                            element.MeasureValue25VTab16 = rnd.NextDouble() * (MaximalValueTab16 - MinimalValueTab16) + MinimalValueTab16;
+                        }
+                        else
+                        {
+                            MinimalValue = element.IdealValue - element.IdealValue * 0.01 * MinValue;
+                            MaximalValue = element.IdealValue + element.IdealValue * 0.01 * MaxValue;
+                            element.MeasureValue = rnd.NextDouble() * (MaximalValue - MinimalValue) + MinimalValue;
+                        }
                     }
 
                 }

@@ -8,6 +8,7 @@ namespace LaboratoryApp.ViewModel
 {
     public class NewWindowTable18Generate : NewWindowTableGenerate
     {
+        
         public NewWindowTable18Generate()
         {
             OKCommand = new SimpleRelayCommand(Confirm);
@@ -22,6 +23,8 @@ namespace LaboratoryApp.ViewModel
             ColumnNames.Add("Dopuszczalna górna wartość limitu błędu mierzonego prądu [A]");
             ColumnNames.Add("Niepewność całkowita rozszerzona typu (B+A) pomiaru prądu ±2S(x) [A]");
             ColumnNames.Add("Niepewność całkowita rozszerzona typu (B+A) pomiaru prądu ±2S(x)");
+
+            Title = "Sprawdzenie normy zgodnie z wymogami instrukcji IZ/009/DASL";
         }
     }
 }

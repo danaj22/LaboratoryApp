@@ -7,6 +7,7 @@
              xmlns:ViewModel="clr-namespace:LaboratoryApp.ViewModel"
 d:DesignHeight="400" d:DesignWidth="900">
     <UserControl.Resources>
+        <ViewModel:MyConverter x:Key="MyConverter"/>
         <ControlTemplate x:Key="errorTemplate">
             <DockPanel LastChildFill="true">
                 <Border Width="20" ToolTip="{Binding AdornedElement.(Validation.Errors)[0].ErrorContent, ElementName=adoner}" Margin="3,0,0,0" Height="20" DockPanel.Dock="right" CornerRadius="5" Background="OrangeRed">
@@ -28,22 +29,22 @@ d:DesignHeight="400" d:DesignWidth="900">
     <Grid >
         <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="16,12,0,0" VerticalAlignment="Top" Height="348" Width="880">
             <DataGrid.Columns>
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="88" Header="Nominalny prąd wyłącznika RCD [mA] (krotność 1x)" Binding="{Binding Multiples}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Zmierzony czas zadziałania wyłącznika RCD na mierniku sprawdzanym [ms]" Binding="{Binding MeasureValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="30" Header="Przedrostek" Binding="{Binding Prefix}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Nastawiony czas zadziałania wyłącznika RCD na symulatorze RCD [ms]" Binding="{Binding IdealValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna dolna wartość limitu błędu mierzonego czasu [ms]" Binding="{Binding DownMeasureError}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna górna wartość limitu błędu mierzonego czasu [ms]" Binding="{Binding UpMeasureError}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B zadawania czasu zadziałania ±2S(x) [ms]" Binding="{Binding ErrorInValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B zadawania czasu zadziałania ±2S(x)" Binding="{Binding ErrorInPercent}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="88" Header="Nominalny prąd wyłącznika RCD [mA] (krotność 1x)" Binding="{Binding Multiples, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Zmierzony czas zadziałania wyłącznika RCD na mierniku sprawdzanym [ms]" Binding="{Binding MeasureValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="30" Header="Przedrostek" Binding="{Binding Prefix, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Nastawiony czas zadziałania wyłącznika RCD na symulatorze RCD [ms]" Binding="{Binding IdealValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna dolna wartość limitu błędu mierzonego czasu [ms]" Binding="{Binding DownMeasureError, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna górna wartość limitu błędu mierzonego czasu [ms]" Binding="{Binding UpMeasureError, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B zadawania czasu zadziałania ±2S(x) [ms]" Binding="{Binding ErrorInValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B zadawania czasu zadziałania ±2S(x)" Binding="{Binding ErrorInPercent, Converter={StaticResource MyConverter}}" />
             </DataGrid.Columns>
         </DataGrid>
         <Label Width="78" VerticalAlignment="Top" Margin="312,29,0,0" HorizontalAlignment="Left" Content="Nazwa tabeli"/>
         <Button Content="Ok" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="656,28,0,0" VerticalAlignment="Top" Width="76"/>
         <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="656,110,0,0" VerticalAlignment="Top" Width="76"/>
         <Button Content="Generuj" Command="{Binding GenerateRandomValuesCommand}" HorizontalAlignment="Left" Margin="656,70,0,0" VerticalAlignment="Top" Width="76"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="740,61,0,0" TextWrapping="Wrap" Text="{Binding MinValue}" VerticalAlignment="Top" Width="108"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="740,109,0,0" TextWrapping="Wrap" Text="{Binding MaxValue}" VerticalAlignment="Top" Width="108"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="740,61,0,0" TextWrapping="Wrap" Text="{Binding MinValue, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="108"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="740,109,0,0" TextWrapping="Wrap" Text="{Binding MaxValue, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="108"/>
         <RadioButton Content="+ +" IsChecked="{Binding HighLevel}" HorizontalAlignment="Left" Margin="740,163,0,0" VerticalAlignment="Top"/>
         <RadioButton Content="- -" IsChecked="{Binding LowLevel}" HorizontalAlignment="Left" Margin="740,186,0,0" VerticalAlignment="Top"/>
         <RadioButton Content="+ -" IsChecked="{Binding CenterLevel}" HorizontalAlignment="Left" Margin="740,209,0,0" VerticalAlignment="Top"/>

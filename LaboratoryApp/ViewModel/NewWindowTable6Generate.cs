@@ -10,6 +10,7 @@ namespace LaboratoryApp.ViewModel
 {
     public class NewWindowTable6Generate : NewWindowTableGenerate
     {
+        
         public NewWindowTable6Generate()
         {
             OKCommand = new SimpleRelayCommand(Confirm);
@@ -23,6 +24,8 @@ namespace LaboratoryApp.ViewModel
             ColumnNames.Add("Dopuszczalna górna wartość limitu błędu mierzonego czasu [ms]");
             ColumnNames.Add("Niepewność całkowita rozszerzona typu B zadawania czasu zadziałania ±2S(x) [ms]");
             ColumnNames.Add("Niepewność całkowita rozszerzona typu B zadawania czasu zadziałania ±2S(x)");
+
+            Title = "Sprawdzenie normy zgodnie z wymogami instrukcji IZ/010/DASL";
         } 
     }
 }

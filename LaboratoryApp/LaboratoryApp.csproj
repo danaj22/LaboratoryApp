@@ -146,6 +146,7 @@
     <Compile Include="ViewModel\LoadData.cs" />
     <Compile Include="ViewModel\Log.cs" />
     <Compile Include="ViewModel\ModalDialogManager.cs" />
+    <Compile Include="ViewModel\MyConverter.cs" />
     <Compile Include="ViewModel\NameValidation.cs" />
     <Compile Include="ViewModel\NewWindowCalibrator.cs" />
     <Compile Include="ViewModel\NewWindowClient.cs" />
@@ -599,9 +600,6 @@
     <Resource Include="Computer-2-icon.png" />
     <Resource Include="office-building-icon.png" />
     <Resource Include="Office-Customer-Male-Light-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Model1.edmx.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

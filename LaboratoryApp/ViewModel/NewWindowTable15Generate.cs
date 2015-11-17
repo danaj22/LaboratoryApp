@@ -8,6 +8,7 @@ namespace LaboratoryApp.ViewModel
 {
     public class NewWindowTable15Generate : NewWindowTableGenerate
     {
+        
         public NewWindowTable15Generate()
         {
             OKCommand = new SimpleRelayCommand(Confirm);
@@ -29,6 +30,8 @@ namespace LaboratoryApp.ViewModel
 
             ColumnNames.Add("Niepewność całkowita rozszerzona typu B pomiaru rezystywności ±2S(x) [Ω*m]");
             ColumnNames.Add("Niepewność całkowita rozszerzona typu B pomiaru rezystywności ±2S(x)");
+
+            Title = "Sprawdzenie normy zgodnie z wymogami instrukcji IZ/007/DASL";
         }
 
     }

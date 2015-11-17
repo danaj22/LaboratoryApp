@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:LaboratoryApp"
              
              mc:Ignorable="d" 
-             d:DesignHeight="300" 
+             d:DesignHeight="150" 
              d:DesignWidth="320">
 
     <UserControl.Resources>
@@ -55,14 +55,10 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+
         </Grid.RowDefinitions>
 
         <Label Content="Producent: " HorizontalAlignment="Left" VerticalAlignment="Center"/>

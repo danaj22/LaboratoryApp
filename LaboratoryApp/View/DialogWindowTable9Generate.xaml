@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
               xmlns:ViewModel="clr-namespace:LaboratoryApp.ViewModel"
-             mc:Ignorable="d" d:DesignWidth="850" Height="447.059">
+             mc:Ignorable="d" d:DesignWidth="940" Height="447.059">
     <UserControl.Resources>
+        <ViewModel:MyConverter x:Key="MyConverter"/>
         <ControlTemplate x:Key="errorTemplate">
             <DockPanel LastChildFill="true">
                 <Border Width="20" ToolTip="{Binding AdornedElement.(Validation.Errors)[0].ErrorContent, ElementName=adoner}" Margin="3,0,0,0" Height="20" DockPanel.Dock="right" CornerRadius="5" Background="OrangeRed">
@@ -24,25 +25,25 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <Grid Margin="0,0,-69,0" >
+    <Grid >
         <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" Margin="6,10,9,0" VerticalAlignment="Top" Height="426">
             <DataGrid.Columns>
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Impedancja dekady kontrolnej włączonej w przewód N pętli zwarciowej [Ω]" Binding="{Binding Multiples}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Wartość wskazana prądu zwarciowego [A]" Binding="{Binding MeasureValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="30" Header="Przedrostek" Binding="{Binding Prefix}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Oczekiwana kontrolna wartość prądu zwarciowego przy zadanym napięciu sieci 230V [A]" Binding="{Binding IdealValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Różnica prądu na mierniku sprawdzanym i kontrolnym [A]" Binding="{Binding Difference}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna dolna wartość limitu błędu prądu mierzonego [A]" Binding="{Binding DownMeasureError}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna górna wartość limitu błędu prądu mierzonego [A]" Binding="{Binding UpMeasureError}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Niepewność całkowita rozszerzona typu (B+A) pomiaru prądu ±2S(x)[A]" Binding="{Binding ErrorInValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Niepewność całkowita rozszerzona typu (B) pomiaru pomiaru prądu ±2S(x)" Binding="{Binding ErrorInPercent}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Impedancja dekady kontrolnej włączonej w przewód N pętli zwarciowej [Ω]" Binding="{Binding Multiples, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Wartość wskazana prądu zwarciowego [A]" Binding="{Binding MeasureValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="30" Header="Przedrostek" Binding="{Binding Prefix, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Oczekiwana kontrolna wartość prądu zwarciowego przy zadanym napięciu sieci 230V [A]" Binding="{Binding IdealValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Różnica prądu na mierniku sprawdzanym i kontrolnym [A]" Binding="{Binding Difference, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna dolna wartość limitu błędu prądu mierzonego [A]" Binding="{Binding DownMeasureError, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna górna wartość limitu błędu prądu mierzonego [A]" Binding="{Binding UpMeasureError, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Niepewność całkowita rozszerzona typu (B+A) pomiaru prądu ±2S(x)[A]" Binding="{Binding ErrorInValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Niepewność całkowita rozszerzona typu (B) pomiaru pomiaru prądu ±2S(x)" Binding="{Binding ErrorInPercent, Converter={StaticResource MyConverter}}" />
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Ok" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="718,17,0,0" VerticalAlignment="Top" Width="75"/>
         <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="718,92,0,0" VerticalAlignment="Top" Width="75"/>
         <Button Content="Generuj" Command="{Binding GenerateRandomValuesCommand}" HorizontalAlignment="Left" Margin="718,52,0,0" VerticalAlignment="Top" Width="75"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="802,43,-60,0" TextWrapping="Wrap" Text="{Binding MinValue}" VerticalAlignment="Top" Width="108"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="802,91,-60,0" TextWrapping="Wrap" Text="{Binding MaxValue}" VerticalAlignment="Top" Width="108"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="802,43,-60,0" TextWrapping="Wrap" Text="{Binding MinValue, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="108"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="802,91,-60,0" TextWrapping="Wrap" Text="{Binding MaxValue, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="108"/>
         <Label Content="dolna wartość:" HorizontalAlignment="Left" Margin="811,17,-47,0" VerticalAlignment="Top"/>
         <Label Content="górna wartość:" HorizontalAlignment="Left" Margin="811,67,-49,0" VerticalAlignment="Top"/>
         <RadioButton Content="+ +" IsChecked="{Binding HighLevel}" HorizontalAlignment="Left" Margin="802,145,0,0" VerticalAlignment="Top"/>

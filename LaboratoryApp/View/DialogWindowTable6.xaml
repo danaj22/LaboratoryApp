@@ -6,6 +6,7 @@
              xmlns:ViewModel="clr-namespace:LaboratoryApp.ViewModel" x:Class="LaboratoryApp.View.DialogWindowTable6" 
              mc:Ignorable="d" Height="463.235" Width="775.941">
     <UserControl.Resources>
+        <ViewModel:MyConverter x:Key="MyConverter"/>
         <ControlTemplate x:Key="errorTemplate">
             <DockPanel LastChildFill="true">
                 <Border Width="20" ToolTip="{Binding AdornedElement.(Validation.Errors)[0].ErrorContent, ElementName=adoner}" Margin="3,0,0,0" Height="20" DockPanel.Dock="right" CornerRadius="5" Background="OrangeRed">
@@ -24,25 +25,25 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <Grid Margin="0,0,10,0">
+    <Grid >
         <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="9,93,0,0" VerticalAlignment="Top" Height="348" Width="727">
             <DataGrid.Columns>
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="88" Header="Nominalny prąd wyłącznika RCD [mA] (krotność 1x)" Binding="{Binding Multiples}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Zmierzony czas zadziałania wyłącznika RCD na mierniku sprawdzanym [ms]" Binding="{Binding MeasureValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="30" Header="Przedrostek" Binding="{Binding Prefix}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Nastawiony czas zadziałania wyłącznika RCD na symulatorze RCD [ms]" Binding="{Binding IdealValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna dolna wartość limitu błędu mierzonego czasu [ms]" Binding="{Binding DownMeasureError}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna górna wartość limitu błędu mierzonego czasu [ms]" Binding="{Binding UpMeasureError}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B zadawania czasu zadziałania ±2S(x) [ms]" Binding="{Binding ErrorInValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B zadawania czasu zadziałania ±2S(x)" Binding="{Binding ErrorInPercent}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="88" Header="Nominalny prąd wyłącznika RCD [mA] (krotność 1x)" Binding="{Binding Multiples, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Zmierzony czas zadziałania wyłącznika RCD na mierniku sprawdzanym [ms]" Binding="{Binding MeasureValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="30" Header="Przedrostek" Binding="{Binding Prefix, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Nastawiony czas zadziałania wyłącznika RCD na symulatorze RCD [ms]" Binding="{Binding IdealValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna dolna wartość limitu błędu mierzonego czasu [ms]" Binding="{Binding DownMeasureError, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna górna wartość limitu błędu mierzonego czasu [ms]" Binding="{Binding UpMeasureError, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B zadawania czasu zadziałania ±2S(x) [ms]" Binding="{Binding ErrorInValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B zadawania czasu zadziałania ±2S(x)" Binding="{Binding ErrorInPercent, Converter={StaticResource MyConverter}}" />
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="%" HorizontalAlignment="Left" Margin="9,60,0,0" VerticalAlignment="Top"/>
         <Label Content="Stała = " HorizontalAlignment="Left" Margin="77,60,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="34,60,0,0" TextWrapping="Wrap" Text="{Binding Percent}" VerticalAlignment="Top" Width="38"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="133,61,0,0" TextWrapping="Wrap" Text="{Binding Constant}" VerticalAlignment="Top" Width="53"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="34,60,0,0" TextWrapping="Wrap" Text="{Binding Percent, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="38"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="133,61,0,0" TextWrapping="Wrap" Text="{Binding Constant, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="53"/>
         <Label Content="Liczb znaczących" HorizontalAlignment="Left" Margin="191,61,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="295,62,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumber}" VerticalAlignment="Top" Width="60"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="295,62,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumber, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="60"/>
         <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="646,172,0,0" VerticalAlignment="Top" Width="75"/>
 
         <Button Width="75" VerticalAlignment="Top" Margin="0,114,45,0" HorizontalAlignment="Right" Command="{Binding OKCommand}" Content="OK">
@@ -75,10 +76,10 @@
         </TextBox>
         <Label Content="%" HorizontalAlignment="Left" Margin="13,10,0,0" VerticalAlignment="Top" Width="21"/>
         <Label Content="Stała " HorizontalAlignment="Left" Margin="83,10,0,0" VerticalAlignment="Top" Width="40"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="38,10,0,0" TextWrapping="Wrap" Text="{Binding PercentIdeal}" VerticalAlignment="Top" Width="39"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="132,10,0,0" TextWrapping="Wrap" Text="{Binding ConstantIdeal}" VerticalAlignment="Top" Width="48"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="38,10,0,0" TextWrapping="Wrap" Text="{Binding PercentIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="39"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="132,10,0,0" TextWrapping="Wrap" Text="{Binding ConstantIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="48"/>
         <Label Content="Liczb znaczących " HorizontalAlignment="Left" Margin="184,10,0,0" VerticalAlignment="Top" Width="104"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="295,10,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumberIdeal}" VerticalAlignment="Top" Width="86"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="295,10,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumberIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="86"/>
 
     </Grid>
 </UserControl>

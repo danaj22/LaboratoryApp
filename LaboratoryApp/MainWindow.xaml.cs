@@ -19,6 +19,8 @@ using System;
 using System.Data.SqlClient;
 using System.Data.Entity;
 using System.Data;
+using System.Globalization;
+using System.Threading;
 
 namespace LaboratoryApp
 {
@@ -40,7 +42,6 @@ namespace LaboratoryApp
 
         public MainWindow()
         {
-
             // your connection string
             string connectionString = @"Data Source=DASL_SERWER;integrated security=True;multipleactiveresultsets=True";
 

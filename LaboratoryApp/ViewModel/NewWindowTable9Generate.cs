@@ -8,6 +8,7 @@ namespace LaboratoryApp.ViewModel
 {
     public class NewWindowTable9Generate : NewWindowTableGenerate
     {
+        
         public NewWindowTable9Generate()
         {
             OKCommand = new SimpleRelayCommand(Confirm);
@@ -24,6 +25,8 @@ namespace LaboratoryApp.ViewModel
 
             ColumnNames.Add("Niepewność całkowita rozszerzona typu (B+A) pomiaru prądu ±2S(x)[A]");
             ColumnNames.Add("Niepewność całkowita rozszerzona typu (B) pomiaru pomiaru prądu ±2S(x)");
+
+            Title = "Sprawdzenie normy zgodnie z wymogami instrukcji IZ/008/DASL";
         }
     }
 }

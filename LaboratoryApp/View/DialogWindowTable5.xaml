@@ -4,9 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewModel="clr-namespace:LaboratoryApp.ViewModel" x:Class="LaboratoryApp.View.DialogWindowTable5" 
-             mc:Ignorable="d" Width="900" Height="400">
+             mc:Ignorable="d" Width="900" Height="441">
 
     <UserControl.Resources>
+        <ViewModel:MyConverter x:Key="MyConverter"/>
         <ControlTemplate x:Key="errorTemplate">
             <DockPanel LastChildFill="true">
                 <Border Width="20" ToolTip="{Binding AdornedElement.(Validation.Errors)[0].ErrorContent, ElementName=adoner}" Margin="3,0,0,0" Height="20" DockPanel.Dock="right" CornerRadius="5" Background="OrangeRed">
@@ -27,27 +28,27 @@
     </UserControl.Resources>
 
     <Grid>
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" Height="348" Width="887">
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="8,80,0,0" VerticalAlignment="Top" Height="348" Width="887">
             <DataGrid.Columns>
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Nastawiona wartość napięcia na mierniku sprawdzanym [V]" Binding="{Binding MeasureValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Odczytana wartość napięcia na mierniku kontrolnym [V]" Binding="{Binding IdealValue}" />
-               <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Błąd względny nastawy napięcia na mierniku sprawdzanym" Binding="{Binding RelativeError}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna różnica napięcia zmierzonego i nastawionego" Binding="{Binding MaxDifference}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Rzeczywista wartość prądu pobierczego [mA]" Binding="{Binding RealValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Wymagana wartość prądu pobierczego [mA]" Binding="{Binding RecommendValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona pomiaru napięcia ±2u(x) [V]" Binding="{Binding ErrorInValue}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona pomiaru prądu ±2u(x) [mA]" Binding="{Binding ErrorInPercent}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Nastawiona wartość napięcia na mierniku sprawdzanym [V]" Binding="{Binding MeasureValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Odczytana wartość napięcia na mierniku kontrolnym [V]" Binding="{Binding IdealValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Błąd względny nastawy napięcia na mierniku sprawdzanym" Binding="{Binding RelativeError, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna różnica napięcia zmierzonego i nastawionego" Binding="{Binding MaxDifference, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Rzeczywista wartość prądu pobierczego [mA]" Binding="{Binding RealValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Wymagana wartość prądu pobierczego [mA]" Binding="{Binding RecommendValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona pomiaru napięcia ±2u(x) [V]" Binding="{Binding ErrorInValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona pomiaru prądu ±2u(x) [mA]" Binding="{Binding ErrorInPercent, Converter={StaticResource MyConverter}}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Label Content="%" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <Label Content="Stała = " HorizontalAlignment="Left" Margin="78,9,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="35,9,0,0" TextWrapping="Wrap" Text="{Binding Percent}" VerticalAlignment="Top" Width="38"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="129,9,0,0" TextWrapping="Wrap" Text="{Binding Constant}" VerticalAlignment="Top" Width="52"/>
-        <Label Content="Liczb znaczących" HorizontalAlignment="Left" Margin="186,10,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="290,9,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumber}" VerticalAlignment="Top" Width="61"/>
-        <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="822,126,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label Content="%" HorizontalAlignment="Left" Margin="8,48,0,0" VerticalAlignment="Top"/>
+        <Label Content="Stała = " HorizontalAlignment="Left" Margin="76,47,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="33,47,0,0" TextWrapping="Wrap" Text="{Binding Percent, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="38"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="127,47,0,0" TextWrapping="Wrap" Text="{Binding Constant, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="52"/>
+        <Label Content="Liczb znaczących" HorizontalAlignment="Left" Margin="184,48,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="288,47,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumber, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="61"/>
+        <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="820,164,0,0" VerticalAlignment="Top" Width="75"/>
 
-        <Button Width="75" VerticalAlignment="Top" Margin="0,43,3,0" HorizontalAlignment="Right" Command="{Binding OKCommand}" Content="OK">
+        <Button Width="75" VerticalAlignment="Top" Margin="0,81,5,0" HorizontalAlignment="Right" Command="{Binding OKCommand}" Content="OK">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="IsEnabled" Value="false"/>
@@ -62,9 +63,9 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Label Width="79" VerticalAlignment="Top" Margin="412,14,0,0" HorizontalAlignment="Left" Content="Nazwa tabeli"/>
+        <Label Width="79" VerticalAlignment="Top" Margin="410,52,0,0" HorizontalAlignment="Left" Content="Nazwa tabeli"/>
 
-        <TextBox x:Name="TxtBoxFunction" HorizontalAlignment="Left" Height="23" Margin="496,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="340"
+        <TextBox x:Name="TxtBoxFunction" HorizontalAlignment="Left" Height="23" Margin="494,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="340"
 			Validation.ErrorTemplate="{StaticResource errorTemplate}" AcceptsReturn="True"
 			HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"  
 			Style="{StaticResource textBoxError}" >
@@ -75,6 +76,12 @@
                 </Binding.ValidationRules>
             </Binding>
         </TextBox>
+        <Label Content="%" HorizontalAlignment="Left" Margin="16,10,0,0" VerticalAlignment="Top" Width="21"/>
+        <Label Content="Stała " HorizontalAlignment="Left" Margin="86,10,0,0" VerticalAlignment="Top" Width="40"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="41,10,0,0" TextWrapping="Wrap" Text="{Binding PercentIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="39"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="135,10,0,0" TextWrapping="Wrap" Text="{Binding ConstantIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="48"/>
+        <Label Content="Liczb znaczących " HorizontalAlignment="Left" Margin="187,10,0,0" VerticalAlignment="Top" Width="104"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="298,10,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumberIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="86"/>
 
     </Grid>
 </UserControl>

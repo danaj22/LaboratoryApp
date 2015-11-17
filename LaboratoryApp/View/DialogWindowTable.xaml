@@ -39,41 +39,41 @@
         </Grid.RowDefinitions>
 
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable1}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
-			DialogWidth="850" DialogResizeMode="CanResize" />
+			DialogWidth="900" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable2}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
-			DialogWidth="860" DialogResizeMode="CanResize" />
+			DialogWidth="100" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable3}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
-			DialogWidth="820" DialogResizeMode="CanResize" />
+			DialogWidth="890" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable4}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
-			DialogWidth="920" DialogResizeMode="CanResize" />
+			DialogWidth="950" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable5}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
-			DialogWidth="820" DialogResizeMode="CanResize" />
+			DialogWidth="890" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable6}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
 			DialogWidth="820" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable7}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
-			DialogWidth="820" DialogResizeMode="CanResize" />
+			DialogWidth="890" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable8}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
-			DialogWidth="820" DialogResizeMode="CanResize" />
+			DialogWidth="890" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable9}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
-			DialogWidth="820" DialogResizeMode="CanResize" />
+			DialogWidth="890" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable10}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="430" 
-			DialogWidth="1030" DialogResizeMode="CanResize" />
+			DialogWidth="900" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable11}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
-			DialogWidth="820" DialogResizeMode="CanResize" />
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable12}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="890" DialogResizeMode="CanResize" />
+        <!--<vm:ModalDialogManager DataContext="{Binding MessageWindowTable12}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
 			DialogWidth="820" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable13}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
-			DialogWidth="820" DialogResizeMode="CanResize" />
+			DialogWidth="820" DialogResizeMode="CanResize" />-->
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable14}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
 			DialogWidth="820" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable15}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
-			DialogWidth="1020" DialogResizeMode="CanResize" />
+			DialogWidth="1300" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable16}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
-			DialogWidth="1020" DialogResizeMode="CanResize" />
+			DialogWidth="1300" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable17}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
 			DialogWidth="1020" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable18}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
-			DialogWidth="1020" DialogResizeMode="CanResize" />
+			DialogWidth="1140" DialogResizeMode="CanResize" />
 
 
 
@@ -98,21 +98,15 @@
         <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable7Command}" Grid.Row="6" Width="349">
             <TextBlock Text="pomiar rezystancji uziemienia" TextWrapping="Wrap" />
         </Button>
-        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable8Command}" Grid.Row="7" Width="349">
-            <TextBlock Text="pomiar dokładności napięcia zakłucającego Un przemiennego" TextWrapping="Wrap" />
-        </Button>
         <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable9Command}" Grid.Row="8" Width="349">
             <TextBlock Text="pomiar prądu zwarciowego w ppętli zwarcionwej sieci o napięciu znamionowym 230V" TextWrapping="Wrap" TextAlignment="Center" />
         </Button>
         <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable10Command}" Grid.Row="9" Width="349">
             <TextBlock Text="pomiar napięcia dotykowego w odniesieniu do prądu różnicowego i oporności uziemienia" TextWrapping="Wrap" TextAlignment="Center"  />
         </Button>
-        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable11Command}" Grid.Row="10" Width="349">
+        <!--<Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable11Command}" Grid.Row="10" Width="349">
             <TextBlock Text="pomiar impendancji oraz reaktancji i rezystancji pętli zwarciowej" TextWrapping="Wrap" TextAlignment="Center" />
-        </Button>
-        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable14Command}" Grid.Row="11" Width="349">
-            <TextBlock Text="pomiar rezystancji połączeń ochronnych i wyrównawczych prądem 200 mA" TextWrapping="Wrap" TextAlignment="Center" />
-        </Button>
+        </Button>-->
         <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddTable15Command}" Grid.Row="12" Width="349">
             <TextBlock Text="pomiar rezystywności gruntu przy odległości sond 1m" TextWrapping="Wrap" TextAlignment="Center" />
         </Button>

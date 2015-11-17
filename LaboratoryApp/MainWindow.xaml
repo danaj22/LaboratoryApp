@@ -13,7 +13,7 @@
         WindowStartupLocation="CenterScreen"
         
         
-        Title="{Binding Title}" Height="600" Width="850">
+        Title="{Binding Title}" Height="560" Width="850">
 
     <Window.Resources>
         <ControlTemplate x:Key="errorTemplate">
@@ -65,89 +65,89 @@
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-    <Grid>
-        <Grid.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.Resources>
 
-        </Grid.Resources>
+            </Grid.Resources>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="160"/>
-            <ColumnDefinition Width="Auto" MinWidth="418"/>
-            <ColumnDefinition MinWidth="130"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" MinHeight="25"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="Auto" MinHeight="35"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="*" MinHeight="35"/>
-        </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="Auto" MinWidth="435"/>
+                <ColumnDefinition MinWidth="130"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" MinHeight="25"/>
+                <RowDefinition Height="Auto" MinHeight="30"/>
+                <RowDefinition Height="Auto" MinHeight="30"/>
+                <RowDefinition Height="Auto" MinHeight="30"/>
+                <RowDefinition Height="Auto" MinHeight="35"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="325"/>
+            </Grid.RowDefinitions>
 
-
-        <!--<Label Content="Data:" Grid.ColumnSpan="2" />
+            <!--<Label Content="Data:" Grid.ColumnSpan="2" />
         <DatePicker Grid.Column="1"  FirstDayOfWeek="Monday"  />-->
-        <Label Content="Temperatura:"  Grid.Row="1" VerticalAlignment="Center" Height="26" Margin="0,2"/>
-        <TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"
+            <Label Content="Temperatura:"  Grid.Row="1" VerticalAlignment="Center" Height="26" Margin="0,4,0,3"/>
+            <TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"
             Validation.ErrorTemplate="{StaticResource errorTemplate}"
-         Style="{StaticResource textBoxError}" Height="22" Margin="2,4" >
+         Style="{StaticResource textBoxError}" Height="22" Margin="2,6,2,5" >
 
-            <TextBox.Text>
-                <Binding Path="Temperature" UpdateSourceTrigger="PropertyChanged" >
-                    <Binding.ValidationRules>
-                        <vm:CalibratorValidation ValidatesOnTargetUpdated="True"
+                <TextBox.Text>
+                    <Binding Path="Temperature" UpdateSourceTrigger="PropertyChanged" >
+                        <Binding.ValidationRules>
+                            <vm:CalibratorValidation ValidatesOnTargetUpdated="True"
                                      ValidationStep="RawProposedValue" />
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox.Text>
-        </TextBox>
-        <Label Content="Imię i Nazwisko:" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Height="26" Margin="0,2"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <Label Content="Imię i Nazwisko:" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Height="26" Margin="0,2"/>
 
 
-        <TreeView Background="Bisque" Name="tvwAllClients" Grid.Row="5" Grid.RowSpan="2" ItemsSource="{Binding RootElement.Children,UpdateSourceTrigger=PropertyChanged}" 
+            <TreeView  Background="Bisque" Name="tvwAllClients" Grid.Row="5" Grid.RowSpan="2" ItemsSource="{Binding RootElement.Children,UpdateSourceTrigger=PropertyChanged}" 
                   vm:TreeViewHelper.SelectedItem="{Binding SelectedNode, Mode=TwoWay}" VirtualizingPanel.IsVirtualizing="True" Grid.Column="0" Grid.ColumnSpan="2">
-            <TreeView.Resources>
-                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
+                <TreeView.Resources>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
                       Color="Aquamarine" />
-                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"
                       Color="Black" />
-                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"
+                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"
                       Color="Aquamarine" />
-                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}"
+                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}"
                       Color="Black" />
-            </TreeView.Resources>
-            <TreeView.ItemContainerStyle>
-                <Style TargetType="TreeViewItem">
-                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
-                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
-                    <!--<Setter Property="Background" Value="Khaki" />-->
-                    <Setter Property="FontWeight" Value="Normal" />
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="FontWeight" Value="Bold"/>
-                        </Trigger>
-                    </Style.Triggers>
+                </TreeView.Resources>
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="TreeViewItem">
+                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+                        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
+                        <!--<Setter Property="Background" Value="Khaki" />-->
+                        <Setter Property="FontWeight" Value="Normal" />
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Trigger>
+                        </Style.Triggers>
 
-                </Style>
-            </TreeView.ItemContainerStyle>
-            <TreeView.ItemTemplate >
+                    </Style>
+                </TreeView.ItemContainerStyle>
+                <TreeView.ItemTemplate >
 
-                <HierarchicalDataTemplate ItemsSource="{Binding Children}" >
-                    <Grid>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Width="20" Height="18" Stretch="Fill" Source="{Binding DisplayImagePath}"/>
-                            <TextBlock Text="{Binding NameOfItem}"/>
-                        </StackPanel>
-                    </Grid>
-                </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
-        </TreeView>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Children}" >
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="20" Height="18" Stretch="Fill" Source="{Binding DisplayImagePath}"/>
+                                <TextBlock Text="{Binding NameOfItem}"/>
+                            </StackPanel>
+                        </Grid>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
 
 
 
-        <!--<TreeView Name="tvwAllClients" ItemContainerStyle="{StaticResource ItemContainerStyle}" Grid.Row="4" Grid.RowSpan="2" ItemsSource="{Binding AllItems,UpdateSourceTrigger=PropertyChanged}" 
+            <!--<TreeView Name="tvwAllClients" ItemContainerStyle="{StaticResource ItemContainerStyle}" Grid.Row="4" Grid.RowSpan="2" ItemsSource="{Binding AllItems,UpdateSourceTrigger=PropertyChanged}" 
                   local:TreeViewHelper.SelectedItem="{Binding SelectedNode, Mode=TwoWay}" VirtualizingPanel.IsVirtualizing="True" Grid.Column="0" Grid.ColumnSpan="2">
             
             <TreeView.ItemTemplate>
@@ -171,12 +171,12 @@
                                 </ItemsControl>
                             </StackPanel>
                             -->
-        <!--<HierarchicalDataTemplate.ItemTemplate>
+            <!--<HierarchicalDataTemplate.ItemTemplate>
                                 <HierarchicalDataTemplate>
                                     <TextBlock Text="{Binding model_of_gauges.model}"/>
                                 </HierarchicalDataTemplate>
                             </HierarchicalDataTemplate.ItemTemplate>-->
-        <!--
+            <!--
                         </DataTemplate>
                     </HierarchicalDataTemplate.ItemTemplate>
                 </HierarchicalDataTemplate>
@@ -184,45 +184,48 @@
             </TreeView.ItemTemplate>
         </TreeView>-->
 
-        <ContentControl Background="LightBlue" Grid.RowSpan="2" Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="2" Content="{Binding CurrentViewModel}">
-        </ContentControl>
-        <Button Content="Wyszukaj" Command="{Binding SearchCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Width="80" Height="22" Margin="10,4"/>
+            <ContentControl Background="LightBlue" Grid.RowSpan="2" Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="2" Content="{Binding CurrentViewModel}">
+            </ContentControl>
+            <Button Content="Wyszukaj" Command="{Binding SearchCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Width="80" Height="25" Margin="10,5"/>
 
-        <!--<vm:ModalDialogManager DataContext="{Binding MessageWindowDatabase}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}" DialogHeight="400" DialogWidth="350"
+            <!--<vm:ModalDialogManager DataContext="{Binding MessageWindowDatabase}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}" DialogHeight="400" DialogWidth="350"
                                DialogResizeMode="CanResize" />-->
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowClient}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="400" 
-			DialogWidth="390" DialogResizeMode="CanResize" />
+            <vm:ModalDialogManager DataContext="{Binding MessageWindowClient}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="400" 
+			DialogWidth="390" DialogResizeMode="CanResize"  />
 
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowModelOfGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="700" 
-			DialogWidth="590" DialogResizeMode="CanResize"/>
+            <vm:ModalDialogManager DataContext="{Binding MessageWindowModelOfGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="700" 
+			DialogWidth="590" DialogResizeMode="CanResize" ScrollViewer.CanContentScroll="True"  ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
 
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowUser}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}" DialogHeight="200" 
+            <vm:ModalDialogManager DataContext="{Binding MessageWindowUser}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}" DialogHeight="200" 
                                DialogWidth="470" DialogResizeMode="CanResize"/>
 
-        <Button Content="Dodaj pomiarowca" Command="{Binding AddNewMeasureCommand}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right"  VerticalAlignment="center" Height="22" Margin="0,2,249,3" Width="142" />
+            <Button Content="Dodaj pomiarowca" Command="{Binding AddNewMeasureCommand}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right"  VerticalAlignment="Center" Height="25" Margin="0,2,249,3" Width="142" />
 
-        <TextBox Text="{Binding SearchItem}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Background="AliceBlue" Height="22" Margin="2,4" />
-        <Button Content="Dodaj klienta" Command="{Binding AddNewClientCommand}" Grid.Column="3" HorizontalAlignment="Right"  VerticalAlignment="center" Width="142" Height="22" Margin="0,2,0,1" />
-        <Button Content="Dodaj model miernika" Command="{Binding AddNewGaugeCommand}" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right"  VerticalAlignment="center" Height="22" Margin="0,4" Width="142" />
-        <RadioButton Content="Nr seryjny" IsChecked="{Binding IsCheckedSerial}" HorizontalAlignment="Left" Margin="10,1,0,0" Grid.Row="4" VerticalAlignment="Top" Height="24" Width="80"/>
-        <RadioButton Content="NIP" IsChecked ="{Binding IsCheckedNip}" HorizontalAlignment="Left" Margin="0,1,0,0" Grid.Row="4" VerticalAlignment="Top" Height="25" Width="48" Grid.Column="1"/>
-        <RadioButton Content="Nazwa klienta" IsChecked="{Binding IsCheckedName}" Grid.Column="1" HorizontalAlignment="Left" Margin="60,1,0,0" Grid.Row="4" VerticalAlignment="Top" Height="29" Width="101" Grid.ColumnSpan="2"/>
+            <TextBox Text="{Binding SearchItem}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Background="AliceBlue" Height="26" Margin="2,5,2,4" />
+            <Button Content="Dodaj klienta" Command="{Binding AddNewClientCommand}" Grid.Column="3" HorizontalAlignment="Right"  VerticalAlignment="center" Width="142" Height="25" Margin="0,2,0,1" />
+            <Button Content="Dodaj model miernika" Command="{Binding AddNewGaugeCommand}" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right"  VerticalAlignment="center" Height="25" Margin="0,4" Width="142" />
+            <RadioButton Content="Nr seryjny" IsChecked="{Binding IsCheckedSerial}" HorizontalAlignment="Left" Margin="10,1,0,0" Grid.Row="4" VerticalAlignment="Top" Height="24" Width="80"/>
+            <RadioButton Content="NIP" IsChecked ="{Binding IsCheckedNip}" HorizontalAlignment="Left" Margin="0,1,0,0" Grid.Row="4" VerticalAlignment="Top" Height="25" Width="48" Grid.Column="1"/>
+            <RadioButton Content="Nazwa klienta" IsChecked="{Binding IsCheckedName}" Grid.Column="1" HorizontalAlignment="Left" Margin="60,1,0,0" Grid.Row="4" VerticalAlignment="Top" Height="29" Width="101" Grid.ColumnSpan="2"/>
 
-        <ComboBox ItemsSource="{Binding ListOfUsers}" Grid.Column="1" 
+            <ComboBox ItemsSource="{Binding ListOfUsers}" Grid.Column="1" 
                   Validation.ErrorTemplate="{StaticResource errorTemplate}"
                   Style="{StaticResource ComboBoxError}" Margin="2,0" Grid.Row="2">
-            <ComboBox.SelectedItem>
-                <Binding Path="NameAndSurname" UpdateSourceTrigger="PropertyChanged">
-                    <Binding.ValidationRules>
-                        <vm:SelectedItemValidation ValidatesOnTargetUpdated="True"
+                <ComboBox.SelectedItem>
+                    <Binding Path="NameAndSurname" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <vm:SelectedItemValidation ValidatesOnTargetUpdated="True"
                                      ValidationStep="RawProposedValue"
                                      ErrorMessage="Wybierz pomiarowca."/>
-                    </Binding.ValidationRules>
-                </Binding>
-            </ComboBox.SelectedItem>
-        </ComboBox>
-        <Label Content="{Binding CertPath}"  Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Center" Height="26" Margin="0,1,184,1" />
-        <Button Content="zmień Ścieżkę zapisu raportów" Command="{Binding ChangePathCommand}" Grid.Column="2" HorizontalAlignment="Left" Margin="239,3,0,0" VerticalAlignment="Top" Width="194" Grid.ColumnSpan="2"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </ComboBox.SelectedItem>
+            </ComboBox>
+            <Label Content="{Binding CertPath}"  Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Center" Height="26" Margin="0,1,184,1" />
+            <Button Content="zmień Ścieżkę zapisu raportów" Command="{Binding ChangePathCommand}" Grid.Column="2" HorizontalAlignment="Left" Margin="239,3,0,0" VerticalAlignment="Top" Width="194" Height="25"/>
 
-    </Grid>
+
+        </Grid>
+    </ScrollViewer>
+
 </Controls:MetroWindow>

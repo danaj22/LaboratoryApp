@@ -6,7 +6,7 @@
              xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
              xmlns:local="clr-namespace:LaboratoryApp"
              
-             mc:Ignorable="d" Width="717" Height="846"
+             mc:Ignorable="d" Width="717" Height="876"
              >
     <UserControl.Resources>
         <ControlTemplate x:Key="errorTemplate">
@@ -53,27 +53,27 @@
 
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="80" MinHeight="30"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="Auto" MinHeight="60"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="Auto" MinHeight="30"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="90"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="95"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="65"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
         </Grid.RowDefinitions>
 
         <Label Content="Zgłaszający: " HorizontalAlignment="Left" VerticalAlignment="Center" Height="26" Margin="0,3,0,2" Width="76"/>
@@ -84,6 +84,7 @@
         <Label Content="Zastosowanie urządzenia: " HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Center" Height="26" Margin="0,3" Width="148"/>
         <Label Content="Metoda wzorcowania: " HorizontalAlignment="Left" Grid.Row="6" VerticalAlignment="Center" Height="26" Margin="0,3" Width="129"/>
         <Label Content="Odniesienie do wzorca państwowego: " HorizontalAlignment="Left" Grid.Row="7" VerticalAlignment="Center" Height="26" Margin="0,3" Width="213"/>
+        <Label Content="Kalibratory: " HorizontalAlignment="Left" Grid.Row="8" VerticalAlignment="Center" Height="26" Width="213"/>
         <Label Content="Temperatura otoczenia: " HorizontalAlignment="Left" Grid.Row="9" VerticalAlignment="Center" Height="26" Margin="0,3,0,2" Width="138"/>
         <Label Content="Wilgotność powietrza: " HorizontalAlignment="Left" Grid.Row="10" VerticalAlignment="Center" Height="26" Margin="0,3" Width="131"/>
         <Label Content="Stwierdzenie zgodności: " HorizontalAlignment="Left" Grid.Row="11" VerticalAlignment="Center" Height="26" Margin="0,3" Width="140"/>
@@ -206,6 +207,6 @@
         <Button Content="Dodaj" Command="{Binding AddCalibratorCommand}" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="8" VerticalAlignment="Center" />
         <Label Content="Czy wydrukować pieczątkę: " HorizontalAlignment="Left" Grid.Row="19" VerticalAlignment="Center" Height="26" Margin="0,2,0,5" Width="176"/>
         <ComboBox ItemsSource="{Binding Stamp}" SelectedItem="{Binding PrintStamp}"  HorizontalAlignment="Left" VerticalAlignment="center" Grid.Row="19" Grid.Column="1" Width="396" Height="24" Margin="0,3,0,5"/>
-
+        
     </Grid>
 </UserControl>
