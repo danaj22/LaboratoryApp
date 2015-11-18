@@ -17,19 +17,19 @@ namespace LaboratoryApp
         {
             //Disable shutdown when the dialog closes
             Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
-            var dialog = new View.ServerConnectWindow();
-            if (dialog.ShowDialog() == true)
-            {
+            //var dialog = new View.ServerConnectWindow();
+            //if (dialog.ShowDialog() == true)
+            //{
                 var mainWindow = new MainWindow();
                 //Re-enable normal shutdown mode.
                 Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
                 Current.MainWindow = mainWindow;
                 mainWindow.Show();
-            }
-            else
-            { 
-                Current.Shutdown(-1);
-            }
+            //}
+            //else
+            //{ 
+                //Current.Shutdown(-1);
+            //}
         }
     }
 }

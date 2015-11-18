@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace LaboratoryApp.ViewModel
 {
@@ -29,6 +30,13 @@ namespace LaboratoryApp.ViewModel
             get { return differenceResist10m; }
             set 
             {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                }
                 differenceResist10m = value;
                 OnPropertyChanged("DifferenceResist10m");
             }
@@ -40,6 +48,13 @@ namespace LaboratoryApp.ViewModel
             get { return differenceResist10mv2; }
             set 
             {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                }
                 differenceResist10mv2 = value;
                 OnPropertyChanged("DifferenceResist10mv2");
             }
@@ -51,6 +66,13 @@ namespace LaboratoryApp.ViewModel
             get { return measureValueTab16; }
             set 
             {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                }
                 measureValueTab16 = value;
                 OnPropertyChanged("MeasureValueTab16");
                 ResistanceOfGroundv2 = this.Multiples * 10 * 2 * Math.PI;
@@ -60,6 +82,34 @@ namespace LaboratoryApp.ViewModel
 
                 this.ErrorInValuev3 = this.ResistanceOfGroundv2 * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
                 this.ErrorInPercentv3 = ErrorInValuev3 / ResistanceOfGroundv2;
+
+
+                if (Math.Abs(IdealValue) > RelativeError)
+                {
+                    BrushConverter conv = new BrushConverter();
+                    ColorResultTab16_50V = conv.ConvertFromString("LightGray") as SolidColorBrush;
+
+                }
+                else
+                {
+                    ColorResultTab16_50V = new SolidColorBrush();
+                }
+            }
+        }
+
+        private double errorRelativePercent;
+
+        public double ErrorRelativePercent
+        {
+            get { return errorRelativePercent; }
+            set {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } errorRelativePercent = value; OnPropertyChanged("ErrorRelativePercent");
             }
         }
 
@@ -69,6 +119,13 @@ namespace LaboratoryApp.ViewModel
             get { return measureValue25VTab16; }
             set
             {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                }
                 measureValue25VTab16 = value;
                 OnPropertyChanged("MeasureValue25VTab16");
 
@@ -79,6 +136,18 @@ namespace LaboratoryApp.ViewModel
 
                 this.ErrorInValuev3 = this.ResistanceOfGroundv2 * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
                 this.ErrorInPercentv3 = ErrorInValuev3 / ResistanceOfGroundv2;
+
+                if(Math.Abs(IdealValue) > RelativeError25V)
+                {
+                     BrushConverter conv = new BrushConverter();
+                    ColorResultTab16_25V = conv.ConvertFromString("LightGray") as SolidColorBrush;
+
+                }
+                else
+                {
+                    ColorResultTab16_25V = new SolidColorBrush();
+                }
+
             }
         }
 
@@ -90,6 +159,13 @@ namespace LaboratoryApp.ViewModel
             get { return idealValue; }
             set
             {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                }
                 idealValue = value;
                 OnPropertyChanged("IdealValue");
                 Difference = this.MeasureValue - this.IdealValue;
@@ -129,7 +205,63 @@ namespace LaboratoryApp.ViewModel
                 prefix2 = value;
                 OnPropertyChanged("Prefix2");
             }
-        } 
+        }
+        private SolidColorBrush colorResult;
+
+        public SolidColorBrush ColorResult
+        {
+            get { return colorResult; }
+            set 
+            { 
+                colorResult = value;
+                OnPropertyChanged("ColorResult");
+            }
+        }
+        private SolidColorBrush colorResult2;
+
+        public SolidColorBrush ColorResult2
+        {
+            get { return colorResult2; }
+            set { colorResult2 = value; OnPropertyChanged("ColorResult2"); }
+        }
+        private SolidColorBrush colorResult3;
+
+        public SolidColorBrush ColorResult3
+        {
+            get { return colorResult3; }
+            set { colorResult3 = value; OnPropertyChanged("ColorResult3"); }
+        }
+        private SolidColorBrush colorResultTab15_50V;
+
+        public SolidColorBrush ColorResultTab15_50V
+        {
+            get { return colorResultTab15_50V; }
+            set { colorResultTab15_50V = value; OnPropertyChanged("ColorResultTab15_50V"); }
+        }
+        private SolidColorBrush colorResultTab15_25V;
+
+        public SolidColorBrush ColorResultTab15_25V
+        {
+            get { return colorResultTab15_25V; }
+            set { colorResultTab15_25V = value; OnPropertyChanged("ColorResultTab15_25V"); }
+        }
+
+        private SolidColorBrush colorResultTab16_50V;
+
+        public SolidColorBrush ColorResultTab16_50V
+        {
+            get { return colorResultTab16_50V; }
+            set { colorResultTab16_50V = value; OnPropertyChanged("ColorResultTab16_50V"); }
+        }
+
+        private SolidColorBrush colorResultTab16_25V;
+
+        public SolidColorBrush ColorResultTab16_25V
+        {
+            get { return colorResultTab16_25V; }
+            set 
+            { colorResultTab16_25V = value; OnPropertyChanged("ColorResultTab16_25V"); }
+        }
 
         private double measureValue;
 
@@ -138,6 +270,13 @@ namespace LaboratoryApp.ViewModel
             get { return measureValue; }
             set
             {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                }
 
                 measureValue = value;
                 
@@ -147,7 +286,10 @@ namespace LaboratoryApp.ViewModel
                 Difference25V = this.MeasureValue25V - this.IdealValue;
                 RelativeError = this.MeasureValue * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
                 RelativeError25V = this.MeasureValue25V * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
-                
+
+                ErrorRelativePercent = Math.Round((IdealValue - MeasureValue)/ MeasureValue * 100,4);
+
+
                 ResistanceOfGround = this.Multiples * 1 * 2 * Math.PI;
 
                 //dla sondy 1m
@@ -166,6 +308,41 @@ namespace LaboratoryApp.ViewModel
 
                 this.ErrorInValue = this.IdealValue * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
                 this.ErrorInPercent = ErrorInValue / IdealValue;
+
+                if(IdealValue > UpMeasureError ||  IdealValue < DownMeasureError )
+                {
+                    BrushConverter conv = new BrushConverter();
+                    ColorResult = conv.ConvertFromString("LightGray") as SolidColorBrush;
+                }
+                else
+                {
+                    ColorResult = new SolidColorBrush();
+                }
+
+                if (IdealValue < Math.Abs(RelativeError))
+                {
+                    BrushConverter conv = new BrushConverter();
+                    ColorResult2 = conv.ConvertFromString("LightGray") as SolidColorBrush;
+                    ColorResultTab15_50V = conv.ConvertFromString("LightGray") as SolidColorBrush;
+                }
+                else
+                {
+                    ColorResult2 = new SolidColorBrush();
+                    ColorResultTab15_50V = new SolidColorBrush();
+                }
+
+                if (IdealValue < Math.Abs(RelativeError25V))
+                {
+                    BrushConverter conv = new BrushConverter();
+                    ColorResult3 = conv.ConvertFromString("LightGray") as SolidColorBrush;
+                    ColorResultTab15_25V = conv.ConvertFromString("LightGray") as SolidColorBrush;
+                }
+                else
+                {
+                    ColorResult3 = new SolidColorBrush();
+                    ColorResultTab15_25V = new SolidColorBrush();
+                }
+                
             }
         }
         private double measureValue25V;
@@ -175,7 +352,13 @@ namespace LaboratoryApp.ViewModel
             get { return measureValue25V; }
             set
             {
-
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                }
                 measureValue25V = value;
                 OnPropertyChanged("MeasureValue25V");
                 Difference = this.MeasureValue25V - this.IdealValue;
@@ -198,6 +381,23 @@ namespace LaboratoryApp.ViewModel
                 
                 this.ErrorInValue = this.IdealValue * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
                 this.ErrorInPercent = ErrorInValue / IdealValue;
+
+
+                if (IdealValue < Math.Abs(RelativeError25V))
+                {
+                    BrushConverter conv = new BrushConverter();
+                    ColorResult3 = conv.ConvertFromString("LightGray") as SolidColorBrush;
+                    ColorResultTab15_25V = conv.ConvertFromString("LightGray") as SolidColorBrush;
+                }
+                else
+                {
+                    ColorResult3 = new SolidColorBrush();
+                    ColorResultTab15_25V = new SolidColorBrush();
+                }
+
+               
+
+
             }
         }
 
@@ -206,21 +406,48 @@ namespace LaboratoryApp.ViewModel
         public double ErrorInValuev2
         {
             get { return errorInValuev2; }
-            set { errorInValuev2 = value; OnPropertyChanged("ErrorInValuev2"); }
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } errorInValuev2 = value; OnPropertyChanged("ErrorInValuev2");
+            }
         }
         private double errorInValuev3;
 
         public double ErrorInValuev3
         {
             get { return errorInValuev3; }
-            set { errorInValuev3 = value; OnPropertyChanged("ErrorInValuev3"); }
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } errorInValuev3 = value; OnPropertyChanged("ErrorInValuev3");
+            }
         }
         private double errorInPercentv2;
 
         public double ErrorInPercentv2
         {
             get { return errorInPercentv2; }
-            set { errorInPercentv2 = value; OnPropertyChanged("ErrorInPercentv2"); }
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } errorInPercentv2 = value; OnPropertyChanged("ErrorInPercentv2");
+            }
         }
 
         private double errorInPercentv3;
@@ -228,7 +455,16 @@ namespace LaboratoryApp.ViewModel
         public double ErrorInPercentv3
         {
             get { return errorInPercentv3; }
-            set { errorInPercentv3 = value; OnPropertyChanged("ErrorInPercentv3"); }
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } errorInPercentv3 = value; OnPropertyChanged("ErrorInPercentv3");
+            }
         }
 
         private double differenceResistance;
@@ -236,8 +472,15 @@ namespace LaboratoryApp.ViewModel
         public double DifferenceResistance
         {
             get { return differenceResistance; }
-            set 
+            set
             {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                }
                 differenceResistance = value;
                 OnPropertyChanged("DifferenceResistance");
             }
@@ -247,7 +490,16 @@ namespace LaboratoryApp.ViewModel
         public double DifferenceResistancev2
         {
             get { return differenceResistancev2; }
-            set { differenceResistancev2 = value; OnPropertyChanged("DifferenceResistancev2"); }
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } differenceResistancev2 = value; OnPropertyChanged("DifferenceResistancev2");
+            }
         }
 
         private double symulatedResistance;
@@ -255,14 +507,32 @@ namespace LaboratoryApp.ViewModel
         public double SymulatedResistance
         {
             get { return symulatedResistance; }
-            set { symulatedResistance = value; OnPropertyChanged("SymulatedResistance"); }
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } symulatedResistance = value; OnPropertyChanged("SymulatedResistance");
+            }
         }
         private double resistanceMeasure;
 
         public double ResistanceMeasure
         {
             get { return resistanceMeasure; }
-            set { resistanceMeasure = value; OnPropertyChanged("ResistanceMeasure"); }
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } resistanceMeasure = value; OnPropertyChanged("ResistanceMeasure");
+            }
         }
         private double multiples;
 
@@ -291,6 +561,13 @@ namespace LaboratoryApp.ViewModel
             get { return difference; }
             set
             {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                }
                 difference = value;
                 OnPropertyChanged("Difference");
             }
@@ -300,21 +577,47 @@ namespace LaboratoryApp.ViewModel
         public double MaxError
         {
             get { return maxError; }
-            set { maxError = value; OnPropertyChanged("MaxError"); }
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } maxError = value; OnPropertyChanged("MaxError");
+            }
         }
         private double maxError25V;
 
         public double MaxError25V
         {
             get { return maxError25V; }
-            set { maxError25V = value; OnPropertyChanged("MaxError25V"); }
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } maxError25V = value; OnPropertyChanged("MaxError25V");
+            }
         }
         private double resistanceOfGround;
 
         public double ResistanceOfGround
         {
             get { return resistanceOfGround; }
-            set {
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                }
                 resistanceOfGround = value;
                 OnPropertyChanged("ResistanceOfGround");
                 this.ErrorInValuev2 = this.ResistanceOfGround * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
@@ -328,7 +631,15 @@ namespace LaboratoryApp.ViewModel
         public double ResistanceOfGroundv2
         {
             get { return resistanceOfGroundv2; }
-            set { resistanceOfGroundv2 = value;
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } resistanceOfGroundv2 = value;
                 OnPropertyChanged("ResistanceOfGroundv2");
                 this.ErrorInValuev2 = this.ResistanceOfGround * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
                 this.ErrorInPercentv2 = ErrorInValuev2 / ResistanceOfGround;
@@ -340,9 +651,19 @@ namespace LaboratoryApp.ViewModel
 
         public double Difference25V
         {
-            get { return difference25V; }
+            get
+            {
+return difference25V;
+            }
             set
             {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } 
                 difference25V = value;
                 OnPropertyChanged("Difference25V");
             }
@@ -352,46 +673,91 @@ namespace LaboratoryApp.ViewModel
         public double DownMeasureErrorResistance
         {
             get { return downMeasureErrorResistance; }
-            set { downMeasureErrorResistance = value; OnPropertyChanged("DownMeasureErrorResistance"); }
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } downMeasureErrorResistance = value; OnPropertyChanged("DownMeasureErrorResistance");
+            }
         }
         private double upMeasureErrorResistance;
 
         public double UpMeasureErrorResistance
         {
             get { return upMeasureErrorResistance; }
-            set { upMeasureErrorResistance = value; OnPropertyChanged("UpMeasureErrorResistance"); }
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } upMeasureErrorResistance = value; OnPropertyChanged("UpMeasureErrorResistance");
+            }
         }
         private double relativeError;
 
         public double RelativeError
         {
             get { return relativeError; }
-            set { relativeError = value; OnPropertyChanged("RelativeError"); }
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } relativeError = value; OnPropertyChanged("RelativeError");
+            }
         }
         private double relativeError25V;
 
         public double RelativeError25V
         {
             get { return relativeError25V; }
-            set { relativeError25V = value; OnPropertyChanged("RelativeError25V"); }
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } relativeError25V = value; OnPropertyChanged("RelativeError25V");
+            }
         }
         private double maxDifference;
 
         public double MaxDifference
         {
             get { return maxDifference; }
-            set { maxDifference = value; OnPropertyChanged("MaxDifference"); }
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } maxDifference = value; OnPropertyChanged("MaxDifference");
+            }
         }
-        private double realValue;
+        private string realValue="";
 
-        public double RealValue
+        public string RealValue
         {
             get { return realValue; }
             set { realValue = value; OnPropertyChanged("RealValue"); }
         }
-        private double recommendValue;
+        private string recommendValue="";
 
-        public double RecommendValue
+        public string RecommendValue
         {
             get { return recommendValue; }
             set { recommendValue = value; OnPropertyChanged("RecommendValue"); }
@@ -404,6 +770,13 @@ namespace LaboratoryApp.ViewModel
             get { return upMeasureError; }
             set
             {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                }
                 upMeasureError = value;
                 OnPropertyChanged("UpMeasureError");
             }
@@ -413,7 +786,16 @@ namespace LaboratoryApp.ViewModel
         public double ReferenceVoltage
         {
             get { return referenceVoltage; }
-            set { referenceVoltage = value; OnPropertyChanged("ReferenceVoltage"); }
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } referenceVoltage = value; OnPropertyChanged("ReferenceVoltage");
+            }
         }
 
         private double downMeasureError;
@@ -423,6 +805,13 @@ namespace LaboratoryApp.ViewModel
             get { return downMeasureError; }
             set
             {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                }
                 downMeasureError = value;
                 OnPropertyChanged("DownMeasureError");
             }
@@ -433,14 +822,32 @@ namespace LaboratoryApp.ViewModel
         public double ErrorInValue
         {
             get { return errorInValue; }
-            set { errorInValue = value; OnPropertyChanged("ErrorInValue"); }
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } errorInValue = value; OnPropertyChanged("ErrorInValue");
+            }
         }
         private double errorInPercent;
 
         public double ErrorInPercent
         {
             get { return errorInPercent; }
-            set { errorInPercent = value; OnPropertyChanged("ErrorInPercent"); }
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } errorInPercent = value; OnPropertyChanged("ErrorInPercent");
+            }
         }
 
         private double valueOfIsolation;
@@ -448,7 +855,16 @@ namespace LaboratoryApp.ViewModel
         public double ValueOfIsolation
         {
             get { return valueOfIsolation; }
-            set { valueOfIsolation = value; OnPropertyChanged("ValueOfIsolation"); }
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } valueOfIsolation = value; OnPropertyChanged("ValueOfIsolation");
+            }
         }
         private double constant;
 
@@ -457,6 +873,13 @@ namespace LaboratoryApp.ViewModel
             get { return constant; }
             set
             {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                }
                 constant = value;
                 OnPropertyChanged("Constant");
             }
@@ -468,6 +891,13 @@ namespace LaboratoryApp.ViewModel
             get { return importantNumber; }
             set
             {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                }
                 importantNumber = value;
                 OnPropertyChanged("ImportantNumber");
 
@@ -480,6 +910,13 @@ namespace LaboratoryApp.ViewModel
             get { return percent; }
             set
             {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                }
                 percent = value;
                 OnPropertyChanged("Percent");
 
@@ -490,7 +927,15 @@ namespace LaboratoryApp.ViewModel
         public double PercentIdeal
         {
             get { return percentIdeal; }
-            set { percentIdeal = value;
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } percentIdeal = value;
                 OnPropertyChanged("PercentIdeal");
             this.ErrorInValue = this.IdealValue * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
             this.ErrorInPercent = ErrorInValue / IdealValue;
@@ -501,7 +946,15 @@ namespace LaboratoryApp.ViewModel
         public double ImportantNumberIdeal
         {
             get { return importantNumberIdeal; }
-            set { importantNumberIdeal = value;
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } importantNumberIdeal = value;
                 OnPropertyChanged("ImportantNumberIdeal");
                 this.ErrorInValue = this.IdealValue * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
                 this.ErrorInPercent = ErrorInValue / IdealValue;
@@ -513,7 +966,15 @@ namespace LaboratoryApp.ViewModel
         public double ConstantIdeal
         {
             get { return constantIdeal; }
-            set { constantIdeal = value;
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } constantIdeal = value;
                 OnPropertyChanged("ConstantIdeal");
                 this.ErrorInValue = this.IdealValue * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
                 this.ErrorInPercent = ErrorInValue / IdealValue;

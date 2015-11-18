@@ -536,6 +536,8 @@ namespace LaboratoryApp.ViewModel
         public void AddTable1()
         {
             MessageWindowTable1 = new NewWindowTable1();
+            //dataGridView1.Rows[rowIndex].Cells[columnIndex].Style.BackColor = Color.Red;
+
             MessageWindowTable1.IsOpen = true;
 
             if (MessageWindowTable1.ToConfirm)

@@ -48,7 +48,13 @@
         </Grid.ColumnDefinitions>
         <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Center" Grid.Row="1" Grid.ColumnSpan="5" VerticalAlignment="Center" Height="320" Width="808" Margin="10,47,30.4,-9" Grid.RowSpan="3">
             <DataGrid.Columns>
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Wartość częstotliwości napięcia przemiennego na mierniku sprawdzanym [Hz]" Binding="{Binding MeasureValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Wartość częstotliwości napięcia przemiennego na mierniku sprawdzanym [Hz]" Binding="{Binding MeasureValue, Converter={StaticResource MyConverter}}" >
+                    <DataGridTextColumn.CellStyle>
+                        <Style>
+                            <Setter Property="Border.Background" Value="{Binding ColorResult}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="30" Header="Przedrostek" Binding="{Binding Prefix, Converter={StaticResource MyConverter}}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Nastawiona wartość częstotliwości napięcia przemiennego o wartości 230V [Hz]" Binding="{Binding IdealValue, Converter={StaticResource MyConverter}}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Różnica częstotliwości na mierniku sprawdzanym i kontrolnym [Hz]" Binding="{Binding Difference, Converter={StaticResource MyConverter}}" />

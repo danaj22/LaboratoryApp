@@ -50,9 +50,21 @@
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Wartość rezystancji nastawionej na dekadzie kontrolnej [Ω]" Binding="{Binding Path=Multiples, Converter={StaticResource MyConverter}}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Hipotetyczna rezystywność gruntu [Ω*m]" Binding="{Binding Path=ResistanceOfGround, Converter={StaticResource MyConverter}}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="30" Header="Przedrostek" Binding="{Binding Path=Prefix, Converter={StaticResource MyConverter}}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Zmierzona wartość rezystywności gruntu na mierniku sprawdzanym przy 50V [Ω*m]" Binding="{Binding Path=MeasureValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Zmierzona wartość rezystywności gruntu na mierniku sprawdzanym przy 50V [Ω*m]" Binding="{Binding Path=MeasureValue, Converter={StaticResource MyConverter}}">
+                    <DataGridTextColumn.CellStyle>
+                        <Style>
+                            <Setter Property="Border.Background" Value="{Binding ColorResultTab15_50V}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Różnica wartości rezystywności na mierniku sprawdzanym i hipotetycznej przy 50V [Ω*m]" Binding="{Binding Path=DifferenceResistance, Converter={StaticResource MyConverter}}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Zmierzona wartość rezystywności gruntu na mierniku sprawdzanym przy 25V [Ω*m]" Binding="{Binding Path=MeasureValue25V, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Zmierzona wartość rezystywności gruntu na mierniku sprawdzanym przy 25V [Ω*m]" Binding="{Binding Path=MeasureValue25V, Converter={StaticResource MyConverter}}">
+                    <DataGridTextColumn.CellStyle>
+                        <Style>
+                            <Setter Property="Border.Background" Value="{Binding ColorResultTab15_25V}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Różnica wartości rezystywności na mierniku sprawdzanym i hipotetycznej przy 25V [Ω*m]" Binding="{Binding Path=DifferenceResistancev2, Converter={StaticResource MyConverter}}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Dopuszczalna wartość błedu bezwzględnego mierzonej rezystywności dla napięcia 50V [Ω*m]" Binding="{Binding Path=RelativeError, Converter={StaticResource MyConverter}}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Dopuszczalna wartość błedu bezwzględnego mierzonej rezystywności dla napięcia 25V [Ω*m]" Binding="{Binding Path=RelativeError25V, Converter={StaticResource MyConverter}}" />

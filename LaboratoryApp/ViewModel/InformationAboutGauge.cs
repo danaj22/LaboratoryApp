@@ -164,6 +164,13 @@ namespace LaboratoryApp.ViewModel
             get { return messageWindowTable4; }
             set { messageWindowTable4 = value; OnPropertyChanged("MessageWindowTable4"); }
         }
+        private NewWindowTable5Generate messageWindowTable5;
+
+        public NewWindowTable5Generate MessageWindowTable5
+        {
+            get { return messageWindowTable5; }
+            set { messageWindowTable5 = value; OnPropertyChanged("MessageWindowTable5"); }
+        }
         private NewWindowTable6Generate messageWindowTable6;
         public NewWindowTable6Generate MessageWindowTable6
         {
@@ -405,6 +412,7 @@ namespace LaboratoryApp.ViewModel
 
                     foreach (string nameOfTable in nameOfData)
                     {
+                        #region table1
                         if (nameOfTable.Substring(33, 7) == "Table1\t")
                         {
                             MessageWindowTable1 = new NewWindowTable1Generate();
@@ -501,6 +509,8 @@ namespace LaboratoryApp.ViewModel
                             }
                             MessageWindowTable1.ToConfirm = false;
                         }
+                        #endregion
+                        #region table2
                         if (nameOfTable.Substring(33, 7) == "Table2\t")
                         {
                             {
@@ -599,7 +609,8 @@ namespace LaboratoryApp.ViewModel
                             }
                             MessageWindowTable2.ToConfirm = false;
                         }
-
+                        #endregion
+                        #region table3
                         if (nameOfTable.Substring(33, 7) == "Table3\t")
                         {
                             MessageWindowTable3 = new NewWindowTable3Generate();
@@ -696,7 +707,8 @@ namespace LaboratoryApp.ViewModel
                             }
                             MessageWindowTable3.ToConfirm = false;
                         }
-
+                        #endregion
+                        #region table4
                         if (nameOfTable.Substring(33, 7) == "Table4\t")
                         {
                             MessageWindowTable4 = new NewWindowTable4Generate();
@@ -797,6 +809,97 @@ namespace LaboratoryApp.ViewModel
                                 TablesToGenerate.Add(MessageWindowTable4);
                             }
                             MessageWindowTable4.ToConfirm = false;
+                        }
+                        #endregion
+
+                        if (nameOfTable.Substring(33, 7) == "Table5\t")
+                        {
+                            MessageWindowTable5 = new NewWindowTable5Generate();
+                            {
+                                int indexStart = nameOfTable.IndexOf("]");
+                                //int indexStart = nameOfTable.IndexOf("\t");
+
+                                q = nameOfTable.Substring(indexStart + 1);
+                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".txt");
+                                foreach (string str in dataToTable)
+                                {
+                                    line = str;
+
+                                    
+                                    //read IdealValue
+                                    int index = str.IndexOf("\t");
+                                    ValueOfCell = str.Substring(0, index);
+                                    idealVal = Convert.ToDouble(ValueOfCell);
+
+                                    //read Percent
+                                    line = str.Substring(index + 1);
+                                    index = line.IndexOf("\t");
+                                    ValueOfCell = line.Substring(0, index);
+                                    percnt = Convert.ToDouble(ValueOfCell);
+
+                                    //read ImportantNumber
+                                    line = line.Substring(index + 1);
+                                    index = line.IndexOf("\t");
+                                    ValueOfCell = line.Substring(0, index);
+                                    impNum = Convert.ToDouble(ValueOfCell);
+
+                                    //read Constant
+                                    line = line.Substring(index + 1);
+                                    ValueOfCell = line;
+                                    cons = Convert.ToDouble(ValueOfCell);
+
+                                    Measure1 m = new Measure1();
+                                    m.ImportantNumber = impNum;
+                                    m.Constant = cons;
+                                    m.Percent = percnt;
+                                    m.IdealValue = idealVal;
+                                    MessageWindowTable5.NameOfFile = q;
+                                    MessageWindowTable5.Tab.Add(m);
+                                }
+                            }
+                            {
+                                int indexStart = nameOfTable.IndexOf("]");
+                                int iterator = 0;
+                                //int indexStart = nameOfTable.IndexOf("\t");
+
+                                q = nameOfTable.Substring(indexStart + 1);
+
+                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + "$.txt");
+                                foreach (string str in dataToTable)
+                                {
+                                    line = str;
+
+                                    //read Percent
+                                    int index = str.IndexOf("\t");
+                                    ValueOfCell = str.Substring(0, index);
+                                    percntIdeal = Convert.ToDouble(ValueOfCell);
+
+                                    //read ImportantNumber
+                                    line = str.Substring(index + 1);
+                                    index = line.IndexOf("\t");
+                                    ValueOfCell = line.Substring(0, index);
+                                    impNumIdeal = Convert.ToDouble(ValueOfCell);
+
+                                    //read Constant
+                                    line = line.Substring(index + 1);
+                                    ValueOfCell = line;
+                                    consIdeal = Convert.ToDouble(ValueOfCell);
+
+                                    MessageWindowTable5.Tab[iterator].ImportantNumberIdeal = impNumIdeal;
+                                    MessageWindowTable5.Tab[iterator].ConstantIdeal = consIdeal;
+                                    MessageWindowTable5.Tab[iterator].PercentIdeal = percntIdeal;
+
+                                    iterator++;
+                                }
+                            }
+
+                            MessageWindowTable5.IsOpen = true;
+                            if (MessageWindowTable5.ToConfirm)
+                            {
+
+                                TablesToGenerate.Add(MessageWindowTable5);
+                            }
+                            MessageWindowTable5.ToConfirm = false;
                         }
 
                         if (nameOfTable.Substring(33, 7) == "Table6\t")
@@ -2207,7 +2310,7 @@ namespace LaboratoryApp.ViewModel
                 {
                     row = table.AddRow();
                 }
-                #region for pętla zapis 
+                #region for pętla zapis tabel
                 for (int i = 0; i < raport.Tab.Count(); i++)
                     {
                         row = table.AddRow();
@@ -2216,6 +2319,10 @@ namespace LaboratoryApp.ViewModel
                         {
                             row.Cells[0].AddParagraph(raport.Tab[i].ValueOfIsolation.ToString());
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            if(raport.Tab[i].ColorResult.Color !=null )
+                            {
+                                row.Cells[1].Shading.Color = Colors.LightGray;
+                            }
                             row.Cells[1].AddParagraph(raport.Tab[i].MeasureValue.ToString() + raport.Tab[i].Prefix);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                             row.Cells[2].AddParagraph(raport.Tab[i].IdealValue.ToString() + raport.Tab[i].Prefix);
@@ -2232,10 +2339,40 @@ namespace LaboratoryApp.ViewModel
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
 
                         }
+
+                        if (raport is NewWindowTable5Generate)
+                        {
+                            if (raport.Tab[i].ColorResult.Color != null)
+                            {
+                                row.Cells[0].Shading.Color = Colors.LightGray;
+                            }
+                            row.Cells[0].AddParagraph(raport.Tab[i].MeasureValue.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[1].AddParagraph(raport.Tab[i].IdealValue.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[2].AddParagraph(raport.Tab[i].ErrorRelativePercent.ToString() + "%");
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[3].AddParagraph(raport.Tab[i].MaxDifference.ToString() + "%");
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[4].AddParagraph(raport.Tab[i].RealValue.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[5].AddParagraph(raport.Tab[i].RecommendValue.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[6].AddParagraph(raport.Tab[i].ErrorInValue.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[7].AddParagraph(raport.Tab[i].ErrorInPercent.ToString() );
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+
+                        }
+
                         if (raport is NewWindowTable9Generate)
                         {
                             row.Cells[0].AddParagraph(raport.Tab[i].Multiples.ToString());
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            if (raport.Tab[i].ColorResult.Color != null)
+                            {
+                                row.Cells[1].Shading.Color = Colors.LightGray;
+                            }
                             row.Cells[1].AddParagraph(raport.Tab[i].MeasureValue.ToString());
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                             row.Cells[2].AddParagraph(raport.Tab[i].IdealValue.ToString());
@@ -2293,6 +2430,10 @@ namespace LaboratoryApp.ViewModel
 
                         if (raport is NewWindowTable1Generate || raport is NewWindowTable2Generate || raport is NewWindowTable3Generate || raport is NewWindowTable17Generate)
                         {
+                            if (raport.Tab[i].ColorResult.Color != null)
+                            {
+                                row.Cells[0].Shading.Color = Colors.LightGray;
+                            }
                             row.Cells[0].AddParagraph(raport.Tab[i].MeasureValue.ToString() + raport.Tab[i].Prefix);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                             row.Cells[1].AddParagraph(raport.Tab[i].IdealValue.ToString() + raport.Tab[i].Prefix);
@@ -2335,24 +2476,50 @@ namespace LaboratoryApp.ViewModel
                         {
                             row.Cells[0].AddParagraph(raport.Tab[i].Multiples.ToString());
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                            row.Cells[1].AddParagraph(raport.Tab[i].ResistanceOfGround.ToString());
+                            row.Cells[1].AddParagraph(raport.Tab[i].ResistanceOfGround.ToString() + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                            row.Cells[2].AddParagraph(raport.Tab[i].MeasureValue.ToString());
+                            row.Cells[2].AddParagraph(raport.Tab[i].MeasureValue.ToString() + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                            row.Cells[3].AddParagraph(raport.Tab[i].DifferenceResistance.ToString());
+                            row.Cells[3].AddParagraph(raport.Tab[i].DifferenceResistance.ToString() + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                            row.Cells[4].AddParagraph(raport.Tab[i].MeasureValue25V.ToString());
+                            row.Cells[4].AddParagraph(raport.Tab[i].MeasureValue25V.ToString() + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                            row.Cells[5].AddParagraph(raport.Tab[i].DifferenceResistancev2.ToString());
+                            row.Cells[5].AddParagraph(raport.Tab[i].DifferenceResistancev2.ToString() + raport.Tab[i].Prefix2);
 
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                            row.Cells[6].AddParagraph(raport.Tab[i].RelativeError.ToString());
+                            row.Cells[6].AddParagraph(raport.Tab[i].RelativeError.ToString() + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                            row.Cells[6].AddParagraph(raport.Tab[i].RelativeError25V.ToString());
+                            row.Cells[6].AddParagraph(raport.Tab[i].RelativeError25V.ToString() + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                            row.Cells[7].AddParagraph(raport.Tab[i].ErrorInValue.ToString());
+                            row.Cells[7].AddParagraph(raport.Tab[i].ErrorInValuev2.ToString() + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                            row.Cells[8].AddParagraph(raport.Tab[i].ErrorInPercent.ToString() + " %");
+                            row.Cells[8].AddParagraph(raport.Tab[i].ErrorInPercentv2.ToString() + " %");
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        }
+
+
+                        if (raport is NewWindowTable16Generate)
+                        {
+                            row.Cells[0].AddParagraph(raport.Tab[i].Multiples.ToString());
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[1].AddParagraph(raport.Tab[i].ResistanceOfGroundv2.ToString() + raport.Tab[i].Prefix2);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[2].AddParagraph(raport.Tab[i].MeasureValueTab16.ToString() + raport.Tab[i].Prefix2);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[3].AddParagraph(raport.Tab[i].DifferenceResist10m.ToString() + raport.Tab[i].Prefix2);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[4].AddParagraph(raport.Tab[i].MeasureValue25VTab16.ToString() + raport.Tab[i].Prefix2);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[5].AddParagraph(raport.Tab[i].DifferenceResist10mv2.ToString() + raport.Tab[i].Prefix2);
+
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[6].AddParagraph(raport.Tab[i].RelativeError.ToString() + raport.Tab[i].Prefix2);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[6].AddParagraph(raport.Tab[i].RelativeError25V.ToString() + raport.Tab[i].Prefix2);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[7].AddParagraph(raport.Tab[i].ErrorInValuev3.ToString() + raport.Tab[i].Prefix2);
+                            row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                            row.Cells[8].AddParagraph(raport.Tab[i].ErrorInPercentv3.ToString() + " %");
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                         }
 
@@ -2510,8 +2677,7 @@ namespace LaboratoryApp.ViewModel
                 LaboratoryEntities context = MainWindowViewModel.Context;
 
             }
-            try
-            {
+
                 row.Cells[1].AddParagraph(raport.CheckedFunction);
                 row = table.AddRow();
                 row.Cells[0].Format.Font.Bold = true;
@@ -2529,11 +2695,7 @@ namespace LaboratoryApp.ViewModel
                 row.Cells[0].Format.Font.Bold = true;
                 row.Cells[0].AddParagraph("Zalecenia dotyczące kolejnego wzorcowania: ");
                 row.Cells[1].AddParagraph(raport.Recommendations);
-            }
-            catch
-            {
-                MessageBox.Show("Brak danych miernika");
-            }
+
             try
             { 
                 row = table.AddRow();

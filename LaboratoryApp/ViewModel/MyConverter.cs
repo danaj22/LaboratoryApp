@@ -12,6 +12,15 @@ namespace LaboratoryApp.ViewModel
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            double number;
+            if(value is double)
+            {
+                number = (double)value;
+                number = Math.Round(number, 4);
+                value = number;
+            }
+
+
             return value;// ((double)value).ToString("N3", CultureInfo.CreateSpecificCulture("sv-SE"));
         }
 
@@ -37,8 +46,8 @@ namespace LaboratoryApp.ViewModel
             }
             else if(g.Contains("."))
             {
-                sub1 = g.Substring(g.IndexOf(".")+1);
-                sub2 = g.Substring(0, g.IndexOf("."));
+                sub1 = g.Substring(0, g.IndexOf("."));
+                sub2 = g.Substring(g.IndexOf(".") + 1); 
                 
                 if (sub2.Length >= 4)
                 {

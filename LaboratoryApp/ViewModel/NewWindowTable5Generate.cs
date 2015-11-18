@@ -18,15 +18,13 @@ namespace LaboratoryApp.ViewModel
             GenerateRandomValuesCommand = new SimpleRelayCommand(GenerateRandomValues);
             ColumnNames.Add("Nastawiona wartość napięcia na mierniku sprawdzanym [V]");
 
-            ColumnNames.Add("Rezystancja odniesienia [Ω]");
-            ColumnNames.Add("Wartość prądu pomiarowego na mierniku kontrolnym [A]");
-            ColumnNames.Add("Obliczona wartość napięcia pobierczego [V]");
-
+            ColumnNames.Add("Odczytana wartość napięcia na mierniku kontrolnym [V]");
             ColumnNames.Add("Błąd względny nastawy napięcia na mierniku sprawdzanym");
-            ColumnNames.Add("Dopuszczalny błąd względny napięcia pobierczego");
-            ColumnNames.Add("Rzeczywista wartość prądu pobierczego [mA]");
+            ColumnNames.Add("Dopuszczalna różnica napięcia zmierzonego i nastawionego");
 
+            ColumnNames.Add("Rzeczywista wartość prądu pobierczego[mA]");
             ColumnNames.Add("Wymagana wartość prądu pobierczego [mA]");
+
             ColumnNames.Add("Niepewność całkowita rozszerzona pomiaru napięcia ±2u(x) [V]");
             ColumnNames.Add("Niepewność całkowita rozszerzona pomiaru prądu ±2u(x) [mA]");
 

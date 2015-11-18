@@ -36,7 +36,13 @@
             <DataGrid.Columns>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="88" Header="Sinusoidalny prąd dotykowy zaczynający się od dodatniej połówki [mA]" Binding="{Binding Path=Multiples, Converter={StaticResource MyConverter}}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Oporność symulująca oporność uziemienia [Ω]" Binding="{Binding Path=SymulatedResistance, Converter={StaticResource MyConverter}}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Mierzona wartość napięcia dotykowego na mierniku sprawdzanym [V]" Binding="{Binding Path=MeasureValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Mierzona wartość napięcia dotykowego na mierniku sprawdzanym [V]" Binding="{Binding Path=MeasureValue, Converter={StaticResource MyConverter}}" >
+                    <DataGridTextColumn.CellStyle>
+                        <Style>
+                            <Setter Property="Border.Background" Value="{Binding ColorResult}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Mierzona wartość napięcia dotykowego na mierniku kontrolnym [V]" Binding="{Binding Path=IdealValue, Converter={StaticResource MyConverter}}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Oporność uziemienia na mierniku sprawdzanym [Ω]" Binding="{Binding Path=ResistanceMeasure, Converter={StaticResource MyConverter}}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Dopuszczalna dolna wartość limitu błędu mierzonego napięcia [V]" Binding="{Binding Path=DownMeasureError, Converter={StaticResource MyConverter}}" />

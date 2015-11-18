@@ -338,7 +338,7 @@ namespace LaboratoryApp.ViewModel
             {
                 fun.IsChecked = false;
             }
-            var gggg = (from cm in context.calibrators_model_of_gauges where cm.model_of_gaug_id == AboutGauge.model_of_gauge_id select cm.model_of_gaug_id).ToList();
+            var gggg = (from cm in context.calibrators_model_of_gauges where cm.model_of_gaug_id == AboutGauge.model_of_gauge_id select cm.calibrator.function_id).ToList();
             foreach(var item in ListOfFunctions)
             {
                 if(gggg.Contains(item.functionId))
