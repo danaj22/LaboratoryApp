@@ -80,13 +80,15 @@ namespace LaboratoryApp.ViewModel
                 DifferenceResist10m = this.MeasureValueTab16 - this.ResistanceOfGroundv2;
                 DifferenceResist10mv2 = this.MeasureValue25VTab16 - this.ResistanceOfGroundv2;
 
+                RelativeErrorTab16 = this.MeasureValueTab16 * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+
                 this.ErrorInValuev3 = this.ResistanceOfGroundv2 * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
                 this.ErrorInPercentv3 = ErrorInValuev3 / ResistanceOfGroundv2;
+                BrushConverter conv = new BrushConverter();
 
-
-                if (Math.Abs(IdealValue) > RelativeError)
+                if (ResistanceOfGroundv2 > Math.Abs(RelativeErrorTab16) + MeasureValueTab16 || ResistanceOfGroundv2 < MeasureValueTab16 - Math.Abs(RelativeErrorTab16))
                 {
-                    BrushConverter conv = new BrushConverter();
+                    
                     ColorResultTab16_50V = conv.ConvertFromString("LightGray") as SolidColorBrush;
 
                 }
@@ -129,6 +131,8 @@ namespace LaboratoryApp.ViewModel
                 measureValue25VTab16 = value;
                 OnPropertyChanged("MeasureValue25VTab16");
 
+                RelativeError25VTab16 = this.MeasureValue25VTab16 * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+
                 ResistanceOfGroundv2 = this.Multiples * 10 * 2 * Math.PI;
                 //dla sondy 10 m
                 DifferenceResist10m = this.MeasureValueTab16 - this.ResistanceOfGroundv2;
@@ -136,10 +140,10 @@ namespace LaboratoryApp.ViewModel
 
                 this.ErrorInValuev3 = this.ResistanceOfGroundv2 * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
                 this.ErrorInPercentv3 = ErrorInValuev3 / ResistanceOfGroundv2;
-
-                if(Math.Abs(IdealValue) > RelativeError25V)
+                BrushConverter conv = new BrushConverter();
+                if (ResistanceOfGroundv2 > Math.Abs(RelativeError25VTab16) + MeasureValue25VTab16 || ResistanceOfGroundv2 < MeasureValue25VTab16 - Math.Abs(RelativeError25VTab16))
                 {
-                     BrushConverter conv = new BrushConverter();
+                     
                     ColorResultTab16_25V = conv.ConvertFromString("LightGray") as SolidColorBrush;
 
                 }
@@ -206,7 +210,7 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("Prefix2");
             }
         }
-        private SolidColorBrush colorResult;
+        private SolidColorBrush colorResult= new SolidColorBrush();
 
         public SolidColorBrush ColorResult
         {
@@ -217,28 +221,28 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("ColorResult");
             }
         }
-        private SolidColorBrush colorResult2;
+        private SolidColorBrush colorResult2= new SolidColorBrush();
 
         public SolidColorBrush ColorResult2
         {
             get { return colorResult2; }
             set { colorResult2 = value; OnPropertyChanged("ColorResult2"); }
         }
-        private SolidColorBrush colorResult3;
+        private SolidColorBrush colorResult3= new SolidColorBrush();
 
         public SolidColorBrush ColorResult3
         {
             get { return colorResult3; }
             set { colorResult3 = value; OnPropertyChanged("ColorResult3"); }
         }
-        private SolidColorBrush colorResultTab15_50V;
+        private SolidColorBrush colorResultTab15_50V= new SolidColorBrush();
 
         public SolidColorBrush ColorResultTab15_50V
         {
             get { return colorResultTab15_50V; }
             set { colorResultTab15_50V = value; OnPropertyChanged("ColorResultTab15_50V"); }
         }
-        private SolidColorBrush colorResultTab15_25V;
+        private SolidColorBrush colorResultTab15_25V= new SolidColorBrush();
 
         public SolidColorBrush ColorResultTab15_25V
         {
@@ -246,7 +250,7 @@ namespace LaboratoryApp.ViewModel
             set { colorResultTab15_25V = value; OnPropertyChanged("ColorResultTab15_25V"); }
         }
 
-        private SolidColorBrush colorResultTab16_50V;
+        private SolidColorBrush colorResultTab16_50V= new SolidColorBrush();
 
         public SolidColorBrush ColorResultTab16_50V
         {
@@ -254,7 +258,7 @@ namespace LaboratoryApp.ViewModel
             set { colorResultTab16_50V = value; OnPropertyChanged("ColorResultTab16_50V"); }
         }
 
-        private SolidColorBrush colorResultTab16_25V;
+        private SolidColorBrush colorResultTab16_25V= new SolidColorBrush();
 
         public SolidColorBrush ColorResultTab16_25V
         {
@@ -284,6 +288,7 @@ namespace LaboratoryApp.ViewModel
 
                 Difference = this.MeasureValue - this.IdealValue;
                 Difference25V = this.MeasureValue25V - this.IdealValue;
+                
                 RelativeError = this.MeasureValue * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
                 RelativeError25V = this.MeasureValue25V * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
 
@@ -309,9 +314,11 @@ namespace LaboratoryApp.ViewModel
                 this.ErrorInValue = this.IdealValue * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
                 this.ErrorInPercent = ErrorInValue / IdealValue;
 
+                BrushConverter conv = new BrushConverter();
+
                 if(IdealValue > UpMeasureError ||  IdealValue < DownMeasureError )
                 {
-                    BrushConverter conv = new BrushConverter();
+                    conv = new BrushConverter();
                     ColorResult = conv.ConvertFromString("LightGray") as SolidColorBrush;
                 }
                 else
@@ -319,29 +326,50 @@ namespace LaboratoryApp.ViewModel
                     ColorResult = new SolidColorBrush();
                 }
 
-                if (IdealValue < Math.Abs(RelativeError))
+                if (IdealValue > Math.Abs(RelativeError) + MeasureValue || IdealValue < MeasureValue - Math.Abs(RelativeError))
                 {
-                    BrushConverter conv = new BrushConverter();
+                    conv = new BrushConverter();
                     ColorResult2 = conv.ConvertFromString("LightGray") as SolidColorBrush;
-                    ColorResultTab15_50V = conv.ConvertFromString("LightGray") as SolidColorBrush;
+                    
                 }
                 else
                 {
                     ColorResult2 = new SolidColorBrush();
-                    ColorResultTab15_50V = new SolidColorBrush();
                 }
 
-                if (IdealValue < Math.Abs(RelativeError25V))
+                if (IdealValue > Math.Abs(RelativeError25V) + MeasureValue25V || IdealValue < MeasureValue25V - Math.Abs(RelativeError25V))
                 {
-                    BrushConverter conv = new BrushConverter();
+                    conv = new BrushConverter();
                     ColorResult3 = conv.ConvertFromString("LightGray") as SolidColorBrush;
-                    ColorResultTab15_25V = conv.ConvertFromString("LightGray") as SolidColorBrush;
+
                 }
                 else
                 {
                     ColorResult3 = new SolidColorBrush();
+                }
+
+
+                if (ResistanceOfGround > Math.Abs(RelativeError25V) + MeasureValue25V || ResistanceOfGround < MeasureValue25V - Math.Abs(RelativeError25V))
+                {
+                    conv = new BrushConverter();
+                   
+                    ColorResultTab15_25V = conv.ConvertFromString("LightGray") as SolidColorBrush;
+                }
+                else
+                {
                     ColorResultTab15_25V = new SolidColorBrush();
                 }
+
+                if (ResistanceOfGround > Math.Abs(RelativeError) + MeasureValue || ResistanceOfGround < MeasureValue - Math.Abs(RelativeError))
+                {
+                    conv = new BrushConverter();
+                    ColorResultTab15_50V = conv.ConvertFromString("LightGray") as SolidColorBrush;
+                }
+                else
+                {
+                    ColorResultTab15_50V = new SolidColorBrush();
+                }
+
                 
             }
         }
@@ -382,17 +410,39 @@ namespace LaboratoryApp.ViewModel
                 this.ErrorInValue = this.IdealValue * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
                 this.ErrorInPercent = ErrorInValue / IdealValue;
 
+                BrushConverter conv = new BrushConverter();
 
                 if (IdealValue < Math.Abs(RelativeError25V))
                 {
-                    BrushConverter conv = new BrushConverter();
+                    conv = new BrushConverter();
                     ColorResult3 = conv.ConvertFromString("LightGray") as SolidColorBrush;
-                    ColorResultTab15_25V = conv.ConvertFromString("LightGray") as SolidColorBrush;
+                    
                 }
                 else
                 {
                     ColorResult3 = new SolidColorBrush();
+                }
+
+                if (ResistanceOfGround > Math.Abs(RelativeError25V) + MeasureValue25V || ResistanceOfGround < MeasureValue25V - Math.Abs(RelativeError25V))
+                {
+                    conv = new BrushConverter();
+
+                    ColorResultTab15_25V = conv.ConvertFromString("LightGray") as SolidColorBrush;
+                }
+                else
+                {
                     ColorResultTab15_25V = new SolidColorBrush();
+                }
+
+                if (IdealValue > Math.Abs(RelativeError) + MeasureValue25V || IdealValue < MeasureValue25V - Math.Abs(RelativeError))
+                {
+                    conv = new BrushConverter();
+                    ColorResult3 = conv.ConvertFromString("LightGray") as SolidColorBrush;
+
+                }
+                else
+                {
+                    ColorResult3 = new SolidColorBrush();
                 }
 
                
@@ -645,6 +695,29 @@ namespace LaboratoryApp.ViewModel
                 this.ErrorInPercentv2 = ErrorInValuev2 / ResistanceOfGround;
                 this.ErrorInValuev3 = this.ResistanceOfGroundv2 * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
                 this.ErrorInPercentv3 = ErrorInValuev3 / ResistanceOfGroundv2;
+
+                BrushConverter conv = new BrushConverter();
+
+                //if (ResistanceOfGroundv2 > Math.Abs(RelativeError25V) + MeasureValue25VTab16 || ResistanceOfGroundv2 < MeasureValue25VTab16 - Math.Abs(RelativeError25V))
+                //{
+                //    conv = new BrushConverter();
+
+                //    ColorResultTab16_25V = conv.ConvertFromString("LightGray") as SolidColorBrush;
+                //}
+                //else
+                //{
+                //    ColorResultTab16_25V = new SolidColorBrush();
+                //}
+
+                //if (ResistanceOfGroundv2 > Math.Abs(RelativeError) + MeasureValueTab16 || ResistanceOfGroundv2 < MeasureValueTab16 - Math.Abs(RelativeError))
+                //{
+                //    conv = new BrushConverter();
+                //    ColorResultTab16_50V = conv.ConvertFromString("LightGray") as SolidColorBrush;
+                //}
+                //else
+                //{
+                //    ColorResultTab16_50V = new SolidColorBrush();
+                //}
             }
         }
         private double difference25V;
@@ -730,6 +803,39 @@ return difference25V;
                     number = Math.Round(number, 4);
                     value = number;
                 } relativeError25V = value; OnPropertyChanged("RelativeError25V");
+            }
+        }
+
+        private double relativeErrorTab16;
+
+        public double RelativeErrorTab16
+        {
+            get { return relativeErrorTab16; }
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } relativeErrorTab16 = value; OnPropertyChanged("RelativeErrorTab16");
+            }
+        }
+        private double relativeError25VTab16;
+
+        public double RelativeError25VTab16
+        {
+            get { return relativeError25VTab16; }
+            set
+            {
+                double number;
+                if (value is double)
+                {
+                    number = (double)value;
+                    number = Math.Round(number, 4);
+                    value = number;
+                } relativeError25VTab16 = value; OnPropertyChanged("RelativeError25VTab16");
             }
         }
         private double maxDifference;

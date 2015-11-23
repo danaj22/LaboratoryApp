@@ -248,16 +248,6 @@ namespace LaboratoryApp.ViewModel
                     ListOfNamesOfTables = new ObservableCollection<CalibrationTable>(ListOfNamesOfTables.OrderBy(i => i.Name));
 
                 }
-
-                if (ListOfCalibrators.Count > 0)
-                {
-                    foreach (Models.calibrator item in ListOfCalibrators)
-                    {
-                        item.IsChecked = false;
-                        CollectionOfCalibrators.Add(item);
-                    }
-                }
-                
             }
             catch(Exception e)
             {

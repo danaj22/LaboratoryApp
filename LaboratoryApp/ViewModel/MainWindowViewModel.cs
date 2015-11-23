@@ -566,6 +566,20 @@ namespace LaboratoryApp.ViewModel
                             }
                             //newGauge.calibrator_model_of_gauge.Add(zmienna);
                         }
+                        foreach(function zmienna in MessageWindowModelOfGauge.CollectionOfCheckedFunction)
+                        {
+                            try
+                            {
+                                System.IO.Directory.CreateDirectory(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\model");
+                                if(zmienna.IsChecked)
+                                {
+                                    File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\model\" + MessageWindowModelOfGauge.AboutModelOfGauge.Model + ".txt", zmienna.functionId + "\n");
+                                    zmienna.IsChecked = false;
+                                }
+                            }
+                            catch(Exception e)
+                            { File.AppendAllText(path, e.ToString()); }
+                        }
 
                     }
                     catch (Exception ex)

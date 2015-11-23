@@ -65,8 +65,8 @@
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Różnica wartości rezystywności na mierniku sprawdzanym i hipotetycznej przy 25V [Ω*m]" Binding="{Binding DifferenceResist10mv2, Converter={StaticResource MyConverter}}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Dopuszczalna wartość błedu bezwzględnego mierzonej rezystywności dla napięcia 50V [Ω*m]" Binding="{Binding RelativeError, Converter={StaticResource MyConverter}}" />
-                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Dopuszczalna wartość błedu bezwzględnego mierzonej rezystywności dla napięcia 25V [Ω*m]" Binding="{Binding RelativeError25V, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Dopuszczalna wartość błedu bezwzględnego mierzonej rezystywności dla napięcia 50V [Ω*m]" Binding="{Binding RelativeErrorTab16, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Dopuszczalna wartość błedu bezwzględnego mierzonej rezystywności dla napięcia 25V [Ω*m]" Binding="{Binding RelativeError25VTab16, Converter={StaticResource MyConverter}}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Niepewność całkowita rozszerzona typu B pomiaru rezystywności ±2S(x) [Ω*m]" Binding="{Binding ErrorInValuev3, Converter={StaticResource MyConverter}}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Niepewność całkowita rozszerzona typu B pomiaru rezystancji ±2S(x)" Binding="{Binding ErrorInPercentv3, Converter={StaticResource MyConverter}}" />
             </DataGrid.Columns>

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -338,15 +339,32 @@ namespace LaboratoryApp.ViewModel
             {
                 fun.IsChecked = false;
             }
-            var gggg = (from cm in context.calibrators_model_of_gauges where cm.model_of_gaug_id == AboutGauge.model_of_gauge_id select cm.calibrator.function_id).ToList();
-            foreach(var item in ListOfFunctions)
+            string[] listOfFunctionFromFile = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\model\" + NewGauge.model_of_gauges.model + ".txt"); 
+
+            foreach(string str in listOfFunctionFromFile)
             {
-                if(gggg.Contains(item.functionId))
-                {
-                    item.IsChecked = true;
-                }
-                CollectionOfCheckedFunction.Add(item);
+                ListOfFunctions[Convert.ToInt16(str) - 1].IsChecked = true;
             }
+
+            foreach(function f in ListOfFunctions)
+            {
+               // if(f.IsChecked)
+               // {
+                    CollectionOfCheckedFunction.Add(f);
+                //}
+            }
+
+
+
+            //var gggg = (from cm in context.calibrators_model_of_gauges where cm.model_of_gaug_id == AboutGauge.model_of_gauge_id select cm.calibrator.function_id).ToList();
+            //foreach(var item in ListOfFunctions)
+            //{
+             //   if(gggg.Contains(item.functionId))
+             //   {
+             //       item.IsChecked = true;
+              //  }
+             //   CollectionOfCheckedFunction.Add(item);
+            //}
             
 
             
@@ -354,7 +372,7 @@ namespace LaboratoryApp.ViewModel
             
             foreach(var item in ListOfCalibrators)
             {
-                item.IsChecked = false;
+                item.IsChecked = false; 
             }
 
             var rrrr = (from cm in context.calibrators_model_of_gauges where cm.model_of_gaug_id == AboutGauge.model_of_gauge_id select cm.calibrator_id).ToList();

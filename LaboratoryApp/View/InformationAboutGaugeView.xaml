@@ -37,7 +37,7 @@
         <TextBlock Text="{Binding Description}" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3"/>
 
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable1}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
-			DialogWidth="950" DialogResizeMode="CanResize" />
+			DialogWidth="980" DialogResizeMode="CanResize" />
 
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable2}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
 			DialogWidth="950" DialogResizeMode="CanResize" />
@@ -51,7 +51,7 @@
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable6}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
 			DialogWidth="950" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable7}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
-			DialogWidth="950" DialogResizeMode="CanResize" />
+			DialogWidth="990" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable8}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
 			DialogWidth="950" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable9}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
@@ -77,8 +77,8 @@
         <vm:ModalDialogManager DataContext="{Binding MessageWindowGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
 			DialogWidth="320" DialogResizeMode="CanResize" />
 
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowRaport}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="926" 
-			DialogWidth="750" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowRaport}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="640" 
+			DialogWidth="770" DialogResizeMode="CanResize" />
 
         <Button Content="Usuń miernik" Command="{Binding DeleteGaugeCommand}"  Grid.Row="5" VerticalAlignment="Center" Grid.Column="3" HorizontalAlignment="Center" Height="22" Width="88" Margin="12,3,0,3"  />
 
