@@ -130,6 +130,8 @@ namespace LaboratoryApp.ViewModel
 //
                 //                }
                 #endregion
+
+                rootItem.Children = new ObservableCollection<MenuItem>(rootItem.Children.OrderBy(i => i.NameOfItem));
             }
             catch(Exception ex)
             {

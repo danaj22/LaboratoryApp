@@ -339,11 +339,17 @@ namespace LaboratoryApp.ViewModel
             {
                 fun.IsChecked = false;
             }
-            string[] listOfFunctionFromFile = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\model\" + NewGauge.model_of_gauges.model + ".txt"); 
-
-            foreach(string str in listOfFunctionFromFile)
+            if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\model\" + NewGauge.model_of_gauges.model + ".txt"))
             {
-                ListOfFunctions[Convert.ToInt16(str) - 1].IsChecked = true;
+                string[] listOfFunctionFromFile = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\model\" + NewGauge.model_of_gauges.model + ".txt");
+
+                
+                    foreach (string str in listOfFunctionFromFile)
+                    {
+                        ListOfFunctions[Convert.ToInt16(str) - 1].IsChecked = true;
+                    }
+                
+
             }
 
             foreach(function f in ListOfFunctions)

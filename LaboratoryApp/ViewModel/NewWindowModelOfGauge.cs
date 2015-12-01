@@ -208,6 +208,7 @@ namespace LaboratoryApp.ViewModel
 
                 if (ListOfCalibrators.Count > 0)
                 {
+                    CollectionOfCalibrators = new ObservableCollection<calibrator>();
                     foreach (Models.calibrator item in ListOfCalibrators)
                     {
                         item.IsChecked = false;

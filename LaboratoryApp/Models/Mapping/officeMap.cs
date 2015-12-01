@@ -13,16 +13,16 @@ namespace LaboratoryApp.Models.Mapping
             // Properties
             this.Property(t => t.name)
                 .IsRequired()
-                .HasMaxLength(100);
+                .HasMaxLength(300);
 
             this.Property(t => t.adress)
-                .HasMaxLength(150);
+                .HasMaxLength(250);
 
             this.Property(t => t.contact_person_name)
-                .HasMaxLength(70);
+                .HasMaxLength(300);
 
             this.Property(t => t.mail)
-                .HasMaxLength(70);
+                .HasMaxLength(300);
 
             this.Property(t => t.tel)
                 .HasMaxLength(15);

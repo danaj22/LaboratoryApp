@@ -44,6 +44,9 @@
             <DataTemplate DataType="{x:Type vm:NewWindowOffice}">
                 <v:DialogWindowOffice />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowMailing}">
+                <v:DialogWindowMailingView />
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vm:NewWindowGauge}">
                 <v:DialogWindowGauge />
             </DataTemplate>

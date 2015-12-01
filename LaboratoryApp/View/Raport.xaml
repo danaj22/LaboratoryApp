@@ -6,7 +6,7 @@
              xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
              xmlns:local="clr-namespace:LaboratoryApp"
              
-             mc:Ignorable="d" Width="731" Height="600"
+             mc:Ignorable="d" Width="731" Height="800"
              >
     <UserControl.Resources>
         <ControlTemplate x:Key="errorTemplate">

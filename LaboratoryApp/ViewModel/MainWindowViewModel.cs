@@ -69,6 +69,14 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("AddNewMeasureCommand");
             }
         }
+        private ICommand mailingCommand;
+
+        public ICommand MailingCommand
+        {
+            get { return mailingCommand; }
+            set { mailingCommand = value; }
+        }
+
         public static LaboratoryEntities Context = new LaboratoryEntities();
         private ObservableCollection<string> listOfUsers = new ObservableCollection<string>();
 
@@ -105,6 +113,14 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("Temperature");
             }
         }
+        private NewWindowMailing messageWindowMailing;
+
+        public NewWindowMailing MessageWindowMailing
+        {
+            get { return messageWindowMailing; }
+            set { messageWindowMailing = value; OnPropertyChanged("MessageWindowMailing"); }
+        }
+
 
         static private LoadData data;
 
@@ -225,6 +241,7 @@ namespace LaboratoryApp.ViewModel
             AddNewGaugeCommand = new SimpleRelayCommand(AddGauge);
             AddNewMeasureCommand = new SimpleRelayCommand(AddNewMeasure);
             ChangePathCommand = new SimpleRelayCommand(ChangePath);
+            MailingCommand = new SimpleRelayCommand(Mailing);
             CurrentViewModel = null;
             userInput = new UserInput();
             LoadView();
@@ -288,6 +305,15 @@ namespace LaboratoryApp.ViewModel
         #endregion
 
 
+        private void Mailing()
+        {
+            MessageWindowMailing = new NewWindowMailing();
+            MessageWindowMailing.IsOpen = true;
+            if(MessageWindowMailing.ToConfirm)
+            {
+
+            }
+        }
         
         private void AddNewMeasure()
         {
@@ -321,7 +347,7 @@ namespace LaboratoryApp.ViewModel
                 {
                     if (IsCheckedSerial)
                     {
-                        var tmp = (from g in Context.gauges where g.serial_number == SearchItem select g).FirstOrDefault();
+                        var tmp = (from g in Context.gauges where g.serial_number.Contains(SearchItem) select g).FirstOrDefault();
 
                         foreach (client cli in RootElement.Children)
                         {
@@ -373,7 +399,7 @@ namespace LaboratoryApp.ViewModel
                     {
                         foreach (client cli in RootElement.Children)
                         {
-                            if (cli.NIP == SearchItem)
+                            if (cli.NIP.Contains( SearchItem))
                             {
 
                                 cli.IsSelected = true;
@@ -388,7 +414,7 @@ namespace LaboratoryApp.ViewModel
                     {
                         foreach (client cli in RootElement.Children)
                         {
-                            if (cli.name.ToUpper() == SearchItem.ToUpper())
+                            if (cli.name.ToUpper().Contains(SearchItem.ToUpper()))
                             {
 
                                 cli.IsSelected = true;
@@ -538,6 +564,15 @@ namespace LaboratoryApp.ViewModel
 
                         foreach (calibrator zmienna in MessageWindowModelOfGauge.CollectionOfCalibrators)
                         {
+
+                            List <calibrator> tableOfExistsCalibrators = (from c in Context.calibrators select c).ToList();
+                            
+                            if(!tableOfExistsCalibrators.Contains(zmienna))
+                            {
+                                Context.calibrators.Add(zmienna);
+                                Context.SaveChanges();
+                            }
+
                             if (zmienna.IsChecked)
                             {
                                 try
@@ -677,6 +712,8 @@ namespace LaboratoryApp.ViewModel
                     //Add new client to TreeView
                     RootElement.Children.Add(newClient);
                     RootElement.Children.Last().NameOfItem = newClient.name;
+
+                    RootElement.Children = new ObservableCollection<MenuItem>(RootElement.Children.OrderBy(i => i.NameOfItem));
 
                     System.Windows.MessageBox.Show("dodanie użytkownika do bazy");
 

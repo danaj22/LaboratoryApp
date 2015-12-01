@@ -2201,7 +2201,7 @@ namespace LaboratoryApp.ViewModel
             section.PageSetup.PageWidth = PageSizeConverter.ToSize(PageSize.A4).Width;
             section.PageSetup.PageHeight = PageSizeConverter.ToSize(PageSize.A4).Height;
             section.PageSetup.TopMargin = 100;
-            section.PageSetup.BottomMargin = 60;
+            section.PageSetup.BottomMargin = 100;
             section.PageSetup.LeftMargin = 20;
             section.PageSetup.RightMargin = 10;
 
@@ -2253,6 +2253,8 @@ namespace LaboratoryApp.ViewModel
 
             paragraph = new Paragraph();
 
+            paragraph.Format.Alignment = ParagraphAlignment.Left;
+            paragraph.AddText("\nData:\t Podpis:\n");
             paragraph.AddTab();
             Image img = paragraph.AddImage(@"linia.jpg");
             img.Height = "0.1cm";
@@ -2520,11 +2522,11 @@ namespace LaboratoryApp.ViewModel
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                             row.Cells[6].AddParagraph(raport.Tab[i].RelativeError.ToString() + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                            row.Cells[6].AddParagraph(raport.Tab[i].RelativeError25V.ToString() + raport.Tab[i].Prefix2);
+                            row.Cells[7].AddParagraph(raport.Tab[i].RelativeError25V.ToString() + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                            row.Cells[7].AddParagraph(raport.Tab[i].ErrorInValuev2.ToString() + raport.Tab[i].Prefix2);
+                            row.Cells[8].AddParagraph(raport.Tab[i].ErrorInValuev2.ToString() + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                            row.Cells[8].AddParagraph(raport.Tab[i].ErrorInPercentv2.ToString() + " %");
+                            row.Cells[9].AddParagraph(raport.Tab[i].ErrorInPercentv2.ToString() + " %");
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                         }
 
@@ -2555,11 +2557,11 @@ namespace LaboratoryApp.ViewModel
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                             row.Cells[6].AddParagraph(raport.Tab[i].RelativeError.ToString() + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                            row.Cells[6].AddParagraph(raport.Tab[i].RelativeError25V.ToString() + raport.Tab[i].Prefix2);
+                            row.Cells[7].AddParagraph(raport.Tab[i].RelativeError25V.ToString() + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                            row.Cells[7].AddParagraph(raport.Tab[i].ErrorInValuev3.ToString() + raport.Tab[i].Prefix2);
+                            row.Cells[8].AddParagraph(raport.Tab[i].ErrorInValuev3.ToString() + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                            row.Cells[8].AddParagraph(raport.Tab[i].ErrorInPercentv3.ToString() + " %");
+                            row.Cells[9].AddParagraph(raport.Tab[i].ErrorInPercentv3.ToString() + " %");
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                         }
 

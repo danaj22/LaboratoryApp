@@ -152,6 +152,7 @@
     <Compile Include="ViewModel\NewWindowClient.cs" />
     <Compile Include="ViewModel\NewWindowConnect.cs" />
     <Compile Include="ViewModel\NewWindowFunction.cs" />
+    <Compile Include="ViewModel\NewWindowMailing.cs" />
     <Compile Include="ViewModel\NewWindowModelOfGauge.cs" />
     <Compile Include="ViewModel\NewWindowOffice.cs" />
     <Compile Include="ViewModel\NewWindowGauge.cs" />
@@ -218,6 +219,9 @@
     </Compile>
     <Compile Include="View\DialogWindowFunction.xaml.cs">
       <DependentUpon>DialogWindowFunction.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowMailingView.xaml.cs">
+      <DependentUpon>DialogWindowMailingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DialogWindowModelOfGauge.xaml.cs">
       <DependentUpon>DialogWindowModelOfGauge.xaml</DependentUpon>
@@ -373,6 +377,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DialogWindowFunction.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowMailingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

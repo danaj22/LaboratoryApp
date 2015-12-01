@@ -390,13 +390,7 @@ namespace LaboratoryApp.ViewModel
 
 
                     //modify data in database
-                    if (MessageWindowClient.AboutClient.name != ""
-                        && MessageWindowClient.AboutClient.adress != ""
-                        && MessageWindowClient.AboutClient.contact_person_name != ""
-                        && MessageWindowClient.AboutClient.mail != ""
-                        && MessageWindowClient.AboutClient.tel != ""
-                        && MessageWindowClient.AboutClient.NIP != ""
-                        && MessageWindowClient.AboutClient.comments != "")
+                    if (!string.IsNullOrEmpty(MessageWindowClient.AboutClient.name) && !string.IsNullOrEmpty(MessageWindowClient.AboutClient.NIP))
                     {
 
                         clientToEdit.name = MessageWindowClient.AboutClient.name;

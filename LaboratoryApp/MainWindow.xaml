@@ -13,7 +13,7 @@
         WindowStartupLocation="CenterScreen"
         
         
-        Title="{Binding Title}" Height="560" Width="850">
+        Title="{Binding Title}" Height="760" Width="950">
 
     <Window.Resources>
         <ControlTemplate x:Key="errorTemplate">
@@ -72,7 +72,7 @@
             </Grid.Resources>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="160"/>
                 <ColumnDefinition Width="Auto" MinWidth="435"/>
                 <ColumnDefinition MinWidth="130"/>
@@ -84,7 +84,7 @@
                 <RowDefinition Height="Auto" MinHeight="30"/>
                 <RowDefinition Height="Auto" MinHeight="35"/>
                 <RowDefinition Height="30"/>
-                <RowDefinition Height="325"/>
+                <RowDefinition Height="525"/>
             </Grid.RowDefinitions>
 
             <!--<Label Content="Data:" Grid.ColumnSpan="2" />
@@ -107,7 +107,7 @@
 
 
             <TreeView  Background="Bisque" Name="tvwAllClients" Grid.Row="5" Grid.RowSpan="2" ItemsSource="{Binding RootElement.Children,UpdateSourceTrigger=PropertyChanged}" 
-                  vm:TreeViewHelper.SelectedItem="{Binding SelectedNode, Mode=TwoWay}" VirtualizingPanel.IsVirtualizing="True" Grid.Column="0" Grid.ColumnSpan="2">
+                  vm:TreeViewHelper.SelectedItem="{Binding SelectedNode, Mode=TwoWay}" VirtualizingPanel.IsVirtualizing="True" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,10">
                 <TreeView.Resources>
                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
                       Color="Aquamarine" />
@@ -199,6 +199,9 @@
             <vm:ModalDialogManager DataContext="{Binding MessageWindowUser}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}" DialogHeight="200" 
                                DialogWidth="470" DialogResizeMode="CanResize"/>
 
+            <vm:ModalDialogManager DataContext="{Binding MessageWindowMailing}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}" DialogHeight="250" 
+                               DialogWidth="315" DialogResizeMode="CanResize"/>
+
             <Button Content="Dodaj pomiarowca" Command="{Binding AddNewMeasureCommand}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right"  VerticalAlignment="Center" Height="25" Margin="0,2,249,3" Width="142" />
 
             <TextBox Text="{Binding SearchItem}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Background="AliceBlue" Height="26" Margin="2,5,2,4" />
@@ -223,6 +226,7 @@
             </ComboBox>
             <Label Content="{Binding CertPath}"  Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Center" Height="26" Margin="0,1,184,1" />
             <Button Content="zmień Ścieżkę zapisu raportów" Command="{Binding ChangePathCommand}" Grid.Column="2" HorizontalAlignment="Left" Margin="239,3,0,0" VerticalAlignment="Top" Width="194" Height="25"/>
+            <Button Content="Mailing i wzorcowania" Grid.Column="2" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Center" Width="155" Command="{Binding MailingCommand}"/>
 
 
         </Grid>
