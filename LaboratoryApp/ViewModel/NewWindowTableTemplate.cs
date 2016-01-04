@@ -100,62 +100,8 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
-        public static double constant;
-        public double Constant
-        {
-            get { return constant; }
-            set
-            {
-                constant = value;
-                OnPropertyChanged("Constant");
-            }
-        }
-
-        public static double constantIdeal;
-
-        public double ConstantIdeal
-        {
-            get { return constantIdeal; }
-            set { constantIdeal = value; OnPropertyChanged("ConstantIdeal"); }
-        }
-        
-        public static double importantNumber;
-        public double ImportantNumber
-        {
-            get { return importantNumber; }
-            set
-            {
-                importantNumber = value;
-                OnPropertyChanged("ImportantNumber");
-
-            }
-        }
-        public static double importantNumberIdeal;
-
-        public double ImportantNumberIdeal
-        {
-            get { return importantNumberIdeal; }
-            set { importantNumberIdeal = value; OnPropertyChanged("ImportantNumberIdeal"); }
-        }
-
-        public static double percent;
-        public double Percent
-        {
-            get { return percent; }
-            set
-            {
-                percent = value;
-                OnPropertyChanged("Percent");
-
-            }
-        }
-        public  static double percentIdeal;
-
-        public double PercentIdeal
-        {
-            get { return percentIdeal; }
-            set { percentIdeal = value; OnPropertyChanged("PercentIdeal"); }
-        }
+       
+        private Measure1 selectedData;
 
         private ObservableCollection<Measure1> tab = new ObservableCollection<Measure1>();
         public ObservableCollection<Measure1> Tab
@@ -165,6 +111,20 @@ namespace LaboratoryApp.ViewModel
             {
                 tab = value;
                 OnPropertyChanged("Tab");
+            }
+        }
+
+        public Measure1 SelectedData
+        {
+            get
+            {
+                return selectedData;
+            }
+
+            set
+            {
+                selectedData = value;
+                OnPropertyChanged("SelectedData");
             }
         }
     }

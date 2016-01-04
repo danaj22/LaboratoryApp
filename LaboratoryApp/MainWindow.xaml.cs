@@ -15,12 +15,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using LaboratoryApp.ViewModel;
 using MahApps.Metro.Controls;
-using System;
 using System.Data.SqlClient;
-using System.Data.Entity;
 using System.Data;
-using System.Globalization;
-using System.Threading;
 
 namespace LaboratoryApp
 {
@@ -43,7 +39,7 @@ namespace LaboratoryApp
         public MainWindow()
         {
             // your connection string
-            string connectionString = @"Data Source=LABORATORIUM-PC\SQLEXPRESS;integrated security=True;multipleactiveresultsets=True";
+            string connectionString = @"Data Source=DESKTOP-BH5P9T1\SQLEXPRESS;integrated security=True;multipleactiveresultsets=True";
 
             // your query:
             //var query = GetDbCreationQuery();

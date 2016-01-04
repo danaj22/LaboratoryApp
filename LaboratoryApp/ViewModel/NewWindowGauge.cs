@@ -83,6 +83,7 @@ namespace LaboratoryApp.ViewModel
         public void Confirm()
         {
             if (!ToConfirm) ToConfirm = true;
+
             IsOpen = false;
 
         }

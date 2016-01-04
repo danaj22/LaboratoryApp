@@ -1,23 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-
 namespace LaboratoryApp.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     public partial class calibrator : ViewModel.ObservableObject
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public calibrator()
         {
-            this.calibrators_model_of_gauges = new ObservableCollection<calibrators_model_of_gauges>();
-            this.calibrators_functions = new ObservableCollection<calibrators_functions>();
+            calibrators_model_of_gauges = new ObservableCollection<calibrators_model_of_gauges>();
         }
-
-        public int calibratorId { get; set; }
-        public string name { get; set; }
-        public Nullable<int> model_of_gauge_id { get; set; }
-        public Nullable<int> function_id { get; set; }
         public bool isChecked;
-
         public bool IsChecked
         {
             get { return isChecked; }
@@ -27,8 +24,20 @@ namespace LaboratoryApp.Models
                 OnPropertyChanged("IsChecked");
             }
         }
+        public int calibratorId { get; set; }
 
+        [Required]
+        [StringLength(300)]
+        public string name { get; set; }
+
+        public int? model_of_gauge_id { get; set; }
+
+        public int? function_id { get; set; }
+        
+
+        public int? function_functionId { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<calibrators_model_of_gauges> calibrators_model_of_gauges { get; set; }
-        public virtual ObservableCollection<calibrators_functions> calibrators_functions { get; set; }
     }
 }

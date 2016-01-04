@@ -19,66 +19,6 @@ namespace LaboratoryApp.ViewModel
 
         }
 
-        private ObservableCollection<calibrator> collectionOfCalibrators;
-
-        public ObservableCollection<calibrator> CollectionOfCalibrators
-        {
-            get { return collectionOfCalibrators; }
-            set
-            {
-                collectionOfCalibrators = value;
-                OnPropertyChanged("collectionOfCalibrators");
-            }
-        }
-
-        private ICommand addCalibratorCommand;
-        public ICommand AddCalibratorCommand
-        {
-            get { return addCalibratorCommand; }
-            set
-            {
-                addCalibratorCommand = value;
-                base.OnPropertyChanged("AddCalibratorCommand");
-            }
-        }
-
-        private NewWindowCalibrator messageWindowCalibrator;
-
-        public NewWindowCalibrator MessageWindowCalibrator
-        {
-            get { return messageWindowCalibrator; }
-            set
-            {
-                messageWindowCalibrator = value;
-                OnPropertyChanged("MessageWindowCalibrator");
-            }
-        }
-
-        public void AddCalibrator()
-        {
-            MessageWindowCalibrator = new NewWindowCalibrator();
-            MessageWindowCalibrator.IsOpen = true;
-
-            if (MessageWindowCalibrator.ToConfirm)
-            {
-                if (!string.IsNullOrEmpty(MessageWindowCalibrator.NameOfCalibrator))
-                {
-                    using (LaboratoryEntities context = new LaboratoryEntities())
-                    {
-                        calibrator CalibratorToAdd = new calibrator();
-                        CalibratorToAdd.name = MessageWindowCalibrator.NameOfCalibrator;
-
-                        context.calibrators.Add(CalibratorToAdd);
-                        context.SaveChanges();
-
-                        CollectionOfCalibrators.Add(CalibratorToAdd);
-                    }
-                }
-
-            }
-            MessageWindowCalibrator.ToConfirm = false;
-        }
-
         private ICommand okCommand;
 
         public ICommand OKCommand

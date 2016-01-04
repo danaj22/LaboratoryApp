@@ -1,48 +1,129 @@
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using LaboratoryApp.Models.Mapping;
-
 namespace LaboratoryApp.Models
 {
+    using System;
+    using System.Data.Entity;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
+
     public partial class LaboratoryEntities : DbContext
     {
-        static LaboratoryEntities()
-        {
-            Database.SetInitializer<LaboratoryEntities>(new CreateDatabaseIfNotExists<LaboratoryEntities>());
-        }
-
         public LaboratoryEntities()
             : base("name=LaboratoryEntities")
         {
         }
 
-        public DbSet<calibrator> calibrators { get; set; }
-        public DbSet<calibrators_model_of_gauges> calibrators_model_of_gauges { get; set; }
-        public DbSet<certificate> certificates { get; set; }
-        public DbSet<client> clients { get; set; }
-        public DbSet<function> functions { get; set; }
-        public DbSet<gauge> gauges { get; set; }
-        public DbSet<model_of_gauges> model_of_gauges { get; set; }
-        public DbSet<office> offices { get; set; }
-        public DbSet<type> types { get; set; }
-        public DbSet<usage> usages { get; set; }
-        public DbSet<calibrators_functions> calibrators_functions { get; set; }
+        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
+        public virtual DbSet<calibrator> calibrators { get; set; }
+        public virtual DbSet<calibrators_model_of_gauges> calibrators_model_of_gauges { get; set; }
+        public virtual DbSet<certificate> certificates { get; set; }
+        public virtual DbSet<client> clients { get; set; }
+        public virtual DbSet<device> devices { get; set; }
+        public virtual DbSet<devices_rents> devices_rents { get; set; }
+        public virtual DbSet<function> functions { get; set; }
+        public virtual DbSet<gauge> gauges { get; set; }
+        public virtual DbSet<genre> genres { get; set; }
+        public virtual DbSet<model_of_gauges> model_of_gauges { get; set; }
+        public virtual DbSet<model_of_gauges_functions> model_of_gauges_functions { get; set; }
+        public virtual DbSet<office> offices { get; set; }
+        public virtual DbSet<rent> rents { get; set; }
+        public virtual DbSet<subscription> subscriptions { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<tariff> tariffs { get; set; }
+        public virtual DbSet<type> types { get; set; }
+        public virtual DbSet<usage> usages { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Configurations.Add(new calibratorMap());
-            modelBuilder.Configurations.Add(new calibrators_model_of_gaugesMap());
-            modelBuilder.Configurations.Add(new certificateMap());
-            modelBuilder.Configurations.Add(new clientMap());
-            modelBuilder.Configurations.Add(new functionMap());
-            modelBuilder.Configurations.Add(new gaugeMap());
-            modelBuilder.Configurations.Add(new model_of_gaugesMap());
-            modelBuilder.Configurations.Add(new officeMap());
-            modelBuilder.Configurations.Add(new typeMap());
-            modelBuilder.Configurations.Add(new usageMap());
-            modelBuilder.Configurations.Add(new calibrators_functionsMap());
+
+            modelBuilder.Entity<calibrator>()
+                .HasMany(e => e.calibrators_model_of_gauges)
+                .WithOptional(e => e.calibrator)
+                .HasForeignKey(e => e.calibrator_id);
+
+            modelBuilder.Entity<client>()
+                .HasMany(e => e.gauges)
+                .WithRequired(e => e.client)
+                .HasForeignKey(e => e.client_id);
+
+            modelBuilder.Entity<client>()
+                .HasMany(e => e.offices)
+                .WithRequired(e => e.client)
+                .HasForeignKey(e => e.client_id);
+
+            modelBuilder.Entity<device>()
+                .HasMany(e => e.devices_rents)
+                .WithOptional(e => e.device)
+                .HasForeignKey(e => e.device_id);
+
+            modelBuilder.Entity<function>()
+                .HasMany(e => e.model_of_gauges_functions)
+                .WithOptional(e => e.function)
+                .HasForeignKey(e => e.function_Id);
+
+            modelBuilder.Entity<gauge>()
+                .HasMany(e => e.certificates)
+                .WithRequired(e => e.gauge)
+                .HasForeignKey(e => e.gauge_id);
+
+            modelBuilder.Entity<genre>()
+                .HasMany(e => e.devices)
+                .WithOptional(e => e.genre)
+                .HasForeignKey(e => e.genre_id);
+
+            modelBuilder.Entity<model_of_gauges>()
+                .HasMany(e => e.calibrators_model_of_gauges)
+                .WithOptional(e => e.model_of_gauges)
+                .HasForeignKey(e => e.model_of_gaug_id);
+
+            modelBuilder.Entity<model_of_gauges>()
+                .HasMany(e => e.gauges)
+                .WithRequired(e => e.model_of_gauges)
+                .HasForeignKey(e => e.model_of_gauge_id);
+
+            modelBuilder.Entity<model_of_gauges>()
+                .HasMany(e => e.model_of_gauges_functions)
+                .WithOptional(e => e.model_of_gauges)
+                .HasForeignKey(e => e.model_of_gauge_id);
+
+            modelBuilder.Entity<office>()
+                .HasMany(e => e.gauges)
+                .WithOptional(e => e.office)
+                .HasForeignKey(e => e.office_id);
+
+            modelBuilder.Entity<rent>()
+                .HasMany(e => e.devices_rents)
+                .WithOptional(e => e.rent)
+                .HasForeignKey(e => e.rent_id);
+
+            modelBuilder.Entity<subscription>()
+                .HasMany(e => e.clients)
+                .WithOptional(e => e.subscription)
+                .HasForeignKey(e => e.subscription_id);
+
+            modelBuilder.Entity<subscription>()
+                .HasMany(e => e.rents)
+                .WithRequired(e => e.subscription)
+                .HasForeignKey(e => e.subscription_id)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<tariff>()
+                .HasMany(e => e.subscriptions)
+                .WithRequired(e => e.tariff)
+                .HasForeignKey(e => e.tariff_id)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<type>()
+                .HasMany(e => e.model_of_gauges)
+                .WithRequired(e => e.type)
+                .HasForeignKey(e => e.type_id);
+
+            modelBuilder.Entity<usage>()
+                .HasMany(e => e.model_of_gauges)
+                .WithRequired(e => e.usage)
+                .HasForeignKey(e => e.usage_id);
+
             modelBuilder.Ignore<ViewModel.MenuItem>();
-            modelBuilder.Entity<ViewModel.MenuItem>().Ignore(x=> x.Id);
+            modelBuilder.Entity<ViewModel.MenuItem>().Ignore(x => x.Id);
             modelBuilder.Entity<ViewModel.MenuItem>().Ignore(x => x.IsExpanded);
             modelBuilder.Entity<ViewModel.MenuItem>().Ignore(x => x.IsSelected);
             modelBuilder.Entity<ViewModel.MenuItem>().Ignore(x => x.NameOfItem);
@@ -50,4 +131,3 @@ namespace LaboratoryApp.Models
         }
     }
 }
-

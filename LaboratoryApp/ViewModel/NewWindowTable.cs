@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -258,7 +259,7 @@ namespace LaboratoryApp.ViewModel
 
             System.IO.Directory.CreateDirectory(tablesPath);
         }
-        #region commands
+        #region commands addTableX
         private ICommand addTable1Command;
         public ICommand AddTable1Command
         {
@@ -454,7 +455,7 @@ namespace LaboratoryApp.ViewModel
                 base.OnPropertyChanged("AddTable18Command");
             }
         }
-
+        #endregion
         private ICommand okCommand;
         public ICommand OKCommand
         {
@@ -476,7 +477,6 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("CancelCommand");
             }
         }
-        #endregion
 
         private bool isOpen;
         public bool IsOpen
@@ -532,6 +532,9 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("CollectionOfTable");
             }
         }
+        Stream stream;
+        BinaryFormatter bformatter = new BinaryFormatter();
+
 
         public void AddTable1()
         {
@@ -542,52 +545,20 @@ namespace LaboratoryApp.ViewModel
 
             if (MessageWindowTable1.ToConfirm)
             {
-                //try
-                {
-                    //if (!string.IsNullOrEmpty(MessageWindowTable1.Title))
-                    if (!File.Exists(tablesPath + "\\" + MessageWindowTable1.NameOfFile + ".txt"))
+      
+                    CollectionOfTable.Add(MessageWindowTable1.NameOfFile);
+
+                    if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable1.NameOfFile + ".lab"))
                     {
-                        //File.Create(tablesPath + "\\" + MessageWindowTable1.NameOfFile + ".txt");
+                        stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable1.NameOfFile + ".lab", FileMode.Create);
 
-                        CollectionOfTable.Add(MessageWindowTable1.NameOfFile);
+                        bformatter.Serialize(stream, MessageWindowTable1.Tab);
 
-                        foreach (var row in MessageWindowTable1.Tab)
-                        {
-
-                            if (!string.IsNullOrEmpty(row.Prefix))
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + ".txt", row.Prefix.ToString());
-                            }
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + ".txt", "\t");
-
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + ".txt", row.IdealValue.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + ".txt", row.Percent.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + ".txt", row.ImportantNumber.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + ".txt", row.Constant.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + ".txt", "\n");
-                        }
-
-                    }
-                    if (!File.Exists(tablesPath + "\\" + MessageWindowTable1.NameOfFile + "$.txt"))
-                    {
-                        foreach (var row in MessageWindowTable1.Tab)
-                        {
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + "$.txt", row.PercentIdeal.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + "$.txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + "$.txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable1.NameOfFile + "$.txt", "\n");
-                        }
-
+                        stream.Close();
                     }
 
-                }
-                //catch { }
                 MessageWindowTable1.ToConfirm = false;
+                
             }
         }
 
@@ -607,36 +578,15 @@ namespace LaboratoryApp.ViewModel
 
                         CollectionOfTable.Add(MessageWindowTable2.NameOfFile);
 
-                        foreach (var row in MessageWindowTable2.Tab)
+                        if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable2.NameOfFile + ".lab"))
                         {
-                            if (!string.IsNullOrEmpty(row.Prefix))
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + ".txt", row.Prefix.ToString());
-                            }
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + ".txt", row.IdealValue.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + ".txt", row.Percent.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + ".txt", row.ImportantNumber.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + ".txt", row.Constant.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + ".txt", "\n");
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable2.NameOfFile + ".lab", FileMode.Create);
+
+                            bformatter.Serialize(stream, MessageWindowTable2.Tab);
+
+                            stream.Close();
                         }
 
-                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable2.NameOfFile + "$.txt"))
-                        {
-                            foreach (var row in MessageWindowTable2.Tab)
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + "$.txt", row.PercentIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable2.NameOfFile + "$.txt", "\n");
-                            }
-
-                        }
                     }
                 }
                 //catch { }
@@ -656,38 +606,15 @@ namespace LaboratoryApp.ViewModel
                     //if (!string.IsNullOrEmpty(MessageWindowTable3.Title))
                     if (!File.Exists(tablesPath + "\\" + MessageWindowTable3.NameOfFile + ".txt"))
                     {
-                        //File.Create(tablesPath + "\\" + MessageWindowTable3.NameOfFile + ".txt");
-
                         CollectionOfTable.Add(MessageWindowTable3.NameOfFile);
 
-                        foreach (var row in MessageWindowTable3.Tab)
+                        if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable3.NameOfFile + ".lab"))
                         {
-                            if(!string.IsNullOrEmpty(row.Prefix))
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + ".txt", row.Prefix.ToString());
-                            }
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + ".txt", row.IdealValue.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + ".txt", row.Percent.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + ".txt", row.ImportantNumber.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + ".txt", row.Constant.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + ".txt", "\n");
-                        }
-                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable3.NameOfFile + "$.txt"))
-                        {
-                            foreach (var row in MessageWindowTable3.Tab)
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + "$.txt", row.PercentIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable3.NameOfFile + "$.txt", "\n");
-                            }
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable3.NameOfFile + ".lab", FileMode.Create);
 
+                            bformatter.Serialize(stream, MessageWindowTable3.Tab);
+
+                            stream.Close();
                         }
                     }
                 }
@@ -708,44 +635,15 @@ namespace LaboratoryApp.ViewModel
                     //if (!string.IsNullOrEmpty(MessageWindowTable4.Title))
                     if (!File.Exists(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt"))
                     {
-                        //File.Create(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt");
-
                         CollectionOfTable.Add(MessageWindowTable4.NameOfFile);
 
-                        foreach (var row in MessageWindowTable4.Tab)
-                        
+                        if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable4.NameOfFile + ".lab"))
                         {
-                            if (!string.IsNullOrEmpty(row.Prefix))
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt", row.Prefix.ToString());
-                            }
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt", "\t");
-                            //different in this window
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt", row.ValueOfIsolation.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt", "\t");
-                           
-                            //the same...
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt", row.IdealValue.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt", row.Percent.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt", row.ImportantNumber.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt", row.Constant.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + ".txt", "\n");
-                        }
-                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable4.NameOfFile + "$.txt"))
-                        {
-                            foreach (var row in MessageWindowTable4.Tab)
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + "$.txt", row.PercentIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4.NameOfFile + "$.txt", "\n");
-                            }
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable4.NameOfFile + ".lab", FileMode.Create);
 
+                            bformatter.Serialize(stream, MessageWindowTable4.Tab);
+
+                            stream.Close();
                         }
                     }
                 }
@@ -766,34 +664,15 @@ namespace LaboratoryApp.ViewModel
                     //if (!string.IsNullOrEmpty(MessageWindowTable4a.Title))
                     if (!File.Exists(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + ".txt"))
                     {
-                        //File.Create(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + ".txt");
-
                         CollectionOfTable.Add(MessageWindowTable4a.NameOfFile);
 
-                        foreach (var row in MessageWindowTable4a.Tab)
+                        if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable4a.NameOfFile + ".lab"))
                         {
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + ".txt", row.IdealValue.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + ".txt", row.Percent.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + ".txt", row.ImportantNumber.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + ".txt", row.Constant.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + ".txt", "\n");
-                        }
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable4a.NameOfFile + ".lab", FileMode.Create);
 
-                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + "$.txt"))
-                        {
-                            foreach (var row in MessageWindowTable4a.Tab)
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + "$.txt", row.PercentIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable4a.NameOfFile + "$.txt", "\n");
-                            }
+                            bformatter.Serialize(stream, MessageWindowTable4a.Tab);
 
+                            stream.Close();
                         }
                     }
                 }
@@ -814,33 +693,15 @@ namespace LaboratoryApp.ViewModel
                     //if (!string.IsNullOrEmpty(MessageWindowTable5.Title))
                     if (!File.Exists(tablesPath + "\\" + MessageWindowTable5.NameOfFile + ".txt"))
                     {
-                        //File.Create(tablesPath + "\\" + MessageWindowTable5.NameOfFile + ".txt");
-
                         CollectionOfTable.Add(MessageWindowTable5.NameOfFile);
 
-                        foreach (var row in MessageWindowTable5.Tab)
+                        if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable5.NameOfFile + ".lab"))
                         {
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + ".txt", row.IdealValue.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + ".txt", row.Percent.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + ".txt", row.ImportantNumber.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + ".txt", row.Constant.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + ".txt", "\n");
-                        }
-                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable5.NameOfFile + "$.txt"))
-                        {
-                            foreach (var row in MessageWindowTable5.Tab)
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + "$.txt", row.PercentIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable5.NameOfFile + "$.txt", "\n");
-                            }
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable5.NameOfFile + ".lab", FileMode.Create);
 
+                            bformatter.Serialize(stream, MessageWindowTable5.Tab);
+
+                            stream.Close();
                         }
                     }
                 }
@@ -861,38 +722,15 @@ namespace LaboratoryApp.ViewModel
                     //if (!string.IsNullOrEmpty(MessageWindowTable6.Title))
                     if (!File.Exists(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt"))
                     {
-                        //File.Create(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt");
-
                         CollectionOfTable.Add(MessageWindowTable6.NameOfFile);
 
-                        foreach (var row in MessageWindowTable6.Tab)
+                        if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable6.NameOfFile + ".lab"))
                         {
-                            //diffrent line...
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", row.Multiples.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", "\t");
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable6.NameOfFile + ".lab", FileMode.Create);
 
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", row.IdealValue.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", row.Percent.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", row.ImportantNumber.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", row.Constant.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + ".txt", "\n");
-                        }
+                            bformatter.Serialize(stream, MessageWindowTable6.Tab);
 
-                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable6.NameOfFile + "$.txt"))
-                        {
-                            foreach (var row in MessageWindowTable6.Tab)
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + "$.txt", row.PercentIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable6.NameOfFile + "$.txt", "\n");
-                            }
-
+                            stream.Close();
                         }
                     }
                 }
@@ -908,48 +746,21 @@ namespace LaboratoryApp.ViewModel
 
             if (MessageWindowTable7.ToConfirm)
             {
-                //try
-                {
+
                     //if (!string.IsNullOrEmpty(MessageWindowTable7.Title))
                     if (!File.Exists(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt"))
                     {
-                        //File.Create(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt");
-
                         CollectionOfTable.Add(MessageWindowTable7.NameOfFile);
 
-                        foreach (var row in MessageWindowTable7.Tab)
+                        if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable7.NameOfFile + ".lab"))
                         {
-                            if (!string.IsNullOrEmpty(row.Prefix))
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", row.Prefix.ToString());
-                            }
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", row.IdealValue.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", row.Percent.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", row.ImportantNumber.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", row.Constant.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + ".txt", "\n");
-                        }
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable7.NameOfFile + ".lab", FileMode.Create);
 
-                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable7.NameOfFile + "$.txt"))
-                        {
-                            foreach (var row in MessageWindowTable7.Tab)
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + "$.txt", row.PercentIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable7.NameOfFile + "$.txt", "\n");
-                            }
+                            bformatter.Serialize(stream, MessageWindowTable7.Tab);
 
+                            stream.Close();
                         }
                     }
-                }
-                //catch { }
                 MessageWindowTable7.ToConfirm = false;
             }
         }
@@ -966,34 +777,15 @@ namespace LaboratoryApp.ViewModel
                     //if (!string.IsNullOrEmpty(MessageWindowTable8.Title))
                     if (!File.Exists(tablesPath + "\\" + MessageWindowTable8.NameOfFile + ".txt"))
                     {
-                        //File.Create(tablesPath + "\\" + MessageWindowTable8.NameOfFile + ".txt");
-
                         CollectionOfTable.Add(MessageWindowTable8.NameOfFile);
 
-                        foreach (var row in MessageWindowTable8.Tab)
+                        if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable8.NameOfFile + ".lab"))
                         {
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + ".txt", row.IdealValue.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + ".txt", row.Percent.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + ".txt", row.ImportantNumber.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + ".txt", row.Constant.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + ".txt", "\n");
-                        }
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable8.NameOfFile + ".lab", FileMode.Create);
 
-                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable8.NameOfFile + "$.txt"))
-                        {
-                            foreach (var row in MessageWindowTable8.Tab)
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + "$.txt", row.PercentIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable8.NameOfFile + "$.txt", "\n");
-                            }
+                            bformatter.Serialize(stream, MessageWindowTable8.Tab);
 
+                            stream.Close();
                         }
                     }
                 }
@@ -1009,46 +801,18 @@ namespace LaboratoryApp.ViewModel
 
             if (MessageWindowTable9.ToConfirm)
             {
-                //try
+                
+                CollectionOfTable.Add(MessageWindowTable9.NameOfFile);
+
+                if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable9.NameOfFile + ".lab"))
                 {
-                    //if (!string.IsNullOrEmpty(MessageWindowTable9.Title))
-                    if (!File.Exists(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt"))
-                    {
-                        //File.Create(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt");
+                    stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable9.NameOfFile + ".lab", FileMode.Create);
 
-                        CollectionOfTable.Add(MessageWindowTable9.NameOfFile);
+                    bformatter.Serialize(stream, MessageWindowTable9.Tab);
 
-                        foreach (var row in MessageWindowTable9.Tab)
-                        {
-                            //diffrent line...
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", row.Multiples.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", "\t");
-
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", row.IdealValue.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", row.Percent.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", row.ImportantNumber.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", row.Constant.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + ".txt", "\n");
-                        }
-
-                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable9.NameOfFile + "$.txt"))
-                        {
-                            foreach (var row in MessageWindowTable9.Tab)
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + "$.txt", row.PercentIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable9.NameOfFile + "$.txt", "\n");
-                            }
-
-                        }
-                    }
+                    stream.Close();
                 }
+
                 //catch { }
                 MessageWindowTable9.ToConfirm = false;
             }
@@ -1066,46 +830,15 @@ namespace LaboratoryApp.ViewModel
                     //if (!string.IsNullOrEmpty(MessageWindowTable10.Title))
                     if (!File.Exists(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt"))
                     {
-                        //File.Create(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt");
-
                         CollectionOfTable.Add(MessageWindowTable10.NameOfFile);
 
-                        foreach (var row in MessageWindowTable10.Tab)
+                        if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable10.NameOfFile + ".lab"))
                         {
-                            if (!string.IsNullOrEmpty(row.Prefix))
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", row.Prefix.ToString());
-                            }
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", "\t");
-                            //diffrent lines...
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", row.Multiples.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", row.SymulatedResistance.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", row.ResistanceMeasure.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", "\t");
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable10.NameOfFile + ".lab", FileMode.Create);
 
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", row.IdealValue.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", row.Percent.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", row.ImportantNumber.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", row.Constant.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + ".txt", "\n");
-                        }
-                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable10.NameOfFile + "$.txt"))
-                        {
-                            foreach (var row in MessageWindowTable10.Tab)
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + "$.txt", row.PercentIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable10.NameOfFile + "$.txt", "\n");
-                            }
+                            bformatter.Serialize(stream, MessageWindowTable10.Tab);
 
+                            stream.Close();
                         }
                     }
                 }
@@ -1126,33 +859,15 @@ namespace LaboratoryApp.ViewModel
                     //if (!string.IsNullOrEmpty(MessageWindowTable11.Title))
                     if (!File.Exists(tablesPath + "\\" + MessageWindowTable11.NameOfFile + ".txt"))
                     {
-                        //File.Create(tablesPath + "\\" + MessageWindowTable11.NameOfFile + ".txt");
-
                         CollectionOfTable.Add(MessageWindowTable11.NameOfFile);
 
-                        foreach (var row in MessageWindowTable11.Tab)
+                        if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable11.NameOfFile + ".lab"))
                         {
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + ".txt", row.IdealValue.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + ".txt", row.Percent.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + ".txt", row.ImportantNumber.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + ".txt", row.Constant.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + ".txt", "\n");
-                        }
-                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable11.NameOfFile + "$.txt"))
-                        {
-                            foreach (var row in MessageWindowTable11.Tab)
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + "$.txt", row.PercentIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable11.NameOfFile + "$.txt", "\n");
-                            }
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable11.NameOfFile + ".lab", FileMode.Create);
 
+                            bformatter.Serialize(stream, MessageWindowTable11.Tab);
+
+                            stream.Close();
                         }
                     }
                 }
@@ -1173,33 +888,15 @@ namespace LaboratoryApp.ViewModel
                     //if (!string.IsNullOrEmpty(MessageWindowTable12.Title))
                     if (!File.Exists(tablesPath + "\\" + MessageWindowTable12.NameOfFile + ".txt"))
                     {
-                        //File.Create(tablesPath + "\\" + MessageWindowTable12.NameOfFile + ".txt");
-
                         CollectionOfTable.Add(MessageWindowTable12.NameOfFile);
 
-                        foreach (var row in MessageWindowTable12.Tab)
+                        if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable12.NameOfFile + ".lab"))
                         {
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + ".txt", row.IdealValue.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + ".txt", row.Percent.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + ".txt", row.ImportantNumber.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + ".txt", row.Constant.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + ".txt", "\n");
-                        }
-                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable12.NameOfFile + "$.txt"))
-                        {
-                            foreach (var row in MessageWindowTable12.Tab)
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + "$.txt", row.PercentIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable12.NameOfFile + "$.txt", "\n");
-                            }
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable12.NameOfFile + ".lab", FileMode.Create);
 
+                            bformatter.Serialize(stream, MessageWindowTable12.Tab);
+
+                            stream.Close();
                         }
                     }
                 }
@@ -1220,34 +917,15 @@ namespace LaboratoryApp.ViewModel
                     //if (!string.IsNullOrEmpty(MessageWindowTable13.Title))
                     if (!File.Exists(tablesPath + "\\" + MessageWindowTable13.NameOfFile + ".txt"))
                     {
-                        //File.Create(tablesPath + "\\" + MessageWindowTable13.NameOfFile + ".txt");
-
                         CollectionOfTable.Add(MessageWindowTable13.NameOfFile);
 
-                        foreach (var row in MessageWindowTable13.Tab)
+                        if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable13.NameOfFile + ".lab"))
                         {
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + ".txt", row.IdealValue.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + ".txt", row.Percent.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + ".txt", row.ImportantNumber.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + ".txt", row.Constant.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + ".txt", "\n");
-                        }
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable13.NameOfFile + ".lab", FileMode.Create);
 
-                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable13.NameOfFile + "$.txt"))
-                        {
-                            foreach (var row in MessageWindowTable13.Tab)
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + "$.txt", row.PercentIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable13.NameOfFile + "$.txt", "\n");
-                            }
+                            bformatter.Serialize(stream, MessageWindowTable13.Tab);
 
+                            stream.Close();
                         }
                     }
                 }
@@ -1268,34 +946,15 @@ namespace LaboratoryApp.ViewModel
                     //if (!string.IsNullOrEmpty(MessageWindowTable14.Title))
                     if (!File.Exists(tablesPath + "\\" + MessageWindowTable14.NameOfFile + ".txt"))
                     {
-                        //File.Create(tablesPath + "\\" + MessageWindowTable14.NameOfFile + ".txt");
-
                         CollectionOfTable.Add(MessageWindowTable14.NameOfFile);
 
-                        foreach (var row in MessageWindowTable14.Tab)
+                        if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable14.NameOfFile + ".lab"))
                         {
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + ".txt", row.IdealValue.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + ".txt", row.Percent.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + ".txt", row.ImportantNumber.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + ".txt", row.Constant.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + ".txt", "\n");
-                        }
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable14.NameOfFile + ".lab", FileMode.Create);
 
-                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable14.NameOfFile + "$.txt"))
-                        {
-                            foreach (var row in MessageWindowTable14.Tab)
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + "$.txt", row.PercentIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable14.NameOfFile + "$.txt", "\n");
-                            }
+                            bformatter.Serialize(stream, MessageWindowTable14.Tab);
 
+                            stream.Close();
                         }
                     }
                 }
@@ -1316,42 +975,15 @@ namespace LaboratoryApp.ViewModel
                     //if (!string.IsNullOrEmpty(MessageWindowTable15.Title))
                     if (!File.Exists(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt"))
                     {
-                        //File.Create(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt");
-
                         CollectionOfTable.Add(MessageWindowTable15.NameOfFile);
 
-                        foreach (var row in MessageWindowTable15.Tab)
+                        if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable15.NameOfFile + ".lab"))
                         {
-                            if (!string.IsNullOrEmpty(row.Prefix))
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", row.Prefix.ToString());
-                            }
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", "\t");
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable15.NameOfFile + ".lab", FileMode.Create);
 
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", row.Multiples.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", row.IdealValue.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", row.Percent.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", row.ImportantNumber.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", row.Constant.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + ".txt", "\n");
-                        }
+                            bformatter.Serialize(stream, MessageWindowTable15.Tab);
 
-                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable15.NameOfFile + "$.txt"))
-                        {
-                            foreach (var row in MessageWindowTable15.Tab)
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + "$.txt", row.PercentIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable15.NameOfFile + "$.txt", "\n");
-                            }
-
+                            stream.Close();
                         }
                     }
                 }
@@ -1372,40 +1004,15 @@ namespace LaboratoryApp.ViewModel
                     //if (!string.IsNullOrEmpty(MessageWindowTable16.Title))
                     if (!File.Exists(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt"))
                     {
-                        //File.Create(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt");
-
                         CollectionOfTable.Add(MessageWindowTable16.NameOfFile);
 
-                        foreach (var row in MessageWindowTable16.Tab)
+                        if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable16.NameOfFile + ".lab"))
                         {
-                            if (!string.IsNullOrEmpty(row.Prefix))
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", row.Prefix.ToString());
-                            }
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", row.Multiples.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", row.IdealValue.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", row.Percent.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", row.ImportantNumber.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", row.Constant.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + ".txt", "\n");
-                        }
-                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable16.NameOfFile + "$.txt"))
-                        {
-                            foreach (var row in MessageWindowTable16.Tab)
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + "$.txt", row.PercentIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable16.NameOfFile + "$.txt", "\n");
-                            }
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable16.NameOfFile + ".lab", FileMode.Create);
 
+                            bformatter.Serialize(stream, MessageWindowTable16.Tab);
+
+                            stream.Close();
                         }
                     }
                 }
@@ -1426,40 +1033,15 @@ namespace LaboratoryApp.ViewModel
                     //if (!string.IsNullOrEmpty(MessageWindowTable17.Title))
                     if (!File.Exists(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt"))
                     {
-                        //File.Create(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt");
-
                         CollectionOfTable.Add(MessageWindowTable17.NameOfFile);
 
-                        foreach (var row in MessageWindowTable17.Tab)
+                        if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable17.NameOfFile + ".lab"))
                         {
-                            if (!string.IsNullOrEmpty(row.Prefix))
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", row.Prefix.ToString());
-                            }
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", "\t");
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable17.NameOfFile + ".lab", FileMode.Create);
 
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", row.IdealValue.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", row.Percent.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", row.ImportantNumber.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", row.Constant.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + ".txt", "\n");
-                        }
+                            bformatter.Serialize(stream, MessageWindowTable17.Tab);
 
-                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable17.NameOfFile + "$.txt"))
-                        {
-                            foreach (var row in MessageWindowTable17.Tab)
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + "$.txt", row.PercentIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable17.NameOfFile + "$.txt", "\n");
-                            }
-
+                            stream.Close();
                         }
                     }
                 }
@@ -1480,49 +1062,15 @@ namespace LaboratoryApp.ViewModel
                     //if (!string.IsNullOrEmpty(MessageWindowTable18.Title))
                     if (!File.Exists(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt"))
                     {
-                        //File.Create(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt");
-
                         CollectionOfTable.Add(MessageWindowTable18.NameOfFile);
 
-                        foreach (var row in MessageWindowTable18.Tab)
+                        if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable18.NameOfFile + ".lab"))
                         {
-                            if (!string.IsNullOrEmpty(row.Prefix))
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", row.Prefix.ToString());
-                            }
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", "\t");
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable18.NameOfFile + ".lab", FileMode.Create);
 
-                            if (!string.IsNullOrEmpty(row.Prefix2))
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", row.Prefix2.ToString());
-                            }
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", "\t");
+                            bformatter.Serialize(stream, MessageWindowTable18.Tab);
 
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", row.Multiples.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", row.ReferenceVoltage.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", row.IdealValue.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", row.Percent.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", row.ImportantNumber.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", "\t");
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", row.Constant.ToString());
-                            File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + ".txt", "\n");
-                        }
-                        if (!File.Exists(tablesPath + "\\" + MessageWindowTable18.NameOfFile + "$.txt"))
-                        {
-                            foreach (var row in MessageWindowTable18.Tab)
-                            {
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + "$.txt", row.PercentIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + "$.txt", row.ImportantNumberIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + "$.txt", "\t");
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + "$.txt", row.ConstantIdeal.ToString());
-                                File.AppendAllText(tablesPath + "\\" + MessageWindowTable18.NameOfFile + "$.txt", "\n");
-                            }
-
+                            stream.Close();
                         }
                     }
                 }

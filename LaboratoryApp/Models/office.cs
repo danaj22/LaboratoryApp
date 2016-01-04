@@ -1,28 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
-
 namespace LaboratoryApp.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     public partial class office : ViewModel.MenuItem
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public office()
         {
-            this.gauges = new ObservableCollection<gauge>();
+            gauges = new ObservableCollection<gauge>();
         }
-        [Key]
-        public int officeId { get; set; }
-        public string name { get; set; }
-        public string adress { get; set; }
-        public string contact_person_name { get; set; }
-        public string mail { get; set; }
-        public string tel { get; set; }
-        public string is_default { get; set; }
-        public int client_id { get; set; }
 
-        public virtual client client { get; set; }
-        public virtual ObservableCollection<gauge> gauges { get; set; }
+        public int officeId { get; set; }
 
         protected override string displayImagePath
         {
@@ -31,34 +24,30 @@ namespace LaboratoryApp.Models
                 return @"office-building-icon.png";
             }
         }
+        [Required]
+        [StringLength(300)]
+        public string name { get; set; }
 
-        //private bool isSelected;
-        //public bool IsSelected
-        //{
-        //    get { return isSelected; }
-        //    set
-        //    {
-        //        if (value != isSelected)
-        //        {
-        //            isSelected = value;
-        //            this.OnPropertyChanged("IsSelected");
-        //        }
-        //    }
-        //}
+        [StringLength(250)]
+        public string adress { get; set; }
 
-        //private bool isExpanded;
-        //public bool IsExpanded
-        //{
-        //    get { return isExpanded; }
-        //    set
-        //    {
-        //        if (value != isExpanded)
-        //        {
-        //            isExpanded = value;
-        //            OnPropertyChanged("IsExpanded");
-        //        }
-        //    }
-        //}
+        [StringLength(300)]
+        public string contact_person_name { get; set; }
 
+        [StringLength(300)]
+        public string mail { get; set; }
+
+        [StringLength(15)]
+        public string tel { get; set; }
+
+        [StringLength(10)]
+        public string is_default { get; set; }
+
+        public int client_id { get; set; }
+
+        public virtual client client { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ObservableCollection<gauge> gauges { get; set; }
     }
 }

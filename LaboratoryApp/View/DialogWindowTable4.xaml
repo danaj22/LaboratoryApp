@@ -27,7 +27,7 @@
         </Style>
     </UserControl.Resources>
     <Grid >
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top" Height="331" Width="903">
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" SelectedItem="{Binding SelectedData}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top" Height="331" Width="903">
             <DataGrid.Columns>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="88" Header="Napięcie pomiarowe rezystancji izolacji [V]" Binding="{Binding ValueOfIsolation, Converter={StaticResource MyConverter}}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Odczytana wartość rezystancji na mierniku sprawdzanym [Ω]" Binding="{Binding MeasureValue, Converter={StaticResource MyConverter}}" >
@@ -48,10 +48,10 @@
         </DataGrid>
         <Label Content="%" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" Height="25"/>
         <Label Content="Stała = " HorizontalAlignment="Left" Margin="72,52,0,0" VerticalAlignment="Top" Height="25"/>
-        <TextBox HorizontalAlignment="Left" Height="25" Margin="35,52,0,0" TextWrapping="Wrap" Text="{Binding Percent, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="32"/>
-        <TextBox HorizontalAlignment="Left" Height="25" Margin="123,52,0,0" TextWrapping="Wrap" Text="{Binding Constant, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="46"/>
+        <TextBox HorizontalAlignment="Left" Height="25" Margin="35,52,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.Percent, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="32"/>
+        <TextBox HorizontalAlignment="Left" Height="25" Margin="123,52,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.Constant, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="46"/>
         <Label Content="Liczb znaczących" HorizontalAlignment="Left" Margin="174,52,0,0" VerticalAlignment="Top" Height="25"/>
-        <TextBox HorizontalAlignment="Left" Height="25" Margin="278,52,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumber, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Height="25" Margin="278,52,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.ImportantNumber, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="120"/>
         <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="830,147,0,0" VerticalAlignment="Top" Width="75" Height="24"/>
         <Button Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="830,103,0,0" Height="21">
             <Button.Style>
@@ -82,10 +82,10 @@
         </TextBox>
         <Label Content="%" HorizontalAlignment="Left" Margin="16,10,0,0" VerticalAlignment="Top" Width="21"/>
         <Label Content="Stała " HorizontalAlignment="Left" Margin="86,10,0,0" VerticalAlignment="Top" Width="40"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="41,10,0,0" TextWrapping="Wrap" Text="{Binding PercentIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="39"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="135,10,0,0" TextWrapping="Wrap" Text="{Binding ConstantIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="48"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="41,10,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.PercentIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="39"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="135,10,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.ConstantIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="48"/>
         <Label Content="Liczb znaczących " HorizontalAlignment="Left" Margin="187,10,0,0" VerticalAlignment="Top" Width="104"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="298,10,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumberIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="86"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="298,10,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.ImportantNumberIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="86"/>
 
     </Grid>
 </UserControl>

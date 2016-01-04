@@ -1,31 +1,28 @@
-using System;
-using System.Collections.Generic;
-
 namespace LaboratoryApp.Models
 {
-    public partial class function : ViewModel.ObservableObject
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    public partial class function
     {
-        public int functionId { get; set; }
-        public string name { get; set; }
-        public virtual ICollection<calibrator> calibrators { get; set; }
-        
-        private bool isChecked;
-        public bool IsChecked
-        {
-            get { return isChecked; }
-            set
-            {
-                isChecked = value;
-                OnPropertyChanged("IsChecked");
-            }
-        }
-        public virtual ICollection<calibrators_functions> calibrators_functions { get; set; }
-        
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public function()
         {
-            this.calibrators_functions = new List<calibrators_functions>();
-            this.calibrators = new List<calibrator>();
+            model_of_gauges_functions = new ObservableCollection<model_of_gauges_functions>();
         }
-            
+
+        public int functionId { get; set; }
+
+        [StringLength(150)]
+        public string name { get; set; }
+
+        public bool IsChecked { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ObservableCollection<model_of_gauges_functions> model_of_gauges_functions { get; set; }
     }
 }

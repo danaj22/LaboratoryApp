@@ -15,6 +15,7 @@ using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -399,6 +400,8 @@ namespace LaboratoryApp.ViewModel
         string line, ValueOfCell,pref2, pref;
         double cons, percnt, impNum, idealVal, consIdeal, percntIdeal, impNumIdeal, valOfIsolation, multi, resistMeasure, symResist,refVolt;
 
+        Stream stream;
+        BinaryFormatter bformatter = new BinaryFormatter();
 
         private void GenerateTables()
         {
@@ -406,199 +409,58 @@ namespace LaboratoryApp.ViewModel
 
             {
 
-                {
+                
                     string[] nameOfData = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + Model + ".txt");
                     TablesToGenerate = new ObservableCollection<NewWindowTableGenerate>();
 
                     foreach (string nameOfTable in nameOfData)
                     {
-                        #region table1
-                        if (nameOfTable.Substring(33, 7) == "Table1\t")
+                    #region table1
+                    if (nameOfTable.Substring(33, 7) == "Table1\t")
+                    {
+                        MessageWindowTable1 = new NewWindowTable1Generate();
+
+                        int indexStart = nameOfTable.IndexOf("]");
+
+                        q = nameOfTable.Substring(indexStart + 1);
+
+                        if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab"))
                         {
-                            MessageWindowTable1 = new NewWindowTable1Generate();
-                            {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                //int indexStart = nameOfTable.IndexOf("\t");
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab", FileMode.Open);
 
-                                q = nameOfTable.Substring(indexStart + 1);
+                            MessageWindowTable1.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
+                            stream.Close();
 
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
-
-                                    //read Prefix
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    pref = Convert.ToString(ValueOfCell);
-
-                                    //read IdealValue
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    idealVal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Percent
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    percnt = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNum = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    cons = Convert.ToDouble(ValueOfCell);
-
-                                    Measure1 m = new Measure1();
-                                    m.ImportantNumber = impNum;
-                                    m.Constant = cons;
-                                    m.Percent = percnt;
-                                    m.IdealValue = idealVal;
-                                    m.Prefix = pref;
-
-                                    MessageWindowTable1.NameOfFile = q;
-                                    MessageWindowTable1.Tab.Add(m);
-                                }
-                            }
-                            {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                int iterator = 0;
-                                //int indexStart = nameOfTable.IndexOf("\t");
-
-                                q = nameOfTable.Substring(indexStart + 1);
-
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + "$.txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
-
-                                    //read Percent
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    percntIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNumIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    consIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    MessageWindowTable1.Tab[iterator].ImportantNumberIdeal = impNumIdeal;
-                                     MessageWindowTable1.Tab[iterator].ConstantIdeal = consIdeal;
-                                     MessageWindowTable1.Tab[iterator].PercentIdeal = percntIdeal;
-
-                                     iterator++;
-                                }
-                            }
-                            MessageWindowTable1.IsOpen = true;
-                            if (MessageWindowTable1.ToConfirm)
-                            {
-
-                                TablesToGenerate.Add(MessageWindowTable1);
-                            }
-                            MessageWindowTable1.ToConfirm = false;
                         }
+
+
+
+                        MessageWindowTable1.IsOpen = true;
+                        if (MessageWindowTable1.ToConfirm)
+                        {
+
+                            TablesToGenerate.Add(MessageWindowTable1);
+                        }
+                        MessageWindowTable1.ToConfirm = false;
+                    }
                         #endregion
                         #region table2
                         if (nameOfTable.Substring(33, 7) == "Table2\t")
                         {
                             {
                                 MessageWindowTable2 = new NewWindowTable2Generate();
+
                                 int indexStart = nameOfTable.IndexOf("]");
-                                //int indexStart = nameOfTable.IndexOf("\t");
 
                                 q = nameOfTable.Substring(indexStart + 1);
 
-
-
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".txt");
-                                foreach (string str in dataToTable)
+                                if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab"))
                                 {
-                                    line = str;
+                                    stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab", FileMode.Open);
 
-                                    //read Prefix
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    pref = Convert.ToString(ValueOfCell);
+                                    MessageWindowTable2.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
+                                    stream.Close();
 
-                                    //read IdealValue
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    idealVal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Percent
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    percnt = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNum = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    cons = Convert.ToDouble(ValueOfCell);
-
-                                    Measure1 m = new Measure1();
-                                    m.ImportantNumber = impNum;
-                                    m.Constant = cons;
-                                    m.Percent = percnt;
-                                    m.IdealValue = idealVal;
-                                    m.Prefix = pref;
-
-                                    MessageWindowTable2.NameOfFile = q;
-                                    MessageWindowTable2.Tab.Add(m);
-                                }
-                            }
-                            {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                int iterator = 0;
-                                //int indexStart = nameOfTable.IndexOf("\t");
-
-                                q = nameOfTable.Substring(indexStart + 1);
-
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + "$.txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
-
-                                    //read Percent
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    percntIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNumIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    consIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    MessageWindowTable2.Tab[iterator].ImportantNumberIdeal = impNumIdeal;
-                                    MessageWindowTable2.Tab[iterator].ConstantIdeal = consIdeal;
-                                    MessageWindowTable2.Tab[iterator].PercentIdeal = percntIdeal;
-
-                                    iterator++;
                                 }
                             }
                             MessageWindowTable2.IsOpen = true;
@@ -609,97 +471,26 @@ namespace LaboratoryApp.ViewModel
                             }
                             MessageWindowTable2.ToConfirm = false;
                         }
+
                         #endregion
                         #region table3
                         if (nameOfTable.Substring(33, 7) == "Table3\t")
                         {
                             MessageWindowTable3 = new NewWindowTable3Generate();
+                            int indexStart = nameOfTable.IndexOf("]");
+
+                            q = nameOfTable.Substring(indexStart + 1);
+
+                            if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab"))
                             {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                //int indexStart = nameOfTable.IndexOf("\t");
+                                stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab", FileMode.Open);
 
-                                q = nameOfTable.Substring(indexStart + 1);
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
+                                MessageWindowTable3.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
+                                stream.Close();
 
-                                    //read Prefix
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    pref = Convert.ToString(ValueOfCell);
-
-                                    //read IdealValue
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    idealVal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Percent
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    percnt = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNum = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    cons = Convert.ToDouble(ValueOfCell);
-
-                                    Measure1 m = new Measure1();
-                                    m.ImportantNumber = impNum;
-                                    m.Constant = cons;
-                                    m.Percent = percnt;
-                                    m.IdealValue = idealVal;
-                                    m.Prefix = pref;
-
-                                    MessageWindowTable3.NameOfFile = q;
-                                    MessageWindowTable3.Tab.Add(m);
-                                }
-                            }
-                            {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                int iterator = 0;
-                                //int indexStart = nameOfTable.IndexOf("\t");
-
-                                q = nameOfTable.Substring(indexStart + 1);
-
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + "$.txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
-
-                                    //read Percent
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    percntIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNumIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    consIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    MessageWindowTable3.Tab[iterator].ImportantNumberIdeal = impNumIdeal;
-                                    MessageWindowTable3.Tab[iterator].ConstantIdeal = consIdeal;
-                                    MessageWindowTable3.Tab[iterator].PercentIdeal = percntIdeal;
-
-                                    iterator++;
-                                }
                             }
 
-                            MessageWindowTable3.IsOpen = true;
+                        MessageWindowTable3.IsOpen = true;
                             if (MessageWindowTable3.ToConfirm)
                             {
 
@@ -712,97 +503,21 @@ namespace LaboratoryApp.ViewModel
                         if (nameOfTable.Substring(33, 7) == "Table4\t")
                         {
                             MessageWindowTable4 = new NewWindowTable4Generate();
-                            {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                //int indexStart = nameOfTable.IndexOf("\t");
 
-                                q = nameOfTable.Substring(indexStart + 1);
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
+                        int indexStart = nameOfTable.IndexOf("]");
 
-                                    //read Prefix
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    pref = Convert.ToString(ValueOfCell);
+                        q = nameOfTable.Substring(indexStart + 1);
 
-                                    //read ValueOfIsolation
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    valOfIsolation = Convert.ToDouble(ValueOfCell);
+                        if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab"))
+                        {
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab", FileMode.Open);
 
-                                    //read IdealValue
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    idealVal = Convert.ToDouble(ValueOfCell);
+                            MessageWindowTable4.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
+                            stream.Close();
 
-                                    //read Percent
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    percnt = Convert.ToDouble(ValueOfCell);
+                        }
 
-                                    //read ImportantNumber
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNum = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    cons = Convert.ToDouble(ValueOfCell);
-
-                                    Measure1 m = new Measure1();
-                                    m.ImportantNumber = impNum;
-                                    m.Constant = cons;
-                                    m.Percent = percnt;
-                                    m.IdealValue = idealVal;
-                                    m.ValueOfIsolation = valOfIsolation;
-                                    MessageWindowTable4.NameOfFile = q;
-                                    MessageWindowTable4.Tab.Add(m);
-                                }
-                            }
-                            {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                int iterator = 0;
-                                //int indexStart = nameOfTable.IndexOf("\t");
-
-                                q = nameOfTable.Substring(indexStart + 1);
-
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + "$.txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
-
-                                    //read Percent
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    percntIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNumIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    consIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    MessageWindowTable4.Tab[iterator].ImportantNumberIdeal = impNumIdeal;
-                                    MessageWindowTable4.Tab[iterator].ConstantIdeal = consIdeal;
-                                    MessageWindowTable4.Tab[iterator].PercentIdeal = percntIdeal;
-
-                                    iterator++;
-                                }
-                            }
-
-                            MessageWindowTable4.IsOpen = true;
+                        MessageWindowTable4.IsOpen = true;
                             if (MessageWindowTable4.ToConfirm)
                             {
 
@@ -815,84 +530,18 @@ namespace LaboratoryApp.ViewModel
                         if (nameOfTable.Substring(33, 7) == "Table5\t")
                         {
                             MessageWindowTable5 = new NewWindowTable5Generate();
+                            int indexStart = nameOfTable.IndexOf("]");
+
+                            q = nameOfTable.Substring(indexStart + 1);
+
+                            if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab"))
                             {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                //int indexStart = nameOfTable.IndexOf("\t");
+                                stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab", FileMode.Open);
 
-                                q = nameOfTable.Substring(indexStart + 1);
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
+                                MessageWindowTable5.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
+                                stream.Close();
 
-                                    
-                                    //read IdealValue
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    idealVal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Percent
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    percnt = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNum = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    cons = Convert.ToDouble(ValueOfCell);
-
-                                    Measure1 m = new Measure1();
-                                    m.ImportantNumber = impNum;
-                                    m.Constant = cons;
-                                    m.Percent = percnt;
-                                    m.IdealValue = idealVal;
-                                    MessageWindowTable5.NameOfFile = q;
-                                    MessageWindowTable5.Tab.Add(m);
-                                }
                             }
-                            {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                int iterator = 0;
-                                //int indexStart = nameOfTable.IndexOf("\t");
-
-                                q = nameOfTable.Substring(indexStart + 1);
-
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + "$.txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
-
-                                    //read Percent
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    percntIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNumIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    consIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    MessageWindowTable5.Tab[iterator].ImportantNumberIdeal = impNumIdeal;
-                                    MessageWindowTable5.Tab[iterator].ConstantIdeal = consIdeal;
-                                    MessageWindowTable5.Tab[iterator].PercentIdeal = percntIdeal;
-
-                                    iterator++;
-                                }
-                            }
-
                             MessageWindowTable5.IsOpen = true;
                             if (MessageWindowTable5.ToConfirm)
                             {
@@ -906,91 +555,20 @@ namespace LaboratoryApp.ViewModel
                         if (nameOfTable.Substring(33, 7) == "Table6\t")
                         {
                             MessageWindowTable6 = new NewWindowTable6Generate();
-                            {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                //int indexStart = nameOfTable.IndexOf("\t");
+                        int indexStart = nameOfTable.IndexOf("]");
 
-                                q = nameOfTable.Substring(indexStart + 1);
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
+                        q = nameOfTable.Substring(indexStart + 1);
 
-                                    //read Multiples
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    multi = Convert.ToDouble(ValueOfCell);
+                        if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab"))
+                        {
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab", FileMode.Open);
 
-                                    //read IdealValue
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    idealVal = Convert.ToDouble(ValueOfCell);
+                            MessageWindowTable6.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
+                            stream.Close();
 
-                                    //read Percent
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    percnt = Convert.ToDouble(ValueOfCell);
+                        }
 
-                                    //read ImportantNumber
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNum = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    cons = Convert.ToDouble(ValueOfCell);
-
-                                    Measure1 m = new Measure1();
-                                    m.ImportantNumber = impNum;
-                                    m.Constant = cons;
-                                    m.Percent = percnt;
-                                    m.IdealValue = idealVal;
-                                    m.Multiples = multi;
-                                    MessageWindowTable6.NameOfFile = q;
-                                    MessageWindowTable6.Tab.Add(m);
-                                }
-                            }
-                            {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                int iterator = 0;
-                                //int indexStart = nameOfTable.IndexOf("\t");
-
-                                q = nameOfTable.Substring(indexStart + 1);
-
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + "$.txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
-
-                                    //read Percent
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    percntIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNumIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    consIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    MessageWindowTable6.Tab[iterator].ImportantNumberIdeal = impNumIdeal;
-                                    MessageWindowTable6.Tab[iterator].ConstantIdeal = consIdeal;
-                                    MessageWindowTable6.Tab[iterator].PercentIdeal = percntIdeal;
-
-                                    iterator++;
-                                }
-                            }
-
-                            MessageWindowTable6.IsOpen = true;
+                        MessageWindowTable6.IsOpen = true;
                             if (MessageWindowTable6.ToConfirm)
                             {
 
@@ -1003,88 +581,17 @@ namespace LaboratoryApp.ViewModel
                         if (nameOfTable.Substring(33, 7) == "Table7\t")
                         {
                             MessageWindowTable7 = new NewWindowTable7Generate();
+
+                            int indexStart = nameOfTable.IndexOf("]");
+                            q = nameOfTable.Substring(indexStart + 1);
+
+                            if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab"))
                             {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                //int indexStart = nameOfTable.IndexOf("\t");
+                                stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab", FileMode.Open);
 
-                                q = nameOfTable.Substring(indexStart + 1);
+                                MessageWindowTable7.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
+                                stream.Close();
 
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
-
-                                    //read Prefix
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    pref = Convert.ToString(ValueOfCell);
-
-                                    //read IdealValue
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    idealVal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Percent
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    percnt = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNum = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    cons = Convert.ToDouble(ValueOfCell);
-
-                                    Measure1 m = new Measure1();
-                                    m.ImportantNumber = impNum;
-                                    m.Constant = cons;
-                                    m.Percent = percnt;
-                                    m.IdealValue = idealVal;
-                                    MessageWindowTable7.NameOfFile = q;
-                                    MessageWindowTable7.Tab.Add(m);
-                                }
-                            }
-                            {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                int iterator = 0;
-                                //int indexStart = nameOfTable.IndexOf("\t");
-
-                                q = nameOfTable.Substring(indexStart + 1);
-
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + "$.txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
-
-                                    //read Percent
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    percntIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNumIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    consIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    MessageWindowTable7.Tab[iterator].ImportantNumberIdeal = impNumIdeal;
-                                    MessageWindowTable7.Tab[iterator].ConstantIdeal = consIdeal;
-                                    MessageWindowTable7.Tab[iterator].PercentIdeal = percntIdeal;
-
-                                    iterator++;
-                                }
                             }
                             MessageWindowTable7.IsOpen = true;
                             if (MessageWindowTable7.ToConfirm)
@@ -1099,90 +606,18 @@ namespace LaboratoryApp.ViewModel
                         if (nameOfTable.Substring(33, 7) == "Table9\t")
                         {
                             MessageWindowTable9 = new NewWindowTable9Generate();
+                            int indexStart = nameOfTable.IndexOf("]");
+
+                            q = nameOfTable.Substring(indexStart + 1);
+
+                            if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab"))
                             {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                //int indexStart = nameOfTable.IndexOf("\t");
+                                stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab", FileMode.Open);
 
-                                q = nameOfTable.Substring(indexStart + 1);
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
+                                MessageWindowTable9.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
+                                stream.Close();
 
-                                    //read Multiples
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    multi = Convert.ToDouble(ValueOfCell);
-
-                                    //read IdealValue
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    idealVal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Percent
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    percnt = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNum = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    cons = Convert.ToDouble(ValueOfCell);
-
-                                    Measure1 m = new Measure1();
-                                    m.ImportantNumber = impNum;
-                                    m.Constant = cons;
-                                    m.Percent = percnt;
-                                    m.IdealValue = idealVal;
-                                    m.Multiples = multi;
-                                    MessageWindowTable9.NameOfFile = q;
-                                    MessageWindowTable9.Tab.Add(m);
-                                }
                             }
-                            {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                int iterator = 0;
-                                //int indexStart = nameOfTable.IndexOf("\t");
-
-                                q = nameOfTable.Substring(indexStart + 1);
-
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + "$.txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
-
-                                    //read Percent
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    percntIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNumIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    consIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    MessageWindowTable9.Tab[iterator].ImportantNumberIdeal = impNumIdeal;
-                                    MessageWindowTable9.Tab[iterator].ConstantIdeal = consIdeal;
-                                    MessageWindowTable9.Tab[iterator].PercentIdeal = percntIdeal;
-
-                                    iterator++;
-                                }
-                            }
-
                             MessageWindowTable9.IsOpen = true;
                             if (MessageWindowTable9.ToConfirm)
                             {
@@ -1196,110 +631,17 @@ namespace LaboratoryApp.ViewModel
                         if (nameOfTable.Substring(33, 7) == "Table10")
                         {
                             MessageWindowTable10 = new NewWindowTable10Generate();
+                            int indexStart = nameOfTable.IndexOf("]");
+
+                            q = nameOfTable.Substring(indexStart + 1);
+
+                            if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab"))
                             {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                //int indexStart = nameOfTable.IndexOf("\t");
+                                stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab", FileMode.Open);
 
-                                q = nameOfTable.Substring(indexStart + 1);
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
+                                MessageWindowTable10.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
+                                stream.Close();
 
-                                    //read prefix
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    pref = Convert.ToString(ValueOfCell);
-
-                                    //read Multiples
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    multi = Convert.ToDouble(ValueOfCell);
-
-                                    //read SymulatedResistance
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    symResist = Convert.ToDouble(ValueOfCell);
-
-                                    //read ResetanceMeasure
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    resistMeasure = Convert.ToDouble(ValueOfCell);
-                                    
-                                    //read IdealValue
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    idealVal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Percent
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    percnt = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNum = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    cons = Convert.ToDouble(ValueOfCell);
-
-                                    Measure1 m = new Measure1();
-                                    m.ImportantNumber = impNum;
-                                    m.Constant = cons;
-                                    m.Percent = percnt;
-                                    m.IdealValue = idealVal;
-                                    m.Multiples = multi;
-                                    m.SymulatedResistance = symResist;
-                                    m.ResistanceMeasure = resistMeasure;
-
-                                    MessageWindowTable10.NameOfFile = q;
-                                    MessageWindowTable10.Tab.Add(m);
-                                }
-                            }
-                            {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                int iterator = 0;
-                                //int indexStart = nameOfTable.IndexOf("\t");
-
-                                q = nameOfTable.Substring(indexStart + 1);
-
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + "$.txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
-
-
-                                    //read Percent
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    percntIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNumIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    consIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    MessageWindowTable10.Tab[iterator].ImportantNumberIdeal = impNumIdeal;
-                                    MessageWindowTable10.Tab[iterator].ConstantIdeal = consIdeal;
-                                    MessageWindowTable10.Tab[iterator].PercentIdeal = percntIdeal;
-
-                                    iterator++;
-                                }
                             }
 
                             MessageWindowTable10.IsOpen = true;
@@ -1315,98 +657,18 @@ namespace LaboratoryApp.ViewModel
                         if (nameOfTable.Substring(33, 7) == "Table15")
                         {
                             MessageWindowTable15 = new NewWindowTable15Generate();
+                            int indexStart = nameOfTable.IndexOf("]");
+
+                            q = nameOfTable.Substring(indexStart + 1);
+
+                            if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab"))
                             {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                //int indexStart = nameOfTable.IndexOf("\t");
+                                stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab", FileMode.Open);
 
-                                q = nameOfTable.Substring(indexStart + 1);
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
+                                MessageWindowTable15.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
+                                stream.Close();
 
-                                    //read Prefix
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    pref = Convert.ToString(ValueOfCell);
-
-                                    //read Multiples
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    multi = Convert.ToDouble(ValueOfCell);
-
-
-                                    //read IdealValue
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    idealVal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Percent
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    percnt = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNum = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    cons = Convert.ToDouble(ValueOfCell);
-
-                                    Measure1 m = new Measure1();
-                                    m.ImportantNumber = impNum;
-                                    m.Constant = cons;
-                                    m.Percent = percnt;
-                                    m.IdealValue = idealVal;
-                                    m.Multiples = multi;
-
-                                    MessageWindowTable15.NameOfFile = q;
-                                    MessageWindowTable15.Tab.Add(m);
-                                }
                             }
-                            {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                int iterator = 0;
-                                //int indexStart = nameOfTable.IndexOf("\t");
-
-                                q = nameOfTable.Substring(indexStart + 1);
-
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + "$.txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
-
-                                    //read Percent
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    percntIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNumIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    consIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    MessageWindowTable15.Tab[iterator].ImportantNumberIdeal = impNumIdeal;
-                                    MessageWindowTable15.Tab[iterator].ConstantIdeal = consIdeal;
-                                    MessageWindowTable15.Tab[iterator].PercentIdeal = percntIdeal;
-
-                                    iterator++;
-                                }
-                            }
-
                             MessageWindowTable15.IsOpen = true;
                             if (MessageWindowTable15.ToConfirm)
                             {
@@ -1420,98 +682,18 @@ namespace LaboratoryApp.ViewModel
                         if (nameOfTable.Substring(33, 7) == "Table16")
                         {
                             MessageWindowTable16 = new NewWindowTable16Generate();
+                            int indexStart = nameOfTable.IndexOf("]");
+
+                            q = nameOfTable.Substring(indexStart + 1);
+
+                            if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab"))
                             {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                //int indexStart = nameOfTable.IndexOf("\t");
+                                stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab", FileMode.Open);
 
-                                q = nameOfTable.Substring(indexStart + 1);
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
+                                MessageWindowTable16.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
+                                stream.Close();
 
-                                    //read Prefix
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    pref = Convert.ToString(ValueOfCell);
-
-                                    //read Multiples
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    multi = Convert.ToDouble(ValueOfCell);
-
-
-                                    //read IdealValue
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    idealVal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Percent
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    percnt = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNum = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    cons = Convert.ToDouble(ValueOfCell);
-
-                                    Measure1 m = new Measure1();
-                                    m.ImportantNumber = impNum;
-                                    m.Constant = cons;
-                                    m.Percent = percnt;
-                                    m.IdealValue = idealVal;
-                                    m.Multiples = multi;
-
-                                    MessageWindowTable16.NameOfFile = q;
-                                    MessageWindowTable16.Tab.Add(m);
-                                }
                             }
-                            {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                int iterator = 0;
-                                //int indexStart = nameOfTable.IndexOf("\t");
-
-                                q = nameOfTable.Substring(indexStart + 1);
-
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + "$.txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
-
-                                    //read Percent
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    percntIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNumIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    consIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    MessageWindowTable16.Tab[iterator].ImportantNumberIdeal = impNumIdeal;
-                                    MessageWindowTable16.Tab[iterator].ConstantIdeal = consIdeal;
-                                    MessageWindowTable16.Tab[iterator].PercentIdeal = percntIdeal;
-
-                                    iterator++;
-                                }
-                            }
-
                             MessageWindowTable16.IsOpen = true;
                             if (MessageWindowTable16.ToConfirm)
                             {
@@ -1525,89 +707,17 @@ namespace LaboratoryApp.ViewModel
                         if (nameOfTable.Substring(33, 7) == "Table17") 
                         {
                             MessageWindowTable17 = new NewWindowTable17Generate();
+                            int indexStart = nameOfTable.IndexOf("]");
+
+                            q = nameOfTable.Substring(indexStart + 1);
+
+                            if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab"))
                             {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                //int indexStart = nameOfTable.IndexOf("\t");
+                                stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab", FileMode.Open);
 
-                                q = nameOfTable.Substring(indexStart + 1);
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
+                                MessageWindowTable17.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
+                                stream.Close();
 
-                                    //read Prefix
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    pref = Convert.ToString(ValueOfCell);
-
-                                    //read IdealValue
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    idealVal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Percent
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    percnt = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNum = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    cons = Convert.ToDouble(ValueOfCell);
-
-                                    Measure1 m = new Measure1();
-                                    m.ImportantNumber = impNum;
-                                    m.Constant = cons;
-                                    m.Percent = percnt;
-                                    m.IdealValue = idealVal;
-                                    m.Prefix = pref;
-
-                                    MessageWindowTable17.NameOfFile = q;
-                                    MessageWindowTable17.Tab.Add(m);
-                                }
-                            }
-                            {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                int iterator = 0;
-                                //int indexStart = nameOfTable.IndexOf("\t");
-
-                                q = nameOfTable.Substring(indexStart + 1);
-
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + "$.txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
-
-                                    //read Percent
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    percntIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNumIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    consIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    MessageWindowTable17.Tab[iterator].ImportantNumberIdeal = impNumIdeal;
-                                    MessageWindowTable17.Tab[iterator].ConstantIdeal = consIdeal;
-                                    MessageWindowTable17.Tab[iterator].PercentIdeal = percntIdeal;
-
-                                    iterator++;
-                                }
                             }
 
                             MessageWindowTable17.IsOpen = true;
@@ -1623,108 +733,17 @@ namespace LaboratoryApp.ViewModel
                         if (nameOfTable.Substring(33, 7) == "Table18")
                         {
                             MessageWindowTable18 = new NewWindowTable18Generate();
+                            int indexStart = nameOfTable.IndexOf("]");
+
+                            q = nameOfTable.Substring(indexStart + 1);
+
+                            if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab"))
                             {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                //int indexStart = nameOfTable.IndexOf("\t");
+                                stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab", FileMode.Open);
 
-                                q = nameOfTable.Substring(indexStart + 1);
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
+                                MessageWindowTable18.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
+                                stream.Close();
 
-                                    //read prefix
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    pref = Convert.ToString(ValueOfCell);
-
-                                    //read prefix2
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    pref2 = Convert.ToString(ValueOfCell);
-
-                                    //read Multiples
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    multi = Convert.ToDouble(ValueOfCell);
-
-                                    //read SymulatedResistance
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    refVolt = Convert.ToDouble(ValueOfCell);
-
-                                    //read IdealValue
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    idealVal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Percent
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    percnt = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = line.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNum = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    cons = Convert.ToDouble(ValueOfCell);
-
-                                    Measure1 m = new Measure1();
-                                    m.ImportantNumber = impNum;
-                                    m.Constant = cons;
-                                    m.Percent = percnt;
-                                    m.IdealValue = idealVal;
-                                    m.Multiples = multi;
-                                    m.ReferenceVoltage = refVolt;
-
-                                    MessageWindowTable18.NameOfFile = q;
-                                    MessageWindowTable18.Tab.Add(m);
-                                }
-                            }
-                            {
-                                int indexStart = nameOfTable.IndexOf("]");
-                                int iterator = 0;
-                                //int indexStart = nameOfTable.IndexOf("\t");
-
-                                q = nameOfTable.Substring(indexStart + 1);
-
-                                string[] dataToTable = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + "$.txt");
-                                foreach (string str in dataToTable)
-                                {
-                                    line = str;
-
-                                    //read Percent
-                                    int index = str.IndexOf("\t");
-                                    ValueOfCell = str.Substring(0, index);
-                                    percntIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read ImportantNumber
-                                    line = str.Substring(index + 1);
-                                    index = line.IndexOf("\t");
-                                    ValueOfCell = line.Substring(0, index);
-                                    impNumIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    //read Constant
-                                    line = line.Substring(index + 1);
-                                    ValueOfCell = line;
-                                    consIdeal = Convert.ToDouble(ValueOfCell);
-
-                                    MessageWindowTable18.Tab[iterator].ImportantNumberIdeal = impNumIdeal;
-                                    MessageWindowTable18.Tab[iterator].ConstantIdeal = consIdeal;
-                                    MessageWindowTable18.Tab[iterator].PercentIdeal = percntIdeal;
-
-                                    iterator++;
-                                }
                             }
 
                             MessageWindowTable18.IsOpen = true;
@@ -1779,7 +798,6 @@ namespace LaboratoryApp.ViewModel
 
                 }
 
-            }
         }
 
         private void GenerateRaportExecute()

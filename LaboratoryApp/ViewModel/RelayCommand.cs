@@ -49,8 +49,57 @@ namespace LaboratoryApp.ViewModel
             _execute();
         }
     }
+    public class SimpleRelayCommandv2 : ObservableObject, ICommand
+    {
+        private Func<string, int> action;
+        public Func<string, int> Action
+        {
+            get
+            {
+                return action;
+            }
 
-    public class SimpleRelayCommand : ICommand
+            set
+            {
+                action = value;
+                OnPropertyChanged("Action");
+            }
+        }
+
+
+
+        #region ICommand Members
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        public void Execute(object parameter)
+        {
+            if (parameter != null)
+            {
+                string str = parameter as string;
+                Action(str);
+            }
+            //else
+            //{
+                
+                //_action();
+                
+           // }
+        }
+
+        #endregion
+    }
+
+        public class SimpleRelayCommand : ICommand
     {
         private Action _action;
 

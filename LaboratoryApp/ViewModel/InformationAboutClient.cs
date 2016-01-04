@@ -262,6 +262,9 @@ namespace LaboratoryApp.ViewModel
                             MainWindowViewModel.selectedNode.Children.Last().Parent = SelectedClient;
 
                             MessageBox.Show("Miernik został dodany do bazy.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+                            
+                            MainWindowViewModel.selectedNode.Children.Last().IsSelected = true;
+                               // SelectedClient.gauges.Last().IsSelected = true;
 
                         }
                         catch (DbEntityValidationException e)

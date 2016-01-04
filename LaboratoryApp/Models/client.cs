@@ -1,29 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
-
 namespace LaboratoryApp.Models
 {
-    public partial class client:ViewModel.MenuItem
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    public partial class client : ViewModel.MenuItem
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public client()
         {
-            this.gauges = new ObservableCollection<gauge>();
-            this.offices = new ObservableCollection<office>();
+            gauges = new ObservableCollection<gauge>();
+            offices = new ObservableCollection<office>();
         }
-        [Key]
-        public int clientId { get; set; }
-        public string name { get; set; }
-        public string adress { get; set; }
-        public string contact_person_name { get; set; }
-        public string mail { get; set; }
-        public string tel { get; set; }
-        public string NIP { get; set; }
-        public string comments { get; set; }
-
-        public virtual ObservableCollection<gauge> gauges { get; set; }
-        public virtual ObservableCollection<office> offices { get; set; }
 
         protected override string displayImagePath
         {
@@ -33,36 +24,39 @@ namespace LaboratoryApp.Models
             }
         }
 
-        //protected override bool isSelected;
-        //public override bool IsSelected
-        //{
-        //    get;
-        //    set;
-        //    //get { return isSelected; }
-        //    //set
-        //    //{
-        //    //    if (value != isSelected)
-        //    //    {
-        //    //        isSelected = value;
-        //    //        this.OnPropertyChanged("IsSelected");
-        //    //    }
-        //    //}
-        //}
+        public int clientId { get; set; }
 
-        ////private bool isExpanded;
-        //public override bool IsExpanded
-        //{
-        //    get;
-        //    set;
-        //    //get { return isExpanded; }
-        //    //set
-        //    //{
-        //    //    if (value != isExpanded)
-        //    //    {
-        //    //        isExpanded = value;
-        //    //        OnPropertyChanged("IsExpanded");
-        //    //    }
-        //    //}
-        //}
+        [Required]
+        [StringLength(300)]
+        public string name { get; set; }
+
+        [StringLength(150)]
+        public string adress { get; set; }
+
+        [StringLength(70)]
+        public string contact_person_name { get; set; }
+
+        [StringLength(400)]
+        public string mail { get; set; }
+
+        [StringLength(15)]
+        public string tel { get; set; }
+
+        [Required]
+        [StringLength(15)]
+        public string NIP { get; set; }
+
+        [StringLength(500)]
+        public string comments { get; set; }
+
+        public int? subscription_id { get; set; }
+
+        public virtual subscription subscription { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ObservableCollection<gauge> gauges { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ObservableCollection<office> offices { get; set; }
     }
 }

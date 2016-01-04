@@ -104,29 +104,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\calibrator.cs" />
-    <Compile Include="Models\calibrators_functions.cs" />
     <Compile Include="Models\calibrators_model_of_gauges.cs" />
     <Compile Include="Models\certificate.cs" />
     <Compile Include="Models\client.cs" />
+    <Compile Include="Models\C__MigrationHistory.cs" />
+    <Compile Include="Models\device.cs" />
+    <Compile Include="Models\devices_rents.cs" />
     <Compile Include="Models\function.cs" />
     <Compile Include="Models\gauge.cs" />
+    <Compile Include="Models\genre.cs" />
     <Compile Include="Models\LaboratoryEntities.cs" />
-    <Compile Include="Models\Mapping\calibratorMap.cs" />
-    <Compile Include="Models\Mapping\calibrators_functionsMap.cs" />
-    <Compile Include="Models\Mapping\calibrators_model_of_gaugesMap.cs" />
-    <Compile Include="Models\Mapping\certificateMap.cs" />
-    <Compile Include="Models\Mapping\clientMap.cs" />
-    <Compile Include="Models\Mapping\functionMap.cs" />
-    <Compile Include="Models\Mapping\gaugeMap.cs" />
-    <Compile Include="Models\Mapping\model_of_gaugesMap.cs" />
-    <Compile Include="Models\Mapping\officeMap.cs" />
-    <Compile Include="Models\Mapping\typeMap.cs" />
-    <Compile Include="Models\Mapping\usageMap.cs" />
     <Compile Include="Models\model_of_gauges.cs" />
-    <Compile Include="Models\MyDbInitializer.cs" />
+    <Compile Include="Models\model_of_gauges_functions.cs" />
     <Compile Include="Models\office.cs" />
+    <Compile Include="Models\rent.cs" />
+    <Compile Include="Models\subscription.cs" />
+    <Compile Include="Models\sysdiagram.cs" />
+    <Compile Include="Models\tariff.cs" />
     <Compile Include="Models\type.cs" />
     <Compile Include="Models\usage.cs" />
     <Compile Include="ViewModel\Answer.cs" />
@@ -145,12 +140,14 @@
     <Compile Include="ViewModel\InformationAboutGauge.cs" />
     <Compile Include="ViewModel\LoadData.cs" />
     <Compile Include="ViewModel\Log.cs" />
+    <Compile Include="ViewModel\Measure1.cs" />
     <Compile Include="ViewModel\ModalDialogManager.cs" />
     <Compile Include="ViewModel\MyConverter.cs" />
     <Compile Include="ViewModel\NameValidation.cs" />
     <Compile Include="ViewModel\NewWindowCalibrator.cs" />
     <Compile Include="ViewModel\NewWindowClient.cs" />
     <Compile Include="ViewModel\NewWindowConnect.cs" />
+    <Compile Include="ViewModel\NewWindowEditGauge.cs" />
     <Compile Include="ViewModel\NewWindowFunction.cs" />
     <Compile Include="ViewModel\NewWindowMailing.cs" />
     <Compile Include="ViewModel\NewWindowModelOfGauge.cs" />
@@ -333,6 +330,9 @@
     </Compile>
     <Compile Include="View\DialogWindowUser.xaml.cs">
       <DependentUpon>DialogWindowUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditModelGauge.xaml.cs">
+      <DependentUpon>EditModelGauge.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\InformationAboutClientView.xaml.cs">
       <DependentUpon>InformationAboutClientView.xaml</DependentUpon>
@@ -532,6 +532,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\EditModelGauge.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\InformationAboutClientView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -576,7 +580,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.manifest" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\certificate.datasource" />
     <None Include="Properties\DataSources\client.datasource" />
@@ -609,6 +612,7 @@
     <Resource Include="office-building-icon.png" />
     <Resource Include="Office-Customer-Male-Light-icon.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

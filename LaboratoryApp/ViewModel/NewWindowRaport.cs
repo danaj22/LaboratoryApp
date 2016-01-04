@@ -334,46 +334,64 @@ namespace LaboratoryApp.ViewModel
             LaboratoryEntities context = MainWindowViewModel.Context;
             AboutGauge = NewGauge;
 
+
             var ListOfFunctions = (from f in context.functions select f).ToList();
-            foreach(function fun in ListOfFunctions)
+            foreach (function fun in ListOfFunctions)
             {
                 fun.IsChecked = false;
             }
-            if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\model\" + NewGauge.model_of_gauges.model + ".txt"))
+
+            var bbbb = (from mf in context.model_of_gauges_functions where mf.model_of_gauge_id == AboutGauge.model_of_gauge_id select mf.function_Id).ToList();
+
+            foreach (var item in ListOfFunctions)
             {
-                string[] listOfFunctionFromFile = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\model\" + NewGauge.model_of_gauges.model + ".txt");
+                if (bbbb.Contains(item.functionId))
+                {
+                    item.IsChecked = true;
+                }
 
-                
-                    foreach (string str in listOfFunctionFromFile)
-                    {
-                        ListOfFunctions[Convert.ToInt16(str) - 1].IsChecked = true;
-                    }
-                
-
-            }
-
-            foreach(function f in ListOfFunctions)
-            {
-               // if(f.IsChecked)
-               // {
-                    CollectionOfCheckedFunction.Add(f);
-                //}
+                CollectionOfCheckedFunction.Add(item);
             }
 
 
+            ///
+            ////                |||||||
+            ////ZLE PODEJSCIE!! VVVVVVV
+            ///
+            ///
 
-            //var gggg = (from cm in context.calibrators_model_of_gauges where cm.model_of_gaug_id == AboutGauge.model_of_gauge_id select cm.calibrator.function_id).ToList();
-            //foreach(var item in ListOfFunctions)
+
+
+            //var ListOfFunctions = (from f in context.functions select f).ToList();
+            //foreach(function fun in ListOfFunctions)
             //{
-             //   if(gggg.Contains(item.functionId))
-             //   {
-             //       item.IsChecked = true;
-              //  }
-             //   CollectionOfCheckedFunction.Add(item);
+            //    fun.IsChecked = false;
             //}
-            
+            //if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\model\" + NewGauge.model_of_gauges.model + ".txt"))
+            //{
+            //    string[] listOfFunctionFromFile = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\model\" + NewGauge.model_of_gauges.model + ".txt");
 
-            
+
+            //        foreach (string str in listOfFunctionFromFile)
+            //        {
+            //            ListOfFunctions[Convert.ToInt16(str) - 1].IsChecked = true;
+            //        }
+
+
+            //}
+
+            //foreach(function f in ListOfFunctions)
+            //{
+            //   // if(f.IsChecked)
+            //   // {
+            //        CollectionOfCheckedFunction.Add(f);
+            //    //}
+            //}
+
+
+
+
+
             var ListOfCalibrators = (from c in context.calibrators select c).ToList();
             
             foreach(var item in ListOfCalibrators)

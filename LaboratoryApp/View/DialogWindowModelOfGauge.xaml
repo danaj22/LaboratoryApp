@@ -46,7 +46,7 @@
             <ColumnDefinition Width="Auto" MinWidth="32"/>
             <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="29"/>
-            <ColumnDefinition  MaxWidth="150"/>
+            <ColumnDefinition  MaxWidth="160"/>
             
 
 
@@ -143,6 +143,44 @@
             </ComboBox.SelectedItem>
         </ComboBox>
 
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable1}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="900" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable2}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="900" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable3}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="890" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable4}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="950" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable5}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="950" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable6}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="820" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable7}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="890" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable8}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="890" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable9}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="890" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable10}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="430" 
+			DialogWidth="900" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable11}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="890" DialogResizeMode="CanResize" />
+        <!--<vm:ModalDialogManager DataContext="{Binding MessageWindowTable12}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="820" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable13}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="820" DialogResizeMode="CanResize" />-->
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable14}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="820" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable15}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="1300" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable16}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="1300" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable17}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="1020" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable18}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+			DialogWidth="1140" DialogResizeMode="CanResize" />
+
+
         <vm:ModalDialogManager DataContext="{Binding MessageWindowType}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="200" 
 			DialogWidth="340" DialogResizeMode="CanResize" Grid.Row="1" />
 
@@ -183,7 +221,7 @@
         <Button Content="Dodaj typ" Command="{Binding AddTypeCommand}" Grid.Column="3" Grid.Row="7" />
         <Button Content="Dodaj Kalibrator" Command="{Binding AddCalibratorCommand}" Grid.Column="3" Grid.Row="13" />
         <Button Content="Dodaj funkcje" Command="{Binding AddFunctionCommand}" Grid.Column="3"  Grid.Row="11" />
-        <Button Content="Dodaj tabelę" Command="{Binding AddTableCommand}" Grid.Column="3" Grid.Row="9"  />
+        <Button Content="Dodaj tabelę" Command="{Binding AddTableCommand}" Grid.Column="3" Grid.Row="9" Margin="0,0,0,81"  />
 
         <ListBox Grid.Column="1" Grid.Row="13" ItemsSource="{Binding CollectionOfCalibrators}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" >
             <ListBox.ItemTemplate>
@@ -202,13 +240,15 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <Label Content="Tabele: " HorizontalAlignment="Left" Grid.Row="9" VerticalAlignment="Center"  Margin="10,22,0,29" Height="26" Width="122"  />
-        <ListBox Grid.Column="1"  Grid.Row="9" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible" ItemsSource="{Binding ListOfNamesOfTables}"  >
+        <ListBox Grid.Column="1"  Grid.Row="9" SelectedItem="{Binding SelectedTable}" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible" ItemsSource="{Binding ListOfNamesOfTables}"  >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding Name}"/>
+
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-            
+        <Button Content="Edytuj zaznaczoną tabelę" Command="{Binding EditTableCommand}" Grid.Column="3" Grid.Row="9" Margin="0,84,0,18"  />
+
     </Grid>
 </UserControl>

@@ -25,7 +25,7 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="-7,38,0,0" VerticalAlignment="Top" Height="345" Width="1071">
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" SelectedItem="{Binding SelectedData}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="-7,38,0,0" VerticalAlignment="Top" Height="345" Width="1071">
             <DataGrid.Columns>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="88" Header="Impedancja pętli zwarcia na mierniku sprawdzanym [Ω]" Binding="{Binding ImpendationMeasure}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="30" Header="Przedrostek" Binding="{Binding Prefix}" />

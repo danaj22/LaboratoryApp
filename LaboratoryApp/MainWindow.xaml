@@ -2,8 +2,6 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:LaboratoryApp"
-        xmlns:view="clr-namespace:LaboratoryApp.View"
-        xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
         BorderBrush="{DynamicResource AccentColorBrush}"
         BorderThickness="1"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
@@ -11,7 +9,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"     
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        
+        xmlns:view ="clr-namespace:LaboratoryApp.View"
+        xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
         
         Title="{Binding Title}" Height="760" Width="950">
 
@@ -49,8 +48,6 @@
             </Style.Triggers>
         </Style>
 
-
-
         <DataTemplate DataType="{x:Type vm:InformationAboutClient}">
             <view:InformationAboutClientView/>
         </DataTemplate>
@@ -60,11 +57,15 @@
         <DataTemplate DataType="{x:Type vm:InformationAboutGauge}">
             <view:InformationAboutGaugeView />
         </DataTemplate>
+
         <vm:MainWindowViewModel x:Key="MainWindowViewModelDataSource"/>
+
     </Window.Resources>
+
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
+
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
         <Grid>
             <Grid.Resources>
@@ -106,7 +107,7 @@
             <Label Content="Imię i Nazwisko:" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Height="26" Margin="0,2"/>
 
 
-            <TreeView  Background="Bisque" Name="tvwAllClients" Grid.Row="5" Grid.RowSpan="2" ItemsSource="{Binding RootElement.Children,UpdateSourceTrigger=PropertyChanged}" 
+            <TreeView Background="Bisque" Name="tvwAllClients" Grid.Row="5" Grid.RowSpan="2" ItemsSource="{Binding RootElement.Children,UpdateSourceTrigger=PropertyChanged}" 
                   vm:TreeViewHelper.SelectedItem="{Binding SelectedNode, Mode=TwoWay}" VirtualizingPanel.IsVirtualizing="True" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,10">
                 <TreeView.Resources>
                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
@@ -188,9 +189,12 @@
             </ContentControl>
             <Button Content="Wyszukaj" Command="{Binding SearchCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Width="80" Height="25" Margin="10,5"/>
 
-            <!--<vm:ModalDialogManager DataContext="{Binding MessageWindowDatabase}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}" DialogHeight="400" DialogWidth="350"
-                               DialogResizeMode="CanResize" />-->
+            <vm:ModalDialogManager DataContext="{Binding MessageWindowDatabase}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}" DialogHeight="400" DialogWidth="350"
+                               DialogResizeMode="CanResize" />
             <vm:ModalDialogManager DataContext="{Binding MessageWindowClient}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="400" 
+			DialogWidth="390" DialogResizeMode="CanResize"  />
+
+            <vm:ModalDialogManager DataContext="{Binding MessageWindowEditGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="400" 
 			DialogWidth="390" DialogResizeMode="CanResize"  />
 
             <vm:ModalDialogManager DataContext="{Binding MessageWindowModelOfGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="700" 
@@ -227,6 +231,7 @@
             <Label Content="{Binding CertPath}"  Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Center" Height="26" Margin="0,1,184,1" />
             <Button Content="zmień Ścieżkę zapisu raportów" Command="{Binding ChangePathCommand}" Grid.Column="2" HorizontalAlignment="Left" Margin="239,3,0,0" VerticalAlignment="Top" Width="194" Height="25"/>
             <Button Content="Mailing i wzorcowania" Grid.Column="2" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Center" Width="155" Command="{Binding MailingCommand}"/>
+            <Button Content="Edytuj model miernika" Command="{Binding EditGaugeCommand}" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Right"  VerticalAlignment="center" Height="25" Margin="0,4,0,3" Width="142" />
 
 
         </Grid>

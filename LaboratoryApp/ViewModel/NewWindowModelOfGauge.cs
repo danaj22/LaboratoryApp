@@ -7,6 +7,8 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using System.IO;
+using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace LaboratoryApp.ViewModel
 {
@@ -67,14 +69,14 @@ namespace LaboratoryApp.ViewModel
             }
         }
         
-        private ObservableCollection<calibrator> collectionOfCalibrators = new ObservableCollection<calibrator>();
+        private ObservableCollection<calibrator> collectionOfCalibrators;
         public ObservableCollection<calibrator> CollectionOfCalibrators
         {
             get { return collectionOfCalibrators; }
             set
             {
                 collectionOfCalibrators = value;
-                OnPropertyChanged("collectionOfCalibrators");
+                OnPropertyChanged("CollectionOfCalibrators");
             }
         }
         
@@ -85,18 +87,25 @@ namespace LaboratoryApp.ViewModel
 
             if (MessageWindowCalibrator.ToConfirm)
             {
+
                 if (!string.IsNullOrEmpty(MessageWindowCalibrator.NameOfCalibrator))
                 {
-                    using (LaboratoryEntities context = new LaboratoryEntities())
+                    try {
+                        using (LaboratoryEntities context = new LaboratoryEntities())
+                        {
+                            calibrator CalibratorToAdd = new calibrator();
+                            CalibratorToAdd.name = MessageWindowCalibrator.NameOfCalibrator;
+                            CalibratorToAdd.isChecked = false;
+                           
+                            CollectionOfCalibrators.Add(CalibratorToAdd);
+                            context.calibrators.Add(CalibratorToAdd);
+                            context.SaveChanges();
+
+                        }
+                    }
+                    catch(Exception e)
                     {
-                        calibrator CalibratorToAdd = new calibrator();
-                        CalibratorToAdd.name = MessageWindowCalibrator.NameOfCalibrator;
-
-                        //context.calibrators.Add(CalibratorToAdd);
-
-                        CollectionOfCalibrators.Add(CalibratorToAdd);
-                        context.SaveChanges();
-
+                        File.AppendAllText(MainWindowViewModel.path, e.ToString());
                     }
                 }
             }
@@ -157,6 +166,9 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
+        private ICommand editTableCommand;
+        private CalibrationTable selectedTable;
+
         private ObservableCollection<CalibrationTable> listOfNamesOfTables = new ObservableCollection<CalibrationTable>();
         public ObservableCollection<CalibrationTable> ListOfNamesOfTables
         {
@@ -190,6 +202,8 @@ namespace LaboratoryApp.ViewModel
         }
 
 
+        
+
         public NewWindowModelOfGauge()
         {
             OKCommand = new SimpleRelayCommand(Confirm);
@@ -200,6 +214,10 @@ namespace LaboratoryApp.ViewModel
             AddFunctionCommand = new SimpleRelayCommand(AddFunction);
             AddTableCommand = new SimpleRelayCommand(AddTable);
 
+            EditTableCommand = new SimpleRelayCommand(EditTable);
+
+
+            CollectionOfCalibrators = new ObservableCollection<calibrator>();
             CollectionOfCheckedFunction = new ObservableCollection<function>();
             LaboratoryEntities context = MainWindowViewModel.Context;
             try
@@ -248,6 +266,8 @@ namespace LaboratoryApp.ViewModel
                     }
                     ListOfNamesOfTables = new ObservableCollection<CalibrationTable>(ListOfNamesOfTables.OrderBy(i => i.Name));
 
+
+
                 }
             }
             catch(Exception e)
@@ -260,6 +280,8 @@ namespace LaboratoryApp.ViewModel
         public NewWindowModelOfGauge(Window window) //: base (window)
         {
         }
+
+
 
 
         private ICommand okCommand;
@@ -341,6 +363,258 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
+        public CalibrationTable SelectedTable
+        {
+            get
+            {
+                return selectedTable;
+            }
+
+            set
+            {
+                selectedTable = value;
+                OnPropertyChanged("SelectedTable");
+            }
+        }
+
+        public ICommand EditTableCommand
+        {
+            get
+            {
+                return editTableCommand;
+            }
+
+            set
+            {
+                editTableCommand = value;
+                OnPropertyChanged("EditTableCommand");
+
+            }
+        }
+        #region tables
+        private NewWindowTable1 messageWindowTable1;
+        public NewWindowTable1 MessageWindowTable1
+        {
+            get { return messageWindowTable1; }
+            set
+            {
+                messageWindowTable1 = value;
+                OnPropertyChanged("MessageWindowTable1");
+            }
+        }
+
+        private NewWindowTable2 messageWindowTable2;
+        public NewWindowTable2 MessageWindowTable2
+        {
+            get { return messageWindowTable2; }
+            set
+            {
+                messageWindowTable2 = value;
+                OnPropertyChanged("MessageWindowTable2");
+            }
+        }
+
+        private NewWindowTable3 messageWindowTable3;
+        public NewWindowTable3 MessageWindowTable3
+        {
+            get { return messageWindowTable3; }
+            set
+            {
+                messageWindowTable3 = value;
+                OnPropertyChanged("MessageWindowTable3");
+            }
+        }
+
+        private NewWindowTable4 messageWindowTable4;
+        public NewWindowTable4 MessageWindowTable4
+        {
+            get { return messageWindowTable4; }
+            set
+            {
+                messageWindowTable4 = value;
+                OnPropertyChanged("MessageWindowTable4");
+            }
+        }
+
+        private NewWindowTable4a messageWindowTable4a;
+        public NewWindowTable4a MessageWindowTable4a
+        {
+            get { return messageWindowTable4a; }
+            set
+            {
+                messageWindowTable4a = value;
+                OnPropertyChanged("MessageWindowTable4a");
+            }
+        }
+
+        private NewWindowTable5 messageWindowTable5;
+        public NewWindowTable5 MessageWindowTable5
+        {
+            get { return messageWindowTable5; }
+            set
+            {
+                messageWindowTable5 = value;
+                OnPropertyChanged("MessageWindowTable5");
+            }
+        }
+
+        private NewWindowTable6 messageWindowTable6;
+        public NewWindowTable6 MessageWindowTable6
+        {
+            get { return messageWindowTable6; }
+            set
+            {
+                messageWindowTable6 = value;
+                OnPropertyChanged("MessageWindowTable6");
+            }
+        }
+
+
+        private NewWindowTable7 messageWindowTable7;
+        public NewWindowTable7 MessageWindowTable7
+        {
+            get { return messageWindowTable7; }
+            set
+            {
+                messageWindowTable7 = value;
+                OnPropertyChanged("MessageWindowTable7");
+            }
+        }
+
+        private NewWindowTable8 messageWindowTable8;
+        public NewWindowTable8 MessageWindowTable8
+        {
+            get { return messageWindowTable8; }
+            set
+            {
+                messageWindowTable8 = value;
+                OnPropertyChanged("MessageWindowTable8");
+            }
+        }
+
+        private NewWindowTable9 messageWindowTable9;
+        public NewWindowTable9 MessageWindowTable9
+        {
+            get { return messageWindowTable9; }
+            set
+            {
+                messageWindowTable9 = value;
+                OnPropertyChanged("MessageWindowTable9");
+            }
+        }
+
+        private NewWindowTable10 messageWindowTable10;
+        public NewWindowTable10 MessageWindowTable10
+        {
+            get { return messageWindowTable10; }
+            set
+            {
+                messageWindowTable10 = value;
+                OnPropertyChanged("MessageWindowTable10");
+            }
+        }
+
+        private NewWindowTable11 messageWindowTable11;
+        public NewWindowTable11 MessageWindowTable11
+        {
+            get { return messageWindowTable11; }
+            set
+            {
+                messageWindowTable11 = value;
+                OnPropertyChanged("MessageWindowTable11");
+            }
+        }
+
+        private NewWindowTable12 messageWindowTable12;
+        public NewWindowTable12 MessageWindowTable12
+        {
+            get { return messageWindowTable12; }
+            set
+            {
+                messageWindowTable12 = value;
+                OnPropertyChanged("MessageWindowTable12");
+            }
+        }
+
+        private NewWindowTable13 messageWindowTable13;
+        public NewWindowTable13 MessageWindowTable13
+        {
+            get { return messageWindowTable13; }
+            set
+            {
+                messageWindowTable13 = value;
+                OnPropertyChanged("MessageWindowTable13");
+            }
+        }
+
+        private NewWindowTable14 messageWindowTable14;
+        public NewWindowTable14 MessageWindowTable14
+        {
+            get { return messageWindowTable14; }
+            set
+            {
+                messageWindowTable14 = value;
+                OnPropertyChanged("MessageWindowTable14");
+            }
+        }
+
+        private NewWindowTable15 messageWindowTable15;
+        public NewWindowTable15 MessageWindowTable15
+        {
+            get { return messageWindowTable15; }
+            set
+            {
+                messageWindowTable15 = value;
+                OnPropertyChanged("MessageWindowTable15");
+            }
+        }
+        private NewWindowTable16 messageWindowTable16;
+        public NewWindowTable16 MessageWindowTable16
+        {
+            get { return messageWindowTable16; }
+            set
+            {
+                messageWindowTable16 = value;
+                OnPropertyChanged("MessageWindowTable16");
+            }
+        }
+        private NewWindowTable17 messageWindowTable17;
+        public NewWindowTable17 MessageWindowTable17
+        {
+            get { return messageWindowTable17; }
+            set
+            {
+                messageWindowTable17 = value;
+                OnPropertyChanged("MessageWindowTable17");
+            }
+        }
+        private NewWindowTable18 messageWindowTable18;
+        public NewWindowTable18 MessageWindowTable18
+        {
+            get { return messageWindowTable18; }
+            set
+            {
+                messageWindowTable18 = value;
+                OnPropertyChanged("MessageWindowTable18");
+            }
+        }
+
+        public string Text
+        {
+            get
+            {
+                return text;
+            }
+
+            set
+            {
+                text = value;
+                OnPropertyChanged("Text");
+            }
+        }
+        #endregion
+
+
         public void Confirm()
         {
             if (!ToConfirm) ToConfirm = true;
@@ -350,6 +624,262 @@ namespace LaboratoryApp.ViewModel
         public void Close()
         {
             IsOpen = false;
+        }
+        Stream stream;
+        BinaryFormatter bformatter = new BinaryFormatter();
+        CalibrationTable newTable;
+
+        private string text;
+
+        private void FillTable(NewWindowTableTemplate table)
+        {
+
+            int index = SelectedTable.Name.IndexOf("]");
+            Text = SelectedTable.Name.Substring(index + 1);
+            table.NameOfFile = Text;
+
+            if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + Text + ".lab"))
+            {
+                stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + Text + ".lab", FileMode.Open);
+
+                table.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
+
+                stream.Close();
+
+            }
+        }
+
+        private void OverridingTable( NewWindowTableTemplate table)
+        {
+            int index = SelectedTable.Name.IndexOf("]");
+            string str = SelectedTable.Name.Substring(index + 1);
+
+            MessageBoxResult message = MessageBox.Show("Czy nadpisać nową tabelę? Jeśli nie zostanie utworzona nowa tabela.", "Pytanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (message == MessageBoxResult.Yes)
+            {
+                if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + str + ".lab"))
+                {
+                    stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + str + ".lab", FileMode.Create);
+                    bformatter.Serialize(stream, table.Tab);
+                    stream.Close();
+                }
+
+            }
+            else if (message == MessageBoxResult.No)
+            {
+                stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + table.NameOfFile + ".lab", FileMode.Create);
+                bformatter.Serialize(stream, table.Tab);
+                stream.Close();
+
+                newTable = new CalibrationTable();
+                newTable.Name = "[" + AboutModelOfGauge.Model + "]" + table.NameOfFile;
+                newTable.TypeOfWindow = table.ToString();
+                ListOfNamesOfTables.Add(newTable);
+                ListOfNamesOfTables = new ObservableCollection<CalibrationTable>(ListOfNamesOfTables.OrderBy(i => i.Name));
+
+                File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", newTable.TypeOfWindow + "\t" + newTable.Name);
+                File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", "\n");
+            }
+        }
+        public void EditTable()
+        {
+            int index = SelectedTable.Name.IndexOf("]");
+            string str = SelectedTable.Name.Substring(index+1);
+            
+            Type t = Type.GetType(SelectedTable.TypeOfWindow);
+
+            if(t.Name == "NewWindowTable18")////zmiana nr tabeli
+
+            {
+                MessageWindowTable18 = new NewWindowTable18();
+                FillTable(MessageWindowTable18);
+
+                MessageWindowTable18.IsOpen = true;
+                if(MessageWindowTable18.ToConfirm)
+                {
+
+                    this.OverridingTable(MessageWindowTable18);
+                }
+
+                
+            }
+            if (t.Name == "NewWindowTable17")
+            {
+                MessageWindowTable17 = new NewWindowTable17();
+                FillTable(MessageWindowTable17);
+
+                MessageWindowTable17.IsOpen = true;
+                if (MessageWindowTable17.ToConfirm)
+                {
+
+                    this.OverridingTable(MessageWindowTable17);
+                }
+
+            }
+            if (t.Name == "NewWindowTable16")
+            {
+                MessageWindowTable16 = new NewWindowTable16();
+                MessageWindowTable16.IsOpen = true;
+                if (MessageWindowTable16.ToConfirm)
+                {
+                    this.OverridingTable(MessageWindowTable16);
+                }
+
+            }
+            if (t.Name == "NewWindowTable15")
+            {
+                MessageWindowTable15 = new NewWindowTable15();
+                MessageWindowTable15.IsOpen = true;
+                if (MessageWindowTable15.ToConfirm)
+                {
+                    this.OverridingTable(MessageWindowTable15);
+                }
+
+            }
+            if (t.Name == "NewWindowTable14")
+            {
+                MessageWindowTable14 = new NewWindowTable14();
+                MessageWindowTable14.IsOpen = true;
+                if (MessageWindowTable14.ToConfirm)
+                {
+                    this.OverridingTable(MessageWindowTable14);
+                }
+
+            }
+            if (t.Name == "NewWindowTable13")
+            {
+                MessageWindowTable13 = new NewWindowTable13();
+                MessageWindowTable13.IsOpen = true;
+                if (MessageWindowTable13.ToConfirm)
+                {
+                    this.OverridingTable(MessageWindowTable13);
+                }
+
+            }
+            if (t.Name == "NewWindowTable12")
+            {
+                MessageWindowTable12 = new NewWindowTable12();
+                MessageWindowTable12.IsOpen = true;
+                if (MessageWindowTable12.ToConfirm)
+                {
+                    this.OverridingTable(MessageWindowTable12);
+                }
+
+            }
+            if (t.Name == "NewWindowTable11")
+            {
+                MessageWindowTable11 = new NewWindowTable11();
+                MessageWindowTable11.IsOpen = true;
+                if (MessageWindowTable11.ToConfirm)
+                {
+                    this.OverridingTable(MessageWindowTable11);
+                }
+
+            }
+            if (t.Name == "NewWindowTable10")
+            {
+                MessageWindowTable10 = new NewWindowTable10();
+                MessageWindowTable10.IsOpen = true;
+                if (MessageWindowTable10.ToConfirm)
+                {
+                    this.OverridingTable(MessageWindowTable10);
+                }
+
+            }
+            if (t.Name == "NewWindowTable9")
+            {
+                MessageWindowTable9 = new NewWindowTable9();
+                MessageWindowTable9.IsOpen = true;
+                if (MessageWindowTable9.ToConfirm)
+                {
+                    this.OverridingTable(MessageWindowTable9);
+                }
+
+            }
+            if (t.Name == "NewWindowTable8")
+            {
+                MessageWindowTable8 = new NewWindowTable8();
+                MessageWindowTable8.IsOpen = true;
+                if (MessageWindowTable8.ToConfirm)
+                {
+                    this.OverridingTable(MessageWindowTable8);
+                }
+
+            }
+            if (t.Name == "NewWindowTable7")
+            {
+                MessageWindowTable7 = new NewWindowTable7();
+                MessageWindowTable7.IsOpen = true;
+                if (MessageWindowTable7.ToConfirm)
+                {
+                    this.OverridingTable(MessageWindowTable7);
+                }
+
+            }
+            if (t.Name == "NewWindowTable6")
+            {
+                MessageWindowTable6 = new NewWindowTable6();
+                MessageWindowTable6.IsOpen = true;
+                if (MessageWindowTable6.ToConfirm)
+                {
+                    this.OverridingTable(MessageWindowTable6);
+                }
+
+            }
+            if (t.Name == "NewWindowTable5")
+            {
+                MessageWindowTable5 = new NewWindowTable5();
+                MessageWindowTable5.IsOpen = true;
+                if (MessageWindowTable5.ToConfirm)
+                {
+                    this.OverridingTable(MessageWindowTable5);
+                }
+
+            }
+
+            if (t.Name == "NewWindowTable4")
+            {
+                MessageWindowTable4 = new NewWindowTable4();
+                MessageWindowTable4.IsOpen = true;
+                if (MessageWindowTable4.ToConfirm)
+                {
+                    this.OverridingTable(MessageWindowTable4);
+                }
+
+            }
+            if (t.Name == "NewWindowTable3")
+            {
+                MessageWindowTable3 = new NewWindowTable3();
+                MessageWindowTable3.IsOpen = true;
+                if (MessageWindowTable3.ToConfirm)
+                {
+                    this.OverridingTable(MessageWindowTable3);
+                }
+
+            }
+            if (t.Name == "NewWindowTable2")
+            {
+                MessageWindowTable2 = new NewWindowTable2();
+                MessageWindowTable2.IsOpen = true;
+                if (MessageWindowTable2.ToConfirm)
+                {
+                    this.OverridingTable(MessageWindowTable2);
+                }
+
+            }
+            if (t.Name == "NewWindowTable1")
+            {
+                MessageWindowTable1 = new NewWindowTable1();
+                MessageWindowTable1.IsOpen = true;
+                if (MessageWindowTable1.ToConfirm)
+                {
+                    this.OverridingTable(MessageWindowTable1);
+                }
+
+            }
+
+
+            ////do skończenia//chyba już skończone
         }
         public void AddType()
         {
@@ -410,7 +940,7 @@ namespace LaboratoryApp.ViewModel
             MessageWindowTable = new NewWindowTable();
             MessageWindowTable.IsOpen = true;
 
-            if (MessageWindowTable.ToConfirm)
+            if (MessageWindowTable.ToConfirm || (MessageBoxResult.No == MessageBox.Show("Czy chcesz porzucić niedawno dodane tabele?","Pytanie",MessageBoxButton.YesNo)))
             {
                 CalibrationTable newTable;
 
@@ -421,8 +951,6 @@ namespace LaboratoryApp.ViewModel
                     newTable.TypeOfWindow = MessageWindowTable.MessageWindowTable1.ToString();
                     ListOfNamesOfTables.Add(newTable);
                     ListOfNamesOfTables = new ObservableCollection<CalibrationTable>(ListOfNamesOfTables.OrderBy(i => i.Name));
-                    //ListOfWindows <IEnumerableTable>
-                    //MessageWindowTable.ListOfWindows.Add(MessageWindowTable.MessageWindowTable1);
 
                     File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", newTable.TypeOfWindow + "\t" + newTable.Name);
                     File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", "\n");

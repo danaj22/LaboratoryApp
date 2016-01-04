@@ -26,7 +26,7 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" Height="348" Width="837">
+        <DataGrid AutoGenerateColumns="False" SelectedItem="{Binding SelectedData}" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" Height="348" Width="837">
             <DataGrid.Columns>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="88" Header="Wartość napięcia przemiennego i stałego na mierniku kontrolnym [V]" Binding="{Binding IdealValue}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Wartość napięcia przemiennego na mierniku sprawdzanym [V]" Binding="{Binding MeasureValue}" />
@@ -38,10 +38,10 @@
         </DataGrid>
         <Label Content="%" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top"/>
         <Label Content="Stała = " HorizontalAlignment="Left" Margin="87,12,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="35,10,0,0" TextWrapping="Wrap" Text="{Binding Percent}" VerticalAlignment="Top" Width="47"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="138,11,0,0" TextWrapping="Wrap" Text="{Binding Constant}" VerticalAlignment="Top" Width="58"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="35,10,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.Percent}" VerticalAlignment="Top" Width="47"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="138,11,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.Constant}" VerticalAlignment="Top" Width="58"/>
         <Label Content="Liczb znaczących" HorizontalAlignment="Left" Margin="201,10,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="305,10,0,0" TextWrapping="Wrap" Text="{Binding ImportantNumber}" VerticalAlignment="Top" Width="57"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="305,10,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.ImportantNumber}" VerticalAlignment="Top" Width="57"/>
         <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="765,139,0,0" VerticalAlignment="Top" Width="75"/>
 
         <Button Width="75" VerticalAlignment="Top" Margin="0,54,10,0" HorizontalAlignment="Right" Command="{Binding OKCommand}" Content="OK">

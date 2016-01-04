@@ -242,6 +242,7 @@ namespace LaboratoryApp.ViewModel
             AddNewMeasureCommand = new SimpleRelayCommand(AddNewMeasure);
             ChangePathCommand = new SimpleRelayCommand(ChangePath);
             MailingCommand = new SimpleRelayCommand(Mailing);
+            EditGaugeCommand = new SimpleRelayCommand(EditGauge);
             CurrentViewModel = null;
             userInput = new UserInput();
             LoadView();
@@ -251,14 +252,7 @@ namespace LaboratoryApp.ViewModel
             {
                 File.Create(path);
             }
-            else
-            {
-                // Create a file to write to. 
-                using (FileLog = File.CreateText(path))
-                {
-                    
-                }
-            }
+
             if (!File.Exists(usersApplication))
             {
                 File.Create(usersApplication);
@@ -477,6 +471,7 @@ namespace LaboratoryApp.ViewModel
         /// command to show modal window where we can add new ModelOfGaugeItem
         /// </summary>
         /// 
+        private ICommand editGaugeCommand;
         private ICommand addNewGaugeCommand;
         public ICommand AddNewGaugeCommand
         {
@@ -565,21 +560,13 @@ namespace LaboratoryApp.ViewModel
                         foreach (calibrator zmienna in MessageWindowModelOfGauge.CollectionOfCalibrators)
                         {
 
-                            List <calibrator> tableOfExistsCalibrators = (from c in Context.calibrators select c).ToList();
-                            
-                            if(!tableOfExistsCalibrators.Contains(zmienna))
-                            {
-                                Context.calibrators.Add(zmienna);
-                                Context.SaveChanges();
-                            }
-
                             if (zmienna.IsChecked)
                             {
                                 try
                                 {
 
                                     calibrators_model_of_gauges calib_gauge_model = new calibrators_model_of_gauges();
-                                    calib_gauge_model.calibrator = zmienna;
+                                    //calib_gauge_model.calibrator = zmienna;
                                     calib_gauge_model.calibrator_id = zmienna.calibratorId;
 
                                     model_of_gauges model = (from m in Context.model_of_gauges orderby m.model_of_gaugeId descending select m).First();
@@ -605,21 +592,34 @@ namespace LaboratoryApp.ViewModel
                         {
                             try
                             {
-                                System.IO.Directory.CreateDirectory(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\model");
+                                //System.IO.Directory.CreateDirectory(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\model");
                                 if(zmienna.IsChecked)
                                 {
-                                    File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\model\" + MessageWindowModelOfGauge.AboutModelOfGauge.Model + ".txt", zmienna.functionId + "\n");
+                                    model_of_gauges_functions mod_of_gaug_fun = new model_of_gauges_functions();
+                                    mod_of_gaug_fun.function_Id = zmienna.functionId;
+                                    model_of_gauges model = (from m in Context.model_of_gauges orderby m.model_of_gaugeId descending select m).First();
+
+                                    mod_of_gaug_fun.model_of_gauges = model;
+                                    mod_of_gaug_fun.model_of_gauge_id = model.model_of_gaugeId;
+
+                                    Context.model_of_gauges_functions.Add(mod_of_gaug_fun);
+                                    Context.SaveChanges();
+
+                                    //File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\model\" + MessageWindowModelOfGauge.AboutModelOfGauge.Model + ".txt", zmienna.functionId + "\n");
+
                                     zmienna.IsChecked = false;
                                 }
                             }
                             catch(Exception e)
-                            { File.AppendAllText(path, e.ToString()); }
+                            {
+                                File.AppendAllText(path, e.ToString());
+                            }
                         }
 
                     }
                     catch (Exception ex)
                     {
-                        FileLog.WriteLine(ex.ToString());
+                        File.AppendAllText(path,ex.ToString());
                     }
                 }
 
@@ -726,6 +726,12 @@ namespace LaboratoryApp.ViewModel
            
 
         }
+        private void EditGauge()
+        {
+            MessageWindowEditGauge = new NewWindowEditGauge();
+            MessageWindowEditGauge.IsOpen = true;
+
+        }
 
         private NewWindowModelOfGauge messageWindowModelOfGauge;
         public NewWindowModelOfGauge MessageWindowModelOfGauge
@@ -783,5 +789,34 @@ namespace LaboratoryApp.ViewModel
                 base.OnPropertyChanged("Status");
             }
         }
+
+        public ICommand EditGaugeCommand
+        {
+            get
+            {
+                return editGaugeCommand;
+            }
+
+            set
+            {
+                editGaugeCommand = value;
+            }
+        }
+
+        public NewWindowEditGauge MessageWindowEditGauge
+        {
+            get
+            {
+                return messageWindowEditGauge;
+            }
+
+            set
+            {
+                messageWindowEditGauge = value;
+                OnPropertyChanged("MessageWindowEditGauge");
+            }
+        }
+
+        private NewWindowEditGauge messageWindowEditGauge;
     }
 }

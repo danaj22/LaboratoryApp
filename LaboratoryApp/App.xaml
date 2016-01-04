@@ -26,8 +26,11 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <DataTemplate DataType="{x:Type vm:NewWindowEditGauge}">
+                <v:EditModelGauge/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vm:NewWindowConnect}">
-                <v:ServerConnectWindow/>
+                <v:ServerConnectWindow />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:NewWindowClient}">
                 <v:DialogWindowClient />
@@ -93,19 +96,21 @@
                 <v:DialogWindowTable4a />
             </DataTemplate>-->
             <DataTemplate DataType="{x:Type vm:NewWindowTable5}">
-                <v:DialogWindowTable5 />
+                <v:DialogWindowTable5/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:NewWindowTable5Generate}">
                 <v:DialogWindowTable5Generate/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:NewWindowTable6}">
-                <v:DialogWindowTable6 />
+                <v:DialogWindowTable6/>
             </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:NewWindowTable7}">
+                <v:DialogWindowTable7/>
+            </DataTemplate>
+                
             <DataTemplate DataType="{x:Type vm:NewWindowTable6Generate}">
                 <v:DialogWindowTable6Generate/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vm:NewWindowTable7}">
-                <v:DialogWindowTable7 />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:NewWindowTable7Generate}">
                 <v:DialogWindowTable7Generate/>

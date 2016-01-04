@@ -8,6 +8,7 @@ namespace LaboratoryApp.ViewModel
 {
     public class CalibrationTable : ObservableObject
     {
+
         private string name;
         public string Name
         {
@@ -29,7 +30,7 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("IsChecked");
             }
         }
-
+        
         private string typeOfWindow;
         public string TypeOfWindow
         {
@@ -40,6 +41,5 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("TypeOfWindow");
             }
         }
-        
     }
 }
