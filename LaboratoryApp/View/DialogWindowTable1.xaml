@@ -10,6 +10,8 @@
             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              mc:Ignorable="d" Width="859" Height="456">
     <UserControl.Resources>
+        <CollectionViewSource x:Key="cvs" x:Name="cvs"   
+        Source="{Binding ElementName=dataGridView1, Path=ItemsSource}"/>
         <vm:MyConverter x:Key="MyConverter"/>
         <ControlTemplate x:Key="errorTemplate">
             <DockPanel LastChildFill="true">
@@ -36,7 +38,7 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <DataGrid Name="dataGridView1" AutoGenerateColumns="False" SelectedItem="{Binding SelectedData}" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="3,93,0,0" VerticalAlignment="Top" Height="351" Width="849">
+        <DataGrid x:Name="dataGridView1" AutoGenerateColumns="False" SelectedItem="{Binding SelectedData}" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="3,93,0,0" VerticalAlignment="Top" Height="351" Width="849">
             <DataGrid.Columns>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Wartość napięcia przemiennego na mierniku sprawdzanym [V]"  Binding="{Binding Path=MeasureValue, Converter={StaticResource MyConverter}}">
                     <DataGridTextColumn.CellStyle>
@@ -95,10 +97,12 @@
         </TextBox>
         <Label Content="%" HorizontalAlignment="Left" Margin="3,20,0,0" VerticalAlignment="Top"/>
         <Label Content="Stała " HorizontalAlignment="Left" Margin="71,20,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="28,20,0,0" TextWrapping="Wrap" Text="{Binding Path=SelectedData.PercentIdeal , Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="38"/>
+        <TextBox x:Name="TxtBoxPercentIdeal" HorizontalAlignment="Left" Height="23" Margin="28,20,0,0" TextWrapping="Wrap" Text="{Binding Path=SelectedData.PercentIdeal , Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="38"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="119,20,0,0" TextWrapping="Wrap" Text="{Binding Path=SelectedData.ConstantIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="46"/>
         <Label Content="Liczb znaczących " HorizontalAlignment="Left" Margin="170,20,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="277,20,0,0" TextWrapping="Wrap" Text="{Binding Path=SelectedData.ImportantNumberIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="84"/>
+        <Label Content="Dokładności kalibratora" HorizontalAlignment="Left" Margin="3,-6,0,0" VerticalAlignment="Top"/>
+        <Label Content="Dokładności miernika" HorizontalAlignment="Left" Margin="0,42,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
             x:Class="LaboratoryApp.View.DialogWindowTable10" 
-             mc:Ignorable="d" Height="439" Width="899">
+             mc:Ignorable="d" Height="466" Width="899">
     <UserControl.Resources>
         <ControlTemplate x:Key="errorTemplate">
             <DockPanel LastChildFill="true">
@@ -44,7 +44,7 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <DataGrid AutoGenerateColumns="False" SelectedItem="{Binding SelectedData}" ItemsSource="{Binding Tab}" Grid.ColumnSpan="10" Grid.RowSpan="6" CanUserAddRows="True" HorizontalAlignment="Left" Margin="9,80,0,0" VerticalAlignment="Top" Height="348">
+        <DataGrid AutoGenerateColumns="False" SelectedItem="{Binding SelectedData}" ItemsSource="{Binding Tab}" Grid.ColumnSpan="9" CanUserAddRows="True" HorizontalAlignment="Left" Margin="9,24,0,0" VerticalAlignment="Top" Height="348" Grid.Row="2">
             <DataGrid.Columns>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="88" Header="Sinusoidalny prąd dotykowy zaczynający się od dodatniej połówki [mA]" Binding="{Binding Path=Multiples , Converter={StaticResource MyConverter}}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Oporność symulująca oporność uziemienia [Ω]" Binding="{Binding Path=SymulatedResistance, Converter={StaticResource MyConverter}}" />
@@ -64,15 +64,15 @@
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu (B) pomiaru napięcia ±2S(x)" Binding="{Binding Path=ErrorInPercent, Converter={StaticResource MyConverter}}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Label Content="%" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
-        <Label Content="Stała " HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2"/>
-        <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Grid.Row="1" Grid.Column="1" Text="{Binding Path=SelectedData.Percent, Converter={StaticResource MyConverter}}" VerticalAlignment="Center" Width="37"/>
-        <TextBox HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Grid.Row="1" Grid.Column="3" Text="{Binding Path=SelectedData.Constant, Converter={StaticResource MyConverter}}" VerticalAlignment="Center" Width="39"/>
-        <Label Content="Liczb znaczących" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBox HorizontalAlignment="Center" Height="23" Grid.Row="1" Grid.Column="5" TextWrapping="Wrap" Text="{Binding Path=SelectedData.ImportantNumber, Converter={StaticResource MyConverter}}" VerticalAlignment="Center" Width="120"/>
-        <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Center" Grid.Column="9" Grid.Row="2" VerticalAlignment="Top" Width="76" Margin="36,76,38,0"/>
+        <Label Content="%" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Margin="10,31,10,369" Grid.RowSpan="2"/>
+        <Label Content="Stała " HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2" Margin="0,31,0,369" Grid.RowSpan="2"/>
+        <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Grid.Row="1" Grid.Column="1" Text="{Binding Path=SelectedData.Percent, Converter={StaticResource MyConverter}}" VerticalAlignment="Center" Width="37" Margin="0,31,0,369" Grid.RowSpan="2"/>
+        <TextBox HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Grid.Row="1" Grid.Column="3" Text="{Binding Path=SelectedData.Constant, Converter={StaticResource MyConverter}}" VerticalAlignment="Center" Width="39" Margin="0,31,0,369" Grid.RowSpan="2"/>
+        <Label Content="Liczb znaczących" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,31,0,369" Grid.RowSpan="2"/>
+        <TextBox HorizontalAlignment="Center" Height="23" Grid.Row="1" Grid.Column="5" TextWrapping="Wrap" Text="{Binding Path=SelectedData.ImportantNumber, Converter={StaticResource MyConverter}}" VerticalAlignment="Center" Width="120" Margin="2,31,3,369" Grid.RowSpan="2"/>
+        <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Center" Grid.Column="9" Grid.Row="2" VerticalAlignment="Top" Width="76" Margin="36,100,38,0"/>
 
-        <Button Width="75" VerticalAlignment="Top"  HorizontalAlignment="Center" Command="{Binding OKCommand}" Content="OK" Grid.Column="9" Grid.Row="2" >
+        <Button Width="76" VerticalAlignment="Top"  HorizontalAlignment="Center" Command="{Binding OKCommand}" Content="OK" Grid.Column="9" Grid.Row="2" Margin="37,24,37,0" >
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="IsEnabled" Value="false"/>
@@ -87,12 +87,12 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Label Width="79" VerticalAlignment="Top" Margin="454,48,0,0" HorizontalAlignment="Left" Content="Nazwa tabeli"/>
+        <Label Width="79" VerticalAlignment="Top" Margin="29,32,0,0" HorizontalAlignment="Left" Content="Nazwa tabeli" Grid.ColumnSpan="2" Grid.Column="6" Grid.Row="1"/>
 
         <TextBox x:Name="TxtBoxFunction" HorizontalAlignment="Left" Height="23" Grid.Column="7" Grid.ColumnSpan="3" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="291"
 			Validation.ErrorTemplate="{StaticResource errorTemplate}" AcceptsReturn="True"
 			HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"  
-			Style="{StaticResource textBoxError}" >
+			Style="{StaticResource textBoxError}" Margin="0,24,0,0" Grid.RowSpan="2" >
             <Binding Path="NameOfFile" UpdateSourceTrigger="PropertyChanged" >
                 <Binding.ValidationRules>
                     <vm:FunctionValidation ValidatesOnTargetUpdated="True"
@@ -100,12 +100,14 @@
                 </Binding.ValidationRules>
             </Binding>
         </TextBox>
-        <Label Content="%" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Width="21"/>
-        <Label Content="Stała " HorizontalAlignment="Left" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Width="40"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="{Binding Path=SelectedData.PercentIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Center" Width="39"/>
-        <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Grid.Row="0" Grid.Column="3" Text="{Binding Path=SelectedData.ConstantIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Center" Width="48"/>
-        <Label Content="Liczb znaczących " HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0" Grid.Column="4" Width="104"/>
-        <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Path=SelectedData.ImportantNumberIdeal, Converter={StaticResource MyConverter}}" Grid.Row="0" Grid.Column="5" VerticalAlignment="Center" Width="86"/>
+        <Label Content="%" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Width="20" Margin="10,24,10,30" Grid.RowSpan="2"/>
+        <Label Content="Stała " HorizontalAlignment="Left" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Width="40" Margin="0,24,0,30" Grid.RowSpan="2"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="{Binding Path=SelectedData.PercentIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Center" Width="39" Margin="0,24,0,30" Grid.RowSpan="2"/>
+        <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Grid.Row="0" Grid.Column="3" Text="{Binding Path=SelectedData.ConstantIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Center" Width="48" Margin="0,24,0,30" Grid.RowSpan="2"/>
+        <Label Content="Liczb znaczących " HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0" Grid.Column="4" Width="104" Grid.ColumnSpan="2" Margin="0,24,0,30" Grid.RowSpan="2"/>
+        <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding Path=SelectedData.ImportantNumberIdeal, Converter={StaticResource MyConverter}}" Grid.Row="0" Grid.Column="5" VerticalAlignment="Center" Width="86" Margin="0,24,0,30" Grid.RowSpan="2"/>
+        <Label Content="Dokładności kalibratora" HorizontalAlignment="Left" Margin="3,-2,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
+        <Label Content="Dokładności miernika" HorizontalAlignment="Left" Margin="0,6,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.Row="1"/>
 
     </Grid>
 </UserControl>

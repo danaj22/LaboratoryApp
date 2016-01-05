@@ -719,6 +719,7 @@ namespace LaboratoryApp.ViewModel
             if (t.Name == "NewWindowTable16")
             {
                 MessageWindowTable16 = new NewWindowTable16();
+                FillTable(MessageWindowTable16);
                 MessageWindowTable16.IsOpen = true;
                 if (MessageWindowTable16.ToConfirm)
                 {
@@ -729,6 +730,7 @@ namespace LaboratoryApp.ViewModel
             if (t.Name == "NewWindowTable15")
             {
                 MessageWindowTable15 = new NewWindowTable15();
+                FillTable(MessageWindowTable15);
                 MessageWindowTable15.IsOpen = true;
                 if (MessageWindowTable15.ToConfirm)
                 {
@@ -739,6 +741,7 @@ namespace LaboratoryApp.ViewModel
             if (t.Name == "NewWindowTable14")
             {
                 MessageWindowTable14 = new NewWindowTable14();
+                FillTable(MessageWindowTable14);
                 MessageWindowTable14.IsOpen = true;
                 if (MessageWindowTable14.ToConfirm)
                 {
@@ -749,6 +752,7 @@ namespace LaboratoryApp.ViewModel
             if (t.Name == "NewWindowTable13")
             {
                 MessageWindowTable13 = new NewWindowTable13();
+                FillTable(MessageWindowTable13);
                 MessageWindowTable13.IsOpen = true;
                 if (MessageWindowTable13.ToConfirm)
                 {
@@ -759,6 +763,7 @@ namespace LaboratoryApp.ViewModel
             if (t.Name == "NewWindowTable12")
             {
                 MessageWindowTable12 = new NewWindowTable12();
+                FillTable(MessageWindowTable12);
                 MessageWindowTable12.IsOpen = true;
                 if (MessageWindowTable12.ToConfirm)
                 {
@@ -769,6 +774,7 @@ namespace LaboratoryApp.ViewModel
             if (t.Name == "NewWindowTable11")
             {
                 MessageWindowTable11 = new NewWindowTable11();
+                FillTable(MessageWindowTable11);
                 MessageWindowTable11.IsOpen = true;
                 if (MessageWindowTable11.ToConfirm)
                 {
@@ -779,6 +785,7 @@ namespace LaboratoryApp.ViewModel
             if (t.Name == "NewWindowTable10")
             {
                 MessageWindowTable10 = new NewWindowTable10();
+                FillTable(MessageWindowTable10);
                 MessageWindowTable10.IsOpen = true;
                 if (MessageWindowTable10.ToConfirm)
                 {
@@ -789,6 +796,7 @@ namespace LaboratoryApp.ViewModel
             if (t.Name == "NewWindowTable9")
             {
                 MessageWindowTable9 = new NewWindowTable9();
+                FillTable(MessageWindowTable9);
                 MessageWindowTable9.IsOpen = true;
                 if (MessageWindowTable9.ToConfirm)
                 {
@@ -799,6 +807,7 @@ namespace LaboratoryApp.ViewModel
             if (t.Name == "NewWindowTable8")
             {
                 MessageWindowTable8 = new NewWindowTable8();
+                FillTable(MessageWindowTable8);
                 MessageWindowTable8.IsOpen = true;
                 if (MessageWindowTable8.ToConfirm)
                 {
@@ -809,6 +818,7 @@ namespace LaboratoryApp.ViewModel
             if (t.Name == "NewWindowTable7")
             {
                 MessageWindowTable7 = new NewWindowTable7();
+                FillTable(MessageWindowTable7);
                 MessageWindowTable7.IsOpen = true;
                 if (MessageWindowTable7.ToConfirm)
                 {
@@ -819,6 +829,7 @@ namespace LaboratoryApp.ViewModel
             if (t.Name == "NewWindowTable6")
             {
                 MessageWindowTable6 = new NewWindowTable6();
+                FillTable(MessageWindowTable6);
                 MessageWindowTable6.IsOpen = true;
                 if (MessageWindowTable6.ToConfirm)
                 {
@@ -829,6 +840,7 @@ namespace LaboratoryApp.ViewModel
             if (t.Name == "NewWindowTable5")
             {
                 MessageWindowTable5 = new NewWindowTable5();
+                FillTable(MessageWindowTable5);
                 MessageWindowTable5.IsOpen = true;
                 if (MessageWindowTable5.ToConfirm)
                 {
@@ -840,6 +852,7 @@ namespace LaboratoryApp.ViewModel
             if (t.Name == "NewWindowTable4")
             {
                 MessageWindowTable4 = new NewWindowTable4();
+                FillTable(MessageWindowTable4);
                 MessageWindowTable4.IsOpen = true;
                 if (MessageWindowTable4.ToConfirm)
                 {
@@ -850,6 +863,7 @@ namespace LaboratoryApp.ViewModel
             if (t.Name == "NewWindowTable3")
             {
                 MessageWindowTable3 = new NewWindowTable3();
+                FillTable(MessageWindowTable3);
                 MessageWindowTable3.IsOpen = true;
                 if (MessageWindowTable3.ToConfirm)
                 {
@@ -860,6 +874,7 @@ namespace LaboratoryApp.ViewModel
             if (t.Name == "NewWindowTable2")
             {
                 MessageWindowTable2 = new NewWindowTable2();
+                FillTable(MessageWindowTable2);
                 MessageWindowTable2.IsOpen = true;
                 if (MessageWindowTable2.ToConfirm)
                 {
@@ -870,6 +885,7 @@ namespace LaboratoryApp.ViewModel
             if (t.Name == "NewWindowTable1")
             {
                 MessageWindowTable1 = new NewWindowTable1();
+                FillTable(MessageWindowTable1);
                 MessageWindowTable1.IsOpen = true;
                 if (MessageWindowTable1.ToConfirm)
                 {

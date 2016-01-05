@@ -186,6 +186,22 @@ namespace LaboratoryApp.ViewModel
             get { return centerLevel; }
             set { centerLevel = value; OnPropertyChanged("CenterLevel"); }
         }
+        private int CountDigitsAfterDecimal(double IdealValue)
+        {
+
+            string TemporaryIdealValue = IdealValue.ToString();
+
+            int digitsAfterDecimal = 0;
+
+            if (TemporaryIdealValue.Contains(","))
+            {
+                int index = TemporaryIdealValue.IndexOf(",");
+                TemporaryIdealValue = TemporaryIdealValue.Substring(index + 1);
+                digitsAfterDecimal = TemporaryIdealValue.Length;
+            }
+
+            return digitsAfterDecimal;
+        }
         public void GenerateRandomValues()
         {
             Random rnd = new Random();
@@ -213,6 +229,8 @@ namespace LaboratoryApp.ViewModel
 
                             element.MeasureValueTab16 = rnd.NextDouble() * (MaximalValueTab16 - MinimalValueTab16) + MinimalValueTab16;
                             element.MeasureValue25VTab16 = rnd.NextDouble() * (MaximalValueTab16 - MinimalValueTab16) + MinimalValueTab16;
+
+                            //element.MeasureValue = Math.Round(element.MeasureValue
                         }
                         else
                         {
@@ -220,6 +238,10 @@ namespace LaboratoryApp.ViewModel
                             MaximalValue = element.IdealValue + element.IdealValue * 0.01 * MaxValue;
 
                             element.MeasureValue = rnd.NextDouble() * (MaximalValue - MinimalValue) + MinimalValue;
+
+                            //how many number shoud be after comma
+                            int count = CountDigitsAfterDecimal(element.IdealValue);
+                            element.MeasureValue = Math.Round(element.MeasureValue, count);
                         }
                     }
                     if (LowLevel == true)
@@ -243,6 +265,10 @@ namespace LaboratoryApp.ViewModel
                             MinimalValue = element.IdealValue - element.IdealValue * 0.01 * MinValue;
                             MaximalValue = element.IdealValue - element.IdealValue * 0.01 * MaxValue;
                             element.MeasureValue = rnd.NextDouble() * (MinimalValue - MaximalValue) + MaximalValue;
+
+                            //how many number shoud be after comma
+                            int count = CountDigitsAfterDecimal(element.IdealValue);
+                            element.MeasureValue = Math.Round(element.MeasureValue, count);
                         }
                     }
                     if (CenterLevel == true)
@@ -266,6 +292,10 @@ namespace LaboratoryApp.ViewModel
                             MinimalValue = element.IdealValue - element.IdealValue * 0.01 * MinValue;
                             MaximalValue = element.IdealValue + element.IdealValue * 0.01 * MaxValue;
                             element.MeasureValue = rnd.NextDouble() * (MaximalValue - MinimalValue) + MinimalValue;
+
+                            //how many number shoud be after comma
+                            int count = CountDigitsAfterDecimal(element.IdealValue);
+                            element.MeasureValue = Math.Round(element.MeasureValue, count);
                         }
                     }
 

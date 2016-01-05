@@ -40,39 +40,39 @@
 
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable1}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
 			DialogWidth="900" DialogResizeMode="CanResize" />
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable2}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable2}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="630" 
 			DialogWidth="900" DialogResizeMode="CanResize" />
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable3}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable3}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="630" 
 			DialogWidth="890" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable4}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
 			DialogWidth="950" DialogResizeMode="CanResize" />
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable5}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable5}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="620" 
 			DialogWidth="950" DialogResizeMode="CanResize" />
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable6}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable6}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="630" 
 			DialogWidth="820" DialogResizeMode="CanResize" />
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable7}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable7}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="620" 
 			DialogWidth="890" DialogResizeMode="CanResize" />
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable8}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable8}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="620" 
 			DialogWidth="890" DialogResizeMode="CanResize" />
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable9}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable9}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="620" 
 			DialogWidth="890" DialogResizeMode="CanResize" />
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable10}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="430" 
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable10}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="500" 
 			DialogWidth="900" DialogResizeMode="CanResize" />
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable11}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable11}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="620" 
 			DialogWidth="890" DialogResizeMode="CanResize" />
         <!--<vm:ModalDialogManager DataContext="{Binding MessageWindowTable12}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
 			DialogWidth="820" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable13}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
 			DialogWidth="820" DialogResizeMode="CanResize" />-->
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable14}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable14}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="620" 
 			DialogWidth="820" DialogResizeMode="CanResize" />
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable15}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable15}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="620" 
 			DialogWidth="1300" DialogResizeMode="CanResize" />
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable16}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable16}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="620" 
 			DialogWidth="1300" DialogResizeMode="CanResize" />
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable17}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable17}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="620" 
 			DialogWidth="1020" DialogResizeMode="CanResize" />
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable18}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable18}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="620" 
 			DialogWidth="1140" DialogResizeMode="CanResize" />
 
 

@@ -100,16 +100,19 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
-       
+
         private Measure1 selectedData;
+
 
         private ObservableCollection<Measure1> tab = new ObservableCollection<Measure1>();
         public ObservableCollection<Measure1> Tab
         {
-            get { return tab; }
+            get {
+                return tab; }
             set
             {
                 tab = value;
+                
                 OnPropertyChanged("Tab");
             }
         }
@@ -118,12 +121,24 @@ namespace LaboratoryApp.ViewModel
         {
             get
             {
+
                 return selectedData;
             }
 
             set
             {
                 selectedData = value;
+
+                if (selectedData != null && Tab.Count() > 1)
+                {
+                    Tab.Last().ConstantIdeal = Tab[Tab.Count()-2].ConstantIdeal;
+                    Tab.Last().Constant = Tab[Tab.Count() - 2].Constant;
+                    Tab.Last().PercentIdeal = Tab[Tab.Count() - 2].PercentIdeal;
+                    Tab.Last().Percent = Tab[Tab.Count() - 2].Percent;
+                    Tab.Last().ImportantNumberIdeal = Tab[Tab.Count() - 2].ImportantNumberIdeal;
+                    Tab.Last().ImportantNumber = Tab[Tab.Count() - 2].ImportantNumber;
+                }
+
                 OnPropertyChanged("SelectedData");
             }
         }

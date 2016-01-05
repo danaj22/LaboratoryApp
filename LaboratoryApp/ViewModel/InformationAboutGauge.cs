@@ -37,6 +37,8 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
+        private static NewWindowRaport temporaryRaport;
+
         private ObservableCollection<NewWindowTableGenerate> tablesToGenerate = new ObservableCollection<NewWindowTableGenerate>();
 
         public ObservableCollection<NewWindowTableGenerate> TablesToGenerate
@@ -429,8 +431,10 @@ namespace LaboratoryApp.ViewModel
                             stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab", FileMode.Open);
 
                             MessageWindowTable1.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
+                            
                             stream.Close();
 
+                            MessageWindowTable1.NameOfFile = q;
                         }
 
 
@@ -460,8 +464,8 @@ namespace LaboratoryApp.ViewModel
 
                                     MessageWindowTable2.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
                                     stream.Close();
-
-                                }
+                                MessageWindowTable2.NameOfFile = q;
+                            }
                             }
                             MessageWindowTable2.IsOpen = true;
                             if (MessageWindowTable2.ToConfirm)
@@ -487,8 +491,8 @@ namespace LaboratoryApp.ViewModel
 
                                 MessageWindowTable3.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
                                 stream.Close();
-
-                            }
+                            MessageWindowTable3.NameOfFile = q;
+                        }
 
                         MessageWindowTable3.IsOpen = true;
                             if (MessageWindowTable3.ToConfirm)
@@ -514,7 +518,7 @@ namespace LaboratoryApp.ViewModel
 
                             MessageWindowTable4.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
                             stream.Close();
-
+                            MessageWindowTable4.NameOfFile = q;
                         }
 
                         MessageWindowTable4.IsOpen = true;
@@ -540,8 +544,8 @@ namespace LaboratoryApp.ViewModel
 
                                 MessageWindowTable5.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
                                 stream.Close();
-
-                            }
+                                MessageWindowTable5.NameOfFile = q;
+                        }
                             MessageWindowTable5.IsOpen = true;
                             if (MessageWindowTable5.ToConfirm)
                             {
@@ -565,7 +569,7 @@ namespace LaboratoryApp.ViewModel
 
                             MessageWindowTable6.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
                             stream.Close();
-
+                            MessageWindowTable6.NameOfFile = q;
                         }
 
                         MessageWindowTable6.IsOpen = true;
@@ -591,8 +595,8 @@ namespace LaboratoryApp.ViewModel
 
                                 MessageWindowTable7.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
                                 stream.Close();
-
-                            }
+                            MessageWindowTable7.NameOfFile = q;
+                        }
                             MessageWindowTable7.IsOpen = true;
                             if (MessageWindowTable7.ToConfirm)
                             {
@@ -616,7 +620,7 @@ namespace LaboratoryApp.ViewModel
 
                                 MessageWindowTable9.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
                                 stream.Close();
-
+                                MessageWindowTable9.NameOfFile = q;
                             }
                             MessageWindowTable9.IsOpen = true;
                             if (MessageWindowTable9.ToConfirm)
@@ -641,8 +645,8 @@ namespace LaboratoryApp.ViewModel
 
                                 MessageWindowTable10.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
                                 stream.Close();
-
-                            }
+                                MessageWindowTable10.NameOfFile = q;
+                        }
 
                             MessageWindowTable10.IsOpen = true;
                             if (MessageWindowTable10.ToConfirm)
@@ -667,7 +671,7 @@ namespace LaboratoryApp.ViewModel
 
                                 MessageWindowTable15.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
                                 stream.Close();
-
+                                MessageWindowTable15.NameOfFile = q;
                             }
                             MessageWindowTable15.IsOpen = true;
                             if (MessageWindowTable15.ToConfirm)
@@ -692,7 +696,7 @@ namespace LaboratoryApp.ViewModel
 
                                 MessageWindowTable16.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
                                 stream.Close();
-
+                                MessageWindowTable16.NameOfFile = q;
                             }
                             MessageWindowTable16.IsOpen = true;
                             if (MessageWindowTable16.ToConfirm)
@@ -717,7 +721,7 @@ namespace LaboratoryApp.ViewModel
 
                                 MessageWindowTable17.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
                                 stream.Close();
-
+                                MessageWindowTable17.NameOfFile = q;
                             }
 
                             MessageWindowTable17.IsOpen = true;
@@ -743,7 +747,7 @@ namespace LaboratoryApp.ViewModel
 
                                 MessageWindowTable18.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
                                 stream.Close();
-
+                                MessageWindowTable18.NameOfFile = q;
                             }
 
                             MessageWindowTable18.IsOpen = true;
@@ -805,7 +809,6 @@ namespace LaboratoryApp.ViewModel
             MessageWindowRaport = new NewWindowRaport(SelectedGauge);
             MessageWindowRaport.AboutGauge = (gauge)SelectedGauge;
             MessageWindowRaport.IsOpen = true;
-
 
             if (MessageWindowRaport.ToConfirm)
             {
@@ -949,13 +952,14 @@ namespace LaboratoryApp.ViewModel
                       outputDocument.Save(filename3);
                       // ...and start a viewer.
                       Process.Start(filename3);
-                  }
+
+                }
                 catch(Exception e)
                   {
                       File.AppendAllText(MainWindowViewModel.path, e.ToString());
                   }
-                
 
+                
             }
 
         }
@@ -1219,7 +1223,7 @@ namespace LaboratoryApp.ViewModel
             section.PageSetup.PageWidth = PageSizeConverter.ToSize(PageSize.A4).Width;
             section.PageSetup.PageHeight = PageSizeConverter.ToSize(PageSize.A4).Height;
             section.PageSetup.TopMargin = 100;
-            section.PageSetup.BottomMargin = 100;
+            section.PageSetup.BottomMargin = 110;
             section.PageSetup.LeftMargin = 20;
             section.PageSetup.RightMargin = 10;
 
@@ -1272,7 +1276,52 @@ namespace LaboratoryApp.ViewModel
             paragraph = new Paragraph();
 
             paragraph.Format.Alignment = ParagraphAlignment.Left;
-            paragraph.AddText("\nData:\t Podpis:\n");
+            paragraph.AddText("\n              Data: " + DateTime.Now.ToString("dd'/'MM'/'yyyy") + " Podpis:");
+
+
+            string lin = "";
+            try
+            {
+                
+                foreach (string str in File.ReadAllLines(MainWindowViewModel.usersApplication))
+                {
+                    lin = str;
+                    if (str.Contains(MainWindowViewModel.nameAndSurname) && str.Contains("PATH"))
+                    {
+                        int index = str.IndexOf("PATH");
+                        //+5 because we need only direct path without text : "PATH="
+                        lin = str.Substring(index + 5);
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                File.AppendAllText(MainWindowViewModel.path, e.ToString());
+            }
+
+            //it could be problem when we change localization of stamp
+            try
+            {
+                Image img2 = paragraph.AddImage(lin);
+                img2.Height = "1.5cm";
+                img2.Width = "3.2cm";
+                //img.LockAspectRatio = true;
+                //img.RelativeVertical = RelativeVertical.Line;
+                //img.RelativeHorizontal = RelativeHorizontal.Margin;
+                //img.Top = ShapePosition.Top;
+                //img.Left = ShapePosition.Left;
+                //img.WrapFormat.Style = WrapStyle.Through;
+            }
+            catch (Exception e)
+            {
+                File.AppendAllText(MainWindowViewModel.path, e.ToString());
+            }
+
+
+
+
+
             paragraph.AddTab();
             Image img = paragraph.AddImage(@"linia.jpg");
             img.Height = "0.1cm";
@@ -1328,7 +1377,6 @@ namespace LaboratoryApp.ViewModel
                     column.Format.Alignment = ParagraphAlignment.Center;
                     table.Columns.Width = 56;
                 }
-
 
                 row = table.AddRow();
                 for (int i = 0; i < raport.ColumnNames.Count(); i++)
@@ -1794,8 +1842,8 @@ namespace LaboratoryApp.ViewModel
                     try
                     {
                         Image img = row.Cells[1].AddImage(line);
-                        img.Height = "1.5cm";
-                        img.Width = "1.5cm";
+                        img.Height = "1.6cm";
+                        img.Width = "3.2cm";
                         //img.LockAspectRatio = true;
                         //img.RelativeVertical = RelativeVertical.Line;
                         //img.RelativeHorizontal = RelativeHorizontal.Margin;

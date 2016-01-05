@@ -444,7 +444,7 @@ namespace LaboratoryApp.ViewModel
             if (SelectedGauge.model_of_gauges.type.name == "Elektryczny")
             {
                 var count = (from c in context.certificates where c.date >= firstDayOfMonth && c.date <= lastDayOfMonth && c.gauge.model_of_gauges.type.name == "Elektryczny" select c).Count();
-                NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM") + "/" + (count+1) + "/E/DASL";
+                NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM") + "/" + (count+1) + "/DASL";
             }
             else if (SelectedGauge.model_of_gauges.type.name == "Manometr")
             {

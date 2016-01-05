@@ -58,6 +58,7 @@ namespace LaboratoryApp.ViewModel
         {
             get { return new SimpleRelayCommand(Search); }
         }
+        private ICommand editMeasureCommand;
         private ICommand addNewMeasureCommand;
 
         public ICommand AddNewMeasureCommand
@@ -240,6 +241,7 @@ namespace LaboratoryApp.ViewModel
             AddNewClientCommand = new SimpleRelayCommand(AddClient);
             AddNewGaugeCommand = new SimpleRelayCommand(AddGauge);
             AddNewMeasureCommand = new SimpleRelayCommand(AddNewMeasure);
+            EditMeasureCommand = new SimpleRelayCommand(EditMeasure);
             ChangePathCommand = new SimpleRelayCommand(ChangePath);
             MailingCommand = new SimpleRelayCommand(Mailing);
             EditGaugeCommand = new SimpleRelayCommand(EditGauge);
@@ -250,7 +252,8 @@ namespace LaboratoryApp.ViewModel
 
             if (!File.Exists(path))
             {
-                File.Create(path);
+                using (File.Create(path)) { }
+                
             }
 
             if (!File.Exists(usersApplication))
@@ -299,6 +302,42 @@ namespace LaboratoryApp.ViewModel
         #endregion
 
 
+        private void EditMeasure()
+        {
+            MessageWindowUser = new NewWindowUser();
+            MessageWindowUser.NameOfUser = nameAndSurname;
+            MessageWindowUser.IsOpen = true;
+
+            if (MessageWindowUser.ToConfirm)
+            {
+                string[] users = File.ReadAllLines(usersApplication);
+                List <string> temporaryUsers = new List<string>();
+                if (users != null)
+                {
+                    foreach (string user in users)
+                    {
+                        if(!user.Contains(nameAndSurname))
+                        {
+                            temporaryUsers.Add(user);
+                        }
+                    }
+                }
+                File.WriteAllLines(usersApplication, temporaryUsers.ToArray());
+
+                File.AppendAllText(usersApplication, MessageWindowUser.NameOfUser);
+
+                if (!string.IsNullOrEmpty(MessageWindowUser.PathOfStamp))
+                {
+                    File.AppendAllText(usersApplication, "PATH=");
+                    File.AppendAllText(usersApplication, MessageWindowUser.PathOfStamp);
+                }
+                File.AppendAllText(usersApplication, "\n");
+
+                ListOfUsers.Remove(nameAndSurname);
+                ListOfUsers.Add(MessageWindowUser.NameOfUser);
+
+            }
+        }
         private void Mailing()
         {
             MessageWindowMailing = new NewWindowMailing();
@@ -814,6 +853,20 @@ namespace LaboratoryApp.ViewModel
             {
                 messageWindowEditGauge = value;
                 OnPropertyChanged("MessageWindowEditGauge");
+            }
+        }
+
+        public ICommand EditMeasureCommand
+        {
+            get
+            {
+                return editMeasureCommand;
+            }
+
+            set
+            {
+                editMeasureCommand = value;
+                OnPropertyChanged("EditMeasureCommand");
             }
         }
 

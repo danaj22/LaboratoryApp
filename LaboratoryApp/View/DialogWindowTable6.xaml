@@ -26,7 +26,7 @@
         </Style>
     </UserControl.Resources>
     <Grid >
-        <DataGrid AutoGenerateColumns="False" SelectedItem="{Binding SelectedData}" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="9,93,0,0" VerticalAlignment="Top" Height="348" Width="727">
+        <DataGrid AutoGenerateColumns="False" SelectedItem="{Binding SelectedData}" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="14,105,0,0" VerticalAlignment="Top" Height="348" Width="742">
             <DataGrid.Columns>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="88" Header="Nominalny prąd wyłącznika RCD [mA] (krotność 1x)" Binding="{Binding Multiples, Converter={StaticResource MyConverter}}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Zmierzony czas zadziałania wyłącznika RCD na mierniku sprawdzanym [ms]" Binding="{Binding MeasureValue, Converter={StaticResource MyConverter}}" >
@@ -44,15 +44,15 @@
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona typu B zadawania czasu zadziałania ±2S(x)" Binding="{Binding ErrorInPercent, Converter={StaticResource MyConverter}}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Label Content="%" HorizontalAlignment="Left" Margin="9,60,0,0" VerticalAlignment="Top"/>
-        <Label Content="Stała = " HorizontalAlignment="Left" Margin="77,60,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="34,60,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.Percent, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="38"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="133,61,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.Constant, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="53"/>
-        <Label Content="Liczb znaczących" HorizontalAlignment="Left" Margin="191,61,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="295,62,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.ImportantNumber, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="60"/>
-        <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="646,172,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label Content="%" HorizontalAlignment="Left" Margin="18,72,0,0" VerticalAlignment="Top" Width="21"/>
+        <Label Content="Stała" HorizontalAlignment="Left" Margin="90,72,0,0" VerticalAlignment="Top" Width="41"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="44,72,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.Percent, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="40"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="141,73,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.Constant, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="48"/>
+        <Label Content="Liczb znaczących" HorizontalAlignment="Left" Margin="193,73,0,0" VerticalAlignment="Top" Width="101"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="306,74,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.ImportantNumber, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="74"/>
+        <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="664,184,0,0" VerticalAlignment="Top" Width="77"/>
 
-        <Button Width="75" VerticalAlignment="Top" Margin="0,114,45,0" HorizontalAlignment="Right" Command="{Binding OKCommand}" Content="OK">
+        <Button Width="77" VerticalAlignment="Top" Margin="0,126,25,0" HorizontalAlignment="Right" Command="{Binding OKCommand}" Content="OK">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="IsEnabled" Value="false"/>
@@ -67,9 +67,9 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Label Width="79" VerticalAlignment="Top" Margin="372,62,0,0" HorizontalAlignment="Left" Content="Nazwa tabeli"/>
+        <Label Width="80" VerticalAlignment="Top" Margin="385,74,0,0" HorizontalAlignment="Left" Content="Nazwa tabeli"/>
 
-        <TextBox x:Name="TxtBoxFunction" HorizontalAlignment="Left" Height="23" Margin="456,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280"
+        <TextBox x:Name="TxtBoxFunction" HorizontalAlignment="Left" Height="23" Margin="470,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="286"
 			Validation.ErrorTemplate="{StaticResource errorTemplate}" AcceptsReturn="True"
 			HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"  
 			Style="{StaticResource textBoxError}" >
@@ -80,12 +80,14 @@
                 </Binding.ValidationRules>
             </Binding>
         </TextBox>
-        <Label Content="%" HorizontalAlignment="Left" Margin="13,10,0,0" VerticalAlignment="Top" Width="21"/>
-        <Label Content="Stała " HorizontalAlignment="Left" Margin="83,10,0,0" VerticalAlignment="Top" Width="40"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="38,10,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.PercentIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="39"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="132,10,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.ConstantIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="48"/>
-        <Label Content="Liczb znaczących " HorizontalAlignment="Left" Margin="184,10,0,0" VerticalAlignment="Top" Width="104"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="295,10,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.ImportantNumberIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="86"/>
+        <Label Content="%" HorizontalAlignment="Left" Margin="18,22,0,0" VerticalAlignment="Top" Width="22"/>
+        <Label Content="Stała " HorizontalAlignment="Left" Margin="90,22,0,0" VerticalAlignment="Top" Width="41"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="44,22,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.PercentIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="40"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="140,22,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.ConstantIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="49"/>
+        <Label Content="Liczb znaczących " HorizontalAlignment="Left" Margin="193,22,0,0" VerticalAlignment="Top" Width="106"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="306,22,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.ImportantNumberIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="73"/>
+        <Label Content="Dokładności kalibratora" HorizontalAlignment="Left" Margin="13,0,0,0" VerticalAlignment="Top"/>
+        <Label Content="Dokładności miernika" HorizontalAlignment="Left" Margin="10,48,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>

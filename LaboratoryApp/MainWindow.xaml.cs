@@ -39,7 +39,7 @@ namespace LaboratoryApp
         public MainWindow()
         {
             // your connection string
-            string connectionString = @"Data Source=DESKTOP-BH5P9T1\SQLEXPRESS;integrated security=True;multipleactiveresultsets=True";
+            string connectionString = @"Data Source=LABORATORIUM-PC\SQLEXPRESS;integrated security=True;multipleactiveresultsets=True";
 
             // your query:
             //var query = GetDbCreationQuery();
