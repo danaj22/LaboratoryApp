@@ -8,7 +8,7 @@
         
              mc:Ignorable="d" 
              x:Name="uc"
-             d:DesignHeight="300" d:DesignWidth="600">
+             d:DesignHeight="600" d:DesignWidth="600">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -24,7 +24,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto" MinHeight="30"/>
-            <RowDefinition Height="80"/>
+            <RowDefinition Height="470"/>
         </Grid.RowDefinitions>
         <TextBlock Text="informacje o mierniku" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center" Height="16" Margin="115,0" Width="116"/>
         <TextBlock Text="Model: " Grid.Column="0" Grid.Row="1"/>
@@ -41,7 +41,7 @@
 
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable2}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
 			DialogWidth="950" DialogResizeMode="CanResize" />
-        
+
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable3}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
 			DialogWidth="950" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable4}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
@@ -58,8 +58,8 @@
 			DialogWidth="950" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable10}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
 			DialogWidth="1030" DialogResizeMode="CanResize" />
-        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable11}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
-			DialogWidth="950" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable11}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="530" 
+			DialogWidth="1250" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable12}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
 			DialogWidth="950" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable13}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
@@ -74,6 +74,8 @@
 			DialogWidth="1030" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowTable18}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="600" 
 			DialogWidth="1240" DialogResizeMode="CanResize" />
+        <vm:ModalDialogManager DataContext="{Binding MessageWindowTable20}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="430" 
+			DialogWidth="840" DialogResizeMode="CanResize" />
         <vm:ModalDialogManager DataContext="{Binding MessageWindowGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="300" 
 			DialogWidth="320" DialogResizeMode="CanResize" />
 
@@ -88,14 +90,15 @@
 
         <DataGrid Grid.Row="6" Grid.ColumnSpan="5" Grid.Column="0" Name="DataGridCertificates" IsReadOnly="True" 
                   CanUserResizeColumns="True" AutoGenerateColumns="False"  CanUserAddRows="False" 
-                  CanUserSortColumns="True" ItemsSource="{Binding CollectionOfCertificate}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="530" Height="183" Margin="0,0,0,-102"   >
+                  CanUserSortColumns="True" ItemsSource="{Binding CollectionOfCertificate}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="530" Height="461"  >
             <DataGrid.Columns>
                 <DataGridTextColumn MinWidth="150" Header="Nazwa certyfikatu" Binding="{Binding name}" />
                 <DataGridTextColumn MinWidth="100" Header="Data" Binding="{Binding date}" />
                 <DataGridTextColumn MinWidth="140" Header="Autor" Binding="{Binding authorized_by}" />
-                <DataGridTextColumn MinWidth="90" Header="Koszt" Binding="{Binding cost}" />
+                <DataGridTextColumn MinWidth="90" Header="Koszt" Binding="{Binding cost, StringFormat=N2}" />
             </DataGrid.Columns>
         </DataGrid>
+        <Button Content="Skocz do klienta" Command="{Binding JumpToClientCommand}" VerticalAlignment="Center" Grid.Column="4" HorizontalAlignment="Left" Height="22" Width="113" Grid.Row="0" Grid.RowSpan="2" Margin="0,4"  />
 
     </Grid>
 </UserControl>

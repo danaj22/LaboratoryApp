@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LaboratoryApp.View"
              xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
-             mc:Ignorable="d" Height="122.033" Width="319.703">
+             mc:Ignorable="d" Height="104.533" Width="294.203">
     <UserControl.Resources>
         <ControlTemplate x:Key="errorTemplate">
             <DockPanel LastChildFill="true">
@@ -39,10 +39,11 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
     </UserControl.Resources>
 
 
-    <Grid Margin="0,0,10,10">
+    <Grid >
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -92,12 +93,12 @@
         </ComboBox>
 
         <vm:ModalDialogManager DataContext="{Binding MessageWindowModelOfGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="700" 
-			DialogWidth="590" DialogResizeMode="CanResize" ScrollViewer.CanContentScroll="True"  ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+			DialogWidth="790" DialogResizeMode="CanResize" ScrollViewer.CanContentScroll="True"  ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
 
 
-        <Button Grid.ColumnSpan="2" Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="79,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="75">
+        <Button Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="9,9,0,0" Grid.Row="3" VerticalAlignment="Top" Width="75" Grid.Column="1">
             <Button.Style>
-                <Style TargetType="Button">
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                     <Setter Property="IsEnabled" Value="false" />
                     <Style.Triggers>
                         <MultiDataTrigger>
@@ -111,6 +112,7 @@
                         </MultiDataTrigger>
                     </Style.Triggers>
                 </Style>
+
             </Button.Style>
         </Button>
         <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1" HorizontalAlignment="Left" Margin="89,9,0,0" Grid.Row="3" VerticalAlignment="Top" Width="75"/>

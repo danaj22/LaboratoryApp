@@ -34,7 +34,7 @@
         <vm:MyConverter x:Key="MyConverter"/>
     </UserControl.Resources>
     <Grid >
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" Margin="10,10,10,0" VerticalAlignment="Top" Height="560">
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" Margin="10,10,250,0" VerticalAlignment="Top" Height="560">
             <DataGrid.Columns>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Wartość napięcia przemiennego na mierniku sprawdzanym [V]"  Binding="{Binding Path=MeasureValue, Converter={StaticResource MyConverter}}">
                     <DataGridTextColumn.CellStyle>

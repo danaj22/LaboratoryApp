@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="LaboratoryApp.View.DialogWindowValuesToTable11"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LaboratoryApp.View"
+             xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
+             mc:Ignorable="d" Height="514" Width="384">
+    <UserControl.Resources>
+        <vm:MyConverter x:Key="MyConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" ItemsSource="{Binding CollectionOfValuesToTable11}" CanUserAddRows="False" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="494" Width="362">
+            <DataGrid.Columns>
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Impendancja pętli zwarcia na mierniku kontrolnym [Ω]" Binding="{Binding Path=IdealValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Rezystancja pętli zwarcia na mierniku kontrolnym [Ω]" Binding="{Binding Path=IdealValueTab11Rezystancja, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Reaktancja pętli zwarcia na mierniku kontrolnym [Ω]" Binding="{Binding Path=IdealValueTab11Reaktancja, Converter={StaticResource MyConverter}}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Right" Margin="0,12,23,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Right" Margin="0,38,23,0" VerticalAlignment="Top" Width="75"/>
+
+    </Grid>
+</UserControl>

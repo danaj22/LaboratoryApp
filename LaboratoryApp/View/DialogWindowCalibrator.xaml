@@ -8,6 +8,7 @@
              Height="77" Width="332">
     
     <UserControl.Resources>
+        
         <ControlTemplate x:Key="errorTemplate">
             <DockPanel LastChildFill="true">
                 <Border Background="OrangeRed" DockPanel.Dock="right"
@@ -60,7 +61,7 @@
 
         <Button Content="Dodaj" Command="{Binding OKCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="74" Grid.Column="1" Margin="89,45,0,0" >
             <Button.Style>
-                <Style TargetType="Button">
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                     <Setter Property="IsEnabled" Value="false" />
                     <Style.Triggers>
                         <MultiDataTrigger>
@@ -71,7 +72,9 @@
                             </MultiDataTrigger.Conditions>
                         </MultiDataTrigger>
                     </Style.Triggers>
+                    
                 </Style>
+                
             </Button.Style>
         </Button>
         <Button Content="Cancel" Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="168,46,0,0" VerticalAlignment="Top" Width="74" Grid.Column="1"/>

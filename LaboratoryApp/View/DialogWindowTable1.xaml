@@ -38,7 +38,7 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <DataGrid x:Name="dataGridView1" AutoGenerateColumns="False" SelectedItem="{Binding SelectedData}" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="3,93,0,0" VerticalAlignment="Top" Height="351" Width="849">
+        <DataGrid x:Name="dataGridView1" AutoGenerateColumns="False" SelectedItem="{Binding SelectedData}" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="3,93,0,0" VerticalAlignment="Top" Height="351" Width="732">
             <DataGrid.Columns>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Wartość napięcia przemiennego na mierniku sprawdzanym [V]"  Binding="{Binding Path=MeasureValue, Converter={StaticResource MyConverter}}">
                     <DataGridTextColumn.CellStyle>
@@ -65,7 +65,7 @@
         <TextBox HorizontalAlignment="Left" Height="23" Margin="277,63,0,0" TextWrapping="Wrap" Text="{Binding Path=SelectedData.ImportantNumber , Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="84"/>
         <Button Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Right" Margin="0,97,17,0" VerticalAlignment="Top" Width="75">
             <Button.Style>
-                <Style TargetType="Button">
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                     <Setter Property="IsEnabled" Value="false" />
                     <Style.Triggers>
                         <MultiDataTrigger>

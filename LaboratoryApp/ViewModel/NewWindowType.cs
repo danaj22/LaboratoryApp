@@ -83,7 +83,7 @@ namespace LaboratoryApp.ViewModel
             set 
             {
                 nameOfType = value;
-                OnPropertyChanged("NameOfType");
+                OnPropertyChanged("NameOfManufacturer");
             }
         }
     }

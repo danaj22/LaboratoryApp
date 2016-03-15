@@ -61,9 +61,9 @@
 
         </TextBox>
 
-        <Button Content="Dodaj" Command="{Binding OKCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="74" Grid.Row="2" Grid.ColumnSpan="2" Margin="149,14,132,14"  >
+        <Button Content="Dodaj" Command="{Binding OKCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="74" Grid.Row="2" Grid.ColumnSpan="2" Margin="149,12,132,12"  >
             <Button.Style>
-                <Style TargetType="Button">
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                     <Setter Property="IsEnabled" Value="false" />
                     <Style.Triggers>
                         <MultiDataTrigger>

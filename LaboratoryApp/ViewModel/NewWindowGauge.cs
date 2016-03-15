@@ -103,8 +103,8 @@ namespace LaboratoryApp.ViewModel
                 collectionOfManufacturers = value;
                 OnPropertyChanged("CollectionOfManufacturers");
             }
-
         }
+
         List<string> collectionOfModels;
         public List<string> CollectionOfModels
         {
@@ -118,8 +118,10 @@ namespace LaboratoryApp.ViewModel
 
         private void InitializeCollectionOfManufacturers()
         {
-            LaboratoryEntities context = new LaboratoryEntities();
-            CollectionOfManufacturers = (from m in context.model_of_gauges select m.manufacturer_name).Distinct().ToList();
+            using (LaboratoryEntities context = new LaboratoryEntities())
+            {
+                CollectionOfManufacturers = (from m in context.model_of_gauges select m.manufacturer_name).Distinct().ToList();
+            }
         }
 
 
@@ -130,10 +132,12 @@ namespace LaboratoryApp.ViewModel
             set
             {
                 selectedManufacturer = value;
-                InitializeCollectionOfModels();
                 OnPropertyChanged("SelectedManufacturer");
+
+                this.InitializeCollectionOfModels();
             }
         }
+
         private string selectedModel;
         public string SelectedModel
         {
@@ -152,7 +156,7 @@ namespace LaboratoryApp.ViewModel
             {
                 using (LaboratoryEntities context = new LaboratoryEntities())
                 {
-                    CollectionOfModels = (from g in context.model_of_gauges where g.manufacturer_name == SelectedManufacturer select g.model).ToList();
+                    CollectionOfModels = (from g in context.model_of_gauges where g.manufacturer_name == SelectedManufacturer select g.model).Distinct().ToList();
 
                 }
             }

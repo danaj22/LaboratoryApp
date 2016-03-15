@@ -22,7 +22,7 @@ namespace LaboratoryApp
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
-    /// </summary>
+    /// </summary>L
     public partial class MainWindow : MetroWindow
     {
         static string GetDbCreationQuery()
@@ -39,7 +39,7 @@ namespace LaboratoryApp
         public MainWindow()
         {
             // your connection string
-            string connectionString = @"Data Source=LABORATORIUM-PC\SQLEXPRESS;integrated security=True;multipleactiveresultsets=True";
+            string connectionString = @"Data Source=LAPTOP-D2IIN1JB\SQLEXPRESS;integrated security=True;multipleactiveresultsets=True";
 
             // your query:
             //var query = GetDbCreationQuery();

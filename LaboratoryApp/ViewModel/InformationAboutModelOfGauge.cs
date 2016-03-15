@@ -26,7 +26,7 @@ namespace LaboratoryApp.ViewModel
 
             using (LaboratoryEntities context = new LaboratoryEntities())
             {
-
+                //context.Database.Connection.Open();
                 var ListOfTypesFromDatabase = (from t in context.types select t.name).Distinct().ToList();
                 
                 if(ListOfTypesFromDatabase.Any())
@@ -64,6 +64,7 @@ namespace LaboratoryApp.ViewModel
                     //(from u in Context.usages select u.usageId.ToString()).Distinct().ToList();
                     SelectedUsage = t[0].description;
                 }
+                context.SaveChanges();
 
             }
         }
@@ -212,14 +213,16 @@ namespace LaboratoryApp.ViewModel
             var result = MessageBox.Show("Czy na pewno chcesz usunąć bezzwłocznie i definitywnie ten miernik?", "Ostrzeżenie", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
-                LaboratoryEntities context = MainWindowViewModel.Context;
-                //delete selected client
-                var gaugeToDelete = (from g in context.gauges
-                                     where g.gaugeId == this.ModelOfGaugeId
-                                     select g).FirstOrDefault();
+                using (LaboratoryEntities context = new LaboratoryEntities())
+                {
+                    //delete selected client
+                    var gaugeToDelete = (from g in context.gauges
+                                         where g.gaugeId == this.ModelOfGaugeId
+                                         select g).FirstOrDefault();
 
-                context.gauges.Remove(gaugeToDelete);
-                context.SaveChanges();
+                    context.gauges.Remove(gaugeToDelete);
+                    context.SaveChanges();
+                }
                 MainWindowViewModel.LoadView();
             }
         }

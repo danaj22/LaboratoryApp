@@ -27,7 +27,7 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" Margin="10,10,10,0" VerticalAlignment="Top" Height="380">
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" Margin="10,10,224,0" VerticalAlignment="Top" Height="380">
             <DataGrid.Columns>
 
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Wartość rezystancji mierzonej na mierniku sprawdzanym dla napięcia 50V [Ω]" Binding="{Binding MeasureValue, Converter={StaticResource MyConverter}}">

@@ -45,7 +45,7 @@ xmlns:ViewModel="clr-namespace:LaboratoryApp.ViewModel"
             <ColumnDefinition MinWidth="100"/>
             <ColumnDefinition MinWidth="100"/>
         </Grid.ColumnDefinitions>
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Grid.ColumnSpan="5" VerticalAlignment="Center" Height="378" Width="1251" Margin="10,2,0,11" Grid.RowSpan="4">
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Grid.ColumnSpan="5" VerticalAlignment="Center" Height="378" Width="1035" Margin="10,4,0,12" Grid.RowSpan="4">
             <DataGrid.Columns>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Wartość rezystancji nastawionej na dekadzie kontrolnej [Ω]" Binding="{Binding Multiples, Converter={StaticResource MyConverter}}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Hipotetyczna rezystywność gruntu [Ω*m]" Binding="{Binding ResistanceOfGroundv2, Converter={StaticResource MyConverter}}" />

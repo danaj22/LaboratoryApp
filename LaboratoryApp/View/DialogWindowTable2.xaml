@@ -46,7 +46,7 @@
             <ColumnDefinition MinWidth="100"/>
             <ColumnDefinition MinWidth="100"/>
         </Grid.ColumnDefinitions>
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" SelectedItem="{Binding SelectedData}" CanUserAddRows="True" HorizontalAlignment="Center" Grid.Row="1" Grid.ColumnSpan="5" VerticalAlignment="Center" Height="320" Width="808" Margin="20,97,20.4,-56" Grid.RowSpan="3">
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" SelectedItem="{Binding SelectedData}" CanUserAddRows="True" HorizontalAlignment="Center" Grid.Row="1" Grid.ColumnSpan="5" VerticalAlignment="Center" Height="320" Width="728" Margin="20,100,100.4,-52" Grid.RowSpan="3">
             <DataGrid.Columns>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Wartość częstotliwości napięcia przemiennego na mierniku sprawdzanym [Hz]" Binding="{Binding MeasureValue, Converter={StaticResource MyConverter}}" >
                     <DataGridTextColumn.CellStyle>
@@ -73,7 +73,7 @@
         <TextBox HorizontalAlignment="Left" Height="23" Margin="98,59,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.ImportantNumber, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Grid.Row="1" Width="120" Grid.ColumnSpan="2" Grid.Column="1"/>
         <Button Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Grid.Column="4" Grid.Row="1" Margin="0,107,22.4,0">
             <Button.Style>
-                <Style TargetType="Button">
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                     <Setter Property="IsEnabled" Value="false" />
                     <Style.Triggers>
                         <MultiDataTrigger>

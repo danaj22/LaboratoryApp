@@ -230,6 +230,40 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("MessageWindowTable18");
             }
         }
+
+        private NewWindowTable19 messageWindowTable19;
+        public NewWindowTable19 MessageWindowTable19
+        {
+            get { return messageWindowTable19; }
+            set
+            {
+                messageWindowTable19 = value;
+                OnPropertyChanged("MessageWindowTable19");
+            }
+        }
+
+        private NewWindowTable20 messageWindowTable20;
+
+        public NewWindowTable20 MessageWindowTable20
+        {
+            get { return messageWindowTable20; }
+            set { messageWindowTable20 = value;
+                OnPropertyChanged("MessageWindowTable20");
+            }
+        }
+
+        private NewWindowTable21 messageWindowTable21;
+
+        public NewWindowTable21 MessageWindowTable21
+        {
+            get { return messageWindowTable21; }
+            set
+            {
+                messageWindowTable21 = value;
+                OnPropertyChanged("MessageWindowTable21");
+            }
+        }
+
         #endregion
 
         private string tablesPath = @"C:\ProgramData\DASLSystems\LaboratoryApp\tables";
@@ -256,6 +290,10 @@ namespace LaboratoryApp.ViewModel
             AddTable16Command = new SimpleRelayCommand(AddTable16);
             AddTable17Command = new SimpleRelayCommand(AddTable17);
             AddTable18Command = new SimpleRelayCommand(AddTable18);
+            AddTable19Command = new SimpleRelayCommand(AddTable19);
+            AddTable20Command = new SimpleRelayCommand(AddTable20);
+            AddTable21Command = new SimpleRelayCommand(AddTable21);
+
 
             System.IO.Directory.CreateDirectory(tablesPath);
         }
@@ -455,6 +493,38 @@ namespace LaboratoryApp.ViewModel
                 base.OnPropertyChanged("AddTable18Command");
             }
         }
+        private ICommand addTable19Command;
+        public ICommand AddTable19Command
+        {
+            get { return addTable19Command; }
+            set
+            {
+                addTable19Command = value;
+                base.OnPropertyChanged("AddTable19Command");
+            }
+        }
+        private ICommand addTable20Command;
+
+        public ICommand AddTable20Command
+        {
+            get { return addTable20Command; }
+            set { addTable20Command = value;
+                base.OnPropertyChanged("AddTable20Command");
+            }
+        }
+
+        private ICommand addTable21Command;
+
+        public ICommand AddTable21Command
+        {
+            get { return addTable21Command; }
+            set
+            {
+                addTable21Command = value;
+                base.OnPropertyChanged("AddTable21Command");
+            }
+        }
+
         #endregion
         private ICommand okCommand;
         public ICommand OKCommand
@@ -1076,6 +1146,101 @@ namespace LaboratoryApp.ViewModel
                 }
                 //catch { }
                 MessageWindowTable18.ToConfirm = false;
+            }
+        }
+
+        public void AddTable19()
+        {
+            MessageWindowTable19 = new NewWindowTable19();
+            MessageWindowTable19.IsOpen = true;
+
+            if (MessageWindowTable19.ToConfirm)
+            {
+                //try
+                {
+                    //if (!string.IsNullOrEmpty(MessageWindowTable19.Title))
+                    if (!File.Exists(tablesPath + "\\" + MessageWindowTable19.NameOfFile + ".txt"))
+                    {
+                        CollectionOfTable.Add(MessageWindowTable19.NameOfFile);
+
+                        if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable19.NameOfFile + ".lab"))
+                        {
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable19.NameOfFile + ".lab", FileMode.Create);
+
+                            bformatter.Serialize(stream, MessageWindowTable19.Tab);
+
+                            stream.Close();
+                        }
+                    }
+                }
+                //catch { }
+                MessageWindowTable19.ToConfirm = false;
+            }
+        }
+
+        public void AddTable20()
+        {
+            MessageWindowTable20 = new NewWindowTable20();
+            MessageWindowTable20.IsOpen = true;
+
+            if (MessageWindowTable20.ToConfirm)
+            {
+                //try
+                {
+                    //if (!string.IsNullOrEmpty(MessageWindowTable20.Title))
+                    if (!File.Exists(tablesPath + "\\" + MessageWindowTable20.NameOfFile + ".txt"))
+                    {
+                        CollectionOfTable.Add(MessageWindowTable20.NameOfFile);
+
+                        if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable20.NameOfFile + ".lab"))
+                        {
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable20.NameOfFile + ".lab", FileMode.Create);
+
+                            foreach(Measure1 item in MessageWindowTable20.Tab)
+                            {
+                                item.AdmissibleDiffrentOfPressures = Convert.ToDouble(MessageWindowTable20.Tab.Last().MeasureValue.Replace(".",",")) * MessageWindowTable20.Tab.Last().Percent * 0.01;
+                            }
+                            bformatter.Serialize(stream, MessageWindowTable20.Tab);
+
+                            stream.Close();
+                        }
+                    }
+                }
+                //catch { }
+                MessageWindowTable20.ToConfirm = false;
+            }
+        }
+
+        public void AddTable21()
+        {
+            MessageWindowTable21 = new NewWindowTable21();
+            MessageWindowTable21.IsOpen = true;
+
+            if (MessageWindowTable21.ToConfirm)
+            {
+                //try
+                {
+                    //if (!string.IsNullOrEmpty(MessageWindowTable21.Title))
+                    if (!File.Exists(tablesPath + "\\" + MessageWindowTable21.NameOfFile + ".txt"))
+                    {
+                        CollectionOfTable.Add(MessageWindowTable21.NameOfFile);
+
+                        if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable21.NameOfFile + ".lab"))
+                        {
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + MessageWindowTable21.NameOfFile + ".lab", FileMode.Create);
+
+                            foreach (Measure1 item in MessageWindowTable21.Tab)
+                            {
+                                item.AdmissibleDiffrentOfPressures = Convert.ToDouble(MessageWindowTable21.Tab.First().MeasureValue.Replace(".", ",")) * MessageWindowTable21.Tab.First().Percent * 0.01;
+                            }
+                            bformatter.Serialize(stream, MessageWindowTable21.Tab);
+
+                            stream.Close();
+                        }
+                    }
+                }
+                //catch { }
+                MessageWindowTable21.ToConfirm = false;
             }
         }
     }

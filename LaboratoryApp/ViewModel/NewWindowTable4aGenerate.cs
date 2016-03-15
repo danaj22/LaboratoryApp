@@ -212,28 +212,28 @@ namespace LaboratoryApp.ViewModel
 
             foreach (var element in Tab)
             {
-
-
-                if (element.MeasureValue == 0)
+                
+                if (string.IsNullOrEmpty(element.MeasureValue))
                 {
+                    double idealVal = Convert.ToDouble(element.IdealValue.Replace(".", ","));
                     if (HighLevel == true)
                     {
 
-                        MinimalValue = element.IdealValue + element.IdealValue * 0.01 * MinValue;
-                        MaximalValue = element.IdealValue + element.IdealValue * 0.01 * MaxValue;
-                        element.MeasureValue = rnd.NextDouble() * (MaximalValue - MinimalValue) + MinimalValue;
+                        MinimalValue = idealVal + idealVal * 0.01 * MinValue;
+                        MaximalValue = idealVal + idealVal * 0.01 * MaxValue;
+                        element.MeasureValue = (rnd.NextDouble() * (MaximalValue - MinimalValue) + MinimalValue).ToString();
                     }
                     if (LowLevel == true)
                     {
-                        MinimalValue = element.IdealValue - element.IdealValue * 0.01 * MinValue;
-                        MaximalValue = element.IdealValue - element.IdealValue * 0.01 * MaxValue;
-                        element.MeasureValue = rnd.NextDouble() * (MinimalValue - MaximalValue) + MaximalValue;
+                        MinimalValue = idealVal - idealVal * 0.01 * MinValue;
+                        MaximalValue = idealVal - idealVal * 0.01 * MaxValue;
+                        element.MeasureValue = (rnd.NextDouble() * (MinimalValue - MaximalValue) + MaximalValue).ToString();
                     }
                     if (CenterLevel == true)
                     {
-                        MinimalValue = element.IdealValue - element.IdealValue * 0.01 * MinValue;
-                        MaximalValue = element.IdealValue + element.IdealValue * 0.01 * MaxValue;
-                        element.MeasureValue = rnd.NextDouble() * (MaximalValue - MinimalValue) + MinimalValue;
+                        MinimalValue = idealVal - idealVal * 0.01 * MinValue;
+                        MaximalValue = idealVal + idealVal * 0.01 * MaxValue;
+                        element.MeasureValue = (rnd.NextDouble() * (MaximalValue - MinimalValue) + MinimalValue).ToString();
                     }
 
                 }

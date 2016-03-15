@@ -12,6 +12,7 @@ using System.Data.Entity;
 using System.IO;
 using LaboratoryApp.Models;
 using System.Windows.Forms;
+using System.Runtime.Serialization.Formatters.Binary;
 //using System.Windows;
 //using System.Windows.Input;
 //todelet 2 lib^^
@@ -77,8 +78,9 @@ namespace LaboratoryApp.ViewModel
             get { return mailingCommand; }
             set { mailingCommand = value; }
         }
+        public ICommand AddValuesToTable11Command { get; set; }
 
-        public static LaboratoryEntities Context = new LaboratoryEntities();
+        //public static LaboratoryEntities Context = new LaboratoryEntities();
         private ObservableCollection<string> listOfUsers = new ObservableCollection<string>();
 
         public ObservableCollection<string> ListOfUsers
@@ -90,6 +92,8 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("ListOfUsers");
             }
         }
+        Stream stream;
+        BinaryFormatter bformatter = new BinaryFormatter();
 
         public static string nameAndSurname;
 
@@ -100,6 +104,15 @@ namespace LaboratoryApp.ViewModel
             {
                 nameAndSurname = value;
                 OnPropertyChanged("NameAndSurname");
+
+                Settings.SelectedUser = nameAndSurname;
+                if (File.Exists(settingsPath))
+                {
+                    stream = File.Open(settingsPath, FileMode.OpenOrCreate);
+                    bformatter.Serialize(stream, Settings);
+                    stream.Close();
+                }
+
             }
         }
 
@@ -122,6 +135,7 @@ namespace LaboratoryApp.ViewModel
             set { messageWindowMailing = value; OnPropertyChanged("MessageWindowMailing"); }
         }
 
+        private ObservableCollection<string> collectionOfFilters;
 
         static private LoadData data;
 
@@ -198,6 +212,17 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
+        private ValuesToTable11 newWindowValuesToTable11;
+        public ValuesToTable11 NewWindowValuesToTable11
+        {
+            get { return newWindowValuesToTable11; }
+            set
+            {
+                newWindowValuesToTable11 = value;
+                this.OnPropertyChanged("NewWindowValuesToTable11");
+            }
+        }
+
         private ObservableObject currentViewModel;
 
         public ObservableObject CurrentViewModel
@@ -209,14 +234,17 @@ namespace LaboratoryApp.ViewModel
                 this.OnPropertyChanged("CurrentViewModel");
             }
         }
+        public static bool isStampPrint;
         #endregion
 
         static public void LoadView()
         {
             data = new LoadData(rootElement);
         }
-        private string certPath;
 
+        public static Settings Settings = new Settings();
+        static public string settingsPath = @"C:\ProgramData\DASLSystems\LaboratoryApp\settings.stg";
+        private string certPath;
         public string CertPath
         {
             get { return certPath; }
@@ -225,6 +253,7 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("CertPath");
             }
         }
+        private string selectedFilter;
 
         public static StreamWriter FileLog;
         static public string path = @"C:\ProgramData\DASLSystems\LaboratoryApp\LaboratoryAppLog.txt";
@@ -245,11 +274,26 @@ namespace LaboratoryApp.ViewModel
             ChangePathCommand = new SimpleRelayCommand(ChangePath);
             MailingCommand = new SimpleRelayCommand(Mailing);
             EditGaugeCommand = new SimpleRelayCommand(EditGauge);
+            AddValuesToTable11Command = new SimpleRelayCommand(AddValuesToTable11);
             CurrentViewModel = null;
             userInput = new UserInput();
             LoadView();
+
+            CollectionOfFilters = new ObservableCollection<string>();
+            CollectionOfFilters.Add("nr seryjny");
+            CollectionOfFilters.Add("NIP");
+            CollectionOfFilters.Add("Nazwa klienta");
+            CollectionOfFilters.Add("model");
+
+            SelectedFilter = CollectionOfFilters[0];
+
             System.IO.Directory.CreateDirectory(@"C:\ProgramData\DASLSystems\LaboratoryApp");
 
+
+            if(!File.Exists(settingsPath))
+            {
+                using (File.Create(settingsPath)) { }
+            }
             if (!File.Exists(path))
             {
                 using (File.Create(path)) { }
@@ -297,10 +341,82 @@ namespace LaboratoryApp.ViewModel
                 File.AppendAllText(path, e.ToString());
             }
 
+           
+
+            try
+            {
+                if (File.Exists(settingsPath))
+                {
+
+                    using (stream = File.Open(settingsPath, FileMode.Open))
+                    {
+                        if (stream.Length != 0)
+                        {
+                            stream.Position = 0;
+                            Settings = (Settings)bformatter.Deserialize(stream);
+
+                            stream.Close();
+
+                            NameAndSurname = Settings.SelectedUser;
+                            IsStampPrint = Settings.IsStampPrint;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                File.AppendAllText(path, e.ToString());
+            }
+            finally
+            {
+                if (stream != null)
+                {
+                    stream.Close();
+                }
+            }
+
 
         }
         #endregion
 
+
+        private void AddValuesToTable11()
+        {
+            NewWindowValuesToTable11 = new ValuesToTable11();
+
+            //tworzy plik z zapisanymi danymi z tabeli z głównego okna
+            //aktualizowane wyniki są wstawiane do tabeli 11
+            if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\Val.Values11"))
+            {
+                for (int i = 0; i < 15; i++)
+                {
+                    NewWindowValuesToTable11.CollectionOfValuesToTable11.Add(new ResistanceImpedanceReactance());
+                }
+                NewWindowValuesToTable11.CollectionOfValuesToTable11[9].IdealValueTab11Rezystancja = "xxxx";
+                NewWindowValuesToTable11.CollectionOfValuesToTable11[10].IdealValueTab11Rezystancja = "xxxx";
+                NewWindowValuesToTable11.CollectionOfValuesToTable11[11].IdealValueTab11Rezystancja = "xxxx";
+                NewWindowValuesToTable11.CollectionOfValuesToTable11[12].IdealValueTab11Rezystancja = "xxxx";
+                NewWindowValuesToTable11.CollectionOfValuesToTable11[9].IdealValueTab11Reaktancja = "xxxx";
+                NewWindowValuesToTable11.CollectionOfValuesToTable11[10].IdealValueTab11Reaktancja = "xxxx";
+                NewWindowValuesToTable11.CollectionOfValuesToTable11[11].IdealValueTab11Reaktancja = "xxxx";
+                NewWindowValuesToTable11.CollectionOfValuesToTable11[12].IdealValueTab11Reaktancja = "xxxx";
+            }
+            NewWindowValuesToTable11.IsOpen = true;
+            if(NewWindowValuesToTable11.ToConfirm)
+            {
+                Stream stream;
+                BinaryFormatter bformatter = new BinaryFormatter();
+
+                
+                {
+                    stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\Val.Values11", FileMode.Create);
+
+                    bformatter.Serialize(stream, NewWindowValuesToTable11.CollectionOfValuesToTable11);
+
+                    stream.Close();
+                }
+            }
+        }
 
         private void EditMeasure()
         {
@@ -340,7 +456,7 @@ namespace LaboratoryApp.ViewModel
         }
         private void Mailing()
         {
-            MessageWindowMailing = new NewWindowMailing();
+            MessageWindowMailing = new NewWindowMailing() { MailPath = Settings.PathToMailing };
             MessageWindowMailing.IsOpen = true;
             if(MessageWindowMailing.ToConfirm)
             {
@@ -369,97 +485,237 @@ namespace LaboratoryApp.ViewModel
 
             }
         }
-
+        private List<MenuItem> SearchingItemsList = new List<MenuItem>();
+        private List<MenuItem> SearchingItemsListName = new List<MenuItem>();
+        private string previousSearchItem;
         
         private void Search()
         {
-            gauge gg = new gauge();
+
             try
             {
+                if(previousSearchItem != SearchItem)
+                {
+                    SearchingItemsList = new List<MenuItem>();
+                    SearchingItemsListName = new List<MenuItem>();
+                }
                 if (SearchItem != null && SearchItem != "")
                 {
-                    if (IsCheckedSerial)
+                    previousSearchItem = SearchItem;
+
+                    if (SelectedFilter == "nr seryjny")
                     {
-                        var tmp = (from g in Context.gauges where g.serial_number.Contains(SearchItem) select g).FirstOrDefault();
-
-                        foreach (client cli in RootElement.Children)
+                        if (!SearchingItemsList.Any() || SearchingItemsList.Last() is client)
                         {
-                            if (tmp.client.name == cli.name)
+                            using (LaboratoryEntities context = new LaboratoryEntities())
                             {
-                                cli.IsExpanded = true;
-                                foreach (gauge g in tmp.client.gauges)
+                                var tmp2 = (from g in context.gauges where g.serial_number.Contains(SearchItem) select g).ToList();
+                                if (tmp2.Count() == 0)
                                 {
-                                    if (g.serial_number == SearchItem)
-                                    {
-                                        if (g.office != null)
-                                        {
-                                            g.office.IsExpanded = true;
-                                        }
-
-
-                                        g.IsSelected = true;
-                                        g.IsExpanded = true;
-                                    }
+                                    System.Windows.MessageBox.Show("Brak elementów.");
+                                    return;
                                 }
-                                foreach(var gaugeInClient in cli.Children)
+
+                                else
                                 {
-                                    if(tmp.office == null)
+                                    SearchingItemsList = new List<MenuItem>();
+                                    foreach (gauge gaug in tmp2)
                                     {
-                                        if (gaugeInClient.NameOfItem == tmp.model_of_gauges.model + " [" + tmp.serial_number + "]")
+                                        SearchingItemsList.Add(gaug);
+                                    }
+
+                                    gauge g2 = new gauge();
+                                    gauge g = (gauge)SearchingItemsList.Last();
+                                    client c = new client();
+                                    office o = new office();
+
+
+                                    foreach (client cli in RootElement.Children)
+                                    {
+                                        if (cli.clientId == g.client_id)
                                         {
-                                            gaugeInClient.IsSelected = true;
+                                            c = cli;
                                         }
+                                    }
+
+                                    c.IsExpanded = true;
+
+                                    if (g.office != null)
+                                    {
+                                        o = c.offices.Where(x => x.officeId == g.office_id).First();
+                                        o.IsExpanded = true;
+                                        g2 = (gauge)o.gauges.Where(x => x.serial_number == g.serial_number);
                                     }
                                     else
                                     {
-                                        foreach(var gaugeInOffice in gaugeInClient.Children)
-                                        {
-                                            if (gaugeInOffice.NameOfItem == tmp.model_of_gauges.model + " [" + tmp.serial_number + "]")
-                                            {
-                                                gaugeInOffice.IsSelected = true;
-                                            }
-                                        }
+                                        g2 = c.gauges.Where(x => x.serial_number == g.serial_number).First();
+                                        g2.Parent.IsExpanded = true;
+                                        g2.IsSelected = true;
                                     }
-                                    
+
+                                    SelectedNode = g2;
+
+                                    SearchingItemsList.Remove(SearchingItemsList.Last());
+
                                 }
                             }
                         }
-                       
-                        SelectedNode = tmp;
+                        else if(SearchingItemsList.Count()>0)
+                        {
+                            gauge g2 = new gauge();
+                            gauge g = (gauge) SearchingItemsList.Last();
+                            client c = new client();
+                            office o = new office();
+                            
+
+                            foreach(client cli in RootElement.Children)
+                            {
+                                if(cli.clientId == g.client_id)
+                                {
+                                    c = cli;
+                                }
+                            }
+
+                            c.IsExpanded = true;
+
+                            if (g.office != null)
+                            {
+                                o = c.offices.Where(x => x.officeId == g.office_id).First();
+                                o.IsExpanded = true;
+                                g2 = (gauge)o.gauges.Where(x => x.serial_number == g.serial_number);
+                            }
+                            else
+                            {
+                                g2 = c.gauges.Where(x => x.serial_number == g.serial_number).First();
+                                g2.IsSelected = true;
+                            }
+
+                            SelectedNode = g2;
+
+                            SearchingItemsList.Remove(SearchingItemsList.Last());
+
+                        }
+
 
                     }
-                    else if (IsCheckedNip)
+                    else if (SelectedFilter =="NIP")
                     {
-                        foreach (client cli in RootElement.Children)
+                        if (!SearchingItemsList.Any() || SearchingItemsList.Last() is gauge)
                         {
-                            if (cli.NIP.Contains( SearchItem))
+                            SearchingItemsList = new List<MenuItem>();
+                            foreach (client cli in RootElement.Children)
                             {
-
-                                cli.IsSelected = true;
+                                if (cli.NIP.ToUpper().Contains(SearchItem.ToUpper()))
+                                {
+                                    SearchingItemsList.Add(cli);
+                                }
+                            }
+                            if (SearchingItemsList.Count() > 0)
+                            {
+                                client c = new client();
+                                c = (client) SearchingItemsList.Last();
+                                c.IsSelected = true;
+                                SelectedNode = c;
+                                SearchingItemsList.Remove(SearchingItemsList.Last());
+                            }
+                            else
+                            {
+                                System.Windows.MessageBox.Show("Brak wyników.");
                             }
 
                         }
-                        //tmp.IsSelected = true;
-
-
-                    }
-                    else if (IsCheckedName)
-                    {
-                        foreach (client cli in RootElement.Children)
+                        else if (SearchingItemsList.Count()>0)
                         {
-                            if (cli.name.ToUpper().Contains(SearchItem.ToUpper()))
-                            {
+                            client c = new client();
+                            c = (client) SearchingItemsList.Last();
 
-                                cli.IsSelected = true;
-                            }
+                            c.IsSelected = true;
+                            SelectedNode = c;
+
+                            SearchingItemsList.Remove(SearchingItemsList.Last());
 
                         }
-                        //tmp.IsExpanded = true;
+                    }
 
-                        //tmp.IsSelected = true;
-                        //SelectedNode.NameOfItem = "ttttttttttttttttttt";
-                        //SelectedNode.IsExpanded = true;
-                        // SelectedNode = tmp;
+                    else if (SelectedFilter == "Nazwa klienta")
+                    {
+                        if (!SearchingItemsListName.Any())
+                        {
+                            SearchingItemsListName = new List<MenuItem>();
+
+                            foreach (client cli in RootElement.Children)
+                            {
+                                if (cli.name.ToUpper().Contains(SearchItem.ToUpper()))
+                                {
+                                    SearchingItemsListName.Add(cli);
+                                }
+                            }
+                            if (SearchingItemsListName.Count() > 0)
+                            {
+                                client c = new client();
+                                c = (client)SearchingItemsListName.Last();
+                                c.IsSelected = true;
+                                SelectedNode = c;
+                                SearchingItemsListName.Remove(SearchingItemsListName.Last());
+                            }
+                            else
+                            {
+                                System.Windows.MessageBox.Show("Brak wyników.");
+                            }
+                        }
+                        else if (SearchingItemsListName.Count() > 0)
+                        {
+                            client c = new client();
+                            c = (client)SearchingItemsListName.Last();
+
+                            c.IsSelected = true;
+                            SelectedNode = c;
+
+                            SearchingItemsListName.Remove(SearchingItemsListName.Last());
+
+                        }
+                    }
+                    else if (SelectedFilter == "model")
+                    {
+                        if (!SearchingItemsListName.Any())
+                        {
+                            SearchingItemsListName = new List<MenuItem>();
+
+                           foreach (client cli in RootElement.Children)
+                            {
+                                foreach(gauge gaug in cli.gauges)
+                                {
+                                    if(gaug.model_of_gauges.model.ToUpper().Contains(SearchItem.ToUpper()))
+                                    {
+                                        SearchingItemsListName.Add(gaug);
+                                    }
+                                }
+                            }
+                            if (SearchingItemsListName.Count() > 0)
+                            {
+                                gauge c = new gauge();
+                                c = (gauge)SearchingItemsListName.Last();
+                                c.Parent.IsExpanded = true;
+                                c.IsSelected = true;
+                                SelectedNode = c;
+                                SearchingItemsListName.Remove(SearchingItemsListName.Last());
+                            }
+                            else
+                            {
+                                System.Windows.MessageBox.Show("Brak wyników.");
+                            }
+                        }
+                        else if (SearchingItemsListName.Count() > 0)
+                        {
+                            gauge c = new gauge();
+                            c = (gauge)SearchingItemsListName.Last();
+
+                            c.IsSelected = true;
+                            SelectedNode = c;
+
+                            SearchingItemsListName.Remove(SearchingItemsListName.Last());
+
+                        }
                     }
                 }
                 else
@@ -534,12 +790,13 @@ namespace LaboratoryApp.ViewModel
 
             if (MessageWindowModelOfGauge.ToConfirm)
             {
-                if (!String.IsNullOrEmpty(MessageWindowModelOfGauge.AboutModelOfGauge.ManufacturerName)
+                if (!String.IsNullOrEmpty(MessageWindowModelOfGauge.SelectedManufacturer)
                     && !String.IsNullOrEmpty(MessageWindowModelOfGauge.AboutModelOfGauge.Model)
                     && !String.IsNullOrEmpty(MessageWindowModelOfGauge.AboutModelOfGauge.SelectedUsage)
                     && !String.IsNullOrEmpty(MessageWindowModelOfGauge.AboutModelOfGauge.SelectedType)
                     )
                 {
+                    MessageWindowModelOfGauge.SelectedManufacturer = MessageWindowModelOfGauge.SelectedManufacturer.First().ToString().ToUpper() + MessageWindowModelOfGauge.SelectedManufacturer.Substring(1);
                     System.IO.Directory.CreateDirectory(@"C:\ProgramData\DASLSystems\LaboratoryApp\models");
 
                     if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\"+ MessageWindowModelOfGauge.AboutModelOfGauge.Model + ".txt"))
@@ -565,24 +822,26 @@ namespace LaboratoryApp.ViewModel
                     
 
                     model_of_gauges newGauge = new model_of_gauges();
-                    newGauge.manufacturer_name = MessageWindowModelOfGauge.AboutModelOfGauge.ManufacturerName;
+                    newGauge.manufacturer_name = MessageWindowModelOfGauge.SelectedManufacturer;
                     newGauge.model = MessageWindowModelOfGauge.AboutModelOfGauge.Model;
                     
 
                     try
                     {
-                        {
+                        using (LaboratoryEntities context = new LaboratoryEntities())
+
+                        { 
                             {
-                                newGauge.type = (from t in Context.types where t.name == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedType select t).FirstOrDefault();
-                                newGauge.usage = (from u in Context.usages where u.description == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedUsage select u).FirstOrDefault();
-                                newGauge.type_id = (from t in Context.types where t.name == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedType select t.typeId).FirstOrDefault();
-                                newGauge.usage_id = (from u in Context.usages where u.description == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedUsage select u.usageId).FirstOrDefault();
+                                newGauge.type = (from t in context.types where t.name == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedType select t).FirstOrDefault();
+                                newGauge.usage = (from u in context.usages where u.description == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedUsage select u).FirstOrDefault();
+                                newGauge.type_id = (from t in context.types where t.name == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedType select t.typeId).FirstOrDefault();
+                                newGauge.usage_id = (from u in context.usages where u.description == MessageWindowModelOfGauge.AboutModelOfGauge.SelectedUsage select u.usageId).FirstOrDefault();
 
                                 var listOfCheckedItems = MessageWindowModelOfGauge.CollectionOfCalibrators.ToList();
                                 //newGauge.calibrators_model_of_gauges = (Models.calibrators_model_of_gauges)listOfCheckedItems;
-                                
-                                Context.model_of_gauges.Add(newGauge);
-                                Context.SaveChanges();
+
+                                context.model_of_gauges.Add(newGauge);
+                                context.SaveChanges();
                             }
                         }
                     }
@@ -593,65 +852,70 @@ namespace LaboratoryApp.ViewModel
                     }
                     try
                     {
-
-                        int LastModelId = (from m in Context.model_of_gauges orderby m.model_of_gaugeId descending select m.model_of_gaugeId).First();
-
-                        foreach (calibrator zmienna in MessageWindowModelOfGauge.CollectionOfCalibrators)
+                        using (LaboratoryEntities context = new LaboratoryEntities())
                         {
+                            int LastModelId = (from m in context.model_of_gauges orderby m.model_of_gaugeId descending select m.model_of_gaugeId).First();
 
-                            if (zmienna.IsChecked)
+                            foreach (calibrator zmienna in MessageWindowModelOfGauge.CollectionOfCalibrators)
+                            {
+
+                                if (zmienna.IsChecked)
+                                {
+                                    try
+                                    {
+
+                                        calibrators_model_of_gauges calib_gauge_model = new calibrators_model_of_gauges();
+                                        //calib_gauge_model.calibrator = zmienna;
+                                        calib_gauge_model.calibrator_id = zmienna.calibratorId;
+
+                                        model_of_gauges model = (from m in context.model_of_gauges orderby m.model_of_gaugeId descending select m).First();
+
+                                        calib_gauge_model.model_of_gauges = model;
+                                        calib_gauge_model.model_of_gaug_id = model.model_of_gaugeId;
+
+
+
+                                        context.calibrators_model_of_gauges.Add(calib_gauge_model);
+                                        context.SaveChanges();
+
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        System.Windows.MessageBox.Show("Nie udało się dodać kalibratora do modelu miernika.");
+                                        File.AppendAllText(path, e.ToString());
+                                    }
+                                }
+                                //newGauge.calibrator_model_of_gauge.Add(zmienna);
+                            }
+                        }
+                        using (LaboratoryEntities context = new LaboratoryEntities())
+                        {
+                            foreach (function zmienna in MessageWindowModelOfGauge.CollectionOfCheckedFunction)
                             {
                                 try
                                 {
+                                    //System.IO.Directory.CreateDirectory(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\model");
+                                    if (zmienna.IsChecked)
+                                    {
+                                        model_of_gauges_functions mod_of_gaug_fun = new model_of_gauges_functions();
+                                        mod_of_gaug_fun.function_Id = zmienna.functionId;
+                                        model_of_gauges model = (from m in context.model_of_gauges orderby m.model_of_gaugeId descending select m).First();
 
-                                    calibrators_model_of_gauges calib_gauge_model = new calibrators_model_of_gauges();
-                                    //calib_gauge_model.calibrator = zmienna;
-                                    calib_gauge_model.calibrator_id = zmienna.calibratorId;
+                                        mod_of_gaug_fun.model_of_gauges = model;
+                                        mod_of_gaug_fun.model_of_gauge_id = model.model_of_gaugeId;
 
-                                    model_of_gauges model = (from m in Context.model_of_gauges orderby m.model_of_gaugeId descending select m).First();
+                                        context.model_of_gauges_functions.Add(mod_of_gaug_fun);
+                                        context.SaveChanges();
 
-                                    calib_gauge_model.model_of_gauges = model;
-                                    calib_gauge_model.model_of_gaug_id = model.model_of_gaugeId;
+                                        //File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\model\" + MessageWindowModelOfGauge.AboutModelOfGauge.Model + ".txt", zmienna.functionId + "\n");
 
-
-
-                                    Context.calibrators_model_of_gauges.Add(calib_gauge_model);
-                                    Context.SaveChanges();
-
+                                        zmienna.IsChecked = false;
+                                    }
                                 }
                                 catch (Exception e)
                                 {
-                                    System.Windows.MessageBox.Show("Nie udało się dodać kalibratora do modelu miernika.");
-                                    File.AppendAllText(path,e.ToString());
+                                    File.AppendAllText(path, e.ToString());
                                 }
-                            }
-                            //newGauge.calibrator_model_of_gauge.Add(zmienna);
-                        }
-                        foreach(function zmienna in MessageWindowModelOfGauge.CollectionOfCheckedFunction)
-                        {
-                            try
-                            {
-                                //System.IO.Directory.CreateDirectory(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\model");
-                                if(zmienna.IsChecked)
-                                {
-                                    model_of_gauges_functions mod_of_gaug_fun = new model_of_gauges_functions();
-                                    mod_of_gaug_fun.function_Id = zmienna.functionId;
-                                    model_of_gauges model = (from m in Context.model_of_gauges orderby m.model_of_gaugeId descending select m).First();
-
-                                    mod_of_gaug_fun.model_of_gauges = model;
-                                    mod_of_gaug_fun.model_of_gauge_id = model.model_of_gaugeId;
-
-                                    Context.model_of_gauges_functions.Add(mod_of_gaug_fun);
-                                    Context.SaveChanges();
-
-                                    //File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\model\" + MessageWindowModelOfGauge.AboutModelOfGauge.Model + ".txt", zmienna.functionId + "\n");
-
-                                    zmienna.IsChecked = false;
-                                }
-                            }
-                            catch(Exception e)
-                            {
-                                File.AppendAllText(path, e.ToString());
                             }
                         }
 
@@ -735,9 +999,10 @@ namespace LaboratoryApp.ViewModel
 
                     try
                     {
+                        using(LaboratoryEntities context = new LaboratoryEntities())
                         {
-                            Context.clients.Add(newClient);
-                            Context.SaveChanges();
+                            context.clients.Add(newClient);
+                            context.SaveChanges();
                         }
                     }
                     catch (Exception ex)
@@ -749,11 +1014,12 @@ namespace LaboratoryApp.ViewModel
                     //var index = RootElement.Items.IndexOf(RootElement.Items.Last())+1;
                     //AllItems.Remove((client)SelectedNode);
                     //Add new client to TreeView
+                    newClient.IsSelected = true;
+                    SelectedNode = newClient;
                     RootElement.Children.Add(newClient);
                     RootElement.Children.Last().NameOfItem = newClient.name;
 
                     RootElement.Children = new ObservableCollection<MenuItem>(RootElement.Children.OrderBy(i => i.NameOfItem));
-
                     System.Windows.MessageBox.Show("dodanie użytkownika do bazy");
 
                 }
@@ -867,6 +1133,58 @@ namespace LaboratoryApp.ViewModel
             {
                 editMeasureCommand = value;
                 OnPropertyChanged("EditMeasureCommand");
+            }
+        }
+
+        public bool IsStampPrint
+        {
+            get
+            {
+                return isStampPrint;
+            }
+
+            set
+            {
+                isStampPrint = value;
+                OnPropertyChanged("IsStampPrint");
+
+                Settings.IsStampPrint = isStampPrint;
+                if (File.Exists(settingsPath))
+                {
+                    stream = File.Open(settingsPath, FileMode.OpenOrCreate);
+                    bformatter.Serialize(stream, Settings);
+                    stream.Close();
+                }
+
+
+            }
+        }
+
+        public ObservableCollection<string> CollectionOfFilters
+        {
+            get
+            {
+                return collectionOfFilters;
+            }
+
+            set
+            {
+                collectionOfFilters = value;
+                OnPropertyChanged("CollectionOfFilters");
+            }
+        }
+
+        public string SelectedFilter
+        {
+            get
+            {
+                return selectedFilter;
+            }
+
+            set
+            {
+                selectedFilter = value;
+                OnPropertyChanged("SelctedFilter");
             }
         }
 

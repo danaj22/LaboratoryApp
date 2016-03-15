@@ -21,7 +21,7 @@ namespace LaboratoryApp.ViewModel
             CancelCommand = new SimpleRelayCommand(Close);
             Models.LaboratoryEntities context = new Models.LaboratoryEntities();
 
-            ServerName = @"LABORATORIUM-PC\SQLEXPRESS";
+            ServerName = @"LAPTOP-D2IIN1JB\SQLEXPRESS";
             DatabaseName = "laboratory";
             
             //create database

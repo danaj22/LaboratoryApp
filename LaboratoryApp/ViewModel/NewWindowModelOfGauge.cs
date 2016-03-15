@@ -201,11 +201,62 @@ namespace LaboratoryApp.ViewModel
             MessageWindowFunction.ToConfirm = false;
         }
 
+        ObservableCollection<string> collectionOfManufacturers;
+        public ObservableCollection<string> CollectionOfManufacturers
+        {
+            get { return this.collectionOfManufacturers; }
+            set
+            {
+                collectionOfManufacturers = value;
+                OnPropertyChanged("CollectionOfManufacturers");
+            }
+        }
+        private string selectedManufacturer;
+        public string SelectedManufacturer
+        {
+            get { return selectedManufacturer; }
+            set
+            {
+                selectedManufacturer = value;
+                OnPropertyChanged("SelectedManufacturer");
+            }
+        }
+        private NewWindowManufacturer messageWindowManufacturer;
 
+        private void InitializeCollectionOfManufacturers()
+        {
+            using (LaboratoryEntities context = new LaboratoryEntities())
+            {
+                List<string> manufacturers = (from m in context.model_of_gauges select m.manufacturer_name).Distinct().ToList();
+
+                CollectionOfManufacturers = new ObservableCollection<string>();
+                foreach (string element in manufacturers)
+                {
+                    CollectionOfManufacturers.Add(element);
+                }
+            }
+
+        }
+
+        public ICommand AddManufacturerCommand { get; set; }
         
+        public void AddManufacturer()
+        {
+            MessageWindowManufacturer = new NewWindowManufacturer();
+            MessageWindowManufacturer.IsOpen = true;
+
+            if(MessageWindowManufacturer.ToConfirm)
+            {
+                CollectionOfManufacturers.Add(MessageWindowManufacturer.NameOfManufacturer);
+            }
+        }
+
+
 
         public NewWindowModelOfGauge()
         {
+            InitializeCollectionOfManufacturers();
+
             OKCommand = new SimpleRelayCommand(Confirm);
             CancelCommand = new SimpleRelayCommand(Close);
             AddUsageCommand = new SimpleRelayCommand(AddUsage);
@@ -213,67 +264,74 @@ namespace LaboratoryApp.ViewModel
             AddCalibratorCommand = new SimpleRelayCommand(AddCalibrator);
             AddFunctionCommand = new SimpleRelayCommand(AddFunction);
             AddTableCommand = new SimpleRelayCommand(AddTable);
+            AddManufacturerCommand = new SimpleRelayCommand(AddManufacturer);
 
             EditTableCommand = new SimpleRelayCommand(EditTable);
+            DeleteTableCommand = new SimpleRelayCommand(DeleteTable);
 
 
             CollectionOfCalibrators = new ObservableCollection<calibrator>();
             CollectionOfCheckedFunction = new ObservableCollection<function>();
-            LaboratoryEntities context = MainWindowViewModel.Context;
-            try
-            {
-                List<Models.calibrator> ListOfCalibrators = context.calibrators.ToList();
 
-                if (ListOfCalibrators.Count > 0)
+            
+                try
                 {
-                    CollectionOfCalibrators = new ObservableCollection<calibrator>();
-                    foreach (Models.calibrator item in ListOfCalibrators)
+                using (LaboratoryEntities context = new LaboratoryEntities())
+                {
+                    List<Models.calibrator> ListOfCalibrators = context.calibrators.ToList();
+
+                    if (ListOfCalibrators.Count > 0)
                     {
-                        item.IsChecked = false;
-                        CollectionOfCalibrators.Add(item);
+                        CollectionOfCalibrators = new ObservableCollection<calibrator>();
+                        foreach (Models.calibrator item in ListOfCalibrators)
+                        {
+                            item.IsChecked = false;
+                            CollectionOfCalibrators.Add(item);
+                        }
+                    }
+
+                    List<Models.function> ListOfFunctions = context.functions.ToList();
+
+                    if (ListOfFunctions.Count > 0)
+                    {
+                        foreach (Models.function item in ListOfFunctions)
+                        {
+                            item.IsChecked = false;
+                            CollectionOfCheckedFunction.Add(item);
+                        }
+                    }
+                    context.SaveChanges();
+                }
+
+                    if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt"))
+                    {
+                        File.Create(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt").Dispose();
+                    }
+                    else
+                    {
+                        string[] s = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt");
+
+                        foreach (string str in s)
+                        {
+                            CalibrationTable newTable = new CalibrationTable();
+
+                            int indexStart = str.IndexOf("\t");
+                            //int indexEnd = str.IndexOf("|");
+                            newTable.Name = str.Substring(indexStart + 1);
+                            newTable.TypeOfWindow = str.Substring(0, indexStart);
+                            ListOfNamesOfTables.Add(newTable);
+                        }
+                        ListOfNamesOfTables = new ObservableCollection<CalibrationTable>(ListOfNamesOfTables.OrderBy(i => i.Name));
+
+
+
                     }
                 }
-
-                List<Models.function> ListOfFunctions = context.functions.ToList();
-
-                if (ListOfFunctions.Count >0)
+                catch (Exception e)
                 {
-                    foreach(Models.function item in ListOfFunctions)
-                    {
-                        item.IsChecked = false;
-                        CollectionOfCheckedFunction.Add(item);
-                    }
+                    File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\LaboratoryAppLog.txt", e.ToString());
                 }
-                context.SaveChanges();
-
-                if (!File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt"))
-                {
-                    File.Create(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt").Dispose();
-                }
-                else
-                {
-                    string[] s = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt");
-
-                    foreach (string str in s)
-                    {
-                        CalibrationTable newTable = new CalibrationTable();
-
-                        int indexStart = str.IndexOf("\t");
-                        //int indexEnd = str.IndexOf("|");
-                        newTable.Name = str.Substring(indexStart + 1);
-                        newTable.TypeOfWindow = str.Substring(0, indexStart);
-                        ListOfNamesOfTables.Add(newTable);
-                    }
-                    ListOfNamesOfTables = new ObservableCollection<CalibrationTable>(ListOfNamesOfTables.OrderBy(i => i.Name));
-
-
-
-                }
-            }
-            catch(Exception e)
-            {
-                File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\LaboratoryAppLog.txt", e.ToString());
-            }
+            
             
         }
 
@@ -376,6 +434,7 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("SelectedTable");
             }
         }
+        private ICommand deleteTableCommand;
 
         public ICommand EditTableCommand
         {
@@ -389,6 +448,34 @@ namespace LaboratoryApp.ViewModel
                 editTableCommand = value;
                 OnPropertyChanged("EditTableCommand");
 
+            }
+        }
+
+        public string Text
+        {
+            get
+            {
+                return text;
+            }
+
+            set
+            {
+                text = value;
+                OnPropertyChanged("Text");
+            }
+        }
+
+        public ICommand DeleteTableCommand
+        {
+            get
+            {
+                return deleteTableCommand;
+            }
+
+            set
+            {
+                deleteTableCommand = value;
+                OnPropertyChanged("DeleteTableCommand");
             }
         }
         #region tables
@@ -599,17 +686,17 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
-        public string Text
+        public NewWindowManufacturer MessageWindowManufacturer
         {
             get
             {
-                return text;
+                return messageWindowManufacturer;
             }
 
             set
             {
-                text = value;
-                OnPropertyChanged("Text");
+                messageWindowManufacturer = value;
+                OnPropertyChanged("MessageWindowManufacturer");
             }
         }
         #endregion
@@ -681,8 +768,73 @@ namespace LaboratoryApp.ViewModel
                 File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", "\n");
             }
         }
+
+        public void DeleteTable()
+        {
+           if(MessageBoxResult.Yes == MessageBox.Show("Czy usunąć tabele?","Pytanie",MessageBoxButton.YesNo))
+            {
+                string[] s = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt");
+                List<string> tempS = new List<string>();
+
+                foreach (string line in s)
+                {
+                    tempS.Add(line);
+                }
+            
+                foreach (CalibrationTable calib in ListOfNamesOfTables)
+                {
+                    if(calib.IsChecked)
+                    {
+                        foreach(string line in s)
+                        {
+                            if(line.Contains(calib.Name))
+                            {
+                                tempS.Remove(line);
+                            }
+                        }
+                    }
+                }
+                //s = tempS.ToArray();
+
+                File.WriteAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt","");
+                File.AppendAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", tempS);
+
+
+                ListOfNamesOfTables = new ObservableCollection<CalibrationTable>();
+                    foreach (string str in tempS)
+                    {
+                        CalibrationTable newTable = new CalibrationTable();
+
+                        int indexStart = str.IndexOf("\t");
+                        //int indexEnd = str.IndexOf("|");
+                        newTable.Name = str.Substring(indexStart + 1);
+                        newTable.TypeOfWindow = str.Substring(0, indexStart);
+                        ListOfNamesOfTables.Add(newTable);
+                    }
+                    ListOfNamesOfTables = new ObservableCollection<CalibrationTable>(ListOfNamesOfTables.OrderBy(i => i.Name));
+                
+            }
+        }
         public void EditTable()
         {
+            int count = 0;
+            int selectedTab = 0;
+            foreach(CalibrationTable ct in ListOfNamesOfTables)
+            {
+                if(ct.IsChecked)
+                {
+                    count++;
+                    selectedTab = ListOfNamesOfTables.IndexOf(ct);
+                }
+            }
+            if(count > 1)
+            {
+                MessageBox.Show("Zaznacz tylko jedną tabelę.");
+                return;
+            }
+
+            SelectedTable = ListOfNamesOfTables[selectedTab];
+
             int index = SelectedTable.Name.IndexOf("]");
             string str = SelectedTable.Name.Substring(index+1);
             
@@ -1180,13 +1332,25 @@ namespace LaboratoryApp.ViewModel
                     File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", "\n");
                 }
 
-                //if (MessageWindowTable.MessageWindowTable19 != null && !string.IsNullOrEmpty(MessageWindowTable.MessageWindowTable19.NameOfFile))
+                if (MessageWindowTable.MessageWindowTable20 != null && !string.IsNullOrEmpty(MessageWindowTable.MessageWindowTable20.NameOfFile))
+                {
+                    newTable = new CalibrationTable();
+                    newTable.Name = "[" + AboutModelOfGauge.Model + "]" + MessageWindowTable.MessageWindowTable20.NameOfFile;
+                    newTable.TypeOfWindow = MessageWindowTable.MessageWindowTable20.ToString();
+                    ListOfNamesOfTables.Add(newTable);
+                    //MessageWindowTable.ListOfWindows.Add(MessageWindowTable.MessageWindowTable20);
+                    ListOfNamesOfTables = new ObservableCollection<CalibrationTable>(ListOfNamesOfTables.OrderBy(i => i.Name));
+                    File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", newTable.TypeOfWindow + "\t" + newTable.Name);
+                    File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", "\n");
+                }
+
+                //if (MessageWindowTable.MessageWindowTable20 != null && !string.IsNullOrEmpty(MessageWindowTable.MessageWindowTable20.NameOfFile))
                 //{
                 //    newTable = new CalibrationTable();
-                //    newTable.Name = MessageWindowTable.MessageWindowTable19.NameOfFile;
-                //    newTable.TypeOfWindow = MessageWindowTable.MessageWindowTable19.ToString();
+                //    newTable.Name = MessageWindowTable.MessageWindowTable20.NameOfFile;
+                //    newTable.TypeOfWindow = MessageWindowTable.MessageWindowTable20.ToString();
                 //    ListOfNamesOfTables.Add(newTable);
-                //    //MessageWindowTable.ListOfWindows.Add(MessageWindowTable.MessageWindowTable19);
+                //    //MessageWindowTable.ListOfWindows.Add(MessageWindowTable.MessageWindowTable20);
                 //    ListOfNamesOfTables = new ObservableCollection<CalibrationTable>(ListOfNamesOfTables.OrderBy(i => i.Name));
                 //    File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", newTable.TypeOfWindow + "\t" + newTable.Name);
                 //    File.AppendAllText(@"C:\ProgramData\DASLSystems\LaboratoryApp\NamesOfTables.txt", "\n");

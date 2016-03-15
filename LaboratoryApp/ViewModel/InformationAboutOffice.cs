@@ -300,7 +300,7 @@ namespace LaboratoryApp.ViewModel
 
             if (MessageWindowOffice.ToConfirm)
             {
-                using (LaboratoryEntities context = new LaboratoryEntities())
+                using (LaboratoryEntities context =new LaboratoryEntities())
                 {
                     //find selected office in database
                     var officeToEdit = (from o in context.offices

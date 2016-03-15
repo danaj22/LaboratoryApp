@@ -150,6 +150,7 @@
     <Compile Include="ViewModel\NewWindowEditGauge.cs" />
     <Compile Include="ViewModel\NewWindowFunction.cs" />
     <Compile Include="ViewModel\NewWindowMailing.cs" />
+    <Compile Include="ViewModel\NewWindowManufacturer.cs" />
     <Compile Include="ViewModel\NewWindowModelOfGauge.cs" />
     <Compile Include="ViewModel\NewWindowOffice.cs" />
     <Compile Include="ViewModel\NewWindowGauge.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="ViewModel\NewWindowTable10.cs" />
     <Compile Include="ViewModel\NewWindowTable10Generate.cs" />
     <Compile Include="ViewModel\NewWindowTable11.cs" />
+    <Compile Include="ViewModel\NewWindowTable11Generate.cs" />
     <Compile Include="ViewModel\NewWindowTable12.cs" />
     <Compile Include="ViewModel\NewWindowTable13.cs" />
     <Compile Include="ViewModel\NewWindowTable14.cs" />
@@ -170,8 +172,14 @@
     <Compile Include="ViewModel\NewWindowTable17Generate.cs" />
     <Compile Include="ViewModel\NewWindowTable18.cs" />
     <Compile Include="ViewModel\NewWindowTable18Generate.cs" />
+    <Compile Include="ViewModel\NewWindowTable19.cs" />
+    <Compile Include="ViewModel\NewWindowTable19Generate.cs" />
     <Compile Include="ViewModel\NewWindowTable1Generate.cs" />
     <Compile Include="ViewModel\NewWindowTable2.cs" />
+    <Compile Include="ViewModel\NewWindowTable20.cs" />
+    <Compile Include="ViewModel\NewWindowTable20Generate.cs" />
+    <Compile Include="ViewModel\NewWindowTable21.cs" />
+    <Compile Include="ViewModel\NewWindowTable21Generate.cs" />
     <Compile Include="ViewModel\NewWindowTable2Generate.cs" />
     <Compile Include="ViewModel\NewWindowTable3.cs" />
     <Compile Include="ViewModel\NewWindowTable3Generate.cs" />
@@ -198,6 +206,7 @@
     <Compile Include="ViewModel\OfficeViewModel.cs" />
     <Compile Include="ViewModel\OpenNewWindow.cs" />
     <Compile Include="ViewModel\MenuItem.cs" />
+    <Compile Include="ViewModel\Settings.cs" />
     <Compile Include="ViewModel\TreeViewHelper.cs" />
     <Compile Include="ViewModel\GaugesViewModel.cs" />
     <Compile Include="ViewModel\ClientsViewModel.cs" />
@@ -205,6 +214,7 @@
     <Compile Include="ViewModel\ObservableObject.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
     <Compile Include="ViewModel\UserInput.cs" />
+    <Compile Include="ViewModel\ValuesToTable11.cs" />
     <Compile Include="View\DialogWindowCalibrator.xaml.cs">
       <DependentUpon>DialogWindowCalibrator.xaml</DependentUpon>
     </Compile>
@@ -219,6 +229,9 @@
     </Compile>
     <Compile Include="View\DialogWindowMailingView.xaml.cs">
       <DependentUpon>DialogWindowMailingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowManufacturer.xaml.cs">
+      <DependentUpon>DialogWindowManufacturer.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DialogWindowModelOfGauge.xaml.cs">
       <DependentUpon>DialogWindowModelOfGauge.xaml</DependentUpon>
@@ -240,6 +253,9 @@
     </Compile>
     <Compile Include="View\DialogWindowTable11.xaml.cs">
       <DependentUpon>DialogWindowTable11.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowTable11Generate.xaml.cs">
+      <DependentUpon>DialogWindowTable11Generate.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DialogWindowTable12.xaml.cs">
       <DependentUpon>DialogWindowTable12.xaml</DependentUpon>
@@ -274,11 +290,29 @@
     <Compile Include="View\DialogWindowTable18Generate.xaml.cs">
       <DependentUpon>DialogWindowTable18Generate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\DialogWindowTable19.xaml.cs">
+      <DependentUpon>DialogWindowTable19.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowTable19Generate.xaml.cs">
+      <DependentUpon>DialogWindowTable19Generate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DialogWindowTable1Generate.xaml.cs">
       <DependentUpon>DialogWindowTable1Generate.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DialogWindowTable2.xaml.cs">
       <DependentUpon>DialogWindowTable2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowTable20.xaml.cs">
+      <DependentUpon>DialogWindowTable20.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowTable20Generate.xaml.cs">
+      <DependentUpon>DialogWindowTable20Generate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowTable21.xaml.cs">
+      <DependentUpon>DialogWindowTable21.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowTable21Generate.xaml.cs">
+      <DependentUpon>DialogWindowTable21Generate.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DialogWindowTable2Generate.xaml.cs">
       <DependentUpon>DialogWindowTable2Generate.xaml</DependentUpon>
@@ -330,6 +364,9 @@
     </Compile>
     <Compile Include="View\DialogWindowUser.xaml.cs">
       <DependentUpon>DialogWindowUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogWindowValuesToTable11.xaml.cs">
+      <DependentUpon>DialogWindowValuesToTable11.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EditModelGauge.xaml.cs">
       <DependentUpon>EditModelGauge.xaml</DependentUpon>
@@ -384,6 +421,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\DialogWindowManufacturer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DialogWindowModelOfGauge.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -409,6 +450,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DialogWindowTable11.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowTable11Generate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -456,11 +501,35 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\DialogWindowTable19.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowTable19Generate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DialogWindowTable1Generate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DialogWindowTable2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowTable20.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowTable20Generate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowTable21.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindowTable21Generate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -532,6 +601,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\DialogWindowValuesToTable11.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\EditModelGauge.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -578,6 +651,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="packages.config" />

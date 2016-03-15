@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -37,12 +38,27 @@ namespace LaboratoryApp.ViewModel
             set { end = value; OnPropertyChanged("End"); }
         }
 
+        Stream stream;
+        BinaryFormatter bformatter = new BinaryFormatter();
+
         private string mailPath;
 
         public string MailPath
         {
             get { return mailPath; }
-            set { mailPath = value; OnPropertyChanged("MailPath"); }
+            set
+            {
+                mailPath = value;
+                OnPropertyChanged("MailPath");
+
+                MainWindowViewModel.Settings.PathToMailing = mailPath;
+                if (File.Exists(MainWindowViewModel.settingsPath))
+                {
+                    stream = File.Open(MainWindowViewModel.settingsPath, FileMode.OpenOrCreate);
+                    bformatter.Serialize(stream, MainWindowViewModel.Settings);
+                    stream.Close();
+                }
+            }
         }
 
         private ICommand okCommand;
@@ -76,31 +92,48 @@ namespace LaboratoryApp.ViewModel
         }
         private void Save()
         {
-            List<certificate> certificates = (from c in MainWindowViewModel.Context.certificates select c).ToList();
+            
 
-            if (!string.IsNullOrEmpty(MailPath))
-            {
-                File.WriteAllText(MailPath + "\\informacje o klientach.txt", String.Empty);
-                File.WriteAllText(MailPath + "\\maile.txt", String.Empty);
-
-
-                foreach (certificate cert in certificates)
+            try {
+                using (LaboratoryEntities context = new LaboratoryEntities())
                 {
-                    if (cert.date <= End && cert.date >= Start)
-                    {
-                        string content = "Klient:" + cert.gauge.client.name + "\\Adres:" + cert.gauge.client.adress + "\\Tel:" + cert.gauge.client.tel + "\\NIP:" + cert.gauge.client.NIP + "\\Producent:" + cert.gauge.model_of_gauges.manufacturer_name + "\\Model:" + cert.gauge.model_of_gauges.model + "\\Koszt:" + cert.cost + " zł\n";
-                        string content2 = cert.gauge.client.mail + "\n";
 
+                    List<certificate> certificates = (from c in context.certificates select c).ToList();
+                    if (!string.IsNullOrEmpty(MailPath))
+                    {
+                        File.WriteAllText(MailPath + "\\informacje o klientach.txt", String.Empty);
+                        File.WriteAllText(MailPath + "\\maile.txt", String.Empty);
+
+                        string content = "";
+                        string content2 = "";
+
+                        foreach (certificate cert in certificates)
+                        {
+                            if (cert.date <= End && cert.date >= Start)
+                            {
+                                content += "Klient: " + cert.gauge.client.name + " Adres: " + cert.gauge.client.adress + " Tel: " + cert.gauge.client.tel + " NIP:" + cert.gauge.client.NIP + "\nProducent:" + cert.gauge.model_of_gauges.manufacturer_name + "\nModel:" + cert.gauge.model_of_gauges.model + "\nKoszt:" + cert.cost + " zł\n";
+
+                                if (!String.IsNullOrEmpty(cert.gauge.client.mail) && !content2.Contains(cert.gauge.client.mail))
+                                {
+                                    content2 += cert.gauge.client.mail + "\n";
+                                }
+
+                            }
+                        }
                         File.AppendAllText(MailPath + "\\informacje o klientach.txt", content);
                         File.AppendAllText(MailPath + "\\maile.txt", content2);
-
+                        this.IsOpen = false;
+                        //MessageBox.Show("Zapisano pliki w wybranej lokalizacji.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Podaj najpierw folder do zapisu.");
                     }
                 }
-                MessageBox.Show("Zapisano pliki w wybranej lokalizacji.");
             }
-            else
+            catch(Exception e)
             {
-                MessageBox.Show("Podaj najpierw folder do zapisu.");
+                File.AppendAllText(MainWindowViewModel.path, e.ToString());
             }
         }
 

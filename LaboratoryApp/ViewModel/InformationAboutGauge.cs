@@ -153,6 +153,13 @@ namespace LaboratoryApp.ViewModel
             get { return messageWindowTable18; }
             set { messageWindowTable18 = value; OnPropertyChanged("MessageWindowTable18"); }
         }
+        private NewWindowTable19Generate messageWindowTable19;
+
+        public NewWindowTable19Generate MessageWindowTable19
+        {
+            get { return messageWindowTable19; }
+            set { messageWindowTable19 = value; OnPropertyChanged("MessageWindowTable19"); }
+        }
         private NewWindowTable3Generate messageWindowTable3;
 
         public NewWindowTable3Generate MessageWindowTable3
@@ -202,6 +209,14 @@ namespace LaboratoryApp.ViewModel
             set { messageWindowTable10 = value; OnPropertyChanged("MessageWindowTable10"); }
         }
 
+        private NewWindowTable11Generate messageWindowTable11;
+
+        public NewWindowTable11Generate MessageWindowTable11
+        {
+            get { return messageWindowTable11; }
+            set { messageWindowTable11 = value; OnPropertyChanged("MessageWindowTable11"); }
+        }
+
         private NewWindowTable15Generate messageWindowTable15;
 
         public NewWindowTable15Generate MessageWindowTable15
@@ -222,6 +237,20 @@ namespace LaboratoryApp.ViewModel
         {
             get { return messageWindowTable17; }
             set { messageWindowTable17 = value; OnPropertyChanged("MessageWindowTable17"); }
+        }
+
+        private NewWindowTable20Generate messageWindowTable20;
+        public NewWindowTable20Generate MessageWindowTable20
+        {
+            get { return messageWindowTable20; }
+            set { messageWindowTable20 = value; OnPropertyChanged("MessageWindowTable20"); }
+        }
+
+        private NewWindowTable21Generate messageWindowTable21;
+        public NewWindowTable21Generate MessageWindowTable21
+        {
+            get { return messageWindowTable21; }
+            set { messageWindowTable21 = value; OnPropertyChanged("MessageWindowTable21"); }
         }
 
         private string manufacturer;
@@ -291,13 +320,15 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("CollectionOfCertificate");
             }
         }
+        private MenuItem parentSelectedNode;
+
 
         #endregion
 
-
-        public InformationAboutGauge(object SelectedNode)
+        public InformationAboutGauge(MenuItem SelectedNode)
         {
             SelectedGauge = (gauge)SelectedNode;
+            ParentSelectedNode = SelectedNode;
             //InitializeCollectionOfManufacturers();
 
             //ModelOfGaugeItem = new model_of_gauges();
@@ -307,14 +338,28 @@ namespace LaboratoryApp.ViewModel
             Description = SelectedGauge.model_of_gauges.usage.description;
 
             CollectionOfCertificate = new ObservableCollection<certificate>();
-            LaboratoryEntities context = MainWindowViewModel.Context;
-            var CertificatesOfSelectedGauge = (from c in context.certificates where c.gauge_id == SelectedGauge.gaugeId select c).ToList();
-
-            foreach (var certificate in CertificatesOfSelectedGauge)
+            using (LaboratoryEntities context = new LaboratoryEntities())
             {
-                CollectionOfCertificate.Add(certificate);
+                var CertificatesOfSelectedGauge = (from c in context.certificates where c.gauge_id == SelectedGauge.gaugeId select c).ToList();
+
+                foreach (var certificate in CertificatesOfSelectedGauge)
+                {
+                    CollectionOfCertificate.Add(certificate);
+                }
             }
 
+        }
+        public ICommand JumpToClientCommand
+        { get { return new SimpleRelayCommand(JumpToClientExecute); } }
+        public void JumpToClientExecute()
+        {
+            Window mainWindow = Application.Current.MainWindow;
+            MainWindowViewModel parentDataContext = (MainWindowViewModel) mainWindow.DataContext;
+            parentDataContext.SelectedNode = MainWindowViewModel.selectedNode.Parent;
+            
+            //ParentSelectedNode = MainWindowViewModel.selectedNode.Parent;
+            //MainWindowViewModel.selectedNode = MainWindowViewModel.selectedNode.Parent;
+            
         }
 
         public ICommand DeleteGaugeCommand
@@ -326,7 +371,7 @@ namespace LaboratoryApp.ViewModel
 
             if (result == MessageBoxResult.Yes)
             {
-                using (LaboratoryEntities context = new LaboratoryEntities())
+                using (LaboratoryEntities context =new LaboratoryEntities())
                 {
                     try
                     {
@@ -399,8 +444,22 @@ namespace LaboratoryApp.ViewModel
         public ICommand GenerateRaportCommand
         { get { return new SimpleRelayCommand(GenerateRaportExecute); } }
 
-        string line, ValueOfCell,pref2, pref;
-        double cons, percnt, impNum, idealVal, consIdeal, percntIdeal, impNumIdeal, valOfIsolation, multi, resistMeasure, symResist,refVolt;
+        public MenuItem ParentSelectedNode
+        {
+            get
+            {
+                return parentSelectedNode;
+            }
+
+            set
+            {
+                parentSelectedNode = value;
+                OnPropertyChanged("ParentSelectedNode");
+            }
+        }
+
+        //string line, ValueOfCell,pref2, pref;
+        //double cons, percnt, impNum, idealVal, consIdeal, percntIdeal, impNumIdeal, valOfIsolation, multi, resistMeasure, symResist,refVolt;
 
         Stream stream;
         BinaryFormatter bformatter = new BinaryFormatter();
@@ -410,9 +469,17 @@ namespace LaboratoryApp.ViewModel
             string q = "";
 
             {
+                string[] nameOfData;
+                try {
+                    nameOfData = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + Model + ".txt");
+                }
+                catch(Exception e)
+                {
+                    MessageBox.Show("Nie dodano do miernika tabel.");
+                    File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                    return;
+                }
 
-                
-                    string[] nameOfData = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\" + Model + ".txt");
                     TablesToGenerate = new ObservableCollection<NewWindowTableGenerate>();
 
                     foreach (string nameOfTable in nameOfData)
@@ -656,9 +723,76 @@ namespace LaboratoryApp.ViewModel
                             MessageWindowTable10.ToConfirm = false;
 
                         }
-                        #endregion
-                        #region table 15
-                        if (nameOfTable.Substring(33, 7) == "Table15")
+                    #endregion
+                    #region table 11
+                    if (nameOfTable.Substring(33, 7) == "Table11")
+                    {
+                        MessageWindowTable11 = new NewWindowTable11Generate();
+                        int indexStart = nameOfTable.IndexOf("]");
+
+                        q = nameOfTable.Substring(indexStart + 1);
+
+                        if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab"))
+                        {
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab", FileMode.Open);
+
+                            MessageWindowTable11.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
+                            stream.Close();
+                            MessageWindowTable11.NameOfFile = q;
+
+                            ObservableCollection<ResistanceImpedanceReactance> CollectionOfValuesToTable11 = new ObservableCollection<ResistanceImpedanceReactance>();
+
+                            if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\Val.Values11"))
+                            {
+                                try
+                                {
+                                    stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\Val.Values11", FileMode.Open);
+                                    CollectionOfValuesToTable11 = (ObservableCollection<ResistanceImpedanceReactance>)bformatter.Deserialize(stream);
+                                    stream.Close();
+
+                                }
+                                catch (Exception e)
+                                {
+                                    File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                                }
+                            }
+
+                            for (int i = 0; i < MessageWindowTable11.Tab.Count(); i++)
+                            {
+                                if(MessageWindowTable11.Tab[i].IdealValueTab11Reaktancja == null)
+                                {
+                                    MessageWindowTable11.Tab[i].IdealValueTab11Reaktancja = CollectionOfValuesToTable11[i].IdealValueTab11Reaktancja;
+                                }
+                                else if (CollectionOfValuesToTable11[i].IdealValueTab11Reaktancja.Contains("x"))
+                                {
+                                    MessageWindowTable11.Tab[i].IdealValueTab11Reaktancja = "xxxx";
+                                }
+                                if (MessageWindowTable11.Tab[i].IdealValueTab11Rezystancja == null)
+                                {
+                                    MessageWindowTable11.Tab[i].IdealValueTab11Rezystancja = CollectionOfValuesToTable11[i].IdealValueTab11Rezystancja;
+                                }
+                                else if(CollectionOfValuesToTable11[i].IdealValueTab11Rezystancja.Contains("x"))
+                                {
+                                    MessageWindowTable11.Tab[i].IdealValueTab11Rezystancja = "xxxx";
+                                }
+                                if (!String.IsNullOrEmpty(CollectionOfValuesToTable11[i].IdealValue))
+                                {
+                                    MessageWindowTable11.Tab[i].IdealValue = CollectionOfValuesToTable11[i].IdealValue;
+                                }
+                            }
+                        }
+
+                        MessageWindowTable11.IsOpen = true;
+                        if (MessageWindowTable11.ToConfirm)
+                        {
+                            TablesToGenerate.Add(MessageWindowTable11);
+                        }
+                        MessageWindowTable11.ToConfirm = false;
+
+                    }
+                    #endregion
+                    #region table 15
+                    if (nameOfTable.Substring(33, 7) == "Table15")
                         {
                             MessageWindowTable15 = new NewWindowTable15Generate();
                             int indexStart = nameOfTable.IndexOf("]");
@@ -758,14 +892,94 @@ namespace LaboratoryApp.ViewModel
                             MessageWindowTable18.ToConfirm = false;
 
                         }
-                        #endregion
+                    #endregion
+                    #region table 19
+                    if (nameOfTable.Substring(33, 7) == "Table19")
+                    {
+                        MessageWindowTable19 = new NewWindowTable19Generate();
+                        int indexStart = nameOfTable.IndexOf("]");
 
+                        q = nameOfTable.Substring(indexStart + 1);
 
+                        if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab"))
+                        {
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab", FileMode.Open);
+
+                            MessageWindowTable19.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
+                            stream.Close();
+                            MessageWindowTable19.NameOfFile = q;
+                        }
+
+                        MessageWindowTable19.IsOpen = true;
+                        if (MessageWindowTable19.ToConfirm)
+                        {
+                            TablesToGenerate.Add(MessageWindowTable19);
+                        }
+                        MessageWindowTable19.ToConfirm = false;
 
                     }
-                    //musi mieć jakąś tabelę do wydrukowania
-                    //bo jak wciśnie się cancel to by próbował się drukować
-                    if (TablesToGenerate.Any())
+                    #endregion
+                    #region table 20
+                    if (nameOfTable.Substring(33, 7) == "Table20")
+                    {
+                        MessageWindowTable20 = new NewWindowTable20Generate();
+                        int indexStart = nameOfTable.IndexOf("]");
+
+                        q = nameOfTable.Substring(indexStart + 1);
+
+                        if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab"))
+                        {
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab", FileMode.Open);
+
+                            MessageWindowTable20.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
+                            stream.Close();
+                            MessageWindowTable20.NameOfFile = q;
+                        }
+
+                        MessageWindowTable20.IsOpen = true;
+                        if (MessageWindowTable20.ToConfirm)
+                        {
+                            TablesToGenerate.Add(MessageWindowTable20);
+                        }
+                        MessageWindowTable20.ToConfirm = false;
+
+                    }
+                    #endregion
+
+                    #region table 21
+                    if (nameOfTable.Substring(33, 7) == "Table21")
+                    {
+                        MessageWindowTable21 = new NewWindowTable21Generate();
+                        int indexStart = nameOfTable.IndexOf("]");
+
+                        q = nameOfTable.Substring(indexStart + 1);
+
+                        if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab"))
+                        {
+                            stream = File.Open(@"C:\ProgramData\DASLSystems\LaboratoryApp\tables\" + q + ".lab", FileMode.Open);
+
+                            MessageWindowTable21.Tab = (ObservableCollection<Measure1>)bformatter.Deserialize(stream);
+                            stream.Close();
+                            MessageWindowTable21.NameOfFile = q;
+                        }
+
+                        MessageWindowTable21.IsOpen = true;
+                        if (MessageWindowTable21.ToConfirm)
+                        {
+                            TablesToGenerate.Add(MessageWindowTable21);
+                        }
+                        MessageWindowTable21.ToConfirm = false;
+
+                    }
+                    #endregion
+
+
+
+                }
+                //musi mieć jakąś tabelę do wydrukowania
+                //bo jak wciśnie się cancel to by próbował się drukować
+                //zabezpieczone
+                if (TablesToGenerate.Any())
                     {
                         string path = @"C:\ProgramData\DASLSystems\LaboratoryApp\cert.txt";
 
@@ -815,39 +1029,75 @@ namespace LaboratoryApp.ViewModel
 
                 try
                 {
-                    LaboratoryEntities context = MainWindowViewModel.Context;
-                    {
-                        certificate cert = new certificate();
-                        cert.gauge_id = SelectedGauge.gaugeId;
-                        //cert.gauge = SelectedGauge;
-                        cert.cost = MessageWindowRaport.Cost;
-                        //DateTime dt = new DateTime();
-
-                        DateTime dt = DateTime.Now;
-
-                        //if(SelectedGauge.model_of_gauges.type.name == "Luksomierz")
-                        //{
-                        //    var tmp = (from c in Context.gauges )
-                        //}
-
-                        cert.date = dt;
-                        cert.name = MessageWindowRaport.NumberOfCertificate; //MessageWindowRaport.NumberOfCertificate;
-                        cert.authorized_by = MessageWindowRaport.Author;
-                        try
+                    
                         {
-                            context.certificates.Add(cert);
-                            context.SaveChanges();
-                            CollectionOfCertificate.Add(cert);
+                            certificate cert = new certificate();
+                            cert.gauge_id = SelectedGauge.gaugeId;
+
+                            //cert.gauge = SelectedGauge;
+                            cert.cost = MessageWindowRaport.Cost;
+                            //DateTime dt = new DateTime();
+
+                            DateTime dt = DateTime.Now;
+
+                            //if(SelectedGauge.model_of_gauges.type.name == "Luksomierz")
+                            //{
+                            //    var tmp = (from c in Context.gauges )
+                            //}
+
+                            cert.date = dt;
+                            cert.name = MessageWindowRaport.NumberOfCertificate; //MessageWindowRaport.NumberOfCertificate;
+                            cert.authorized_by = MessageWindowRaport.Author;
+                            try
+                            {
+
+                            using (LaboratoryEntities context = new LaboratoryEntities())
+                            {
+                                var tmp = (from c in context.certificates where MessageWindowRaport.NumberOfCertificate == c.name select c).FirstOrDefault();
+
+                                if (tmp != null)
+                                {
+
+                                    if (MessageBoxResult.Yes == MessageBox.Show("Czy nadpisać certyfikat?", "Pytanie", MessageBoxButton.YesNo))
+                                    {
+                                        tmp.cost = MessageWindowRaport.Cost;
+                                        tmp.date = DateTime.Parse(MessageWindowRaport.DateSurvey);
+                                        tmp.authorized_by = MessageWindowRaport.Author;
+                                    }
+                                    else
+                                    {
+                                        context.certificates.Add(cert);
+                                        CollectionOfCertificate.Add(cert);
+                                    }
+                                }
+                                else
+                                {
+                                    context.certificates.Add(cert);
+                                    CollectionOfCertificate.Add(cert);
+                                }
+
+                                context.SaveChanges();
+
+                                CollectionOfCertificate = new ObservableCollection<certificate>();
+                                var CertificatesOfSelectedGauge = (from c in context.certificates where c.gauge_id == SelectedGauge.gaugeId select c).ToList();
+
+                                foreach (var certificate in CertificatesOfSelectedGauge)
+                                {
+                                    CollectionOfCertificate.Add(certificate);
+                                }
+                            }
+
+                            }
+                            catch (Exception e)
+                            {
+                                MessageBox.Show("Nie udało się utworzyć certyfikatu w bazie.");
+                                File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                            }
+
+
+
                         }
-                        catch (Exception e)
-                        {
-                            MessageBox.Show("Nie udało się utworzyć certyfikatu w bazie.");
-                            File.AppendAllText(MainWindowViewModel.path, e.ToString());
-                        }
-
-
-
-                    }
+                    
                 }
                 catch (DbEntityValidationException e)
                 {
@@ -921,23 +1171,28 @@ namespace LaboratoryApp.ViewModel
  
                   // Open the output document
                   PdfDocument outputDocument = new PdfDocument();
- 
-                  // Iterate files
-                  foreach (string file in files)
+                PdfDocument inputDocument = null;
+                // Iterate files
+                foreach (string file in files)
                   {
-                    // Open the document to import pages from it.
-                    PdfDocument inputDocument = PdfReader.Open(file, PdfDocumentOpenMode.Import);
- 
-                    // Iterate pages
-                    int count = inputDocument.PageCount;
-                    for (int idx = 0; idx < count; idx++)
+                    
+                    if (File.Exists(file))
                     {
-                      // Get the page from the external document...
-                      PdfPage page = inputDocument.Pages[idx];
-                      // ...and add it to the output document.
-                      outputDocument.AddPage(page);
+                        // Open the document to import pages from it.
+                        inputDocument = PdfReader.Open(file, PdfDocumentOpenMode.Import);
+
+                        // Iterate pages
+                        int count = inputDocument.PageCount;
+                        for (int idx = 0; idx < count; idx++)
+                        {
+                          // Get the page from the external document...
+                          PdfPage page = inputDocument.Pages[idx];
+                          // ...and add it to the output document.
+                          outputDocument.AddPage(page);
+                        }
                     }
-                  }
+
+                }
 
                   try
                   {
@@ -952,6 +1207,18 @@ namespace LaboratoryApp.ViewModel
                       outputDocument.Save(filename3);
                       // ...and start a viewer.
                       Process.Start(filename3);
+                    //usuwanie pliku tymczasowego tab.pdf
+                    foreach (string file in files)
+                    {
+                        if (file.Contains("tab.pdf"))
+                        {
+                            if (File.Exists(file))
+                            {
+                                File.Delete(file);
+                            }
+                        }
+                    }
+                    
 
                 }
                 catch(Exception e)
@@ -1092,14 +1359,14 @@ namespace LaboratoryApp.ViewModel
             // font of the whole document. Or, more exactly, it changes the font of
             // all styles and paragraphs that do not redefine the font.
             style.Font.Name = "Times New Roman";
-            style.Font.Size = 12;
+            style.Font.Size = 11;
             // Heading1 to Heading9 are predefined styles with an outline level. An outline level
             // other than OutlineLevel.BodyText automatically creates the outline (or bookmarks) 
             // in PDF.
 
             style = document.Styles["Heading1"];
             style.Font.Name = "Tahoma";
-            style.Font.Size = 14;
+            style.Font.Size = 12;
             style.Font.Bold = true;
             style.Font.Color = Colors.Black;
             style.ParagraphFormat.PageBreakBefore = true;
@@ -1276,7 +1543,7 @@ namespace LaboratoryApp.ViewModel
             paragraph = new Paragraph();
 
             paragraph.Format.Alignment = ParagraphAlignment.Left;
-            paragraph.AddText("\n              Data: " + DateTime.Now.ToString("dd'/'MM'/'yyyy") + " Podpis:");
+            paragraph.AddText("\n              Data: " + DateTime.Now.ToString("dd'/'MM'/'yyyy") + " Podpis:" + MainWindowViewModel.nameAndSurname +" ");
 
 
             string lin = "";
@@ -1303,15 +1570,18 @@ namespace LaboratoryApp.ViewModel
             //it could be problem when we change localization of stamp
             try
             {
-                Image img2 = paragraph.AddImage(lin);
-                img2.Height = "1.5cm";
-                img2.Width = "3.2cm";
-                //img.LockAspectRatio = true;
-                //img.RelativeVertical = RelativeVertical.Line;
-                //img.RelativeHorizontal = RelativeHorizontal.Margin;
-                //img.Top = ShapePosition.Top;
-                //img.Left = ShapePosition.Left;
-                //img.WrapFormat.Style = WrapStyle.Through;
+                if (MainWindowViewModel.isStampPrint)
+                {
+                    Image img2 = paragraph.AddImage(lin);
+                    img2.Height = "1.5cm";
+                    img2.Width = "3.2cm";
+                    //img.LockAspectRatio = true;
+                    //img.RelativeVertical = RelativeVertical.Line;
+                    //img.RelativeHorizontal = RelativeHorizontal.Margin;
+                    //img.Top = ShapePosition.Top;
+                    //img.Left = ShapePosition.Left;
+                    //img.WrapFormat.Style = WrapStyle.Through;
+                }
             }
             catch (Exception e)
             {
@@ -1375,7 +1645,7 @@ namespace LaboratoryApp.ViewModel
                 {
                     column = table.AddColumn();
                     column.Format.Alignment = ParagraphAlignment.Center;
-                    table.Columns.Width = 56;
+                    table.Columns.Width = 46;
                 }
 
                 row = table.AddRow();
@@ -1398,7 +1668,7 @@ namespace LaboratoryApp.ViewModel
                             {
                                 row.Cells[1].Shading.Color = Colors.LightGray;
                             }
-                            row.Cells[1].AddParagraph(raport.Tab[i].MeasureValue.ToString() + raport.Tab[i].Prefix);
+                            row.Cells[1].AddParagraph(raport.Tab[i].MeasureValue.ToString().Replace(".", ",") + raport.Tab[i].Prefix);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                             row.Cells[2].AddParagraph(raport.Tab[i].IdealValue.ToString() + raport.Tab[i].Prefix);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
@@ -1418,7 +1688,7 @@ namespace LaboratoryApp.ViewModel
                         if (raport is NewWindowTable5Generate)
                         {
 
-                            row.Cells[0].AddParagraph(raport.Tab[i].MeasureValue.ToString());
+                            row.Cells[0].AddParagraph(raport.Tab[i].MeasureValue.ToString().Replace(".", ","));
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                             row.Cells[1].AddParagraph(raport.Tab[i].IdealValue.ToString());
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
@@ -1445,7 +1715,7 @@ namespace LaboratoryApp.ViewModel
                             {
                                 row.Cells[1].Shading.Color = Colors.LightGray;
                             }
-                            row.Cells[1].AddParagraph(raport.Tab[i].MeasureValue.ToString());
+                            row.Cells[1].AddParagraph(raport.Tab[i].MeasureValue.ToString().Replace(".", ","));
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                             row.Cells[2].AddParagraph(raport.Tab[i].IdealValue.ToString());
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
@@ -1469,7 +1739,7 @@ namespace LaboratoryApp.ViewModel
 
                             row.Cells[0].AddParagraph(raport.Tab[i].Multiples.ToString());
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                            row.Cells[1].AddParagraph(raport.Tab[i].MeasureValue.ToString());
+                            row.Cells[1].AddParagraph(raport.Tab[i].MeasureValue.ToString().Replace(".", ","));
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                             row.Cells[2].AddParagraph(raport.Tab[i].IdealValue.ToString());
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
@@ -1488,7 +1758,7 @@ namespace LaboratoryApp.ViewModel
                             {
                                 row.Cells[0].Shading.Color = Colors.LightGray;
                             }
-                            row.Cells[0].AddParagraph(raport.Tab[i].MeasureValue.ToString() + raport.Tab[i].Prefix);
+                            row.Cells[0].AddParagraph(raport.Tab[i].MeasureValue.ToString().Replace(".", ",") + raport.Tab[i].Prefix);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                             row.Cells[1].AddParagraph(raport.Tab[i].IdealValue.ToString() + raport.Tab[i].Prefix);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
@@ -1499,7 +1769,7 @@ namespace LaboratoryApp.ViewModel
                             {
                                 row.Cells[3].Shading.Color = Colors.LightGray;
                             }
-                            row.Cells[3].AddParagraph(raport.Tab[i].MeasureValue25V.ToString() + raport.Tab[i].Prefix);
+                            row.Cells[3].AddParagraph(raport.Tab[i].MeasureValue25V.ToString().Replace(".", ",") + raport.Tab[i].Prefix);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
 
                             row.Cells[4].AddParagraph(raport.Tab[i].Difference25V.ToString() + raport.Tab[i].Prefix);
@@ -1520,7 +1790,7 @@ namespace LaboratoryApp.ViewModel
                             {
                                 row.Cells[0].Shading.Color = Colors.LightGray;
                             }
-                            row.Cells[0].AddParagraph(raport.Tab[i].MeasureValue.ToString() + raport.Tab[i].Prefix);
+                            row.Cells[0].AddParagraph(raport.Tab[i].MeasureValue.ToString().Replace(".", ",") + raport.Tab[i].Prefix);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                             row.Cells[1].AddParagraph(raport.Tab[i].IdealValue.ToString() + raport.Tab[i].Prefix);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
@@ -1545,7 +1815,7 @@ namespace LaboratoryApp.ViewModel
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                             row.Cells[1].AddParagraph(raport.Tab[i].SymulatedResistance.ToString() + raport.Tab[i].Prefix);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                            row.Cells[2].AddParagraph(raport.Tab[i].MeasureValue.ToString());
+                            row.Cells[2].AddParagraph(raport.Tab[i].MeasureValue.ToString().Replace(".", ","));
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                             row.Cells[3].AddParagraph(raport.Tab[i].ResistanceMeasure.ToString() + raport.Tab[i].Prefix);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
@@ -1562,7 +1832,41 @@ namespace LaboratoryApp.ViewModel
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                         }
 
-                        if (raport is NewWindowTable15Generate)
+                    if (raport is NewWindowTable11Generate)
+                    {
+                        if (raport.Tab[i].ColorResult4.Color != null && raport.Tab[i].ColorResult4.Color == System.Windows.Media.Colors.LightGray)
+                        {
+                            row.Cells[0].Shading.Color = Colors.LightGray;
+                        }
+                        row.Cells[0].AddParagraph(raport.Tab[i].MeasureValue.ToString().Replace(".", ","));
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        row.Cells[1].AddParagraph(raport.Tab[i].MeasureValueTab11Rezystancja.ToString());
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        row.Cells[2].AddParagraph(raport.Tab[i].MeasureValueTab11Reaktancja.ToString());
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        row.Cells[3].AddParagraph(raport.Tab[i].IdealValue.ToString());
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+
+                        row.Cells[4].AddParagraph(raport.Tab[i].IdealValueTab11Rezystancja.ToString().Replace(".",","));
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        row.Cells[5].AddParagraph(raport.Tab[i].IdealValueTab11Reaktancja.ToString().Replace(".", ","));
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        row.Cells[6].AddParagraph(raport.Tab[i].RelativeErrorTab11Impedancja.ToString());
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        row.Cells[7].AddParagraph(raport.Tab[i].RelativeErrorTab11Rezystancja.ToString());
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        row.Cells[8].AddParagraph(raport.Tab[i].RelativeErrorTab11Reaktancja.ToString());
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+
+                        row.Cells[9].AddParagraph(raport.Tab[i].MaxError.ToString());
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        row.Cells[10].AddParagraph(raport.Tab[i].ErrorInValue.ToString());
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        row.Cells[11].AddParagraph(raport.Tab[i].ErrorInPercent.ToString() + " %");
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                    }
+
+                    if (raport is NewWindowTable15Generate)
                         {
                             if (raport.Tab[i].ColorResultTab15_50V.Color != null && raport.Tab[i].ColorResultTab15_50V.Color == System.Windows.Media.Colors.LightGray)
                             {
@@ -1572,7 +1876,7 @@ namespace LaboratoryApp.ViewModel
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                             row.Cells[1].AddParagraph(raport.Tab[i].ResistanceOfGround.ToString() + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                            row.Cells[2].AddParagraph(raport.Tab[i].MeasureValue.ToString() + raport.Tab[i].Prefix2);
+                            row.Cells[2].AddParagraph(raport.Tab[i].MeasureValue.ToString().Replace(".", ",") + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                             row.Cells[3].AddParagraph(raport.Tab[i].DifferenceResistance.ToString() + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
@@ -1581,7 +1885,7 @@ namespace LaboratoryApp.ViewModel
                             {
                                 row.Cells[4].Shading.Color = Colors.LightGray;
                             }
-                            row.Cells[4].AddParagraph(raport.Tab[i].MeasureValue25V.ToString() + raport.Tab[i].Prefix2);
+                            row.Cells[4].AddParagraph(raport.Tab[i].MeasureValue25V.ToString().Replace(".", ",") + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                             row.Cells[5].AddParagraph(raport.Tab[i].DifferenceResistancev2.ToString() + raport.Tab[i].Prefix2);
 
@@ -1607,7 +1911,7 @@ namespace LaboratoryApp.ViewModel
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                             row.Cells[1].AddParagraph(raport.Tab[i].ResistanceOfGroundv2.ToString() + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                            row.Cells[2].AddParagraph(raport.Tab[i].MeasureValueTab16.ToString() + raport.Tab[i].Prefix2);
+                            row.Cells[2].AddParagraph(raport.Tab[i].MeasureValueTab16.ToString().Replace(".", ",") + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                             row.Cells[3].AddParagraph(raport.Tab[i].DifferenceResist10m.ToString() + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
@@ -1616,7 +1920,7 @@ namespace LaboratoryApp.ViewModel
                             {
                                 row.Cells[4].Shading.Color = Colors.LightGray;
                             }
-                            row.Cells[4].AddParagraph(raport.Tab[i].MeasureValue25VTab16.ToString() + raport.Tab[i].Prefix2);
+                            row.Cells[4].AddParagraph(raport.Tab[i].MeasureValue25VTab16.ToString().Replace(".", ",") + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                             row.Cells[5].AddParagraph(raport.Tab[i].DifferenceResist10mv2.ToString() + raport.Tab[i].Prefix2);
 
@@ -1641,7 +1945,7 @@ namespace LaboratoryApp.ViewModel
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                             row.Cells[1].AddParagraph(raport.Tab[i].ReferenceVoltage.ToString());
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
-                            row.Cells[2].AddParagraph(raport.Tab[i].MeasureValue.ToString() + raport.Tab[i].Prefix2);
+                            row.Cells[2].AddParagraph(raport.Tab[i].MeasureValue.ToString().Replace(".", ",") + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                             row.Cells[3].AddParagraph(raport.Tab[i].IdealValue.ToString() + raport.Tab[i].Prefix2);
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
@@ -1657,7 +1961,47 @@ namespace LaboratoryApp.ViewModel
                             row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                         }
 
+                    if (raport is NewWindowTable19Generate)
+                    {
+                        if (raport.Tab[i].ColorResult.Color != null && raport.Tab[i].ColorResult.Color == System.Windows.Media.Colors.LightGray)
+                        {
+                            row.Cells[0].Shading.Color = Colors.LightGray;
+                        }
+                        row.Cells[0].AddParagraph(raport.Tab[i].MeasureValue.ToString().Replace(".", ","));
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        row.Cells[1].AddParagraph(raport.Tab[i].IdealValue.ToString());
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        row.Cells[2].AddParagraph(raport.Tab[i].RelativeErrorTab11Impedancja.ToString());
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        row.Cells[3].AddParagraph(raport.Tab[i].MaxError.ToString());
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        row.Cells[4].AddParagraph(raport.Tab[i].ErrorInValue.ToString());
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        row.Cells[5].AddParagraph(raport.Tab[i].ErrorInPercent.ToString() + " %");
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
                     }
+
+                    if (raport is NewWindowTable20Generate || raport is NewWindowTable21Generate)
+                    {
+                        if (raport.Tab[i].ColorResult.Color != null && raport.Tab[i].ColorResult.Color == System.Windows.Media.Colors.LightGray)
+                        {
+                            row.Cells[0].Shading.Color = Colors.LightGray;
+                        }
+                        row.Cells[0].AddParagraph(raport.Tab[i].MeasureValue.ToString().Replace(".", ","));
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        row.Cells[1].AddParagraph(raport.Tab[i].IdealValue.ToString());
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        row.Cells[2].AddParagraph(raport.Tab[i].Difference.ToString());
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        row.Cells[3].AddParagraph("±" + raport.Tab[i].AdmissibleDiffrentOfPressures.ToString());
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        row.Cells[4].AddParagraph(raport.Tab[i].UpMeasureError.ToString());
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                        row.Cells[5].AddParagraph(raport.Tab[i].ErrorInPercent.ToString() + " %");
+                        row.VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Top;
+                    }
+
+                }
                 #endregion
 
                 table.Rows.Height = 15;
@@ -1769,11 +2113,11 @@ namespace LaboratoryApp.ViewModel
             row.Cells[0].AddParagraph("Stwierdzenie zgodności: ");
             if (raport.SelectedCompatibility == "Zgodny")
             {
-                row.Cells[1].AddParagraph("Na podstawie przeprowadzonych badań oraz ich wyników stwierdzono, że przyrząd spełnia deklarowane parametry użytkowe i funkcjinalne");
+                row.Cells[1].AddParagraph("Na podstawie przeprowadzonych badań oraz ich wyników stwierdzono, że przyrząd spełnia deklarowane parametry użytkowe i funkcjonalne");
             }
             else
             {
-                row.Cells[1].AddParagraph("Na podstawie przeprowadzonych badań oraz ich wyników stwierdzono, że przyrząd nie spełnia deklarowanych parametrów użytkowych i funkcjinalnych");
+                row.Cells[1].AddParagraph("Na podstawie przeprowadzonych badań oraz ich wyników stwierdzono, że przyrząd nie spełnia deklarowanych parametrów użytkowych i funkcjonalnych");
             }
 
             row = table.AddRow();
@@ -1784,15 +2128,21 @@ namespace LaboratoryApp.ViewModel
             {
                 if(fun.IsChecked)
                 {  
-                    raport.CheckedFunction += fun.name + ";";
+                    raport.CheckedFunction += fun.name + "; ";
                 }
-                LaboratoryEntities context = MainWindowViewModel.Context;
+                //LaboratoryEntities context = MainWindowViewModel.Context;
 
             }
-
+            if (raport.CheckedFunction == null)
+            {
+               
+            }
+            else
+            {
                 row.Cells[1].AddParagraph(raport.CheckedFunction);
                 row = table.AddRow();
                 row.Cells[0].Format.Font.Bold = true;
+            }
                 row.Cells[0].AddParagraph("Niepewność pomiaru: ");
                 row.Cells[1].AddParagraph(raport.Uncertainty);
                 row = table.AddRow();
@@ -1805,65 +2155,79 @@ namespace LaboratoryApp.ViewModel
                 row.Cells[1].AddParagraph(raport.DateSurvey);
                 row = table.AddRow();
                 row.Cells[0].Format.Font.Bold = true;
-                row.Cells[0].AddParagraph("Zalecenia dotyczące kolejnego wzorcowania: ");
+
+            gauge SelectedGauge;
+            using (LaboratoryEntities context = new LaboratoryEntities())
+            {
+                gauge tmpGauge = (gauge)MainWindowViewModel.selectedNode;
+                SelectedGauge = (from g in context.gauges where tmpGauge.gaugeId == g.gaugeId select g).FirstOrDefault();
+
+                if (SelectedGauge.model_of_gauges.type.name == "Luksomierz")
+                {
+                    row.Cells[0].AddParagraph("Uwagi: ");
+                }
+                else
+                {
+                    row.Cells[0].AddParagraph("Zalecenia dotyczące kolejnego wzorcowania: ");
+                }
                 row.Cells[1].AddParagraph(raport.Recommendations);
 
-            try
-            { 
-                row = table.AddRow();
-                row.Cells[0].Format.Font.Bold = true;
-                row.Cells[0].AddParagraph("Pomiary zatwierdził: ");
-
-                row.Cells[1].AddParagraph(raport.Author);
-
-                string line = "";
-                if (raport.PrintStamp == "Tak")
+                try
                 {
-                    try
+                    row = table.AddRow();
+                    row.Cells[0].Format.Font.Bold = true;
+                    row.Cells[0].AddParagraph("Pomiary zatwierdził: ");
+
+                    row.Cells[1].AddParagraph(raport.Author);
+
+                    string line = "";
+                    if (raport.PrintStamp == "Tak")
                     {
-                        foreach (string str in File.ReadAllLines(MainWindowViewModel.usersApplication))
+                        try
                         {
-                            line = str;
-                            if (str.Contains(raport.Author) && str.Contains("PATH"))
+                            foreach (string str in File.ReadAllLines(MainWindowViewModel.usersApplication))
                             {
-                                int index = str.IndexOf("PATH");
-                                //+5 because we need only direct path without text : "PATH="
-                                line = str.Substring(index +5);
+                                line = str;
+                                if (str.Contains(raport.Author) && str.Contains("PATH"))
+                                {
+                                    int index = str.IndexOf("PATH");
+                                    //+5 because we need only direct path without text : "PATH="
+                                    line = str.Substring(index + 5);
+                                }
                             }
+
+                        }
+                        catch (Exception e)
+                        {
+                            File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                        }
+
+                        //it could be problem when we change localization of stamp
+                        try
+                        {
+                            Image img = row.Cells[1].AddImage(line);
+                            img.Height = "1.6cm";
+                            img.Width = "3.2cm";
+                            //img.LockAspectRatio = true;
+                            //img.RelativeVertical = RelativeVertical.Line;
+                            //img.RelativeHorizontal = RelativeHorizontal.Margin;
+                            //img.Top = ShapePosition.Top;
+                            //img.Left = ShapePosition.Left;
+                            //img.WrapFormat.Style = WrapStyle.Through;
+                        }
+                        catch (Exception e)
+                        {
+                            File.AppendAllText(MainWindowViewModel.path, e.ToString());
                         }
 
                     }
-                    catch (Exception e)
-                    {
-                        File.AppendAllText(MainWindowViewModel.path, e.ToString());
-                    }
-                    
-                    //it could be problem when we change localization of stamp
-                    try
-                    {
-                        Image img = row.Cells[1].AddImage(line);
-                        img.Height = "1.6cm";
-                        img.Width = "3.2cm";
-                        //img.LockAspectRatio = true;
-                        //img.RelativeVertical = RelativeVertical.Line;
-                        //img.RelativeHorizontal = RelativeHorizontal.Margin;
-                        //img.Top = ShapePosition.Top;
-                        //img.Left = ShapePosition.Left;
-                        //img.WrapFormat.Style = WrapStyle.Through;
-                    }
-                    catch (Exception e)
-                    {
-                        File.AppendAllText(MainWindowViewModel.path, e.ToString());
-                    }
 
                 }
-
+                catch
+                {
+                    MessageBox.Show("Podaj swoje dane do świadectwa.");
+                }
             }
-            catch
-            {
-                MessageBox.Show("Podaj swoje dane do świadectwa.");
-            }
-
 
 
         }

@@ -26,7 +26,7 @@
         </Style>
     </UserControl.Resources>
     <Grid >
-        <DataGrid AutoGenerateColumns="False" SelectedItem="{Binding SelectedData}" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="14,105,0,0" VerticalAlignment="Top" Height="348" Width="742">
+        <DataGrid AutoGenerateColumns="False" SelectedItem="{Binding SelectedData}" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="14,105,0,0" VerticalAlignment="Top" Height="348" Width="601">
             <DataGrid.Columns>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="88" Header="Nominalny prąd wyłącznika RCD [mA] (krotność 1x)" Binding="{Binding Multiples, Converter={StaticResource MyConverter}}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Zmierzony czas zadziałania wyłącznika RCD na mierniku sprawdzanym [ms]" Binding="{Binding MeasureValue, Converter={StaticResource MyConverter}}" >
@@ -48,13 +48,13 @@
         <Label Content="Stała" HorizontalAlignment="Left" Margin="90,72,0,0" VerticalAlignment="Top" Width="41"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="44,72,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.Percent, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="40"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="141,73,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.Constant, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="48"/>
-        <Label Content="Liczb znaczących" HorizontalAlignment="Left" Margin="193,73,0,0" VerticalAlignment="Top" Width="101"/>
+        <Label Content="Liczb znaczących" HorizontalAlignment="Left" Margin="203,73,0,0" VerticalAlignment="Top" Width="101"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="306,74,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.ImportantNumber, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="74"/>
         <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="664,184,0,0" VerticalAlignment="Top" Width="77"/>
 
-        <Button Width="77" VerticalAlignment="Top" Margin="0,126,25,0" HorizontalAlignment="Right" Command="{Binding OKCommand}" Content="OK">
+        <Button Width="77" VerticalAlignment="Top" Margin="0,124,35,0" HorizontalAlignment="Right" Command="{Binding OKCommand}" Content="OK">
             <Button.Style>
-                <Style TargetType="{x:Type Button}">
+                <Style TargetType="{x:Type Button}"  BasedOn="{StaticResource {x:Type Button}}" >
                     <Setter Property="IsEnabled" Value="false"/>
                     <Style.Triggers>
                         <MultiDataTrigger>
@@ -84,7 +84,7 @@
         <Label Content="Stała " HorizontalAlignment="Left" Margin="90,22,0,0" VerticalAlignment="Top" Width="41"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="44,22,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.PercentIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="40"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="140,22,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.ConstantIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="49"/>
-        <Label Content="Liczb znaczących " HorizontalAlignment="Left" Margin="193,22,0,0" VerticalAlignment="Top" Width="106"/>
+        <Label Content="Liczb znaczących " HorizontalAlignment="Left" Margin="203,22,0,0" VerticalAlignment="Top" Width="106"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="306,22,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.ImportantNumberIdeal, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="73"/>
         <Label Content="Dokładności kalibratora" HorizontalAlignment="Left" Margin="13,0,0,0" VerticalAlignment="Top"/>
         <Label Content="Dokładności miernika" HorizontalAlignment="Left" Margin="10,48,0,0" VerticalAlignment="Top"/>

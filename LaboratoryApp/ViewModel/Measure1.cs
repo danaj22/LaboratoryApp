@@ -16,7 +16,7 @@ namespace LaboratoryApp.ViewModel
         public Measure1(SerializationInfo info, StreamingContext ctxt)
         {
             //Get the values from info and assign them to the appropriate properties
-            IdealValue = (double)info.GetValue("IdealVal", typeof(double));
+            IdealValue = (string)info.GetValue("IdealVal", typeof(string));
             Prefix = (string)info.GetValue("Pref", typeof(string));
             Prefix2 = (string)info.GetValue("Pref2", typeof(string));
             ReferenceVoltage = (double)info.GetValue("RefVolt", typeof(double));
@@ -29,6 +29,14 @@ namespace LaboratoryApp.ViewModel
             ImportantNumberIdeal = (double)info.GetValue("ImpNumI", typeof(double));
             Constant = (double)info.GetValue("Cons", typeof(double));
             ConstantIdeal = (double)info.GetValue("ConsI", typeof(double));
+
+            //table 11
+            IdealValueTab11Rezystancja = (string)info.GetValue("IdealValRezystancja", typeof(string));
+            IdealValueTab11Reaktancja = (string)info.GetValue("IdealValReaktancja", typeof(string));
+
+            //table 20
+            AdmissibleDiffrentOfPressures = (double)info.GetValue("AdmissDiffOfPress", typeof(double));
+
 
         }
 
@@ -53,10 +61,17 @@ namespace LaboratoryApp.ViewModel
             info.AddValue("ImpNumI", ImportantNumberIdeal); 
             info.AddValue("Cons", Constant);
             info.AddValue("ConsI", ConstantIdeal);
-            
+
+            //table 11 
+            info.AddValue("IdealValRezystancja", IdealValueTab11Rezystancja);
+            info.AddValue("IdealValReaktancja", IdealValueTab11Reaktancja);
+
+            //table 20
+            info.AddValue("AdmissDiffOfPress", AdmissibleDiffrentOfPressures);
 
         }
         #region
+
         private double differenceResist10m;
         public double DifferenceResist10m
         {
@@ -93,33 +108,64 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
-        private double measureValueTab16;
-        public double MeasureValueTab16
+        private string measureValueTab16;
+        public string MeasureValueTab16
         {
             get { return measureValueTab16; }
             set
             {
-                double number;
-                if (value is double)
-                {
-                    number = (double)value;
-                    number = Math.Round(number, 4);
-                    value = number;
-                }
+
                 measureValueTab16 = value;
                 OnPropertyChanged("MeasureValueTab16");
-                ResistanceOfGroundv2 = this.Multiples * 10 * 2 * Math.PI;
+
+                string tmpResOfGndv2 = (Multiples * 10 * 2 * Math.PI).ToString();
+                if (tmpResOfGndv2.Contains(","))
+                {
+                    int index = tmpResOfGndv2.IndexOf(",");
+                    ResistanceOfGroundv2 = tmpResOfGndv2.Substring(0, index + 3);
+                }
+
+                double resGndv2 = 0;
+                try
+                {
+                    resGndv2 = Convert.ToDouble(this.ResistanceOfGroundv2.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+                double measValTab16 = 0;
+                try
+                {
+                    measValTab16 = Convert.ToDouble(this.MeasureValueTab16.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+                double measVal25VTab16 = 0;
+                try
+                {
+                    measVal25VTab16 = Convert.ToDouble(this.MeasureValue25VTab16.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
                 //dla sondy 10 m
-                DifferenceResist10m = this.MeasureValueTab16 - this.ResistanceOfGroundv2;
-                DifferenceResist10mv2 = this.MeasureValue25VTab16 - this.ResistanceOfGroundv2;
+                DifferenceResist10m = measValTab16 - resGndv2;
+                DifferenceResist10mv2 = measVal25VTab16 - resGndv2;
 
-                RelativeErrorTab16 = this.MeasureValueTab16 * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+                RelativeErrorTab16 = measValTab16 * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
 
-                this.ErrorInValuev3 = this.ResistanceOfGroundv2 * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
-                this.ErrorInPercentv3 = ErrorInValuev3 / ResistanceOfGroundv2;
+                this.ErrorInValuev3 = resGndv2 * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
+                this.ErrorInPercentv3 = ErrorInValuev3 / resGndv2 * 100;
                 BrushConverter conv = new BrushConverter();
 
-                if (ResistanceOfGroundv2 > Math.Abs(RelativeErrorTab16) + MeasureValueTab16 || ResistanceOfGroundv2 < MeasureValueTab16 - Math.Abs(RelativeErrorTab16))
+                if (resGndv2 > Math.Abs(RelativeErrorTab16) + measValTab16 || resGndv2 < measValTab16 - Math.Abs(RelativeErrorTab16))
                 {
 
                     ColorResultTab16_50V = conv.ConvertFromString("LightGray") as SolidColorBrush;
@@ -150,33 +196,64 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
-        private double measureValue25VTab16;
-        public double MeasureValue25VTab16
+        private string measureValue25VTab16;
+        public string MeasureValue25VTab16
         {
             get { return measureValue25VTab16; }
             set
             {
-                double number;
-                if (!double.IsNaN(value))
-                {
-                    number = (double)value;
-                    number = Math.Round(number, 4);
-                    value = number;
-                }
+
                 measureValue25VTab16 = value;
                 OnPropertyChanged("MeasureValue25VTab16");
 
-                RelativeError25VTab16 = this.MeasureValue25VTab16 * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+                string tmpResOfGndv2 = (Multiples * 10 * 2 * Math.PI).ToString();
+                if (tmpResOfGndv2.Contains(","))
+                {
+                    int index = tmpResOfGndv2.IndexOf(",");
+                    ResistanceOfGroundv2 = tmpResOfGndv2.Substring(0, index + 3);
+                }
 
-                ResistanceOfGroundv2 = this.Multiples * 10 * 2 * Math.PI;
+                double resGndv2 = 0;
+                try
+                {
+                    resGndv2 = Convert.ToDouble(this.ResistanceOfGroundv2.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+                double measValTab16 = 0;
+                try
+                {
+                    measValTab16 = Convert.ToDouble(this.MeasureValueTab16.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+                double measVal25VTab16 = 0;
+                try
+                {
+                    measVal25VTab16 = Convert.ToDouble(this.MeasureValue25VTab16.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+
+                RelativeError25VTab16 = measVal25VTab16 * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+
                 //dla sondy 10 m
-                DifferenceResist10m = this.MeasureValueTab16 - this.ResistanceOfGroundv2;
-                DifferenceResist10mv2 = this.MeasureValue25VTab16 - this.ResistanceOfGroundv2;
+                DifferenceResist10m = measValTab16 - resGndv2;
+                DifferenceResist10mv2 = measVal25VTab16 - resGndv2;
 
-                this.ErrorInValuev3 = this.ResistanceOfGroundv2 * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
-                this.ErrorInPercentv3 = ErrorInValuev3 / ResistanceOfGroundv2;
+                this.ErrorInValuev3 = resGndv2 * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
+                this.ErrorInPercentv3 = ErrorInValuev3 / resGndv2 * 100;
                 BrushConverter conv = new BrushConverter();
-                if (ResistanceOfGroundv2 > Math.Abs(RelativeError25VTab16) + MeasureValue25VTab16 || ResistanceOfGroundv2 < MeasureValue25VTab16 - Math.Abs(RelativeError25VTab16))
+                if (resGndv2 > Math.Abs(RelativeError25VTab16) + measVal25VTab16 || resGndv2 < measVal25VTab16 - Math.Abs(RelativeError25VTab16))
                 {
 
                     ColorResultTab16_25V = conv.ConvertFromString("LightGray") as SolidColorBrush;
@@ -191,35 +268,83 @@ namespace LaboratoryApp.ViewModel
         }
 
 
-        private double idealValue;
+        private string idealValue;
 
-        public double IdealValue
+        public string IdealValue
         {
             get { return idealValue; }
             set
             {
-                double number;
-                if (value is double)
+               // double number;
+                //if (value is string)
                 {
-                    number = (double)value;
-                    number = Math.Round(number, 4);
-                    value = number;
+                   // number = (double)Convert.ToDouble(value.Replace(".",","));
+                   // number = Math.Round(number, 4);
+                   // value = number.ToString();
                 }
+
                 idealValue = value;
                 OnPropertyChanged("IdealValue");
-                Difference = this.MeasureValue - this.IdealValue;
-                Difference25V = this.MeasureValue25V - this.IdealValue;
-                RelativeError = this.MeasureValue * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
-                RelativeError25V = this.MeasureValue25V * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
 
-                ResistanceOfGround = this.Multiples * 1 * 2 * Math.PI;
+                //
+                //tymczasowe wartości dla konwersji słowa na liczbę
+                double measVal = 0;
+                double idealVal = 0;
+                double measVal25V = 0;
+                try
+                {
+                    measVal = Convert.ToDouble(this.MeasureValue.Replace(".", ","));
 
-                this.DownMeasureError = this.MeasureValue - this.MeasureValue * this.Percent * 0.01 - this.ImportantNumber - this.Constant;
-                this.UpMeasureError = this.MeasureValue + this.MeasureValue * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+                try
+                {
+                    idealVal = Convert.ToDouble(this.IdealValue.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+                try
+                {
+                    measVal25V = Convert.ToDouble(this.MeasureValue25V.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+
+                //
+                // aktualizacja wszystkich pól
+                //
+                #region
+                Difference = measVal - idealVal;
+                Difference25V = measVal25V - idealVal;
+                //dla tab 11
+                RelativeErrorTab11Impedancja = Math.Abs(measVal - idealVal);
+
+                RelativeError = measVal * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+                RelativeError25V = measVal25V * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+
+                string tmpResOfGnd = (Multiples * 1 * 2 * Math.PI).ToString(); //table 15
+                if (tmpResOfGnd.Contains(","))
+                {
+                    int index = tmpResOfGnd.IndexOf(",");
+                    ResistanceOfGround = tmpResOfGnd.Substring(0, index + 3);
+                }
+
+                this.DownMeasureError = measVal - measVal * this.Percent * 0.01 - this.ImportantNumber - this.Constant;
+                this.UpMeasureError = measVal + measVal * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
 
 
-                this.ErrorInValue = this.IdealValue * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
-                this.ErrorInPercent = ErrorInValue / IdealValue;
+                this.ErrorInValue = idealVal * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
+                this.ErrorInPercent = ErrorInValue / idealVal * 100;
+                #endregion
             }
         }
         private string prefix;
@@ -256,6 +381,7 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("ColorResult");
             }
         }
+
         private SolidColorBrush colorResult2 = new SolidColorBrush();
 
         public SolidColorBrush ColorResult2
@@ -269,6 +395,18 @@ namespace LaboratoryApp.ViewModel
         {
             get { return colorResult3; }
             set { colorResult3 = value; OnPropertyChanged("ColorResult3"); }
+        }
+
+        private SolidColorBrush colorResult4 = new SolidColorBrush();
+
+        public SolidColorBrush ColorResult4
+        {
+            get { return colorResult4; }
+            set
+            {
+                colorResult4 = value;
+                OnPropertyChanged("ColorResult4");
+            }
         }
         private SolidColorBrush colorResultTab15_50V = new SolidColorBrush();
 
@@ -302,56 +440,115 @@ namespace LaboratoryApp.ViewModel
             { colorResultTab16_25V = value; OnPropertyChanged("ColorResultTab16_25V"); }
         }
 
-        private double measureValue;
+        private string measureValue;
 
-        public double MeasureValue
+        public string MeasureValue
         {
             get { return measureValue; }
             set
             {
-                double number;
-                if (value is double)
-                {
-                    number = (double)value;
-                    number = Math.Round(number, 4);
-                    value = number;
-                }
+                //double number;
+                //if (value is double)
+                //{
+                //    number = (double)value;
+                //    number = Math.Round(number, 4);
+                //    value = number;
+                //}
+
 
                 measureValue = value;
 
                 OnPropertyChanged("MeasureValue");
 
-                Difference = this.MeasureValue - this.IdealValue;
-                Difference25V = this.MeasureValue25V - this.IdealValue;
+                //
+                //tymczasowe wartości do konwersji słowa na liczbę
+                double measVal = 0;
+                double idealVal = 0;
+                double measVal25V = 0;
+                double resGnd = 0;
 
-                RelativeError = this.MeasureValue * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
-                RelativeError25V = this.MeasureValue25V * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+                try
+                {
+                    measVal = Convert.ToDouble(this.MeasureValue.Replace(".", ","));
 
-                ErrorRelativePercent = Math.Round((IdealValue - MeasureValue) / MeasureValue * 100, 4);
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+                try
+                {
+                    idealVal = Convert.ToDouble(this.IdealValue.Replace(".", ","));
 
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+                try
+                {
+                    measVal25V = Convert.ToDouble(this.MeasureValue25V.Replace(".", ","));
 
-                ResistanceOfGround = this.Multiples * 1 * 2 * Math.PI;
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+                ///
+                ///aktualizacja wszytkich pól
+                ///
+                #region 
+                { 
+                Difference = measVal - idealVal;
+                Difference25V = measVal25V - idealVal;
 
+                RelativeError = measVal * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+                RelativeError25V = measVal25V * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+
+                ErrorRelativePercent = Math.Round((idealVal - measVal) / measVal * 100, 4);
+}
+                //dla tabeli 11 
+                RelativeErrorTab11Impedancja = Math.Abs(measVal - idealVal);
+                this.MaxError = measVal * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+                this.ErrorInValue = idealVal * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
+                this.ErrorInPercent = ErrorInValue / idealVal *100;
+
+                string tmpResOfGnd = (Multiples * 1 * 2 * Math.PI).ToString(); //table 15
+                if (tmpResOfGnd.Contains(","))
+                {
+                    int index = tmpResOfGnd.IndexOf(",");
+                    ResistanceOfGround = tmpResOfGnd.Substring(0, index + 3);
+                }
+
+                try
+                {
+                    resGnd = Convert.ToDouble(this.ResistanceOfGround.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
                 //dla sondy 1m
-                DifferenceResistance = this.MeasureValue - this.ResistanceOfGround;
-                DifferenceResistancev2 = this.MeasureValue25V - this.ResistanceOfGround;
+                DifferenceResistance = measVal - resGnd;
+                DifferenceResistancev2 = measVal25V - resGnd;
 
 
 
-                this.DownMeasureError = this.MeasureValue - this.MeasureValue * this.Percent * 0.01 - this.ImportantNumber - this.Constant;
-                this.UpMeasureError = this.MeasureValue + this.MeasureValue * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+                this.DownMeasureError = measVal - measVal * this.Percent * 0.01 - this.ImportantNumber - this.Constant;
+                this.UpMeasureError = measVal + measVal * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
 
                 //for table 15 and 16
-                this.ErrorInValuev2 = this.ResistanceOfGround * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
-                this.ErrorInPercentv2 = ErrorInValuev2 / ResistanceOfGround;
+                this.ErrorInValuev2 = resGnd * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
+                this.ErrorInPercentv2 = ErrorInValuev2 / resGnd * 100;
 
 
-                this.ErrorInValue = this.IdealValue * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
-                this.ErrorInPercent = ErrorInValue / IdealValue;
+                this.ErrorInValue = idealVal * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
+                this.ErrorInPercent = ErrorInValue / idealVal * 100;
 
                 BrushConverter conv = new BrushConverter();
 
-                if (IdealValue > UpMeasureError || IdealValue < DownMeasureError)
+                if (idealVal > UpMeasureError || idealVal < DownMeasureError)
                 {
                     conv = new BrushConverter();
                     ColorResult = conv.ConvertFromString("LightGray") as SolidColorBrush;
@@ -361,7 +558,7 @@ namespace LaboratoryApp.ViewModel
                     ColorResult = new SolidColorBrush();
                 }
 
-                if (IdealValue > Math.Abs(RelativeError) + MeasureValue || IdealValue < MeasureValue - Math.Abs(RelativeError))
+                if (idealVal > Math.Abs(RelativeError) + measVal || idealVal < measVal - Math.Abs(RelativeError))
                 {
                     conv = new BrushConverter();
                     ColorResult2 = conv.ConvertFromString("LightGray") as SolidColorBrush;
@@ -372,7 +569,7 @@ namespace LaboratoryApp.ViewModel
                     ColorResult2 = new SolidColorBrush();
                 }
 
-                if (IdealValue > Math.Abs(RelativeError25V) + MeasureValue25V || IdealValue < MeasureValue25V - Math.Abs(RelativeError25V))
+                if (idealVal > Math.Abs(RelativeError25V) + measVal25V || idealVal < measVal25V - Math.Abs(RelativeError25V))
                 {
                     conv = new BrushConverter();
                     ColorResult3 = conv.ConvertFromString("LightGray") as SolidColorBrush;
@@ -384,7 +581,7 @@ namespace LaboratoryApp.ViewModel
                 }
 
 
-                if (ResistanceOfGround > Math.Abs(RelativeError25V) + MeasureValue25V || ResistanceOfGround < MeasureValue25V - Math.Abs(RelativeError25V))
+                if (resGnd > Math.Abs(RelativeError25V) + measVal25V || resGnd < measVal25V - Math.Abs(RelativeError25V))
                 {
                     conv = new BrushConverter();
 
@@ -395,7 +592,7 @@ namespace LaboratoryApp.ViewModel
                     ColorResultTab15_25V = new SolidColorBrush();
                 }
 
-                if (ResistanceOfGround > Math.Abs(RelativeError) + MeasureValue || ResistanceOfGround < MeasureValue - Math.Abs(RelativeError))
+                if (resGnd > Math.Abs(RelativeError) + measVal || resGnd < measVal - Math.Abs(RelativeError))
                 {
                     conv = new BrushConverter();
                     ColorResultTab15_50V = conv.ConvertFromString("LightGray") as SolidColorBrush;
@@ -404,50 +601,271 @@ namespace LaboratoryApp.ViewModel
                 {
                     ColorResultTab15_50V = new SolidColorBrush();
                 }
-
+                #endregion
 
             }
         }
-        private double measureValue25V;
 
-        public double MeasureValue25V
+
+        private string relativeErrorTab11Rezystancja;
+        public string RelativeErrorTab11Rezystancja
+        {
+            get
+            {
+                return relativeErrorTab11Rezystancja;
+            }
+
+            set
+            {
+                relativeErrorTab11Rezystancja = value;
+                OnPropertyChanged("RelativeErrorTab11Rezystancja");
+
+                if (IdealValueTab11Rezystancja.Contains("x"))
+                {
+                    if (RelativeErrorTab11Impedancja > MaxError ||
+                    RelativeErrorTab11Reaktancja != null && !RelativeErrorTab11Reaktancja.Contains("x") && Double.Parse(RelativeErrorTab11Reaktancja) > MaxError ||
+                    RelativeErrorTab11Rezystancja != null && !RelativeErrorTab11Rezystancja.Contains("x") && Double.Parse(RelativeErrorTab11Rezystancja) > MaxError)
+                    {
+                        BrushConverter conv = new BrushConverter();
+
+                        conv = new BrushConverter();
+                        ColorResult4 = conv.ConvertFromString("LightGray") as SolidColorBrush;
+                    }
+                    else
+                    {
+                        ColorResult4 = new SolidColorBrush();
+                    }
+                }
+            }
+        }
+
+        private double relativeErrorTab11Impedancja;
+        public double RelativeErrorTab11Impedancja
+        {
+            get
+            {
+                return relativeErrorTab11Impedancja;
+            }
+
+            set
+            {
+                relativeErrorTab11Impedancja = value;
+                OnPropertyChanged("RelativeErrorTab11Impedancja");
+
+                
+                if (RelativeErrorTab11Impedancja > MaxError ||
+                    RelativeErrorTab11Reaktancja != null && !RelativeErrorTab11Reaktancja.Contains("x") && Double.Parse(RelativeErrorTab11Reaktancja) > MaxError ||
+                    RelativeErrorTab11Rezystancja != null && !RelativeErrorTab11Rezystancja.Contains("x") && Double.Parse(RelativeErrorTab11Rezystancja) > MaxError)
+                {
+                    BrushConverter conv = new BrushConverter();
+
+                    conv = new BrushConverter();
+                    ColorResult4 = conv.ConvertFromString("LightGray") as SolidColorBrush;
+                }
+                else
+                {
+                    ColorResult4 = new SolidColorBrush();
+                }
+            }
+        }
+
+        private string relativeErrorTab11Reaktancja;
+        public string RelativeErrorTab11Reaktancja
+        {
+            get
+            {
+                return relativeErrorTab11Reaktancja;
+            }
+
+            set
+            {
+                relativeErrorTab11Reaktancja = value;
+                OnPropertyChanged("RelativeErrorTab11Reaktancja");
+
+
+                if (!IdealValueTab11Reaktancja.Contains("x"))
+                {
+                    if (RelativeErrorTab11Impedancja > MaxError ||
+                    RelativeErrorTab11Reaktancja != null && !RelativeErrorTab11Reaktancja.Contains("x") && Double.Parse(RelativeErrorTab11Reaktancja) > MaxError ||
+                    RelativeErrorTab11Rezystancja != null && !RelativeErrorTab11Rezystancja.Contains("x") && Double.Parse(RelativeErrorTab11Rezystancja) > MaxError)
+                    {
+                        BrushConverter conv = new BrushConverter();
+
+                        conv = new BrushConverter();
+                        ColorResult4 = conv.ConvertFromString("LightGray") as SolidColorBrush;
+                    }
+                    else
+                    {
+                        ColorResult4 = new SolidColorBrush();
+                    }
+                }
+            }
+        }
+
+        private string measureValueTab11Rezystancja;
+        public string MeasureValueTab11Rezystancja
+        {
+            get
+            {
+                return measureValueTab11Rezystancja;
+            }
+
+            set
+            {
+                measureValueTab11Rezystancja = value;
+                OnPropertyChanged("MeasureValueTab11Rezystancja");
+            }
+        }
+
+        private string measureValueTab11Reaktancja;
+        public string MeasureValueTab11Reaktancja
+        {
+            get
+            {
+                return measureValueTab11Reaktancja;
+            }
+
+            set
+            {
+                measureValueTab11Reaktancja = value;
+                OnPropertyChanged("MeasureValueTab11Reaktancja");
+               
+            }
+        }
+
+        private string idealValueTab11Rezystancja;
+        public string IdealValueTab11Rezystancja
+        {
+            get
+            {
+                return idealValueTab11Rezystancja;
+            }
+
+            set
+            {
+                idealValueTab11Rezystancja = value;
+                OnPropertyChanged("IdealValueTab11Rezystancja");
+
+                if (idealValueTab11Rezystancja != null && idealValueTab11Rezystancja.Contains("x"))
+                {
+                    MeasureValueTab11Rezystancja = "xxxx";
+                    RelativeErrorTab11Rezystancja = "xxxx";
+                }
+                else if (MeasureValueTab11Reaktancja != null && MeasureValueTab11Rezystancja != null)
+                {
+                    RelativeErrorTab11Rezystancja = Math.Abs(Double.Parse(this.MeasureValueTab11Rezystancja.Replace(".", ",")) - Double.Parse(IdealValueTab11Rezystancja.Replace(".", ","))).ToString();
+                }
+            }
+        }
+        private string idealValueTab11Reaktancja;
+        public string IdealValueTab11Reaktancja
+        {
+            get
+            {
+                return idealValueTab11Reaktancja;
+            }
+
+            set
+            {
+                idealValueTab11Reaktancja = value;
+                OnPropertyChanged("IdealValueTab11Reaktancja");
+
+                if (idealValueTab11Reaktancja != null && idealValueTab11Reaktancja.Contains("x"))
+                {
+                    MeasureValueTab11Reaktancja = "xxxx";
+                    RelativeErrorTab11Reaktancja = "xxxx";
+                }
+                else if(MeasureValueTab11Reaktancja != null && MeasureValueTab11Rezystancja != null)
+                {
+
+                    RelativeErrorTab11Reaktancja = Math.Abs(Double.Parse(this.MeasureValueTab11Reaktancja.Replace(".",",")) - Double.Parse(IdealValueTab11Reaktancja.Replace(".",","))).ToString();
+                }
+            }
+        }
+
+        private string measureValue25V;
+
+        public string MeasureValue25V
         {
             get { return measureValue25V; }
             set
             {
-                double number;
-                if (value is double)
-                {
-                    number = (double)value;
-                    number = Math.Round(number, 4);
-                    value = number;
-                }
+                
                 measureValue25V = value;
                 OnPropertyChanged("MeasureValue25V");
-                Difference = this.MeasureValue25V - this.IdealValue;
-                Difference25V = this.MeasureValue25V - this.IdealValue;
-                RelativeError = this.MeasureValue * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
-                RelativeError25V = MeasureValue25V * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
-                ResistanceOfGround = Multiples * 1 * 2 * Math.PI; //table 15
+
+                double measVal = 0;
+                double idealVal = 0;
+                double measVal25V = 0;
+                double resGnd = 0;
+                try
+                {
+                    measVal = Convert.ToDouble(this.MeasureValue.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+                try
+                {
+                    idealVal = Convert.ToDouble(this.IdealValue.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+                try
+                {
+                    measVal25V = Convert.ToDouble(this.MeasureValue25V.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+
+
+                Difference = measVal25V - idealVal;
+                Difference25V = measVal25V - idealVal;
+                RelativeError = measVal * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+                RelativeError25V = measVal25V * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+                string tmpResOfGnd = (Multiples * 1 * 2 * Math.PI).ToString(); //table 15
+                if (tmpResOfGnd.Contains(","))
+                {
+                    int index = tmpResOfGnd.IndexOf(",");
+                    ResistanceOfGround = tmpResOfGnd.Substring(0, index + 3);
+                }
+
+                try
+                {
+                    resGnd = Convert.ToDouble(this.ResistanceOfGround.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
 
                 //dla sondy 1m
-                DifferenceResistance = this.MeasureValue - this.ResistanceOfGround;
-                DifferenceResistancev2 = this.MeasureValue25V - this.ResistanceOfGround;
+                DifferenceResistance = measVal - resGnd;
+                DifferenceResistancev2 = measVal25V - resGnd;
 
 
-                this.DownMeasureError = this.MeasureValue25V - this.MeasureValue25V * this.Percent * 0.01 - this.ImportantNumber - this.Constant;
-                this.UpMeasureError = this.MeasureValue25V + this.MeasureValue25V * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+                this.DownMeasureError = measVal25V - measVal25V * this.Percent * 0.01 - this.ImportantNumber - this.Constant;
+                this.UpMeasureError = measVal25V + measVal25V * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
 
                 //for table 15 
-                this.ErrorInValuev2 = this.ResistanceOfGround * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
-                this.ErrorInPercentv2 = ErrorInValuev2 / ResistanceOfGround;
+                this.ErrorInValuev2 = resGnd * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
+                this.ErrorInPercentv2 = ErrorInValuev2 / resGnd * 100;
 
-                this.ErrorInValue = this.IdealValue * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
-                this.ErrorInPercent = ErrorInValue / IdealValue;
+                this.ErrorInValue = idealVal * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
+                this.ErrorInPercent = ErrorInValue / idealVal * 100;
 
                 BrushConverter conv = new BrushConverter();
 
-                if (IdealValue < Math.Abs(RelativeError25V))
+                if (idealVal < Math.Abs(RelativeError25V))
                 {
                     conv = new BrushConverter();
                     ColorResult3 = conv.ConvertFromString("LightGray") as SolidColorBrush;
@@ -458,7 +876,7 @@ namespace LaboratoryApp.ViewModel
                     ColorResult3 = new SolidColorBrush();
                 }
 
-                if (ResistanceOfGround > Math.Abs(RelativeError25V) + MeasureValue25V || ResistanceOfGround < MeasureValue25V - Math.Abs(RelativeError25V))
+                if (resGnd > Math.Abs(RelativeError25V) + measVal25V || resGnd < measVal25V - Math.Abs(RelativeError25V))
                 {
                     conv = new BrushConverter();
 
@@ -469,7 +887,7 @@ namespace LaboratoryApp.ViewModel
                     ColorResultTab15_25V = new SolidColorBrush();
                 }
 
-                if (IdealValue > Math.Abs(RelativeError) + MeasureValue25V || IdealValue < MeasureValue25V - Math.Abs(RelativeError))
+                if (idealVal > Math.Abs(RelativeError) + measVal25V || idealVal < measVal25V - Math.Abs(RelativeError))
                 {
                     conv = new BrushConverter();
                     ColorResult3 = conv.ConvertFromString("LightGray") as SolidColorBrush;
@@ -633,16 +1051,52 @@ namespace LaboratoryApp.ViewModel
             get { return multiples; }
             set
             {
+
+
+
                 multiples = value;
                 OnPropertyChanged("Multiples");
-                ResistanceOfGround = Multiples * 1 * 2 * Math.PI; //table 15
-                ResistanceOfGroundv2 = Multiples * 10 * 2 * Math.PI; //table 16
+                
+                string tmpResOfGnd = (Multiples * 1 * 2 * Math.PI).ToString(); //table 15
+                if (tmpResOfGnd.Contains(","))
+                {
+                    int index = tmpResOfGnd.IndexOf(",");
+                    ResistanceOfGround = tmpResOfGnd.Substring(0, index + 3);
+                }
+                string tmpResOfGndv2 = (Multiples * 10 * 2 * Math.PI).ToString();
+                if(tmpResOfGndv2.Contains(","))
+                {
+                    int index = tmpResOfGndv2.IndexOf(",");
+                    ResistanceOfGroundv2 = tmpResOfGndv2.Substring(0, index + 3);
+                }
+                
                 //for table 15 
-                this.ErrorInValuev2 = this.ResistanceOfGround * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
-                this.ErrorInPercentv2 = ErrorInValuev2 / ResistanceOfGround;
+                double resGnd = 0;
+                try
+                {
+                    resGnd = Convert.ToDouble(this.ResistanceOfGround.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+                double resGndv2 = 0;
+                try
+                {
+                    resGndv2 = Convert.ToDouble(this.ResistanceOfGroundv2.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+
+                this.ErrorInValuev2 = resGnd * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
+                this.ErrorInPercentv2 = ErrorInValuev2 / resGnd * 100;
                 //for table 16
-                this.ErrorInValuev3 = this.ResistanceOfGroundv2 * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
-                this.ErrorInPercentv3 = ErrorInValuev3 / ResistanceOfGroundv2;
+                this.ErrorInValuev3 = resGndv2 * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
+                this.ErrorInPercentv3 = ErrorInValuev3 / resGndv2 * 100;
             }
         }
 
@@ -665,6 +1119,8 @@ namespace LaboratoryApp.ViewModel
                 OnPropertyChanged("Difference");
             }
         }
+
+        private double admissibleDiffrentOfPressures;
         private double maxError;
 
         public double MaxError
@@ -680,6 +1136,20 @@ namespace LaboratoryApp.ViewModel
                     value = number;
                 }
                 maxError = value; OnPropertyChanged("MaxError");
+
+                if (RelativeErrorTab11Impedancja > MaxError ||
+                    RelativeErrorTab11Reaktancja != null && !RelativeErrorTab11Reaktancja.Contains("x") && Double.Parse(RelativeErrorTab11Reaktancja) > MaxError ||
+                    RelativeErrorTab11Rezystancja != null && !RelativeErrorTab11Rezystancja.Contains("x") && Double.Parse(RelativeErrorTab11Rezystancja) > MaxError)
+                {
+                    BrushConverter conv = new BrushConverter();
+
+                    conv = new BrushConverter();
+                    ColorResult4 = conv.ConvertFromString("LightGray") as SolidColorBrush;
+                }
+                else
+                {
+                    ColorResult4 = new SolidColorBrush();
+                }
             }
         }
         private double maxError25V;
@@ -699,48 +1169,83 @@ namespace LaboratoryApp.ViewModel
                 maxError25V = value; OnPropertyChanged("MaxError25V");
             }
         }
-        private double resistanceOfGround;
+        private string resistanceOfGround;
 
-        public double ResistanceOfGround
+        public string ResistanceOfGround
         {
             get { return resistanceOfGround; }
             set
             {
-                double number;
-                if (value is double)
-                {
-                    number = (double)value;
-                    number = Math.Round(number, 4);
-                    value = number;
-                }
+
                 resistanceOfGround = value;
                 OnPropertyChanged("ResistanceOfGround");
-                this.ErrorInValuev2 = this.ResistanceOfGround * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
-                this.ErrorInPercentv2 = ErrorInValuev2 / ResistanceOfGround;
-                this.ErrorInValuev3 = this.ResistanceOfGroundv2 * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
-                this.ErrorInPercentv3 = ErrorInValuev3 / ResistanceOfGroundv2;
+
+                double resGnd = 0;
+                try
+                {
+                    resGnd = Convert.ToDouble(this.ResistanceOfGround.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+                double resGndv2 = 0;
+                try
+                {
+                    resGnd = Convert.ToDouble(this.ResistanceOfGroundv2.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+
+
+                this.ErrorInValuev2 = resGnd * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
+                this.ErrorInPercentv2 = ErrorInValuev2 / resGnd * 100;
+                this.ErrorInValuev3 = resGndv2 * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
+                this.ErrorInPercentv3 = ErrorInValuev3 / resGndv2 * 100;
             }
         }
-        private double resistanceOfGroundv2;
+        private string resistanceOfGroundv2;
 
-        public double ResistanceOfGroundv2
+        public string ResistanceOfGroundv2
         {
             get { return resistanceOfGroundv2; }
             set
             {
-                double number;
-                if (value is double)
-                {
-                    number = (double)value;
-                    number = Math.Round(number, 4);
-                    value = number;
-                }
+
                 resistanceOfGroundv2 = value;
                 OnPropertyChanged("ResistanceOfGroundv2");
-                this.ErrorInValuev2 = this.ResistanceOfGround * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
-                this.ErrorInPercentv2 = ErrorInValuev2 / ResistanceOfGround;
-                this.ErrorInValuev3 = this.ResistanceOfGroundv2 * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
-                this.ErrorInPercentv3 = ErrorInValuev3 / ResistanceOfGroundv2;
+
+                double resGnd = 0;
+                try
+                {
+                    resGnd = Convert.ToDouble(this.ResistanceOfGround.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+
+                double resGndv2 = 0;
+                try
+                {
+                    resGnd = Convert.ToDouble(this.ResistanceOfGroundv2.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+
+
+                this.ErrorInValuev2 = resGnd * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
+                this.ErrorInPercentv2 = ErrorInValuev2 / resGnd * 100;
+                this.ErrorInValuev3 = resGndv2 * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
+                this.ErrorInPercentv3 = ErrorInValuev3 / resGndv2 * 100;
 
                 BrushConverter conv = new BrushConverter();
 
@@ -1046,13 +1551,34 @@ namespace LaboratoryApp.ViewModel
                     value = number;
                 }
                 constant = value;
+                double measVal = 0;
+                double idealVal = 0;
+                try
+                {
+                    measVal = Convert.ToDouble(this.MeasureValue.Replace(".", ","));
 
-                this.DownMeasureError = this.MeasureValue - this.MeasureValue * this.Percent * 0.01 - this.ImportantNumber - this.Constant;
-                this.UpMeasureError = this.MeasureValue + this.MeasureValue * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+                try
+                {
+                    idealVal = Convert.ToDouble(this.IdealValue.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+
+                this.DownMeasureError = measVal - measVal * this.Percent * 0.01 - this.ImportantNumber - this.Constant;
+                this.UpMeasureError = measVal + measVal * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+                this.MaxError = measVal * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
 
                 BrushConverter conv = new BrushConverter();
 
-                if (IdealValue > UpMeasureError || IdealValue < DownMeasureError)
+                if (idealVal > UpMeasureError || idealVal < DownMeasureError)
                 {
                     conv = new BrushConverter();
                     ColorResult = conv.ConvertFromString("LightGray") as SolidColorBrush;
@@ -1081,13 +1607,34 @@ namespace LaboratoryApp.ViewModel
                     value = number;
                 }
                 importantNumber = value;
+                double measVal = 0;
+                double idealVal = 0;
+                try
+                {
+                    measVal = Convert.ToDouble(this.MeasureValue.Replace(".", ","));
 
-                this.DownMeasureError = this.MeasureValue - this.MeasureValue * this.Percent * 0.01 - this.ImportantNumber - this.Constant;
-                this.UpMeasureError = this.MeasureValue + this.MeasureValue * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+                try
+                {
+                    idealVal = Convert.ToDouble(this.IdealValue.Replace(".", ","));
 
-                BrushConverter conv = new BrushConverter();
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
 
-                if (IdealValue > UpMeasureError || IdealValue < DownMeasureError)
+                this.DownMeasureError = measVal - measVal * this.Percent * 0.01 - this.ImportantNumber - this.Constant;
+                this.UpMeasureError = measVal + measVal * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+                this.MaxError = measVal * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+
+                BrushConverter conv = new BrushConverter();                
+
+                if (idealVal > UpMeasureError || idealVal < DownMeasureError)
                 {
                     conv = new BrushConverter();
                     ColorResult = conv.ConvertFromString("LightGray") as SolidColorBrush;
@@ -1116,13 +1663,35 @@ namespace LaboratoryApp.ViewModel
                     value = number;
                 }
                 percent = value;
+                double measVal = 0;
+                double idealVal = 0;
+                try
+                {
+                    measVal = Convert.ToDouble(this.MeasureValue.Replace(".", ","));
 
-                this.DownMeasureError = this.MeasureValue - this.MeasureValue * this.Percent * 0.01 - this.ImportantNumber - this.Constant;
-                this.UpMeasureError = this.MeasureValue + this.MeasureValue * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+                try
+                {
+                    idealVal = Convert.ToDouble(this.IdealValue.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+
+                this.DownMeasureError = measVal - measVal * this.Percent * 0.01 - this.ImportantNumber - this.Constant;
+                this.UpMeasureError = measVal + measVal * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+                this.MaxError = measVal * this.Percent * 0.01 + this.ImportantNumber + this.Constant;
+
 
                 BrushConverter conv = new BrushConverter();
-
-                if (IdealValue > UpMeasureError || IdealValue < DownMeasureError)
+                
+                if ( idealVal > UpMeasureError || idealVal < DownMeasureError)
                 {
                     conv = new BrushConverter();
                     ColorResult = conv.ConvertFromString("LightGray") as SolidColorBrush;
@@ -1152,8 +1721,21 @@ namespace LaboratoryApp.ViewModel
                 }
                 percentIdeal = value;
                 OnPropertyChanged("PercentIdeal");
-                this.ErrorInValue = this.IdealValue * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
-                this.ErrorInPercent = ErrorInValue / IdealValue;
+
+                double idealVal = 0;
+
+                try
+                {
+                    idealVal = Convert.ToDouble(this.IdealValue.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+
+                this.ErrorInValue = idealVal * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
+                this.ErrorInPercent = ErrorInValue / idealVal * 100;
             }
         }
         private double importantNumberIdeal;
@@ -1172,8 +1754,20 @@ namespace LaboratoryApp.ViewModel
                 }
                 importantNumberIdeal = value;
                 OnPropertyChanged("ImportantNumberIdeal");
-                this.ErrorInValue = this.IdealValue * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
-                this.ErrorInPercent = ErrorInValue / IdealValue;
+                double idealVal = 0;
+
+                try
+                {
+                    idealVal = Convert.ToDouble(this.IdealValue.Replace(".", ","));
+
+                }
+                catch (Exception e)
+                {
+                    System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                }
+
+                this.ErrorInValue = idealVal * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
+                this.ErrorInPercent = ErrorInValue / idealVal * 100;
             }
         }
 
@@ -1193,10 +1787,39 @@ namespace LaboratoryApp.ViewModel
                 }
                 constantIdeal = value;
                 OnPropertyChanged("ConstantIdeal");
-                this.ErrorInValue = this.IdealValue * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
-                this.ErrorInPercent = ErrorInValue / IdealValue;
+                if (!String.IsNullOrEmpty(IdealValue))
+                {
+                    double idealVal = 0;
+
+                    try
+                    {
+                        idealVal = Convert.ToDouble(this.IdealValue.Replace(".", ","));
+
+                    }
+                    catch (Exception e)
+                    {
+                        System.IO.File.AppendAllText(MainWindowViewModel.path, e.ToString());
+                    }
+                    this.ErrorInValue = idealVal * this.PercentIdeal * 0.01 + this.ImportantNumberIdeal + this.ConstantIdeal;
+                    this.ErrorInPercent = ErrorInValue / idealVal * 100;
+                }
             }
         }
+
+        public double AdmissibleDiffrentOfPressures
+        {
+            get
+            {
+                return admissibleDiffrentOfPressures;
+            }
+
+            set
+            {
+                admissibleDiffrentOfPressures = value;
+                OnPropertyChanged("AdmissibleDiffrentOfPressures");
+            }
+        }
+
         public Measure1()
         {
             //Percent = NewWindowTableTemplate.percent;

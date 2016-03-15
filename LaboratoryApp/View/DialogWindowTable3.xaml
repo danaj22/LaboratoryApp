@@ -26,7 +26,7 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" SelectedItem="{Binding SelectedData}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="10,104,0,0" VerticalAlignment="Top" Height="344" Width="825">
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" SelectedItem="{Binding SelectedData}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="10,104,0,0" VerticalAlignment="Top" Height="344" Width="603">
             <DataGrid.Columns>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Wartość rezystancji mierzonej na mierniku sprawdzanym [Ω]" Binding="{Binding MeasureValue, Converter={StaticResource MyConverter}}" >
                     <DataGridTextColumn.CellStyle>
@@ -54,7 +54,7 @@
 
         <Button Width="75" VerticalAlignment="Top" Margin="0,105,10,0" HorizontalAlignment="Right" Command="{Binding OKCommand}" Content="OK">
             <Button.Style>
-                <Style TargetType="{x:Type Button}">
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                     <Setter Property="IsEnabled" Value="false"/>
                     <Style.Triggers>
                         <MultiDataTrigger>

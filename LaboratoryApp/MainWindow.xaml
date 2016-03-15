@@ -8,11 +8,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"     
         mc:Ignorable="d"
-        WindowStartupLocation="CenterScreen"
         xmlns:view ="clr-namespace:LaboratoryApp.View"
         xmlns:vm="clr-namespace:LaboratoryApp.ViewModel"
         
-        Title="{Binding Title}" Height="760" Width="950">
+        Title="{Binding Title}" Height="1000" Width="1040"
+        WindowStartupLocation="CenterScreen" WindowState="Maximized"
+                      >
 
     <Window.Resources>
         <ControlTemplate x:Key="errorTemplate">
@@ -29,7 +30,7 @@
                 </AdornedElementPlaceholder>
             </DockPanel>
         </ControlTemplate>
-        <Style x:Key="textBoxError" TargetType="TextBox">
+        <Style x:Key="textBoxError" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
             <Style.Triggers>
                 <Trigger Property="Validation.HasError" Value="true">
                     <Setter Property="ToolTip"
@@ -38,7 +39,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="ComboBoxError" TargetType="ComboBox">
+        <Style x:Key="ComboBoxError" TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
             <Style.Triggers>
                 <Trigger Property="Validation.HasError" Value="true">
                     <Setter Property="ToolTip"
@@ -85,7 +86,7 @@
                 <RowDefinition Height="Auto" MinHeight="35"/>
                 <RowDefinition Height="Auto" MinHeight="35"/>
                 <RowDefinition Height="30"/>
-                <RowDefinition Height="525"/>
+                <RowDefinition Height="750"/>
             </Grid.RowDefinitions>
 
             <!--<Label Content="Data:" Grid.ColumnSpan="2" />
@@ -93,7 +94,7 @@
             <Label Content="Temperatura:"  Grid.Row="1" VerticalAlignment="Center" Height="26" Margin="0,4,0,3"/>
             <TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"
             Validation.ErrorTemplate="{StaticResource errorTemplate}"
-         Style="{StaticResource textBoxError}" Height="22" Margin="2,6,2,5" >
+         Style="{StaticResource textBoxError}" Height="22" Margin="0,7" >
 
                 <TextBox.Text>
                     <Binding Path="Temperature" UpdateSourceTrigger="PropertyChanged" >
@@ -107,7 +108,7 @@
             <Label Content="Imię i Nazwisko:" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Height="26" Margin="0,7"/>
 
 
-            <TreeView Background="Bisque" Name="tvwAllClients" Grid.Row="5" Grid.RowSpan="2" ItemsSource="{Binding RootElement.Children,UpdateSourceTrigger=PropertyChanged}" 
+            <TreeView Background="Bisque" Name="tvwAllClients" Grid.Row="6" ItemsSource="{Binding RootElement.Children,UpdateSourceTrigger=PropertyChanged}" 
                   vm:TreeViewHelper.SelectedItem="{Binding SelectedNode, Mode=TwoWay}" VirtualizingPanel.IsVirtualizing="True" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,10">
                 <TreeView.Resources>
                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
@@ -128,6 +129,7 @@
                         <Style.Triggers>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="vm:TreeViewHelper.BringIntoViewWhenSelected" Value="True" />
                             </Trigger>
                         </Style.Triggers>
 
@@ -147,47 +149,9 @@
             </TreeView>
 
 
-
-            <!--<TreeView Name="tvwAllClients" ItemContainerStyle="{StaticResource ItemContainerStyle}" Grid.Row="4" Grid.RowSpan="2" ItemsSource="{Binding AllItems,UpdateSourceTrigger=PropertyChanged}" 
-                  local:TreeViewHelper.SelectedItem="{Binding SelectedNode, Mode=TwoWay}" VirtualizingPanel.IsVirtualizing="True" Grid.Column="0" Grid.ColumnSpan="2">
-            
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding offices}">
-                    <TextBlock Text="{Binding name}"/>
-                    <HierarchicalDataTemplate.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Text="{Binding name}"/>
-                                <ItemsControl ItemsSource="{Binding gauges}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Vertical" />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="miejsce 3"/>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </StackPanel>
-                            -->
-            <!--<HierarchicalDataTemplate.ItemTemplate>
-                                <HierarchicalDataTemplate>
-                                    <TextBlock Text="{Binding model_of_gauges.model}"/>
-                                </HierarchicalDataTemplate>
-                            </HierarchicalDataTemplate.ItemTemplate>-->
-            <!--
-                        </DataTemplate>
-                    </HierarchicalDataTemplate.ItemTemplate>
-                </HierarchicalDataTemplate>
-
-            </TreeView.ItemTemplate>
-        </TreeView>-->
-
             <ContentControl Background="LightBlue" Grid.RowSpan="2" Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="2" Content="{Binding CurrentViewModel}">
             </ContentControl>
-            <Button Content="Wyszukaj" Command="{Binding SearchCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Width="80" Height="25" Margin="35,5"/>
+            <Button Content="Wyszukaj" Command="{Binding SearchCommand}" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="3" Width="80" Height="24" Grid.ColumnSpan="1" Margin="0,6,3,6" />
 
             <vm:ModalDialogManager DataContext="{Binding MessageWindowDatabase}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}" DialogHeight="400" DialogWidth="350"
                                DialogResizeMode="CanResize" />
@@ -197,8 +161,8 @@
             <vm:ModalDialogManager DataContext="{Binding MessageWindowEditGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="400" 
 			DialogWidth="390" DialogResizeMode="CanResize"  />
 
-            <vm:ModalDialogManager DataContext="{Binding MessageWindowModelOfGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="700" 
-			DialogWidth="590" DialogResizeMode="CanResize" ScrollViewer.CanContentScroll="True"  ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+            <vm:ModalDialogManager DataContext="{Binding MessageWindowModelOfGauge}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}"  DialogHeight="660" 
+			DialogWidth="790" DialogResizeMode="CanResize" ScrollViewer.CanContentScroll="True"  ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
 
             <vm:ModalDialogManager DataContext="{Binding MessageWindowUser}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}" DialogHeight="200" 
                                DialogWidth="470" DialogResizeMode="CanResize"/>
@@ -206,14 +170,15 @@
             <vm:ModalDialogManager DataContext="{Binding MessageWindowMailing}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}" DialogHeight="250" 
                                DialogWidth="315" DialogResizeMode="CanResize"/>
 
-            <Button Content="Dodaj pomiarowca" Command="{Binding AddNewMeasureCommand}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right"  VerticalAlignment="Center" Height="25" Margin="0,7,133,8" Width="142" />
+            <vm:ModalDialogManager DataContext="{Binding NewWindowValuesToTable11}" IsOpen="{Binding IsOpen}" ToConfirm="{Binding ToConfirm}" DialogHeight="520" 
+                               DialogWidth="400" DialogResizeMode="NoResize"/>
 
-            <TextBox Text="{Binding SearchItem}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Background="AliceBlue" Height="26" Margin="2,5,2,4" />
-            <Button Content="Dodaj klienta" Command="{Binding AddNewClientCommand}" Grid.Column="3" HorizontalAlignment="Right"  VerticalAlignment="center" Width="142" Height="26" Margin="0,2,0,1" />
-            <Button Content="Dodaj model miernika" Command="{Binding AddNewGaugeCommand}" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right"  VerticalAlignment="center" Height="25" Margin="0,4" Width="142" />
-            <RadioButton Content="Nr seryjny" IsChecked="{Binding IsCheckedSerial}" HorizontalAlignment="Left" Margin="10,1,0,0" Grid.Row="4" VerticalAlignment="Top" Height="24" Width="80"/>
-            <RadioButton Content="NIP" IsChecked ="{Binding IsCheckedNip}" HorizontalAlignment="Left" Margin="0,1,0,0" Grid.Row="4" VerticalAlignment="Top" Height="25" Width="48" Grid.Column="1"/>
-            <RadioButton Content="Nazwa klienta" IsChecked="{Binding IsCheckedName}" Grid.Column="1" HorizontalAlignment="Left" Margin="60,1,0,0" Grid.Row="4" VerticalAlignment="Top" Height="29" Width="101" Grid.ColumnSpan="2"/>
+
+            <Button Content="Dodaj pomiarowca" Command="{Binding AddNewMeasureCommand}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right"  VerticalAlignment="Center" Height="24" Margin="0,8,54,9" Width="142" />
+
+            <TextBox Text="{Binding SearchItem}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Background="AliceBlue" Height="26" Margin="0,6,0,5" />
+            <Button Content="Dodaj klienta" Command="{Binding AddNewClientCommand}" HorizontalAlignment="Right"  VerticalAlignment="center" Width="142" Height="26" Grid.Row="5" />
+            <Button Content="Dodaj model miernika" Command="{Binding AddNewGaugeCommand}" Grid.Column="3" HorizontalAlignment="Right"  VerticalAlignment="center" Height="25" Margin="0,3,10,4" Width="142" />
 
             <ComboBox ItemsSource="{Binding ListOfUsers}" Grid.Column="1" Height="30"
                   Validation.ErrorTemplate="{StaticResource errorTemplate}"
@@ -229,10 +194,14 @@
                 </ComboBox.SelectedItem>
             </ComboBox>
             <Label Content="{Binding CertPath}"  Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Center" Height="26" Margin="0,2,184,1" />
-            <Button Content="zmień Ścieżkę zapisu raportów" Command="{Binding ChangePathCommand}" Grid.Column="2" HorizontalAlignment="Left" Margin="239,3,0,0" VerticalAlignment="Top" Width="194" Height="25"/>
+            <Button Content="zmień Ścieżkę zapisu raportów" Command="{Binding ChangePathCommand}" Grid.Column="2" HorizontalAlignment="Left" Margin="239,3,0,0" VerticalAlignment="Top" Width="204" Height="25"/>
             <Button Content="Mailing i wzorcowania" Grid.Column="2" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Center" Width="155" Command="{Binding MailingCommand}" Grid.ColumnSpan="2" Margin="0,7,168,8" Height="25"/>
-            <Button Content="Edytuj model miernika" Command="{Binding EditGaugeCommand}" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Right"  VerticalAlignment="center" Height="25" Margin="0,8,0,7" Width="142" />
-            <Button Content="Edytuj pomiarowca" Command="{Binding EditMeasureCommand}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right"  VerticalAlignment="Center" Height="25" Margin="0,7,280,8" Width="125" />
+            <Button Content="Edytuj model miernika" Command="{Binding EditGaugeCommand}" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right"  VerticalAlignment="center" Height="25" Margin="0,12,10,43" Width="142" Grid.RowSpan="2" />
+            <Button Content="Edytuj pomiarowca" Command="{Binding EditMeasureCommand}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right"  VerticalAlignment="Center" Height="24" Margin="0,8,201,9" Width="125" />
+            <CheckBox x:Name="checkBox" Content="Pieczątka" IsChecked="{Binding IsStampPrint}" Grid.Column="2" HorizontalAlignment="Left" Margin="31,10,0,0" Grid.Row="2" VerticalAlignment="Top" RenderTransformOrigin="-0.147,0"/>
+            <Button x:Name="button" Content="Wpisy tabeli" Command="{Binding AddValuesToTable11Command}" Grid.Column="2" HorizontalAlignment="Right" Margin="0,15,168,0" Grid.Row="1" VerticalAlignment="Top" Width="155" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+            <ComboBox x:Name="comboBox" ItemsSource="{Binding CollectionOfFilters}" SelectedItem="{Binding SelectedFilter}" Grid.Column="1" HorizontalAlignment="Left" Margin="0,1,0,0" Grid.Row="4" VerticalAlignment="Top" Width="160"/>
+            <Label x:Name="label" Content="Wyszukaj po:" HorizontalAlignment="Right" Grid.Row="4" VerticalAlignment="Top"/>
 
 
         </Grid>

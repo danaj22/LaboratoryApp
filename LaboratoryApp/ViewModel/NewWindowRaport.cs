@@ -12,6 +12,7 @@ namespace LaboratoryApp.ViewModel
 {
     public class NewWindowRaport : ObservableObject
     {
+        #region fields
         private gauge aboutGauge = new gauge();
         public gauge AboutGauge
         {
@@ -272,6 +273,9 @@ namespace LaboratoryApp.ViewModel
             }
         }
 
+        #endregion
+
+        public LaboratoryEntities ctx { get; set; }
         public void AddCalibrator()
         {
             MessageWindowCalibrator = new NewWindowCalibrator();
@@ -281,7 +285,7 @@ namespace LaboratoryApp.ViewModel
             {
                 if (!string.IsNullOrEmpty(MessageWindowCalibrator.NameOfCalibrator))
                 {
-                    using (LaboratoryEntities context = new LaboratoryEntities())
+                    using (LaboratoryEntities context = ctx)
                     {
                         calibrator CalibratorToAdd = new calibrator();
                         CalibratorToAdd.name = MessageWindowCalibrator.NameOfCalibrator;
@@ -305,7 +309,7 @@ namespace LaboratoryApp.ViewModel
             if (MessageWindowFunction.ToConfirm)
             {
                 
-                    using (LaboratoryEntities context = new LaboratoryEntities())
+                    using (LaboratoryEntities context = ctx)
                     {
                         function FunctionToAdd = new function();
                         FunctionToAdd.name = MessageWindowFunction.NameOfFunction;
@@ -325,149 +329,132 @@ namespace LaboratoryApp.ViewModel
 
         public NewWindowRaport(gauge NewGauge)
         {
+            
             AddCalibratorCommand = new SimpleRelayCommand(AddCalibrator);
             AddFunctionCommand = new SimpleRelayCommand(AddFunction);
 
             CollectionOfCheckedFunction = new ObservableCollection<function>();
             CollectionOfCalibrators = new ObservableCollection<calibrator>();
-            
-            LaboratoryEntities context = MainWindowViewModel.Context;
-            AboutGauge = NewGauge;
 
-
-            var ListOfFunctions = (from f in context.functions select f).ToList();
-            foreach (function fun in ListOfFunctions)
+            using (LaboratoryEntities context = new LaboratoryEntities())
             {
-                fun.IsChecked = false;
-            }
+                AboutGauge = NewGauge;
 
-            var bbbb = (from mf in context.model_of_gauges_functions where mf.model_of_gauge_id == AboutGauge.model_of_gauge_id select mf.function_Id).ToList();
 
-            foreach (var item in ListOfFunctions)
-            {
-                if (bbbb.Contains(item.functionId))
+                var ListOfFunctions = (from f in context.functions select f).ToList();
+                foreach (function fun in ListOfFunctions)
                 {
-                    item.IsChecked = true;
+                    fun.IsChecked = false;
                 }
 
-                CollectionOfCheckedFunction.Add(item);
-            }
+                var bbbb = (from mf in context.model_of_gauges_functions where mf.model_of_gauge_id == AboutGauge.model_of_gauge_id select mf.function_Id).ToList();
 
-
-            ///
-            ////                |||||||
-            ////ZLE PODEJSCIE!! VVVVVVV
-            ///
-            ///
-
-
-
-            //var ListOfFunctions = (from f in context.functions select f).ToList();
-            //foreach(function fun in ListOfFunctions)
-            //{
-            //    fun.IsChecked = false;
-            //}
-            //if (File.Exists(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\model\" + NewGauge.model_of_gauges.model + ".txt"))
-            //{
-            //    string[] listOfFunctionFromFile = File.ReadAllLines(@"C:\ProgramData\DASLSystems\LaboratoryApp\models\model\" + NewGauge.model_of_gauges.model + ".txt");
-
-
-            //        foreach (string str in listOfFunctionFromFile)
-            //        {
-            //            ListOfFunctions[Convert.ToInt16(str) - 1].IsChecked = true;
-            //        }
-
-
-            //}
-
-            //foreach(function f in ListOfFunctions)
-            //{
-            //   // if(f.IsChecked)
-            //   // {
-            //        CollectionOfCheckedFunction.Add(f);
-            //    //}
-            //}
-
-
-
-
-
-            var ListOfCalibrators = (from c in context.calibrators select c).ToList();
-            
-            foreach(var item in ListOfCalibrators)
-            {
-                item.IsChecked = false; 
-            }
-
-            var rrrr = (from cm in context.calibrators_model_of_gauges where cm.model_of_gaug_id == AboutGauge.model_of_gauge_id select cm.calibrator_id).ToList();
-
-            foreach (var item in ListOfCalibrators)
-            {
-                if (rrrr.Contains(item.calibratorId))
+                foreach (var item in ListOfFunctions)
                 {
-                    item.IsChecked = true;
+                    if (bbbb.Contains(item.functionId))
+                    {
+                        item.IsChecked = true;
+                    }
+
+                    CollectionOfCheckedFunction.Add(item);
                 }
 
-                CollectionOfCalibrators.Add(item);
+
+                var ListOfCalibrators = (from c in context.calibrators select c).ToList();
+
+                foreach (var item in ListOfCalibrators)
+                {
+                    item.IsChecked = false;
+                }
+
+                var rrrr = (from cm in context.calibrators_model_of_gauges where cm.model_of_gaug_id == AboutGauge.model_of_gauge_id select cm.calibrator_id).ToList();
+
+                foreach (var item in ListOfCalibrators)
+                {
+                    if (rrrr.Contains(item.calibratorId))
+                    {
+                        item.IsChecked = true;
+                    }
+
+                    CollectionOfCalibrators.Add(item);
+                }
+
+
+
+                OKCommand = new SimpleRelayCommand(Confirm);
+                CancelCommand = new SimpleRelayCommand(Close);
+                Footer = "Świadectwo składa się z 1 strony. Może być okazywane lub kopiowane tylko w całości.";
+                TheCalibrationMethod = "Porównanie wartości mierzonej miernikiem sprawdzanym z wielkością wzorcową na podstawie instrukcji IZ/001/DASL i pozostałych";
+                NationalPattern = "Wyniki wzorcowania zostały odniesione do państwowych wzorców jednostek miar poprzez zastosowanie:\n\n";
+
+                Temperature = MainWindowViewModel.temperature;
+                Humidity = "(30-60) %";
+
+                Compatibility = new List<string>();
+                Compatibility.Add("Zgodny");
+                Compatibility.Add("Niezgodny");
+                SelectedCompatibility = Compatibility.First();
+
+                Stamp = new List<string>();
+                Stamp.Add("Nie");
+                Stamp.Add("Tak");
+                if (!MainWindowViewModel.isStampPrint)
+                {
+                    PrintStamp = Stamp.First();
+                }
+                else
+                {
+                    PrintStamp = Stamp[1];
+                }
+
+                DateSurvey = DateTime.Now.ToString("dd'/'MM'/'yyyy");
+
+                Uncertainty = "Maksymalna niepewność odwzorowania wartości poprawnej wynosi +/- 0,5 % przy poziomie ufności 95 % na podstawie Publikacji EA-4/02";
+
+                var firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+
+                //System.Windows.MessageBox.Show(firstDayOfMonth.ToString());
+                Recommendations = "Jeśli harmonogram Zleceniodawcy nie przewiduje inaczej, to następne wzorcowanie zaleca się przeprowadzić przed upływem ostatniego dnia analogicznego miesiąca następnego roku (w stosunku do daty wystawienia) lub w przypadku uszkodzenia";
+
+                //////////////////
+                gauge tmpGauge = (gauge)MainWindowViewModel.selectedNode;
+                gauge SelectedGauge = (from g in context.gauges where tmpGauge.gaugeId == g.gaugeId select g).FirstOrDefault();
+
+
+                //SelectedGauge = (from g in con.gauges where g.gaugeId == SelectedGauge.gaugeId select g).FirstOrDefault();
+
+                if (SelectedGauge.model_of_gauges.type.name == "Elektryczny")
+                {
+                    var count = (from c in context.certificates where c.date >= firstDayOfMonth && c.date <= lastDayOfMonth && c.gauge.model_of_gauges.type.name == "Elektryczny" select c).Count();
+                    NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM") + "/" + (count + 1) + "/DASL";
+                }
+                else if (SelectedGauge.model_of_gauges.type.name == "Manometr")
+                {
+                    var count = (from c in context.certificates where c.date >= firstDayOfMonth && c.date <= lastDayOfMonth && c.gauge.model_of_gauges.type.name == "Manometr" select c).Count();
+
+                    NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM") + "/" + (count + 1) + "/M/DASL";
+                }
+                else if (SelectedGauge.model_of_gauges.type.name == "Luksomierz")
+                {
+                    Recommendations = "";
+                    var count = (from c in context.certificates where c.date >= firstDayOfMonth && c.date <= lastDayOfMonth && c.gauge.model_of_gauges.type.name == "Luksomierz" select c).Count();
+                    NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM") + "/" + (count + 1) + "/L/DASL";
+                }
+                else
+                {
+                    var count = (from c in context.certificates
+                                 where 
+                                 c.date >= firstDayOfMonth &&
+                                 c.date <= lastDayOfMonth &&
+                                 !c.name.Contains("/L/") 
+                                 select c).Count();
+                    NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM") + "/" + (count + 1) + "/DASL";
+                }
             }
-
-
-            OKCommand = new SimpleRelayCommand(Confirm);
-            CancelCommand = new SimpleRelayCommand(Close);
-            Footer = "Świadectwo składa się z 1 strony. Może być okazywane lub kopiowane tylko w całości.";
-            TheCalibrationMethod = "Porównanie wartości mierzonej miernikiem sprawdzanym z wielkością wzorcową na podstawie instrukcji IZ/001/DASL i pozostałych";
-            NationalPattern = "Wyniki wzorcowania zostały odniesione do państwowych wzorców jednostek miar poprzez zastosowanie:\n\n";
-
-            Temperature = MainWindowViewModel.temperature;
-            Humidity = "(30-60) %";
-
-            Compatibility = new List<string>();
-            Compatibility.Add("Zgodny");
-            Compatibility.Add("Niezgodny");
-            SelectedCompatibility = Compatibility.First();
-
-            Stamp = new List<string>();
-            Stamp.Add("Nie");
-            Stamp.Add("Tak");
-            PrintStamp = Stamp.First();
-
-            DateSurvey = DateTime.Now.ToString("dd'/'MM'/'yyyy");
-
-            Uncertainty = "Maksymalna niepewność odwzorowania wartości poprawnej wynosi +/- 0,5 % przy poziomie ufności 95 % na podstawie Publikacji EA-4/02";
-
-            var firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
-
-            //System.Windows.MessageBox.Show(firstDayOfMonth.ToString());
-
-            gauge SelectedGauge = (gauge)MainWindowViewModel.selectedNode;
-            if (SelectedGauge.model_of_gauges.type.name == "Elektryczny")
-            {
-                var count = (from c in context.certificates where c.date >= firstDayOfMonth && c.date <= lastDayOfMonth && c.gauge.model_of_gauges.type.name == "Elektryczny" select c).Count();
-                NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM") + "/" + (count+1) + "/DASL";
-            }
-            else if (SelectedGauge.model_of_gauges.type.name == "Manometr")
-            {
-                var count = (from c in context.certificates where c.date >= firstDayOfMonth && c.date <= lastDayOfMonth && c.gauge.model_of_gauges.type.name == "Manometr" select c).Count();
-
-                NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM") + "/" + (count+1) + "/M/DASL";
-            }
-            else if (SelectedGauge.model_of_gauges.type.name == "Luksomierz")
-            {
-                var count = (from c in context.certificates where c.date >= firstDayOfMonth && c.date <= lastDayOfMonth && c.gauge.model_of_gauges.type.name == "Luksomierz" select c).Count();
-                NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM") + "/" + (count+1) + "/L/DASL";
-            }
-            else
-            {
-                var count = (from c in context.certificates where c.date >= firstDayOfMonth && c.date <= lastDayOfMonth && c.gauge.model_of_gauges.type.name != "Luksomierz" && c.gauge.model_of_gauges.type.name != "Manometr" && c.gauge.model_of_gauges.type.name != "Elektryczny" select c).Count();
-
-                NumberOfCertificate = DateTime.Now.ToString("yyyy'/'MM") + "/" + (count+1) + "/DASL";
-            }
-
-            Recommendations = "Jeśli harmonogram Zleceniodawcy nie przewiduje inaczej, to następne wzorcowanie zaleca się przeprowadzić przed upływem ostatniego dnia analogicznego miesiąca następnego roku (w stosunku do daty wystawienia) lub w przypadku uszkodzenia";
             Author = MainWindowViewModel.nameAndSurname;
 
-
+        
 
         }
 

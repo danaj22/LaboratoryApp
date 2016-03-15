@@ -7,7 +7,7 @@
                           xmlns:ViewModel="clr-namespace:LaboratoryApp.ViewModel"
             BorderBrush="{DynamicResource AccentColorBrush}"
             BorderThickness="1"
-            xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" Width="1160" Height="463.119">
+            xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" Width="1160" Height="463.120">
     <UserControl.Resources>
         <ControlTemplate x:Key="errorTemplate">
             <DockPanel LastChildFill="true">
@@ -44,7 +44,7 @@
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="700"/>
         </Grid.ColumnDefinitions>
-        <DataGrid AutoGenerateColumns="False" SelectedItem="{Binding SelectedData}" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Grid.Row="1" Grid.ColumnSpan="5" VerticalAlignment="Center" Height="320" Width="1136" Margin="7,93,0,-54" Grid.RowSpan="3">
+        <DataGrid AutoGenerateColumns="False" SelectedItem="{Binding SelectedData}" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Grid.Row="1" Grid.ColumnSpan="5" VerticalAlignment="Center" Height="320" Width="1034" Margin="7,94,0,-52" Grid.RowSpan="3">
             <DataGrid.Columns>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Wartość rezystancji nastawionej na dekadzie kontrolnej [Ω]" Binding="{Binding Multiples, Converter={StaticResource MyConverter}}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Hipotetyczna rezystywność gruntu [Ω*m]" Binding="{Binding ResistanceOfGroundv2, Converter={StaticResource MyConverter}}" />
@@ -80,7 +80,7 @@
         <TextBox HorizontalAlignment="Left" Height="23" Margin="150,54,0,0" TextWrapping="Wrap" Text="{Binding SelectedData.ImportantNumber, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Grid.Row="1" Width="95" Grid.ColumnSpan="2" Grid.Column="1"/>
         <Button Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Grid.Column="4" Grid.Row="1" Margin="286,118,0,0">
             <Button.Style>
-                <Style TargetType="Button">
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                     <Setter Property="IsEnabled" Value="false" />
                     <Style.Triggers>
                         <MultiDataTrigger>

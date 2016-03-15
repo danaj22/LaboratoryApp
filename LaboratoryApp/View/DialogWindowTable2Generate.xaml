@@ -9,7 +9,7 @@
         <ViewModel:MyConverter x:Key="MyConverter"/>
     </UserControl.Resources>
     <Grid>
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" Height="348" Width="787">
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" Height="348" Width="730">
             <DataGrid.Columns>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Wartość częstotliwości napięcia przemiennego na mierniku sprawdzanym [Hz]" Binding="{Binding MeasureValue, Converter={StaticResource MyConverter}}" >
                     <DataGridTextColumn.CellStyle>
@@ -37,7 +37,7 @@
         <Label Content="górna wartość:" HorizontalAlignment="Left" Margin="838,68,0,0" VerticalAlignment="Top"/>
         <RadioButton Content="+ +" IsChecked="{Binding HighLevel}" HorizontalAlignment="Left" Margin="829,146,0,0" VerticalAlignment="Top"/>
         <RadioButton Content="- -" IsChecked="{Binding LowLevel}" HorizontalAlignment="Left" Margin="829,169,0,0" VerticalAlignment="Top"/>
-        <RadioButton Content="+ -" IsChecked="{Binding CenterLevel}" HorizontalAlignment="Left" Margin="829,192,0,0" VerticalAlignment="Top"/>
+        <RadioButton Content="+ -" IsChecked="{Binding CenterLevel}" HorizontalAlignment="Left" Margin="829,202,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>

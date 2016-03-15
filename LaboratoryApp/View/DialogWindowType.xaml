@@ -59,7 +59,7 @@
 
         <Button Content="Dodaj" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="133,46,0,0" VerticalAlignment="Top" Width="74" >
             <Button.Style>
-                <Style TargetType="Button">
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                     <Setter Property="IsEnabled" Value="false" />
                     <Style.Triggers>
                         <MultiDataTrigger>

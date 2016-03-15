@@ -28,30 +28,30 @@
     </UserControl.Resources>
 
     <Grid>
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="380" Width="870">
-                <DataGrid.Columns>
-                    <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Nastawiona wartość napięcia na mierniku sprawdzanym [V]" Binding="{Binding MeasureValue, Converter={StaticResource MyConverter}}" >
-                    </DataGridTextColumn>
-                    <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Odczytana wartość napięcia na mierniku kontrolnym [V]" Binding="{Binding IdealValue, Converter={StaticResource MyConverter}}" />
-                    <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Błąd względny nastawy napięcia na mierniku sprawdzanym" Binding="{Binding ErrorRelativePercent, Converter={StaticResource MyConverter}}" />
-                    <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="85" Header="Dopuszczalna różnica napięcia zmierzonego i nastawionego" Binding="{Binding MaxDifference, Converter={StaticResource MyConverter}}" />
-                    <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Rzeczywista wartość prądu pobierczego [mA]" Binding="{Binding RealValue, Converter={StaticResource MyConverter}}" />
-                    <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Wymagana wartość prądu pobierczego [mA]" Binding="{Binding RecommendValue, Converter={StaticResource MyConverter}}" />
-                    <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona pomiaru napięcia ±2u(x) [V]" Binding="{Binding ErrorInValue, Converter={StaticResource MyConverter}}" />
-                    <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona pomiaru prądu ±2u(x) [mA]" Binding="{Binding ErrorInPercent, Converter={StaticResource MyConverter}}" />
-                </DataGrid.Columns>
-                
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="380" Width="646">
+            <DataGrid.Columns>
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Nastawiona wartość napięcia na mierniku sprawdzanym [V]" Binding="{Binding MeasureValue, Converter={StaticResource MyConverter}}" >
+                </DataGridTextColumn>
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Odczytana wartość napięcia na mierniku kontrolnym [V]" Binding="{Binding IdealValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Błąd względny nastawy napięcia na mierniku sprawdzanym" Binding="{Binding ErrorRelativePercent, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="85" Header="Dopuszczalna różnica napięcia zmierzonego i nastawionego" Binding="{Binding MaxDifference, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Rzeczywista wartość prądu pobierczego [mA]" Binding="{Binding RealValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Wymagana wartość prądu pobierczego [mA]" Binding="{Binding RecommendValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona pomiaru napięcia ±2u(x) [V]" Binding="{Binding ErrorInValue, Converter={StaticResource MyConverter}}" />
+                <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="80" Header="Niepewność całkowita rozszerzona pomiaru prądu ±2u(x) [mA]" Binding="{Binding ErrorInPercent, Converter={StaticResource MyConverter}}" />
+            </DataGrid.Columns>
+
         </DataGrid>
-        <Button Content="Ok" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="648,28,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="648,103,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Generuj" Command="{Binding GenerateRandomValuesCommand}" HorizontalAlignment="Left" Margin="648,63,0,0" VerticalAlignment="Top" Width="75"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="732,54,-14,0" TextWrapping="Wrap" Text="{Binding MinValue, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="108"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="732,102,-14,0" TextWrapping="Wrap" Text="{Binding MaxValue, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="108"/>
-        <Label Content="dolna wartość:" HorizontalAlignment="Left" Margin="741,28,-1,0" VerticalAlignment="Top"/>
-        <Label Content="górna wartość:" HorizontalAlignment="Left" Margin="741,78,-3,0" VerticalAlignment="Top"/>
-        <RadioButton Content="+ +" IsChecked="{Binding HighLevel}" HorizontalAlignment="Left" Margin="732,156,0,0" VerticalAlignment="Top"/>
-        <RadioButton Content="- -" IsChecked="{Binding LowLevel}" HorizontalAlignment="Left" Margin="732,179,0,0" VerticalAlignment="Top"/>
-        <RadioButton Content="+ -" IsChecked="{Binding CenterLevel}" HorizontalAlignment="Left" Margin="732,202,0,0" VerticalAlignment="Top"/>
+        <Button Content="Ok" Command="{Binding OKCommand}" HorizontalAlignment="Left" Margin="661,28,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Cancel"  Command="{Binding CancelCommand}" HorizontalAlignment="Left" Margin="661,103,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Generuj" Command="{Binding GenerateRandomValuesCommand}" HorizontalAlignment="Left" Margin="661,63,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="745,54,0,0" TextWrapping="Wrap" Text="{Binding MinValue, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="108"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="745,102,0,0" TextWrapping="Wrap" Text="{Binding MaxValue, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Width="108"/>
+        <Label Content="dolna wartość:" HorizontalAlignment="Left" Margin="754,28,0,0" VerticalAlignment="Top"/>
+        <Label Content="górna wartość:" HorizontalAlignment="Left" Margin="754,78,0,0" VerticalAlignment="Top"/>
+        <RadioButton Content="+ +" IsChecked="{Binding HighLevel}" HorizontalAlignment="Left" Margin="745,156,0,0" VerticalAlignment="Top"/>
+        <RadioButton Content="- -" IsChecked="{Binding LowLevel}" HorizontalAlignment="Left" Margin="745,179,0,0" VerticalAlignment="Top"/>
+        <RadioButton Content="+ -" IsChecked="{Binding CenterLevel}" HorizontalAlignment="Left" Margin="745,202,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>

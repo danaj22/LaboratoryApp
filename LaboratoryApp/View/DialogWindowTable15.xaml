@@ -45,7 +45,7 @@
             <ColumnDefinition MinWidth="100"/>
             <ColumnDefinition MinWidth="100"/>
         </Grid.ColumnDefinitions>
-        <DataGrid AutoGenerateColumns="False" SelectedItem="{Binding SelectedData}" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Grid.Row="1" Grid.ColumnSpan="5" VerticalAlignment="Center" Height="320" Width="1094" Margin="13,79,0,-40" Grid.RowSpan="3">
+        <DataGrid AutoGenerateColumns="False" SelectedItem="{Binding SelectedData}" ItemsSource="{Binding Tab}" CanUserAddRows="True" HorizontalAlignment="Left" Grid.Row="1" Grid.ColumnSpan="5" VerticalAlignment="Center" Height="320" Width="1028" Margin="10,81,0,-26" Grid.RowSpan="3">
             <DataGrid.Columns>
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Wartość rezystancji nastawionej na dekadzie kontrolnej [Ω]" Binding="{Binding Path=Multiples, Converter={StaticResource MyConverter}}" />
                 <DataGridTextColumn HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Width="100" Header="Hipotetyczna rezystywność gruntu [Ω*m]" Binding="{Binding Path=ResistanceOfGround, Converter={StaticResource MyConverter}}" />
@@ -82,7 +82,7 @@
         <TextBox HorizontalAlignment="Left" Height="23" Margin="97,50,0,0" TextWrapping="Wrap" Text="{Binding Path=SelectedData.ImportantNumber, Converter={StaticResource MyConverter}}" VerticalAlignment="Top" Grid.Row="1" Width="102" Grid.Column="1"/>
         <Button Content="OK" Command="{Binding OKCommand}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Grid.Column="4" Grid.Row="1" Margin="0,91,7,0">
             <Button.Style>
-                <Style TargetType="Button">
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                     <Setter Property="IsEnabled" Value="false" />
                     <Style.Triggers>
                         <MultiDataTrigger>

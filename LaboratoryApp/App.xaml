@@ -26,6 +26,9 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <DataTemplate DataType="{x:Type vm:ValuesToTable11}">
+                <v:DialogWindowValuesToTable11 />
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vm:NewWindowEditGauge}">
                 <v:EditModelGauge/>
             </DataTemplate>
@@ -40,6 +43,9 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:NewWindowType}">
                 <v:DialogWindowType />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowManufacturer}">
+                <v:DialogWindowManufacturer />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:NewWindowUsage}">
                 <v:DialogWindowUsage />
@@ -133,6 +139,9 @@
             <DataTemplate DataType="{x:Type vm:NewWindowTable11}">
                 <v:DialogWindowTable11 />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable11Generate}">
+                <v:DialogWindowTable11Generate />
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vm:NewWindowTable12}">
                 <v:DialogWindowTable12 />
             </DataTemplate>
@@ -165,6 +174,24 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:NewWindowTable18Generate}">
                 <v:DialogWindowTable18Generate/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable19}">
+                <v:DialogWindowTable19 />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable19Generate}">
+                <v:DialogWindowTable19Generate />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable20}">
+                <v:DialogWindowTable20 />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable20Generate}">
+                <v:DialogWindowTable20Generate/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable21}">
+                <v:DialogWindowTable21 />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:NewWindowTable21Generate}">
+                <v:DialogWindowTable21Generate/>
             </DataTemplate>
 
         </ResourceDictionary>
